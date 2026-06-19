@@ -1,6 +1,9 @@
 # 4-PEL: 4-Valued Probabilistic Epistemic Logic
 
-This repository contains the **Lean 4 formalization** of the 4-Valued Probabilistic Epistemic Logic (4-PEL), as introduced in the paper *"The Cartography of Paradoxes: Unifying Probabilistic Epistemic Logic and Non-Bivalent Validity"*.
+This repository contains the **Lean 4 formalization** of the 4-Valued Probabilistic Epistemic Logic (4-PEL), as introduced in the paper *"The Cartography of Paradoxes: Unifying Probabilistic Epistemic Logic and Non-Bivalent Validity"*. 
+
+> [!WARNING]
+> **Status:** The associated paper is currently an unpublished draft / under peer review. This repository serves as supplementary material for the verification of its formal mathematical claims.
 
 4-PEL elegantly resolves major epistemic paradoxes (such as the Liar, Lottery, Preface, and Moore's paradoxes) by embedding a Lockean threshold belief operator into the 4-valued Belnap-Dunn (First Degree Entailment) semantic space. It provides a mathematical mechanism to paraconsistently isolate contradictions and prevent epistemic explosion (*ex falso quodlibet*).
 
