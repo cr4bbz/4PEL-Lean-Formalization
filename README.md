@@ -34,7 +34,7 @@ Welcome! This project demonstrates how to elegantly formalize a novel epistemic 
 - `PEL4/Theorems.lean`: The core mathematical proofs.
 
 ### A Note on `Mathlib` and Performance
-To keep this project extremely fast to compile and entirely dependency-free, we intentionally chose **not** to import the massive `Mathlib` library (which would be required for continuous measure theory and Rational `linarith` tactics). 
+To keep this project extremely fast to compile and entirely dependency-free, I intentionally chose **not** to import the massive `Mathlib` library (which would be required for continuous measure theory and Rational `linarith` tactics). 
 
 Instead, probability distributions over the finite sets of accessible worlds (Model Checking) are represented using `Int` (e.g., scaled to 100% or permille). This enables the use of Lean 4's lightning-fast built-in presburger arithmetic tactic (`omega`) to close the core proofs in under 500 milliseconds. The geometric and logical rigor of the theorems remains fully isomorphic to a Rational/Real implementation.
 
