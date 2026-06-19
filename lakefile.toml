@@ -1,0 +1,6 @@
+name = "PEL4"
+version = "0.1.0"
+defaultTargets = ["PEL4"]
+
+[[lean_lib]]
+name = "PEL4"
