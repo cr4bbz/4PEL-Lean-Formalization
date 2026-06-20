@@ -27,7 +27,7 @@
 \maketitle
 
 \begin{abstract}
-Probabilistic Epistemic Logic (PEL) traditionally operates under the assumption of classical bivalent semantics, which renders it vulnerable to epistemic paradoxes such as the Preface Paradox and logical omniscience issues. Simultaneously, non-bivalent logics (e.g., Belnap-Dunn 4-valued logic) successfully resolve semantic paradoxes like the Liar but lack a robust probabilistic framework for doxastic attitudes. This paper introduces 4-Valued Probabilistic Epistemic Logic (4-PEL), a novel framework that models non-bivalent probability over a multi-agent Kripke-style structure $(W, \mu, v)$ with a 4-valued valuation function $v(w, \phi) \in \{T, B, N, F\}$. By defining an agent-specific Lockean threshold belief operator over this space, I formulate a strict mathematical boundary for the emergence of epistemic gluts (paradoxes). I provide Lean 4-verified formal proofs of the central probabilistic bounds demonstrating that epistemic gluts require a strict lower bound of ontological gluts, alongside general theorems ensuring the preservation of classical logic in paradox-free states and the prevention of epistemic explosion. I establish the computational tractability of the framework, proving a polynomial-time bound for model checking. Furthermore, I apply non-bivalent validity standards (Strict-Tolerant, Tolerant-Tolerant, Strict-Strict) to demonstrate how 4-PEL successfully models and classifies five classical epistemic paradoxes (the Liar, Lottery, Preface, Moore's Paradox, and G\"odel's Incompleteness) alongside neutralizing the threat of Epistemic Explosion.
+Probabilistic Epistemic Logic (PEL) traditionally operates under the assumption of classical bivalent semantics, which renders it vulnerable to epistemic paradoxes such as the Preface Paradox and logical omniscience issues. Simultaneously, non-bivalent logics (e.g., Belnap-Dunn 4-valued logic) successfully resolve semantic paradoxes like the Liar but lack a robust probabilistic framework for doxastic attitudes. This paper introduces 4-Valued Probabilistic Epistemic Logic (4-PEL), a novel framework that models non-bivalent probability over a multi-agent Kripke-style structure $(W, \mu, v)$ with a 4-valued valuation function $v(w, \phi) \in \{T, B, N, F\}$. By defining an agent-specific Lockean threshold belief operator over this space, I formulate a strict mathematical boundary for the emergence of epistemic gluts (paradoxes). I provide Lean 4-verified formal proofs of the central probabilistic bounds demonstrating that epistemic gluts require a strict lower bound of ontological gluts, alongside general theorems ensuring the preservation of classical logic in paradox-free states and the prevention of epistemic explosion. I establish the computational tractability of the framework, proving a polynomial-time bound for model checking. Furthermore, I apply non-bivalent validity standards (Strict-Tolerant, Tolerant-Tolerant, Strict-Strict) to demonstrate how 4-PEL successfully models and classifies five classical epistemic paradoxes (the Liar, Lottery, Preface, Moore's Paradox, and G\"odel-inspired epistemic fixed points) alongside neutralizing the threat of Epistemic Explosion.
 \end{abstract}
 
 \section{Introduction}
@@ -44,7 +44,7 @@ The primary contributions of this paper are fourfold:
 \begin{enumerate}
     \item I mathematically derive and formally verify (using the Lean 4 interactive theorem prover) the ``Cartography of Paradoxes'': the Glut Boundary Theorem bounding epistemic gluts by $P_B \ge 2c_i - 1$.
     \item I formalize the 4-PEL framework, integrating world-relative probability measures over 4-valued spaces with an agent-specific Lockean belief operator, and introduce dynamics for belief conditionalization.
-    \item I demonstrate that mapping non-bivalent validity standards (ST, LP, SS) onto this probabilistic space successfully models and defuses five classical epistemic paradoxes (Liar, Lottery, Preface, Moore's Paradox, and G\"odel's Incompleteness) alongside the threat of Epistemic Explosion.
+    \item I demonstrate that mapping non-bivalent validity standards (ST, LP, SS) onto this probabilistic space successfully models and defuses five classical epistemic paradoxes (Liar, Lottery, Preface, Moore's Paradox, and G\"odel-inspired epistemic fixed points) alongside the threat of Epistemic Explosion.
     \item I prove the ``Disagreement Theorem,'' establishing how multi-agent structures natively support rational disagreement and higher-order perspective modeling. This lays a theoretical foundation for applications in social epistemology, rational disagreement, and AI ensemble alignment.
 \end{enumerate}
 
@@ -82,14 +82,14 @@ To model how agents revise their beliefs over time, Dynamic Epistemic Logic (DEL
 While approaches to Paraconsistent Probability \cite{priest1979} offer valuable insights into distributing probability over contradictory events, and frameworks for judgment aggregation \cite{list2002} tackle conflicting multi-agent votes, they frequently lack a unified Kripke-style possible worlds semantics tying dynamic threshold belief to 4-valued validities.
 
 \subsection{Synthesis}
-While these distinct frameworks successfully address specific facets of logic, none of them can natively derive the Glut Boundary Theorem. Table \ref{tab:frameworks} illustrates the comparative capabilities of existing approaches. Crucially, the derivation of the boundary theorem depends entirely on the mathematical overlap between positive and negative support within a unified probability space. Classical PEL lacks the contradiction machinery, while categorical non-bivalent logics lack the probabilistic continuum. My objective is to bridge this gap by embedding these non-bivalent validity standards into a fully probabilistic Kripke-style framework, equipping it with dynamic capabilities.
+While these distinct frameworks successfully address specific facets of logic, none of them natively interpret the overlap as ontological glut mass inside a threshold-based epistemic semantics. Table \ref{tab:frameworks} illustrates the comparative capabilities of existing approaches. Crucially, the derivation of the boundary theorem depends entirely on the mathematical overlap between positive and negative support within a unified probability space. Classical PEL lacks the contradiction machinery, while categorical non-bivalent logics lack the probabilistic continuum. My objective is to bridge this gap by embedding these non-bivalent validity standards into a fully probabilistic Kripke-style framework, equipping it with dynamic capabilities.
 
 \begin{table}[ht]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lccc}
 \hline
-\textbf{Framework} & \textbf{Handles Probability} & \textbf{Handles Contradiction} & \textbf{Derives Boundary Theorem} \\
+\textbf{Framework} & \textbf{Handles Probability} & \textbf{Handles Contradiction} & \textbf{Interprets Glut Boundary} \\
 \hline
 Classical PEL & \checkmark & $\times$ & $\times$ \\
 FDE & $\times$ & \checkmark & $\times$ \\
@@ -274,14 +274,14 @@ Only a 4-valued (or greater) overlap semantics natively defines a state ($B$) th
 \section{Modeling Paradoxes: Case Studies}
 \label{sec:casestudies}
 
-By embedding non-bivalent validity standards into this probabilistic framework, I can actively resolve epistemic paradoxes rather than merely halting at contradictions. The Lean 4 formalization explicitly classifies these paradoxes into a structural taxonomy based on their Kripke attractors:
+By embedding non-bivalent validity standards into this probabilistic framework, I can actively model and classify epistemic paradoxes rather than merely halting at contradictions, while safely blocking explosive consequences. The Lean 4 formalization explicitly organizes these paradoxes into a structural taxonomy based on their Kripke attractors:
 \begin{itemize}
-    \item \textbf{Class I (Self-Reference):} Paradoxes like the Liar and the Epistemic G\"odel Sentence forcefully absorb the system into a stable \textbf{Epistemic Glut} ($B$).
+    \item \textbf{Class I (Self-Reference):} Paradoxes like the Liar and the G\"odel-inspired fixed points forcefully absorb the system into a stable \textbf{Epistemic Glut} ($B$).
     \item \textbf{Class II (Aggregation):} Paradoxes like the Lottery and Preface organically degrade beliefs, collapsing them into \textbf{Strict Falsity} ($F$) or Gaps.
     \item \textbf{Class III (Introspection):} Paradoxes like Moore's sentences fail self-reflection, collapsing deterministically into an \textbf{Epistemic Gap} ($N$).
 \end{itemize}
 
-Table \ref{tab:paradox_resolution} summarizes the mapping of classical failures to 4-PEL resolutions. The following subsections formalize these case studies, supported by Lean 4 formalizations of the core semantic and probabilistic constraints.
+Table \ref{tab:paradox_resolution} summarizes the mapping of classical failures to 4-PEL classifications. The following subsections formalize these case studies, supported by Lean 4 formalizations of the core semantic and probabilistic constraints.
 
 \begin{table}[ht]
 \centering
@@ -290,14 +290,14 @@ Table \ref{tab:paradox_resolution} summarizes the mapping of classical failures 
 \textbf{Paradox} & \textbf{Classical Outcome} & \textbf{4-PEL Outcome} \\
 \hline
 Liar & Explosion & Stable Glut ($B$) \\
-G\"odel's Incompleteness & Incompleteness (Gap) & Epistemic Glut ($B$) \\
+G\"odel-inspired Epistemic Fixed Points & Incompleteness (Gap) & Epistemic Glut ($B$) \\
 Lottery & Closure Failure & Probabilistic Degradation ($F$) \\
 Preface & Closure Failure & Epistemic Gap ($N$) \\
 Moore & Incoherence & Epistemic Gap ($N$) \\
 Ex Falso & Explosion & LP Blocks Inference \\
 \hline
 \end{tabular}
-\caption{Resolution of epistemic paradoxes in 4-PEL compared to classical Probabilistic Epistemic Logic.}
+\caption{Classification of epistemic paradoxes in 4-PEL compared to classical Probabilistic Epistemic Logic.}
 \label{tab:paradox_resolution}
 \end{table}
 
@@ -312,7 +312,7 @@ Applying the conditionalization rule (Definition 4.1):
 \begin{equation*}
 \mu_{i,w}^*(\{w'\}) = \frac{\mu_{i,w}(\{w'\} \cap \mathcal{E}^+(E) \cap R_i(w))}{\mu_{i,w}(\mathcal{E}^+(E) \cap R_i(w))}
 \end{equation*}
-Since the intersection of $\{w'_{T, F, N}\}$ with $\mathcal{E}^+(E)$ is empty, their numerator is $0$. The agent's probability mass is entirely stripped from $T, F,$ and $N$. Since $P_B > 0$, the denominator consists solely of $P_B$, ensuring it is well-defined (non-zero). The probability mass must re-normalize over the remaining states in $\mathcal{E}^+(E)$. Because only $B$ remains, the fraction evaluates to $1$. Thus, $P_B^*(p, w) = 1$ becomes the unique stable state instantaneously.
+Since the intersection of $\{w'_{T, F, N}\}$ with $\mathcal{E}^+(E)$ is empty, their numerator is $0$. The agent's probability mass is entirely stripped from $T, F,$ and $N$. Since $P_B > 0$, the denominator consists solely of $P_B$, ensuring it is well-defined. Because probability mass over $A$ is conditionally restricted to the positive extension of $E$, all weight assigned to $N$ and $F$ vanishes. The sole remaining mass strictly belongs to $B$. Thus, $P_B^*(p, w) = 1$ becomes the unique stable state after conditionalization.
 Consequently, the threshold belief operator evaluates the premise $B_i(p)$ as an epistemic glut ($B$). Evaluating the inference $B_i(p) \implies B_i(\neg p)$ under the Strict-to-Tolerant (ST) validity standard reveals that the inference is vacuously \textit{valid} (since the premise is not strictly true), preventing explosion.
 \end{proof}
 
@@ -368,7 +368,7 @@ The Cartography of Paradoxes (Section 4) maps the boundary where first-order epi
 Let $S_n$ denote the surface boundary for an epistemic glut at reflection depth $n$ (i.e., the state where $B_i^n(p) = B$). Intuitively, one might expect higher-order reflection to dampen contradictions, creating increasingly strict boundaries ($S_1 < S_2 < S_3 \dots$).
 
 \begin{theorem}[The Theorem of Meta-Glut Hierarchy Collapse]
-For any isolated epistemic agent $i$ with a constant threshold $c_i$, if a proposition breaches the first-order paradox boundary ($P_B \ge 2c_i - 1$), it instantaneously and necessarily floods the entire infinitely deep meta-belief hierarchy. Formally:
+Under Euclidean and transitive accessibility ($R_i$), stable local measures, and uniform evaluation of $B_i(p)$ across $R_i(w)$, if a proposition breaches the first-order paradox boundary ($P_B \ge 2c_i - 1$) for an agent $i$ with a constant threshold $c_i$, it propagates through the entire infinitely deep meta-belief hierarchy. Formally:
 $B_i(p) = B \implies \forall n \in \mathbb{N}^+, B_i^n(p) = B$.
 Thus, the topological boundaries collapse perfectly onto each other: $S_1 = S_\infty$.
 \end{theorem}
@@ -397,6 +397,20 @@ To meet the rigorous standards of formal logic, I provide a Hilbert-style axioma
 
 \subsection{Axiomatization and Soundness}
 The deductive system for 4-PEL, denoted $\vdash_{ST}$, is anchored in the Strict-Tolerant validity standard, ensuring that inferences preserve at least tolerant truth (preventing explosion). The core axioms include schemata valid in FDE, such as double negation principles, De Morgan principles, and conjunction/disjunction rules appropriate to the positive/negative support semantics. The primary inference rule is Modus Ponens ($\phi, \phi \to \psi \vdash \psi$), which is uniquely ST-valid but notably invalid under LP-validity.
+
+To formalize this two-level proof discipline, the calculus tracks strict and tolerant statuses using typed derivability:
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Judgment} & \textbf{Meaning} \\
+\hline
+$\Gamma \vdash_S \varphi$ & strict derivability \\
+$\Gamma \vdash_T \varphi$ & tolerant derivability \\
+MP-ST & from strict $\varphi$ and strict $\varphi \to \psi$, infer tolerant $\psi$ \\
+\hline
+\end{tabular}
+\end{table}
 
 \begin{theorem}[Soundness of 4-PEL]
 If $\vdash_{ST} \phi$, then $\models_{ST} \phi$. Any formula provable within the Hilbert-style calculus of 4-PEL is valid under ST semantics.
@@ -478,12 +492,12 @@ By strictly separating the verifiable mathematical architecture from its interpr
 
 This paper introduces the 4-Valued Probabilistic Epistemic Logic (4-PEL), a framework that unifies the quantitative nuance of Probabilistic Epistemic Logic with the qualitative resilience of Belnap-Dunn 4-valued semantics. By formally charting the ``Cartography of Paradoxes,'' I demonstrated mathematically and computationally (via Lean 4) that subjective epistemic contradictions are safely bounded by objective ontological gluts ($P_B \ge 2c - 1$). The formal verification extends beyond specific models to general theorems, proving that Strict-to-Tolerant (ST) validity preserves classical truth in consistent states, while Tolerant-to-Tolerant (LP) validity blocks epistemic explosion (ex falso quodlibet).
 
-Furthermore, by applying these non-bivalent validities to probabilistic belief operators, 4-PEL provides a robust mechanism to evaluate and defuse four major epistemic paradoxes, alongside the structural threat of epistemic explosion. The framework also demonstrates multi-agent rational disagreement. The seamless transition of classical contradictions into rational epistemic gaps or bounded gluts showcases the framework's expressive power. 
+Furthermore, by applying these non-bivalent validities to probabilistic belief operators, 4-PEL provides a robust mechanism to evaluate and defuse five classical epistemic paradoxes, alongside the structural threat of epistemic explosion. The framework also demonstrates multi-agent rational disagreement. The seamless transition of classical contradictions into rational epistemic gaps or bounded gluts showcases the framework's expressive power. 
 
 \section{Future Work}
 \label{sec:futurework}
 
-Future research will explore extending 4-PEL into full Dynamic Epistemic Logic (DEL) \cite{baltag2008probabilistic} with relational updates. Additionally, the polynomial-time model checking complexity suggests potential applications in artificial intelligence. As AI agents aggregate crowdsourced datasets, they encounter inherently contradictory training data. Implementing 4-PEL as a foundational layer could allow artificial systems to safely compartmentalize contradictions and maintain paraconsistent reasoning under uncertainty.
+Future research will explore extending 4-PEL into full Dynamic Epistemic Logic (DEL) \cite{baltag2008probabilistic} with relational updates. Additionally, the polynomial-time model checking complexity suggests potential applications in artificial intelligence. As AI agents aggregate crowdsourced datasets, they encounter inherently contradictory training data. As an interpretive application, implementing 4-PEL as a foundational layer could allow artificial systems to safely compartmentalize contradictions and maintain paraconsistent reasoning under uncertainty.
 \section{Data Availability}
 The Lean 4 code formalizing the 4-PEL framework, the Glut Boundary Theorem, and the core semantic/probabilistic constraints underlying the paradox case studies is included in the supplementary material provided with this submission and accessible via the public repository: \url{https://github.com/cr4bbz/4PEL-Lean-Formalization}.
 
@@ -519,7 +533,7 @@ The belief operator integrates the local measure with the evaluated positive/neg
 def belief (m : Model W Ag Atom) (i : Ag) (w : W) (v_phi : W -> FDEValue) : FDEValue :=
   let prob_pos := m.mu i w {w' \in m.R i w | (v_phi w').pos = true}
   let prob_neg := m.mu i w {w' \in m.R i w | (v_phi w').neg = true}
-  { pos := prob_pos >= m.c, neg := prob_neg >= m.c }
+  { pos := prob_pos >= m.c i, neg := prob_neg >= m.c i }
 \end{lstlisting}
 Beyond these semantic evaluations, the repository now features a complete structural axiomatization of the logic. The syntax is formalized as an inductive datatype (\texttt{Formula}) alongside syntactic macros for disjunction and material implication, and we provide a safe Hilbert-style calculus (\texttt{ST\_Entails}). Crucially, the metatheoretical ST-Soundness theorem (\(\vdash_{ST} \phi \implies \models_{ST} \phi\)) is fully verified by the Lean 4 kernel via structural induction, guaranteeing that all provable inferences safely preserve tolerant truth within our 4-valued threshold semantics.
 
