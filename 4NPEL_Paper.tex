@@ -32,7 +32,7 @@ Probabilistic Epistemic Logic (PEL) traditionally operates under the assumption 
 
 \section{Introduction}
 
-The intersection of probability and formal epistemology has long been a fertile ground for both deep insights and intractable paradoxes. At the heart of this intersection lies the Lockean Thesis, which posits that a rational agent believes a proposition if and only if their subjective probability in that proposition exceeds a certain high, agent-specific threshold $c_i \in (0.5, 1]$. While elegantly simple, implementing this thesis within standard Probabilistic Epistemic Logic (PEL) inevitably leads to structural friction when confronting the bounds of classical logic. Specifically, classical PEL breaks down entirely when encountering self-referential paradoxes like the Liar, or aggregation issues like the Lottery Paradox.
+The intersection of probability and formal epistemology has long been a fertile ground for both deep insights and intractable paradoxes. At the heart of this intersection lies the Lockean Thesis, which posits that a rational agent believes a proposition if and only if their subjective probability in that proposition exceeds a certain high, agent-specific threshold $c_i \in (0.5, 1]$. While elegantly simple, implementing this thesis within standard Probabilistic Epistemic Logic (PEL) inevitably leads to structural friction when confronting the bounds of classical logic. Specifically, classical PEL faces structural limitations when encountering self-referential paradoxes like the Liar, or aggregation issues like the Lottery Paradox.
 
 The central result of this paper is that subjective, epistemic contradictions (epistemic gluts) are mathematically impossible unless the objective probability of an ontological contradiction (an ontological glut, $P_B$) meets a strict lower bound. Specifically, I formally derive the \textbf{Glut Boundary Theorem}, which proves that an epistemic glut for agent $i$ requires an ontological contradiction level of $P_B \ge 2c_i - 1$. 
 
@@ -94,7 +94,7 @@ While these distinct frameworks successfully address specific facets of logic, n
 Classical PEL & \checkmark & $\times$ & $\times$ \\
 FDE & $\times$ & \checkmark & $\times$ \\
 LP/ST validity & $\times$ & \checkmark & $\times$ \\
-Paraconsistent Probability & Partial & Partial & Unknown \\
+Paraconsistent Probability & Partial & Partial & Framework-dependent \\
 \textbf{4-PEL} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} \\
 \hline
 \end{tabular}%
@@ -324,7 +324,7 @@ Let $G$ be an epistemic fixed point defined structurally such that $G \leftright
 In classical bivalent frameworks, a sentence asserting its own unprovability (analogous to G\"odel's First Incompleteness Theorem) creates a gap: neither provable nor disprovable within the system. In this epistemic analogue, let $B_i$ denote strict provability/belief ($c_i = 1$), and let $G$ be the fixed point $G \leftrightarrow \neg B_i(G)$.
 If we evaluate $G$ as a strictly bivalent proposition, we arrive at a gap. However, in 4-PEL, the system can absorb the fixed point as a glut. 
 I computationally verified this via Lean 4: By assigning the Ontological Glut state ($B$) to $G$ with probability 1, the positive and negative mass are both $1 \ge c_i$. Therefore, $B_i(G)$ evaluates to $B$. The negation of a glut is a glut, so $\neg B_i(G)$ evaluates to $B$. The fixed point equation holds: $v(G) = v(\neg B_i(G)) = B$. 
-While this is not a formal treatment of arithmetic incompleteness, it provides a powerful case study: the example shows that a self-referential epistemic fixed point can be modeled as a stable glut rather than as a gap. A probabilistically resilient agent does not necessarily ``halt'' at self-referential unprovability; instead, it actively holds a contradictory but mathematically stable belief.
+While this is not a formal treatment of arithmetic incompleteness, it provides a powerful case study: the example shows that a self-referential epistemic fixed point can be modeled as a stable glut rather than as a gap. An agent using 4-PEL does not necessarily ``halt'' at self-referential unprovability; instead, it actively holds a contradictory but mathematically stable belief.
 \end{proof}
 
 \subsection{The Lottery Paradox and Deductive Closure}
@@ -384,7 +384,7 @@ Let $i, j \in Ag$ be agents observing the same local probability measure ($\mu_{
 \end{theorem}
 The power of a multi-agent framework lies in modeling perspective-dependent reasoning. Suppose agents $i$ and $j$ share the same accessibility relation and observe an ontological glut probability of $P_B(\phi, w) = 0.6$, with the remaining mass purely classical: $P_T = 0.2, P_F = 0.2, P_N = 0$.
 Let agent $i$ be highly risk-averse with a strict threshold $c_i = 0.9$, and agent $j$ be more permissive with $c_j = 0.6$. For agent $j$, because $0.6 \ge c_j$, their threshold belief operator evaluates $B_j(\phi)$ as an epistemic glut ($B$). However, for agent $i$, the probability falls short of $c_i$, leading $B_i(\phi)$ to evaluate as an epistemic gap ($N$). 
-Because the 4-PEL framework allows seamless nesting of belief operators, agent $i$ can perfectly model agent $j$'s contradictory state. If agent $i$'s local measure places probability $1.0$ on worlds where $B_j(\phi)$ evaluates to $B$, then $B_i(B_j(\phi))$ evaluates to strict truth ($T$), even though $B_i(\phi)$ is an epistemic gap ($N$). This demonstrates how 4-PEL elegantly models rational higher-order disagreement about contradictions, rescuing the topological curvature of the meta-belief hierarchy through relativistic social epistemology.
+Because the 4-PEL framework allows seamless nesting of belief operators, agent $i$ can perfectly model agent $j$'s contradictory state. If agent $i$'s local measure places probability $1.0$ on worlds where $B_j(\phi)$ evaluates to $B$, then $B_i(B_j(\phi))$ evaluates to strict truth ($T$), even though $B_i(\phi)$ is an epistemic gap ($N$). This demonstrates how 4-PEL elegantly models rational higher-order disagreement about contradictions, rescuing the topological curvature of the meta-belief hierarchy through perspectival social epistemology.
 
 \section{Axiomatization and Metatheory}
 \label{sec:metatheorems}
