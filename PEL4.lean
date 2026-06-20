@@ -8,3 +8,18 @@ import PEL4.Soundness
 import PEL4.ExFalso
 import PEL4.CPEL
 import PEL4.Translation
+
+import PEL4.Dynamics
+import PEL4.Paradoxes.Liar
+
+import PEL4.Conservation
+
+import PEL4.Paradoxes.ConservationTest
+
+import PEL4.Paradoxes.Lottery
+
+import PEL4.Paradoxes.Moore
+
+import PEL4.Godel
+
+import PEL4.Paradoxes.Cartography

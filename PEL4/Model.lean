@@ -20,16 +20,16 @@ structure Model (W Ag Atom : Type) [DecidableEq W] where
   mu : Ag → W → ProbMeasure W
   /-- The valuation function assigning 4-values to atomic propositions at worlds -/
   val : W → Atom → FDEValue
-  /-- The global Lockean threshold for belief -/
-  c : Rat
+  /-- The global Lockean threshold for belief for each agent -/
+  c : Ag → Rat
   
   /-- Axiom: Total probability of the accessible worlds is 1. -/
   mu_total : ∀ (i : Ag) (w : W), mu i w (R i w) = 1
   /-- Axiom: Probability of empty set is 0. -/
   mu_empty : ∀ (i : Ag) (w : W), mu i w [] = 0
   /-- Axiom: Lockean threshold is strictly greater than 1/2. -/
-  c_gt_half : c > 1/2
+  c_gt_half : ∀ i, c i > 1/2
   /-- Axiom: Lockean threshold is at most 1. -/
-  c_le_one : c ≤ 1
+  c_le_one : ∀ i, c i ≤ 1
 
 end PEL4

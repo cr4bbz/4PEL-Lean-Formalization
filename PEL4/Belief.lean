@@ -21,7 +21,7 @@ def belief {W Ag Atom : Type} [DecidableEq W] (m : Model W Ag Atom) (i : Ag) (w 
   let prob_pos := m.mu i w pos_worlds
   let prob_neg := m.mu i w neg_worlds
   
-  -- Return the 4-value evaluated against the global threshold m.c
-  { pos := prob_pos ≥ m.c, neg := prob_neg ≥ m.c }
+  -- Return the 4-value evaluated against the global threshold m.c i
+  { pos := prob_pos ≥ m.c i, neg := prob_neg ≥ m.c i }
 
 end PEL4
