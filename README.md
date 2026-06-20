@@ -5,7 +5,11 @@ This repository contains the **Lean 4 formalization** of the 4-Valued Probabilis
 > [!WARNING]
 > **Status:** The associated paper is currently an unpublished draft / under peer review. This repository serves as supplementary material for the verification of its formal mathematical claims.
 
-4-PEL elegantly resolves major epistemic paradoxes (such as the Liar, Lottery, Preface, and Moore's paradoxes) by embedding a Lockean threshold belief operator into the 4-valued Belnap-Dunn (First Degree Entailment) semantic space. It provides a mathematical mechanism to paraconsistently isolate contradictions and prevent epistemic explosion (*ex falso quodlibet*).
+4-PEL elegantly models and classifies classical epistemic paradoxes (such as the Liar, Lottery, Preface, Moore's Paradox, and Gödel-inspired epistemic fixed points) by embedding a Lockean threshold belief operator into the 4-valued Belnap-Dunn (First Degree Entailment) semantic space. It provides a mathematical mechanism to paraconsistently isolate contradictions and prevent epistemic explosion (*ex falso quodlibet*).
+
+---
+
+**Note:** The final draft of the paper is available in this repository as `4NPEL_Paper.pdf`.
 
 ---
 
@@ -17,7 +21,7 @@ This repository provides the **machine-checked mathematical backbone** of the 4-
 1. **Belnap-Dunn Logic:** The foundational 4-valued logic consisting of True ($T$), False ($F$), Epistemic Gluts ($B$), and Epistemic Gaps ($N$), along with non-bivalent validity standards (ST and LP).
 2. **The 4-PEL Kripke Model:** A rigorous finite-state model featuring accessibility relations and local probability measures ($\mu_{i,w}$).
 3. **The Lockean Belief Operator:** A dynamic threshold operator $B_i(\phi)$ that maps probabilities over possible worlds back into the 4-valued FDE algebra.
-4. **The Glut Boundary Theorem:** A formal, computationally verified proof of the paper's central theorem: If an agent rationally believes a contradiction, the objective probability of an ontological glut ($P_B$) is mathematically bounded by $P_B \ge 2c - 1$.
+4. **The Glut Boundary Theorem:** A formal, computationally verified proof of the paper's central theorem: If an agent rationally believes a contradiction, the objective probability of an ontological glut ($P_B$) is mathematically bounded by $P_B \ge 2c_i - 1$.
 
 Reviewers can browse the source files directly on GitHub to examine the axioms and definitions without needing to install Lean locally.
 
@@ -32,6 +36,7 @@ Welcome! This project demonstrates how to elegantly formalize a novel epistemic 
 - `PEL4/Model.lean`: Defines the Kripke structures and finite probability measures.
 - `PEL4/Belief.lean`: Implements the threshold probability operator.
 - `PEL4/Theorems.lean`: The core mathematical proofs.
+- `PEL4/Paradoxes/`: Lean verification of specific paradoxes (Liar, Lottery, Preface, Moore).
 
 ### A Note on `Mathlib` and Performance
 To keep this project extremely fast to compile and entirely dependency-free, I intentionally chose **not** to import the massive `Mathlib` library (which would be required for continuous measure theory and Rational `linarith` tactics). 
