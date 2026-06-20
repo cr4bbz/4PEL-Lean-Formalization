@@ -276,9 +276,9 @@ Only a 4-valued (or greater) overlap semantics natively defines a state ($B$) th
 
 By embedding non-bivalent validity standards into this probabilistic framework, I can actively model and classify epistemic paradoxes rather than merely halting at contradictions, while safely blocking explosive consequences. The Lean 4 formalization explicitly organizes these paradoxes into a structural taxonomy based on their Kripke attractors:
 \begin{itemize}
-    \item \textbf{Class I (Self-Reference):} Paradoxes like the Liar and the G\"odel-inspired fixed points forcefully absorb the system into a stable \textbf{Epistemic Glut} ($B$).
-    \item \textbf{Class II (Aggregation):} Paradoxes like the Lottery and Preface organically degrade beliefs, collapsing them into \textbf{Strict Falsity} ($F$) or Gaps.
-    \item \textbf{Class III (Introspection):} Paradoxes like Moore's sentences fail self-reflection, collapsing deterministically into an \textbf{Epistemic Gap} ($N$).
+    \item \textbf{Class I (Self-Reference):} Paradoxes like the Liar and the G\"odel-inspired fixed points are represented as stable \textbf{Epistemic Gluts} ($B$).
+    \item \textbf{Class II (Aggregation):} Paradoxes like the Lottery and Preface fall below threshold under aggregation, evaluating them as \textbf{Strict Falsity} ($F$) or Gaps.
+    \item \textbf{Class III (Introspection):} Paradoxes like Moore's sentences fail self-reflection, and evaluate as \textbf{Epistemic Gaps} ($N$) under the specified model.
 \end{itemize}
 
 Table \ref{tab:paradox_resolution} summarizes the mapping of classical failures to 4-PEL classifications. The following subsections formalize these case studies, supported by Lean 4 formalizations of the core semantic and probabilistic constraints.
@@ -312,7 +312,7 @@ Applying the conditionalization rule (Definition 4.1):
 \begin{equation*}
 \mu_{i,w}^*(\{w'\}) = \frac{\mu_{i,w}(\{w'\} \cap \mathcal{E}^+(E) \cap R_i(w))}{\mu_{i,w}(\mathcal{E}^+(E) \cap R_i(w))}
 \end{equation*}
-Since the intersection of $\{w'_{T, F, N}\}$ with $\mathcal{E}^+(E)$ is empty, their numerator is $0$. The agent's probability mass is entirely stripped from $T, F,$ and $N$. Since $P_B > 0$, the denominator consists solely of $P_B$, ensuring it is well-defined. Because probability mass over $A$ is conditionally restricted to the positive extension of $E$, all weight assigned to $N$ and $F$ vanishes. The sole remaining mass strictly belongs to $B$. Thus, $P_B^*(p, w) = 1$ becomes the unique stable state after conditionalization.
+Since the intersection of $\{w'_{T, F, N}\}$ with $\mathcal{E}^+(E)$ is empty, their numerator is $0$. The agent's probability mass is entirely stripped from $T, F,$ and $N$. Since $P_B > 0$, the denominator consists solely of $P_B$, ensuring it is well-defined. Because probability mass over $A$ is conditionally restricted to the positive extension of $E$, all weight assigned to $N$ and $F$ vanishes. The sole remaining mass strictly belongs to $B$. Under this update rule, any prior with $P_B > 0$ conditionalizes onto the glut state.
 Consequently, the threshold belief operator evaluates the premise $B_i(p)$ as an epistemic glut ($B$). Evaluating the inference $B_i(p) \implies B_i(\neg p)$ under the Strict-to-Tolerant (ST) validity standard reveals that the inference is vacuously \textit{valid} (since the premise is not strictly true), preventing explosion.
 \end{proof}
 
@@ -324,7 +324,7 @@ Let $G$ be an epistemic fixed point defined structurally such that $G \leftright
 In classical bivalent frameworks, a sentence asserting its own unprovability (analogous to G\"odel's First Incompleteness Theorem) creates a gap: neither provable nor disprovable within the system. In this epistemic analogue, let $B_i$ denote strict provability/belief ($c_i = 1$), and let $G$ be the fixed point $G \leftrightarrow \neg B_i(G)$.
 If we evaluate $G$ as a strictly bivalent proposition, we arrive at a gap. However, in 4-PEL, the system can absorb the fixed point as a glut. 
 I computationally verified this via Lean 4: By assigning the Ontological Glut state ($B$) to $G$ with probability 1, the positive and negative mass are both $1 \ge c_i$. Therefore, $B_i(G)$ evaluates to $B$. The negation of a glut is a glut, so $\neg B_i(G)$ evaluates to $B$. The fixed point equation holds: $v(G) = v(\neg B_i(G)) = B$. 
-While this is not a formal treatment of arithmetic incompleteness, it provides a powerful case study: a probabilistically resilient agent does not necessarily ``halt'' at self-referential unprovability; instead, it can synthesize the unprovable self-referential truth into a state of \textit{Overcompleteness} (an Epistemic Glut), actively holding a contradictory but mathematically stable belief.
+While this is not a formal treatment of arithmetic incompleteness, it provides a powerful case study: the example shows that a self-referential epistemic fixed point can be modeled as a stable glut rather than as a gap. A probabilistically resilient agent does not necessarily ``halt'' at self-referential unprovability; instead, it actively holds a contradictory but mathematically stable belief.
 \end{proof}
 
 \subsection{The Lottery Paradox and Deductive Closure}
@@ -412,6 +412,8 @@ MP-ST & from strict $\varphi$ and strict $\varphi \to \psi$, infer tolerant $\ps
 \end{tabular}
 \end{table}
 
+Representative axiom schemata governing this calculus include strict double negation ($\vdash_S \neg\neg\phi \leftrightarrow \phi$), De Morgan laws for conjunction and disjunction, and belief-distribution axioms tracking positive and negative support. Strict derivability ($\vdash_S$) operates as the generative engine for tautologies, while tolerant derivability ($\vdash_T$) acts as the absorbing boundary for conclusions. A strict premise guarantees a tolerant conclusion via ST Modus Ponens, but a tolerant premise does not propel further strict inferences, structurally neutralizing explosive derivations without stripping the logic of classical deductive power in consistent states.
+
 \begin{theorem}[Soundness of 4-PEL]
 If $\vdash_{ST} \phi$, then $\models_{ST} \phi$. Any formula provable within the Hilbert-style calculus of 4-PEL is valid under ST semantics.
 \end{theorem}
@@ -423,7 +425,7 @@ The proof proceeds by structural induction on the length of the derivation. Each
 Proving strong completeness from scratch for a logic combining probability, non-bivalent evaluations, and threshold modal operators is notoriously complex. However, the static fragment of 4-PEL admits a reduction route to classical Probabilistic Epistemic Logic (PEL) defined by Fagin, Halpern, and Megiddo (1990) \cite{fagin1990}.
 
 \begin{proposition}[Reduction of the Static Fragment]
-This provides a route to completeness by reduction to classical PEL, assuming a fully compositional translation for all modal and probabilistic formulas, including nested $B_i$ operators and agent-indexed thresholds.
+This establishes a conditional route to decidability and strong completeness for the static fragment, pending a fully explicit compositional proof of the translation.
 \end{proposition}
 \begin{proof}[Proof Sketch]
 For any atomic proposition $p \in \Phi$, we introduce two strictly classical (bivalent) atomic propositions: $p^+$ (representing positive support) and $p^-$ (representing negative support). The 4-valued space $W$ is mathematically isomorphic to a classical probability space constructed over the powerset of $\{p^+, p^- : p \in \Phi\}$. 
@@ -492,7 +494,7 @@ By strictly separating the verifiable mathematical architecture from its interpr
 
 This paper introduces the 4-Valued Probabilistic Epistemic Logic (4-PEL), a framework that unifies the quantitative nuance of Probabilistic Epistemic Logic with the qualitative resilience of Belnap-Dunn 4-valued semantics. By formally charting the ``Cartography of Paradoxes,'' I demonstrated mathematically and computationally (via Lean 4) that subjective epistemic contradictions are safely bounded by objective ontological gluts ($P_B \ge 2c - 1$). The formal verification extends beyond specific models to general theorems, proving that Strict-to-Tolerant (ST) validity preserves classical truth in consistent states, while Tolerant-to-Tolerant (LP) validity blocks epistemic explosion (ex falso quodlibet).
 
-Furthermore, by applying these non-bivalent validities to probabilistic belief operators, 4-PEL provides a robust mechanism to evaluate and defuse five classical epistemic paradoxes, alongside the structural threat of epistemic explosion. The framework also demonstrates multi-agent rational disagreement. The seamless transition of classical contradictions into rational epistemic gaps or bounded gluts showcases the framework's expressive power. 
+Furthermore, by applying these non-bivalent validities to probabilistic belief operators, 4-PEL provides a robust mechanism to model and classify five paradoxical case studies, while blocking explosive consequences in the relevant paraconsistent settings. The framework also demonstrates multi-agent rational disagreement. The seamless transition of classical contradictions into rational epistemic gaps or bounded gluts showcases the framework's expressive power. 
 
 \section{Future Work}
 \label{sec:futurework}
