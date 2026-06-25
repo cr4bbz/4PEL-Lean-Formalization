@@ -1,0 +1,5 @@
+import Fallstudien.LiarParadox
+import Fallstudien.LotteryParadox
+import Fallstudien.MooreParadox
+import Fallstudien.ExFalso
+import Fallstudien.PrefaceParadox
