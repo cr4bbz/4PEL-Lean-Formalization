@@ -2,39 +2,65 @@ import PEL4.Syntax
 
 namespace PEL4
 
-/-- LP-Validity semantic entailment (Logic of Paradox):
-    If `phi` is tolerantly true (i.e. pos = true), `psi` must be tolerantly true.
-    Note: ST-entailment allows strict premises, but LP-entailment is robust
-    and prevents chaining issues like Modus Ponens failure.
+/-- ST-Validity semantic entailment (Strict-Tolerant):
+    If `phi` is strictly true (pos = true, neg = false), `psi` must be tolerantly true (pos = true).
+-/
+def ST_SemanticEntails {Atom Ag : Type} (phi psi : Formula Atom Ag) : Prop :=
+  ∀ {W : Type} [DecidableEq W] (m : Model W Ag Atom) (w : W),
+    (eval m w phi) = { pos := true, neg := false } → (eval m w psi).pos = true
+
+/-- LP-Validity semantic entailment (Tolerant-Tolerant):
+    If `phi` is tolerantly true (pos = true), `psi` must be tolerantly true.
 -/
 def LP_SemanticEntails {Atom Ag : Type} (phi psi : Formula Atom Ag) : Prop :=
   ∀ {W : Type} [DecidableEq W] (m : Model W Ag Atom) (w : W),
     (eval m w phi).pos = true → (eval m w psi).pos = true
 
 /-- The Soundness Theorem:
-    If `phi` ST-entails `psi` in our safe Hilbert calculus, then it is semantically LP-valid. -/
+    If `phi` ST-entails `psi` in our calculus, then it is semantically ST-valid. -/
 theorem soundness {Atom Ag : Type} (phi psi : Formula Atom Ag) (d : ST_Entails phi psi) : 
-  LP_SemanticEntails phi psi := by
-  intro W _ m w h_pos
-  induction d with
-  | id phi => exact h_pos
-  | double_neg_elim phi =>
-    exact h_pos
-  | double_neg_intro phi =>
-    exact h_pos
-  | and_elim_l phi psi =>
-    have h : ((eval m w phi).pos && (eval m w psi).pos) = true := h_pos
-    exact (Bool.and_eq_true _ _).mp h |>.1
-  | and_elim_r phi psi =>
-    have h : ((eval m w phi).pos && (eval m w psi).pos) = true := h_pos
-    exact (Bool.and_eq_true _ _).mp h |>.2
-  | or_intro_l phi psi =>
+  ST_SemanticEntails phi psi := by
+  induction d
+  case id phi => 
+    intro W _ m w h_strict
+    exact congrArg FDEValue.pos h_strict
+  case double_neg_elim phi =>
+    intro W _ m w h_strict
+    exact congrArg FDEValue.pos h_strict
+  case double_neg_intro phi =>
+    intro W _ m w h_strict
+    exact congrArg FDEValue.pos h_strict
+  case and_elim_l phi psi =>
+    intro W _ m w h_strict
+    have h1 : ((eval m w phi).pos && (eval m w psi).pos) = true := congrArg FDEValue.pos h_strict
+    simp at h1
+    exact h1.1
+  case and_elim_r phi psi =>
+    intro W _ m w h_strict
+    have h1 : ((eval m w phi).pos && (eval m w psi).pos) = true := congrArg FDEValue.pos h_strict
+    simp at h1
+    exact h1.2
+  case or_intro_l phi psi =>
+    intro W _ m w h_strict
+    have h_pos : (eval m w phi).pos = true := congrArg FDEValue.pos h_strict
     simp [Formula.or, eval, FDEValue.not, FDEValue.and, h_pos]
-  | or_intro_r phi psi =>
+  case or_intro_r phi psi =>
+    intro W _ m w h_strict
+    have h_pos : (eval m w psi).pos = true := congrArg FDEValue.pos h_strict
     simp [Formula.or, eval, FDEValue.not, FDEValue.and, h_pos]
-  | de_morgan phi psi =>
-    -- eval(not (and phi psi)).pos is definitionally phi.neg || psi.neg
-    -- eval(or (not phi) (not psi)).pos is also definitionally phi.neg || psi.neg
-    exact h_pos
+  case de_morgan phi psi =>
+    intro W _ m w h_strict
+    exact congrArg FDEValue.pos h_strict
+  case mp phi psi =>
+    intro W _ m w h_strict
+    have h1 : ((eval m w phi).pos && (eval m w (Formula.implies phi psi)).pos) = true := congrArg FDEValue.pos h_strict
+    have h2 : ((eval m w phi).neg || (eval m w (Formula.implies phi psi)).neg) = false := congrArg FDEValue.neg h_strict
+    simp at h1
+    simp at h2
+    have h1_neg : (eval m w phi).neg = false := h2.1
+    have h2_pos : (eval m w (Formula.implies phi psi)).pos = true := h1.2
+    have h3 : (eval m w (Formula.implies phi psi)).pos = ((eval m w phi).neg || (eval m w psi).pos) := rfl
+    rw [h3, h1_neg] at h2_pos
+    exact h2_pos
 
 end PEL4

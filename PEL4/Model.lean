@@ -4,7 +4,7 @@ namespace PEL4
 
 /-- A simple representation of finite sets as Lists without duplicates.
     For this prototype, we just use List and ensure no duplicates externally. -/
-def FiniteSet (α : Type) := List α
+abbrev FiniteSet (α : Type) := List α
 
 /-- Probability measure represented using Rational numbers. 
     It evaluates the probability of a subset of worlds. -/

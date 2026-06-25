@@ -34,5 +34,6 @@ inductive ST_Entails {Atom Ag : Type} : Formula Atom Ag → Formula Atom Ag → 
   | or_intro_l : ∀ (phi psi : Formula Atom Ag), ST_Entails phi (Formula.or phi psi)
   | or_intro_r : ∀ (phi psi : Formula Atom Ag), ST_Entails psi (Formula.or phi psi)
   | de_morgan  : ∀ (phi psi : Formula Atom Ag), ST_Entails (Formula.not (Formula.and phi psi)) (Formula.or (Formula.not phi) (Formula.not psi))
+  | mp : ∀ (phi psi : Formula Atom Ag), ST_Entails (Formula.and phi (Formula.implies phi psi)) psi
 
 end PEL4

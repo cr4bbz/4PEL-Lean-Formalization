@@ -4,11 +4,12 @@ import PEL4.Belief
 namespace PEL4
 
 /-- 
-  The Glut Boundary Theorem (Theorem 5.1).
+  The Conflict-Mass Boundary Theorem.
   Since core Lean 4 without Mathlib lacks `linarith` for Rationals,
   we prove this purely algebraically over Integers (representing scaled probabilities, e.g., permille).
-  If an agent strictly believes a contradiction (an epistemic glut),
-  then the objective probability of the ontological glut (P_B) must be greater than or equal to 2c - 1.
+  If an agent strictly believes both sides of a proposition (an epistemic glut),
+  then the local evidential-overlap mass (P_B in the scaled encoding) must be
+  greater than or equal to 2c - 1.
 -/
 theorem glut_boundary_theorem 
   (c : Int)
