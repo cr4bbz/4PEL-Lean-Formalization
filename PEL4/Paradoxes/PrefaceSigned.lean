@@ -53,6 +53,7 @@ theorem glut_overlap_bound (s : SignedMassCell) (h : s.IsB) :
     2 * s.k ≤ s.m + s.b := by
   rcases h with ⟨hpos, hneg⟩
   simp [positive, negative] at hpos hneg
+  have htotal := s.total
   omega
 
 /-- At a strict-majority threshold, a belief glut requires genuinely positive
@@ -190,12 +191,14 @@ def signedLocalAcceptance := Formula.and sbp1 (Formula.and sbp2 sbp3)
 /-- The joint B control cell for `SignedBModel`: T=2, B=1, N=0, F=2,
 threshold 3/5.  The overlap bound is tight: `b = 2k-m = 1`. -/
 def signedBJointCell : SignedMassCell :=
-  { t := 2, b := 1, n := 0, f := 2, m := 5, k := 3, total := by omega }
+  { t := 2, b := 1, n := 0, f := 2, m := 5, k := 3, total := by decide }
 
 example : signedBJointCell.IsB := by
   constructor <;> decide
 
-example : 0 < signedBJointCell.b :=
-  SignedMassCell.strict_majority_glut_requires_overlap signedBJointCell (by decide) (by decide)
+example : 0 < signedBJointCell.b := by
+  apply SignedMassCell.strict_majority_glut_requires_overlap signedBJointCell
+  · decide
+  · constructor <;> decide
 
 end PEL4.Paradoxes
