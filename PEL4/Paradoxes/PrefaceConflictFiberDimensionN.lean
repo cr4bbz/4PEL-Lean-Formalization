@@ -128,15 +128,19 @@ theorem carrier_marginal_constraint_independence
     have hsingleC : a0 + c = 0 := hsingle c hc
     omega
 
-/-- Number of independent affine constraints after fixing carrier plus all
-`n` local marginals. -/
+/-- Number of carrier-plus-marginal affine equations.  The theorem above
+certifies that all `n+1` are independent for `n >= 2`; at arity one the carrier
+and sole marginal equation coincide. -/
 def fixedMarginalConstraintCount (n : Nat) : Nat := n + 1
 
-/-- Generic affine degrees of freedom of a fixed-carrier/fixed-marginal fiber. -/
+/-- Raw affine parameter count obtained by subtracting the carrier-plus-marginal
+equation count from the nonempty incidence-coordinate count.  Its geometric
+interpretation as the generic fiber dimension is justified for `n >= 2` by the
+independence certificate above. -/
 def fixedMarginalFiberFreedom (n : Nat) : Nat :=
   (powTwo n - 1) - fixedMarginalConstraintCount n
 
-/-- Exact parameter-count formula:
+/-- Exact arithmetic parameter-count formula:
 
   (2^n - 1) - (n + 1) = 2^n - n - 2.
 
@@ -145,6 +149,13 @@ theorem fixedMarginalFiberFreedom_formula (n : Nat) :
     fixedMarginalFiberFreedom n = powTwo n - n - 2 := by
   simp [fixedMarginalFiberFreedom, fixedMarginalConstraintCount]
   omega
+
+/-- For `n >= 2`, the independent-constraint certificate promotes the raw
+parameter count to the generic affine fixed-marginal fiber dimension count. -/
+theorem generic_fixedMarginalFiber_dimension_count
+    (n : Nat) (_hn : 2 ≤ n) :
+    fixedMarginalFiberFreedom n = powTwo n - n - 2 :=
+  fixedMarginalFiberFreedom_formula n
 
 /-- Sanity checks matching the already-formalized three-claim tetrahedral
 fiber and the first higher-arity cases. -/
@@ -159,7 +170,7 @@ example : fixedMarginalFiberFreedom 5 = 25 := by decide
 The visible first-order description grows only linearly with arity (`n`
 marginals plus one carrier coordinate), while the exact conflict incidence
 structure grows exponentially (`2^n - 1` coordinates).  Their difference
-therefore grows as `2^n - n - 2`.
+therefore grows as `2^n - n - 2` for the generic `n >= 2` fiber.
 
 This quantifies the hidden-interaction reservoir behind marginal
 underdetermination: as the number of jointly considered claims increases,
