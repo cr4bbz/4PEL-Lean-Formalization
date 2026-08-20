@@ -69,6 +69,7 @@ theorem redundancy_incidence_decomposition (s : ConflictIncidence3) :
     s.totalLocal =
       s.d + s.x12 + s.x13 + s.x23 + 2 * s.x123 := by
   have hmult := totalLocal_incidence_identity s
+  have htotal := s.total
   omega
 
 /-- Because every carrier pattern is nonempty, carrier mass is bounded by total
@@ -80,14 +81,17 @@ theorem carrier_le_totalLocal (s : ConflictIncidence3) :
 
 /-- Each local marginal is contained in the carrier. -/
 theorem b1_le_carrier (s : ConflictIncidence3) : s.b1 ≤ s.d := by
+  have htotal := s.total
   simp [b1]
   omega
 
 theorem b2_le_carrier (s : ConflictIncidence3) : s.b2 ≤ s.d := by
+  have htotal := s.total
   simp [b2]
   omega
 
 theorem b3_le_carrier (s : ConflictIncidence3) : s.b3 ≤ s.d := by
+  have htotal := s.total
   simp [b3]
   omega
 
@@ -98,11 +102,11 @@ def toTopologyN (s : ConflictIncidence3) : ConflictTopologyN :=
   { d := s.d
   , local := [s.b1, s.b2, s.b3]
   , union_le_sum := by
+      have htotal := s.total
       simp [b1, b2, b3]
       omega
   , local_le_carrier := by
-      simp [AllLE]
-      exact ⟨b1_le_carrier s, b2_le_carrier s, b3_le_carrier s⟩ }
+      simp [AllLE, b1_le_carrier s, b2_le_carrier s, b3_le_carrier s] }
 
 /-- The full incidence simplex projects into the same raw triangle chain
 `d <= S <= 3p <= 3d`. -/
@@ -145,6 +149,7 @@ theorem no_redundancy_iff_singleton_face (s : ConflictIncidence3) :
 carrier, then no positive-mass incidence pattern can omit proposition 1. -/
 theorem b1_full_carrier_iff_no_pattern_without_1 (s : ConflictIncidence3) :
     s.b1 = s.d ↔ s.x2 = 0 ∧ s.x3 = 0 ∧ s.x23 = 0 := by
+  have htotal := s.total
   constructor
   · intro h
     simp [b1] at h
@@ -162,6 +167,7 @@ theorem maximal_redundancy_forces_triple_vertex
       s.x1 = 0 ∧ s.x2 = 0 ∧ s.x3 = 0 ∧
       s.x12 = 0 ∧ s.x13 = 0 ∧ s.x23 = 0 := by
   have hdec := redundancy_incidence_decomposition s
+  have htotal := s.total
   omega
 
 /-!
