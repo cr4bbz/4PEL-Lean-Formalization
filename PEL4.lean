@@ -35,6 +35,7 @@ import PEL4.Paradoxes.PrefaceLatentConflictN
 import PEL4.Paradoxes.PrefaceSharpness
 import PEL4.Paradoxes.PrefaceConflictTopologyN
 import PEL4.Paradoxes.PrefaceConflictIncidence3
+import PEL4.Paradoxes.PrefaceConflictIncidenceN
 
 import PEL4.Paradoxes.Moore
 
