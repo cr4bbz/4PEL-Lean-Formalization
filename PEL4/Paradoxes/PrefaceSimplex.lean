@@ -45,6 +45,8 @@ theorem preface_simplex3_threshold_necessary
     (h : s.InRegion) :
     4 * s.k ≤ 3 * s.m := by
   rcases h with ⟨ha, he1, he2, he3⟩
+  have htotal := s.total
+  have hsub : s.m - s.k + s.k = s.m := Nat.sub_add_cancel hk
   omega
 
 /--
@@ -63,13 +65,9 @@ theorem preface_simplex3_above_three_quarters_empty
 
 /-- The symmetric control point `(1,1,1,1)` at threshold `3/4` lies on the boundary. -/
 def symmetricSimplex3 : PrefaceSimplex3 :=
-  { a := 1, e1 := 1, e2 := 1, e3 := 1, m := 4, k := 3, total := by omega }
+  { a := 1, e1 := 1, e2 := 1, e3 := 1, m := 4, k := 3, total := by decide }
 
 example : symmetricSimplex3.InRegion := by
-  constructor
-  · omega
-  constructor
-  · omega
-  constructor <;> omega
+  decide
 
 end PEL4.Paradoxes
