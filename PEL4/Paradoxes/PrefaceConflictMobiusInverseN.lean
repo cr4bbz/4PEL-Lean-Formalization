@@ -161,11 +161,13 @@ theorem mobius_reconstructs_exact_pattern {n : Nat}
     rw [hcell, ih]
     by_cases heq : c.pattern = target
     · have heq' : target = c.pattern := heq.symm
-      simp [heq, heq']
+      rw [if_pos heq', if_pos heq]
+      omega
     · have hne : target ≠ c.pattern := by
         intro h
         exact heq h.symm
-      simp [heq, hne]
+      rw [if_neg hne, if_neg heq]
+      omega
 
 namespace ConflictIncidenceN
 
