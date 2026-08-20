@@ -175,7 +175,7 @@ theorem local_carrier_indicator_le_glut_sum (w : SignedPrefaceTriple) :
   cases h3 : SignedPrefaceTriple.p3Glut w <;>
   simp [SignedPrefaceTriple.localCarrier, someLocalGlut3,
     SignedPrefaceTriple.p1Glut, SignedPrefaceTriple.p2Glut,
-    SignedPrefaceTriple.p3Glut] at h1 h2 h3 ⊢
+    SignedPrefaceTriple.p3Glut, h1, h2, h3]
 
 /-- The union mass of local conflict carriers is bounded by the sum of the
 individual local glut masses. -/
