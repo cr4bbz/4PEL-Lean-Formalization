@@ -37,6 +37,14 @@ def IsF (s : SignedMassCell) : Prop := s.positive < s.k ∧ s.k ≤ s.negative
 def IsB (s : SignedMassCell) : Prop := s.k ≤ s.positive ∧ s.k ≤ s.negative
 def IsN (s : SignedMassCell) : Prop := s.positive < s.k ∧ s.negative < s.k
 
+/-- Every signed threshold profile falls into at least one of the four 4-PEL
+states.  Since the defining inequalities are complementary, these are the four
+exhaustive threshold regions in the positive/negative evidence plane. -/
+theorem threshold_exhaustive (s : SignedMassCell) :
+    s.IsT ∨ s.IsF ∨ s.IsB ∨ s.IsN := by
+  unfold IsT IsF IsB IsN positive negative
+  omega
+
 /--
 Any threshold glut forces overlap mass.  This is the arbitrary-denominator
 counterpart of the repository's `glut_boundary_theorem`.
