@@ -38,17 +38,30 @@ theorem patternContains_trans :
     ∀ a b c : List Bool,
       patternContains a b = true →
       patternContains b c = true →
-      patternContains a c = true
-| [], [], [] => by simp [patternContains]
-| a :: as, b :: bs, c :: cs => by
-    intro hab hbc
-    simp [patternContains] at hab hbc ⊢
-    rcases hab with ⟨hab0, habTail⟩
-    rcases hbc with ⟨hbc0, hbcTail⟩
-    constructor
-    · cases a <;> cases b <;> cases c <;> simp_all
-    · exact patternContains_trans as bs cs habTail hbcTail
-| _, _, _ => by simp [patternContains]
+      patternContains a c = true := by
+  intro a
+  induction a with
+  | nil =>
+      intro b c
+      cases b with
+      | nil =>
+          cases c <;> simp [patternContains]
+      | cons b bs =>
+          cases c <;> simp [patternContains]
+  | cons a as ih =>
+      intro b c
+      cases b with
+      | nil =>
+          cases c <;> simp [patternContains]
+      | cons b bs =>
+          cases c with
+          | nil => simp [patternContains]
+          | cons c cs =>
+              intro hab hbc
+              simp [patternContains] at hab hbc ⊢
+              constructor
+              · cases a <;> cases b <;> cases c <;> simp_all
+              · exact ih bs cs hab.2 hbc.2
 
 /-- Cumulative co-conflict mass for one query pattern. -/
 def coConflictMass {n : Nat}
@@ -133,8 +146,8 @@ theorem ConflictIncidenceN.coConflict_antitone {n : Nat}
 ## Fixed-arity query constructors
 
 The constructors below let us name first- and higher-order conflict coordinates
-without introducing Finset/Mathlib machinery.  `unitQuery n i` marks coordinate
-`i` when it is in range; `orQuery` forms unions of requirements.
+without introducing Finset/Mathlib machinery.  `orQuery` forms unions of
+requirements.
 -/
 
 /-- Boolean union of equal-length query patterns. -/
@@ -147,25 +160,43 @@ def orQuery : List Bool → List Bool → List Bool
 theorem patternContains_left_orQuery :
     ∀ a b : List Bool,
       a.length = b.length →
-      patternContains a (orQuery a b) = true
-| [], [], _ => by simp [patternContains, orQuery]
-| a :: as, b :: bs, hlen => by
-    simp at hlen
-    have ih := patternContains_left_orQuery as bs hlen
-    cases a <;> cases b <;> simp [patternContains, orQuery, ih]
-| _, _, h => by simp at h
+      patternContains a (orQuery a b) = true := by
+  intro a
+  induction a with
+  | nil =>
+      intro b hlen
+      cases b with
+      | nil => simp [patternContains, orQuery]
+      | cons b bs => simp at hlen
+  | cons a as ih =>
+      intro b hlen
+      cases b with
+      | nil => simp at hlen
+      | cons b bs =>
+          have htail : as.length = bs.length := by simpa using hlen
+          have hrec := ih bs htail
+          cases a <;> cases b <;> simp [patternContains, orQuery, hrec]
 
 /-- Symmetric containment into Boolean query union. -/
 theorem patternContains_right_orQuery :
     ∀ a b : List Bool,
       a.length = b.length →
-      patternContains b (orQuery a b) = true
-| [], [], _ => by simp [patternContains, orQuery]
-| a :: as, b :: bs, hlen => by
-    simp at hlen
-    have ih := patternContains_right_orQuery as bs hlen
-    cases a <;> cases b <;> simp [patternContains, orQuery, ih]
-| _, _, h => by simp at h
+      patternContains b (orQuery a b) = true := by
+  intro a
+  induction a with
+  | nil =>
+      intro b hlen
+      cases b with
+      | nil => simp [patternContains, orQuery]
+      | cons b bs => simp at hlen
+  | cons a as ih =>
+      intro b hlen
+      cases b with
+      | nil => simp at hlen
+      | cons b bs =>
+          have htail : as.length = bs.length := by simpa using hlen
+          have hrec := ih bs htail
+          cases a <;> cases b <;> simp [patternContains, orQuery, hrec]
 
 /-- Adding requirements by Boolean union can only lower co-conflict mass. -/
 theorem ConflictIncidenceN.coConflict_orQuery_le_left {n : Nat}
