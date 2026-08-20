@@ -41,11 +41,15 @@ def sameCoarse3 (s t : ConflictIncidence3) : Prop :=
 
 /-- The pair-balanced cycle profile occupies the same coarse fiber as `fiberA`. -/
 theorem fiberA_cycle_same_coarse : sameCoarse3 fiberA fiberCycle := by
-  decide
+  unfold sameCoarse3
+  simp [fiberA, fiberCycle, symmetricMidFiberFromOverlap,
+    b1, b2, b3, totalLocal, peak]
 
 /-- It also occupies the same coarse fiber as `fiberB`. -/
 theorem fiberCycle_B_same_coarse : sameCoarse3 fiberCycle fiberB := by
-  decide
+  unfold sameCoarse3
+  simp [fiberB, fiberCycle, symmetricMidFiberFromOverlap,
+    b1, b2, b3, totalLocal, peak]
 
 /-- `fiberA` has three vertices but only the `{1,2}` support edge. -/
 theorem fiberA_support_nerve_signature :
@@ -91,6 +95,7 @@ theorem same_coarse_distinct_support_nerve_euler :
     supportNerveEuler3 fiberA = 2 ∧
     supportNerveEuler3 fiberCycle = 0 ∧
     supportNerveEuler3 fiberB = 1 := by
+  refine ⟨fiberA_cycle_same_coarse, fiberCycle_B_same_coarse, ?_⟩
   decide
 
 /-!
