@@ -41,7 +41,7 @@ theorem allLE_mono {a b : Nat} (hab : a ≤ b) :
 | [], _ => by simp [AllLE]
 | x :: xs, h => by
     simp [AllLE] at h ⊢
-    exact ⟨le_trans h.1 hab, allLE_mono hab xs h.2⟩
+    exact ⟨Nat.le_trans h.1 hab, allLE_mono hab xs h.2⟩
 
 /-- Every entry is bounded by the maximum of its list. -/
 theorem allLE_maxNatList :
@@ -61,7 +61,7 @@ theorem maxNatList_le_of_allLE (d : Nat) :
 | x :: xs, h => by
     simp [AllLE] at h
     simp [maxNatList]
-    exact max_le h.1 (maxNatList_le_of_allLE d xs h.2)
+    exact Nat.max_le_of_le_of_le h.1 (maxNatList_le_of_allLE d xs h.2)
 
 /-- Recursive cap budget is ordinary multiplication. -/
 theorem capBudget_eq_mul (n cap : Nat) :
@@ -143,13 +143,13 @@ mass. -/
 theorem carrier_le_n_peak (s : ConflictTopologyN) :
     s.d ≤ s.arity * s.peak := by
   have h := raw_triangle_chain s
-  exact le_trans h.1 h.2.1
+  exact Nat.le_trans h.1 h.2.1
 
 /-- Total redundancy is at most `n` copies of the carrier mass. -/
 theorem total_le_n_carrier (s : ConflictTopologyN) :
     s.totalLocal ≤ s.arity * s.d := by
   have h := raw_triangle_chain s
-  exact le_trans h.2.1 h.2.2
+  exact Nat.le_trans h.2.1 h.2.2
 
 /-- Raw numerator inequality behind `r <= q`:
 
