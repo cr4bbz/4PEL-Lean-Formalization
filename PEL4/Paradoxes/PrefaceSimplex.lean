@@ -68,6 +68,6 @@ def symmetricSimplex3 : PrefaceSimplex3 :=
   { a := 1, e1 := 1, e2 := 1, e3 := 1, m := 4, k := 3, total := by decide }
 
 example : symmetricSimplex3.InRegion := by
-  decide
+  simp [PrefaceSimplex3.InRegion, symmetricSimplex3]
 
 end PEL4.Paradoxes
