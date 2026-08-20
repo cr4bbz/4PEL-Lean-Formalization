@@ -89,7 +89,7 @@ theorem allLE_sum_eq_budget_eq_replicate (cap : Nat) :
     have ih := allLE_sum_eq_budget_eq_replicate cap xs hxs htailEq
     rw [hxEq]
     change cap :: xs = cap :: List.replicate xs.length cap
-    rw [ih]
+    exact congrArg (fun ys => cap :: ys) ih
 
 /-- An n-claim conflict topology represented only by its carrier mass and
 individual local glut masses.  The first inequality is the union bound; the
@@ -173,7 +173,8 @@ theorem minimal_peak_forces_no_redundancy
     (s : ConflictTopologyN)
     (hsat : s.arity * s.peak = s.d) :
     s.totalLocal = s.d := by
-  have hlower := s.union_le_sum
+  have hlower : s.d ≤ s.totalLocal := by
+    simpa [totalLocal] using s.union_le_sum
   have hupper := total_le_n_peak s
   omega
 
