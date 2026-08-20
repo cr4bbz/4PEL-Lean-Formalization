@@ -112,11 +112,11 @@ theorem joint_indicator_bound (w : SignedPrefaceTriple) :
     (if SignedPrefaceTriple.jointPositive w then 1 else 0) +
       (if SignedPrefaceTriple.jointNegative w then 1 else 0) ≤
     1 + (if SignedPrefaceTriple.jointGlut w then 1 else 0) := by
-  cases hpos : SignedPrefaceTriple.jointPositive w <;>
-  cases hneg : SignedPrefaceTriple.jointNegative w <;>
-  simp [hpos, hneg, SignedPrefaceTriple.jointGlut,
-    SignedPrefaceTriple.jointPositive, SignedPrefaceTriple.jointNegative,
-    isGlut]
+  cases hpos : (SignedPrefaceTriple.joint w).pos <;>
+  cases hneg : (SignedPrefaceTriple.joint w).neg <;>
+  simp [SignedPrefaceTriple.jointPositive,
+    SignedPrefaceTriple.jointNegative, SignedPrefaceTriple.jointGlut,
+    isGlut, hpos, hneg]
 
 /-- Finite inclusion-exclusion bound for the conjunction evidence counts. -/
 theorem joint_pos_neg_count_bound (ws : List SignedPrefaceTriple) :
@@ -170,9 +170,9 @@ theorem local_carrier_indicator_le_glut_sum (w : SignedPrefaceTriple) :
       (if SignedPrefaceTriple.p1Glut w then 1 else 0) +
       (if SignedPrefaceTriple.p2Glut w then 1 else 0) +
       (if SignedPrefaceTriple.p3Glut w then 1 else 0) := by
-  cases h1 : SignedPrefaceTriple.p1Glut w <;>
-  cases h2 : SignedPrefaceTriple.p2Glut w <;>
-  cases h3 : SignedPrefaceTriple.p3Glut w <;>
+  cases h1 : isGlut w.p1 <;>
+  cases h2 : isGlut w.p2 <;>
+  cases h3 : isGlut w.p3 <;>
   simp [SignedPrefaceTriple.localCarrier, someLocalGlut3,
     SignedPrefaceTriple.p1Glut, SignedPrefaceTriple.p2Glut,
     SignedPrefaceTriple.p3Glut, h1, h2, h3]
