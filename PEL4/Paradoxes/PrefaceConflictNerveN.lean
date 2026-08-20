@@ -122,6 +122,17 @@ theorem conflictNerveAt_iff_filtration_sublevel {n : Nat}
   simp [conflictNerveFiltration]
   omega
 
+/-- The exact co-conflict mass is recoverable from its filtration value.
+Consequently the full weighted filtration loses no information relative to the
+co-conflict hierarchy. -/
+theorem coConflict_recovered_from_filtration {n : Nat}
+    (s : ConflictIncidenceN n)
+    (query : List Bool) :
+    s.d - s.conflictNerveFiltration query = s.coConflict query := by
+  have hquery := s.coConflict_le_carrier query
+  unfold conflictNerveFiltration
+  omega
+
 /-!
 ## Interpretation
 
@@ -130,6 +141,11 @@ conflicted at all.  The weighted hierarchy remembers how much carrier mass
 supports each simplex.  The filtration `d - J_Q` turns that strength hierarchy
 into the standard increasing filtration convention used in persistent
 homology.
+
+Because `J_Q = d - f(Q)`, the complete weighted filtration is information-
+equivalent to the complete co-conflict hierarchy.  Information is lost only
+when the filtration is thresholded, reduced to support, or compressed further
+to invariants such as Betti numbers or persistence barcodes.
 -/
 
 end ConflictIncidenceN
