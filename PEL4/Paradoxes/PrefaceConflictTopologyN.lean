@@ -71,6 +71,26 @@ theorem capBudget_eq_mul (n cap : Nat) :
   | succ n ih =>
       simp [capBudget, ih, Nat.succ_mul, Nat.add_comm]
 
+/-- Saturating a common coordinate cap forces every entry to equal that cap. -/
+theorem allLE_sum_eq_budget_eq_replicate (cap : Nat) :
+    ∀ xs : List Nat,
+      AllLE cap xs →
+      xs.sum = capBudget xs.length cap →
+      xs = List.replicate xs.length cap
+| [], _, _ => by simp
+| x :: xs, hle, hsum => by
+    simp [AllLE] at hle
+    rcases hle with ⟨hx, hxs⟩
+    have htail_le := sum_le_capBudget hxs
+    have hxEq : x = cap := by
+      simp [capBudget] at hsum
+      omega
+    have htailEq : xs.sum = capBudget xs.length cap := by
+      simp [capBudget] at hsum
+      omega
+    have ih := allLE_sum_eq_budget_eq_replicate cap xs hxs htailEq
+    simp [hxEq, ih]
+
 /-- An n-claim conflict topology represented only by its carrier mass and
 individual local glut masses.  The first inequality is the union bound; the
 second field records that every local glut set lies inside the carrier union. -/
@@ -156,6 +176,28 @@ theorem minimal_peak_forces_no_redundancy
   have hlower := s.union_le_sum
   have hupper := total_le_n_peak s
   omega
+
+/-- Equality on the triangle diagonal `S = n*p` forces every local marginal to
+reach the same peak.  Thus `r = q` means equal conflict loads, not merely a
+numerical coincidence. -/
+theorem diagonal_forces_equal_local_masses
+    (s : ConflictTopologyN)
+    (hdiag : s.totalLocal = s.arity * s.peak) :
+    s.local = List.replicate s.arity s.peak := by
+  have hle := allLE_maxNatList s.local
+  have hbudget : s.local.sum = capBudget s.local.length s.peak := by
+    simpa [totalLocal, arity, peak, capBudget_eq_mul] using hdiag
+  exact allLE_sum_eq_budget_eq_replicate s.peak s.local hle hbudget
+
+/-- Maximum redundancy `S = n*d` forces every local glut marginal to equal the
+entire carrier mass. -/
+theorem maximal_redundancy_forces_full_carrier_marginals
+    (s : ConflictTopologyN)
+    (hfull : s.totalLocal = s.arity * s.d) :
+    s.local = List.replicate s.arity s.d := by
+  have hbudget : s.local.sum = capBudget s.local.length s.d := by
+    simpa [totalLocal, arity, capBudget_eq_mul] using hfull
+  exact allLE_sum_eq_budget_eq_replicate s.d s.local s.local_le_carrier hbudget
 
 /-- Three-claim examples recover the old triangle corners in the generic
 representation. -/
