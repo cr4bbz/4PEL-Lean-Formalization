@@ -38,6 +38,7 @@ import PEL4.Paradoxes.PrefaceConflictIncidence3
 import PEL4.Paradoxes.PrefaceConflictIncidenceN
 import PEL4.Paradoxes.PrefaceConflictFiber3
 import PEL4.Paradoxes.PrefaceConflictMobius3
+import PEL4.Paradoxes.PrefaceConflictMobiusN
 
 import PEL4.Paradoxes.Moore
 
