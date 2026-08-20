@@ -33,6 +33,7 @@ import PEL4.Paradoxes.PrefaceSigned
 import PEL4.Paradoxes.PrefaceLatentConflict
 import PEL4.Paradoxes.PrefaceLatentConflictN
 import PEL4.Paradoxes.PrefaceSharpness
+import PEL4.Paradoxes.PrefaceConflictTopologyN
 
 import PEL4.Paradoxes.Moore
 
