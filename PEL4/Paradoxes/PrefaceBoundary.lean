@@ -41,7 +41,8 @@ theorem symmetric_preface_boundary
   constructor
   · exact hlocal
   constructor
-  · omega
+  · show 1 < k
+    omega
   · exact hlocal
 
 /--
@@ -52,18 +53,21 @@ three-claim control model.
 theorem symmetric_preface_region_nonempty_iff (n : Nat) :
     (∃ k, SymmetricPrefaceRegion n k) ↔ 2 ≤ n := by
   constructor
-  · rintro ⟨k, hmajority, hlocal⟩
+  · rintro ⟨k, ⟨hmajority, hlocal⟩⟩
     omega
   · intro hn
-    refine ⟨n, ?_, le_rfl⟩
-    omega
+    refine ⟨n, ?_⟩
+    show 2 * n > n + 1 ∧ n ≤ n
+    constructor
+    · omega
+    · exact Nat.le_refl n
 
 /-- The three-claim example sits at the upper boundary `k = n = 3`. -/
 example : SymmetricPrefaceRegion 3 3 := by
-  omega
+  decide
 
 /-- A two-claim Preface model already exists at threshold `2/3`. -/
 example : SymmetricPrefaceRegion 2 2 := by
-  omega
+  decide
 
 end PEL4.Paradoxes
