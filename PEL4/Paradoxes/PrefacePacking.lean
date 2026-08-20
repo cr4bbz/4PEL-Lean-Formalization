@@ -1,4 +1,4 @@
-import Std.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 
 namespace PEL4.Paradoxes
 
