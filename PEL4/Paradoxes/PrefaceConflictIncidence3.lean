@@ -100,7 +100,7 @@ marginals.  This is the raw projection from `Delta^6` toward the conflict
 triangle. -/
 def toTopologyN (s : ConflictIncidence3) : ConflictTopologyN :=
   { d := s.d
-  , local := [s.b1, s.b2, s.b3]
+  , masses := [s.b1, s.b2, s.b3]
   , union_le_sum := by
       have htotal := s.total
       simp [b1, b2, b3]
