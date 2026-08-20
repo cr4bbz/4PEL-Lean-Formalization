@@ -58,11 +58,24 @@ theorem totalLocal_incidence_identity (s : ConflictIncidence3) :
   simp [totalLocal, b1, b2, b3]
   omega
 
+/-- Exact redundancy decomposition for three claims.
+
+The excess multiplicity above the carrier mass is one copy of every pair-only
+cell plus two extra copies of the triple cell:
+
+  S = d + x12 + x13 + x23 + 2*x123.
+-/
+theorem redundancy_incidence_decomposition (s : ConflictIncidence3) :
+    s.totalLocal =
+      s.d + s.x12 + s.x13 + s.x23 + 2 * s.x123 := by
+  have hmult := totalLocal_incidence_identity s
+  omega
+
 /-- Because every carrier pattern is nonempty, carrier mass is bounded by total
 local multiplicity. -/
 theorem carrier_le_totalLocal (s : ConflictIncidence3) :
     s.d ≤ s.totalLocal := by
-  have h := totalLocal_incidence_identity s
+  have h := redundancy_incidence_decomposition s
   omega
 
 /-- Each local marginal is contained in the carrier. -/
@@ -109,6 +122,47 @@ def overlapMass (s : ConflictIncidence3) : Nat :=
 /-- Triple-incidence mass, another higher-order coordinate invisible to `(q,r)`
 once carrier, total local mass, and peak are fixed. -/
 def tripleMass (s : ConflictIncidence3) : Nat := s.x123
+
+/-!
+## Triangle boundaries as faces of the incidence simplex
+-/
+
+/-- Bottom edge `r = 0`: exact absence of redundancy is equivalent to all
+pairwise and triple incidence coordinates vanishing.  The incidence profile is
+therefore confined to the singleton face spanned by `{1}`, `{2}`, `{3}`. -/
+theorem no_redundancy_iff_singleton_face (s : ConflictIncidence3) :
+    s.totalLocal = s.d ↔
+      s.x12 = 0 ∧ s.x13 = 0 ∧ s.x23 = 0 ∧ s.x123 = 0 := by
+  constructor
+  · intro h
+    have hdec := redundancy_incidence_decomposition s
+    omega
+  · rintro ⟨h12, h13, h23, h123⟩
+    have hdec := redundancy_incidence_decomposition s
+    omega
+
+/-- Right edge for proposition 1: if its local glut marginal fills the whole
+carrier, then no positive-mass incidence pattern can omit proposition 1. -/
+theorem b1_full_carrier_iff_no_pattern_without_1 (s : ConflictIncidence3) :
+    s.b1 = s.d ↔ s.x2 = 0 ∧ s.x3 = 0 ∧ s.x23 = 0 := by
+  constructor
+  · intro h
+    simp [b1] at h
+    omega
+  · rintro ⟨h2, h3, h23⟩
+    simp [b1]
+    omega
+
+/-- Maximum redundancy `S = 3d` collapses the whole incidence simplex to the
+triple-conflict vertex: every carrier world is glutty in all three conjuncts. -/
+theorem maximal_redundancy_forces_triple_vertex
+    (s : ConflictIncidence3)
+    (hmax : s.totalLocal = 3 * s.d) :
+    s.x123 = s.d ∧
+      s.x1 = 0 ∧ s.x2 = 0 ∧ s.x3 = 0 ∧
+      s.x12 = 0 ∧ s.x13 = 0 ∧ s.x23 = 0 := by
+  have hdec := redundancy_incidence_decomposition s
+  omega
 
 /-!
 ## A nontrivial fiber over one triangle point
