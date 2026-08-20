@@ -97,7 +97,12 @@ theorem symmetricMidFiberFromOverlap_coarse
   have hp := symmetricMidFiberFromOverlap_projection m x12 x13 x23 x123 h
   dsimp at hp ⊢
   rcases hp with ⟨hd, h1, h2, h3⟩
-  simp [totalLocal, peak, h1, h2, h3, hd]
+  constructor
+  · exact hd
+  constructor
+  · simp [totalLocal, h1, h2, h3]
+    omega
+  · simp [peak, h1, h2, h3]
 
 /-- Existing Fiber A is the pair vertex of this tetrahedral family. -/
 example :
