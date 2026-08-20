@@ -31,6 +31,7 @@ import PEL4.Paradoxes.PrefaceSimplex
 import PEL4.Paradoxes.PrefacePacking
 import PEL4.Paradoxes.PrefaceSigned
 import PEL4.Paradoxes.PrefaceLatentConflict
+import PEL4.Paradoxes.PrefaceLatentConflictN
 
 import PEL4.Paradoxes.Moore
 
