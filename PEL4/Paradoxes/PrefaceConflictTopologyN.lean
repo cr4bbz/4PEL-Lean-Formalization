@@ -40,15 +40,16 @@ theorem allLE_mono {a b : Nat} (hab : a ≤ b) :
     ∀ xs : List Nat, AllLE a xs → AllLE b xs
 | [], _ => by simp [AllLE]
 | x :: xs, h => by
-    simp [AllLE] at h ⊢
+    change x ≤ a ∧ AllLE a xs at h
+    change x ≤ b ∧ AllLE b xs
     exact ⟨Nat.le_trans h.1 hab, allLE_mono hab xs h.2⟩
 
 /-- Every entry is bounded by the maximum of its list. -/
 theorem allLE_maxNatList :
     ∀ xs : List Nat, AllLE (maxNatList xs) xs
-| [] => by simp [AllLE, maxNatList]
+| [] => by simp [AllLE]
 | x :: xs => by
-    simp [AllLE, maxNatList]
+    change x ≤ max x (maxNatList xs) ∧ AllLE (max x (maxNatList xs)) xs
     constructor
     · exact Nat.le_max_left _ _
     · exact allLE_mono (Nat.le_max_right x (maxNatList xs)) xs
@@ -59,8 +60,8 @@ theorem maxNatList_le_of_allLE (d : Nat) :
     ∀ xs : List Nat, AllLE d xs → maxNatList xs ≤ d
 | [], _ => by simp [maxNatList]
 | x :: xs, h => by
-    simp [AllLE] at h
-    simp [maxNatList]
+    change x ≤ d ∧ AllLE d xs at h
+    change max x (maxNatList xs) ≤ d
     exact Nat.max_le_of_le_of_le h.1 (maxNatList_le_of_allLE d xs h.2)
 
 /-- Recursive cap budget is ordinary multiplication. -/
@@ -79,48 +80,47 @@ theorem allLE_sum_eq_budget_eq_replicate (cap : Nat) :
       xs = List.replicate xs.length cap
 | [], _, _ => by simp
 | x :: xs, hle, hsum => by
-    simp [AllLE] at hle
+    change x ≤ cap ∧ AllLE cap xs at hle
     rcases hle with ⟨hx, hxs⟩
-    have htail_le := sum_le_capBudget hxs
-    have hxEq : x = cap := by
-      simp [capBudget] at hsum
-      omega
-    have htailEq : xs.sum = capBudget xs.length cap := by
-      simp [capBudget] at hsum
-      omega
+    have htailLe := sum_le_capBudget hxs
+    change x + xs.sum = cap + capBudget xs.length cap at hsum
+    have hxEq : x = cap := by omega
+    have htailEq : xs.sum = capBudget xs.length cap := by omega
     have ih := allLE_sum_eq_budget_eq_replicate cap xs hxs htailEq
-    simp [hxEq, ih]
+    rw [hxEq]
+    change cap :: xs = cap :: List.replicate xs.length cap
+    rw [ih]
 
 /-- An n-claim conflict topology represented only by its carrier mass and
 individual local glut masses.  The first inequality is the union bound; the
 second field records that every local glut set lies inside the carrier union. -/
 structure ConflictTopologyN where
   d : Nat
-  local : List Nat
-  union_le_sum : d ≤ local.sum
-  local_le_carrier : AllLE d local
+  masses : List Nat
+  union_le_sum : d ≤ masses.sum
+  local_le_carrier : AllLE d masses
 
 namespace ConflictTopologyN
 
 /-- Number of conjuncts. -/
-def arity (s : ConflictTopologyN) : Nat := s.local.length
+def arity (s : ConflictTopologyN) : Nat := s.masses.length
 
 /-- Sum of all local glut masses. -/
-def totalLocal (s : ConflictTopologyN) : Nat := s.local.sum
+def totalLocal (s : ConflictTopologyN) : Nat := s.masses.sum
 
 /-- Largest local glut mass. -/
-def peak (s : ConflictTopologyN) : Nat := maxNatList s.local
+def peak (s : ConflictTopologyN) : Nat := maxNatList s.masses
 
 /-- The local masses fit below `n * peak`. -/
 theorem total_le_n_peak (s : ConflictTopologyN) :
     s.totalLocal ≤ s.arity * s.peak := by
-  have h := sum_le_capBudget (allLE_maxNatList s.local)
+  have h := sum_le_capBudget (allLE_maxNatList s.masses)
   simpa [totalLocal, arity, peak, capBudget_eq_mul] using h
 
 /-- No individual local glut mass can exceed the carrier union. -/
 theorem peak_le_carrier (s : ConflictTopologyN) :
     s.peak ≤ s.d := by
-  exact maxNatList_le_of_allLE s.d s.local s.local_le_carrier
+  exact maxNatList_le_of_allLE s.d s.masses s.local_le_carrier
 
 /-- General raw latent-conflict triangle chain.
 
@@ -183,47 +183,50 @@ numerical coincidence. -/
 theorem diagonal_forces_equal_local_masses
     (s : ConflictTopologyN)
     (hdiag : s.totalLocal = s.arity * s.peak) :
-    s.local = List.replicate s.arity s.peak := by
-  have hle := allLE_maxNatList s.local
-  have hbudget : s.local.sum = capBudget s.local.length s.peak := by
+    s.masses = List.replicate s.arity s.peak := by
+  have hle := allLE_maxNatList s.masses
+  have hbudget : s.masses.sum = capBudget s.masses.length s.peak := by
     simpa [totalLocal, arity, peak, capBudget_eq_mul] using hdiag
-  exact allLE_sum_eq_budget_eq_replicate s.peak s.local hle hbudget
+  exact allLE_sum_eq_budget_eq_replicate s.peak s.masses hle hbudget
 
 /-- Maximum redundancy `S = n*d` forces every local glut marginal to equal the
 entire carrier mass. -/
 theorem maximal_redundancy_forces_full_carrier_marginals
     (s : ConflictTopologyN)
     (hfull : s.totalLocal = s.arity * s.d) :
-    s.local = List.replicate s.arity s.d := by
-  have hbudget : s.local.sum = capBudget s.local.length s.d := by
+    s.masses = List.replicate s.arity s.d := by
+  have hbudget : s.masses.sum = capBudget s.masses.length s.d := by
     simpa [totalLocal, arity, capBudget_eq_mul] using hfull
-  exact allLE_sum_eq_budget_eq_replicate s.d s.local s.local_le_carrier hbudget
+  exact allLE_sum_eq_budget_eq_replicate s.d s.masses s.local_le_carrier hbudget
 
 /-- Three-claim examples recover the old triangle corners in the generic
 representation. -/
 def distributed3N : ConflictTopologyN :=
   { d := 3
-  , local := [1, 1, 1]
+  , masses := [1, 1, 1]
   , union_le_sum := by decide
-  , local_le_carrier := by decide }
+  , local_le_carrier := by simp [AllLE] }
 
 /-- One conjunct carries the whole conflict region. -/
 def concentrated3N : ConflictTopologyN :=
   { d := 3
-  , local := [3, 0, 0]
+  , masses := [3, 0, 0]
   , union_le_sum := by decide
-  , local_le_carrier := by decide }
+  , local_le_carrier := by simp [AllLE] }
 
 /-- Every conjunct is glutty throughout the full carrier region. -/
 def redundant3N : ConflictTopologyN :=
   { d := 3
-  , local := [3, 3, 3]
+  , masses := [3, 3, 3]
   , union_le_sum := by decide
-  , local_le_carrier := by decide }
+  , local_le_carrier := by simp [AllLE] }
 
-example : distributed3N.totalLocal = 3 ∧ distributed3N.peak = 1 := by decide
-example : concentrated3N.totalLocal = 3 ∧ concentrated3N.peak = 3 := by decide
-example : redundant3N.totalLocal = 9 ∧ redundant3N.peak = 3 := by decide
+example : distributed3N.totalLocal = 3 ∧ distributed3N.peak = 1 := by
+  constructor <;> rfl
+example : concentrated3N.totalLocal = 3 ∧ concentrated3N.peak = 3 := by
+  constructor <;> rfl
+example : redundant3N.totalLocal = 9 ∧ redundant3N.peak = 3 := by
+  constructor <;> rfl
 
 end ConflictTopologyN
 
