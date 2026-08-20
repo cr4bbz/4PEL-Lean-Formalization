@@ -10,7 +10,7 @@ q : concentration
 r : redundancy.
 ```
 
-Those coordinates are useful but coarse.  They do not determine how local
+Those coordinates are useful but coarse. They do not determine how local
 object-level gluts co-occur across propositions.
 
 This note introduces the next descriptive layer: the **Conflict Incidence
@@ -83,7 +83,7 @@ Using the carrier normalization, this becomes the exact redundancy identity
 S = d + x12 + x13 + x23 + 2x123.
 ```
 
-Thus redundancy is not an opaque scalar.  It counts higher-order incidence:
+Thus redundancy is not an opaque scalar. It counts higher-order incidence:
 
 * pair-only conflict contributes one extra membership,
 * triple conflict contributes two extra memberships.
@@ -101,7 +101,7 @@ interpretation.
 
 ### Bottom edge: `r = 0`
 
-Here `S = d`.  The decomposition above forces
+Here `S = d`. The decomposition above forces
 
 ```text
 x12 = x13 = x23 = x123 = 0.
@@ -146,7 +146,7 @@ If
 S = 3d,
 ```
 
-then every carrier membership slot is saturated.  The profile collapses to the
+then every carrier membership slot is saturated. The profile collapses to the
 single triple-conflict vertex:
 
 ```text
@@ -164,7 +164,7 @@ maximal_redundancy_forces_triple_vertex.
 ## A nontrivial fiber
 
 The key philosophical question is whether the coarse projection loses genuine
-structure.  It does.
+structure. It does.
 
 The module contains two profiles with carrier mass
 
@@ -254,7 +254,7 @@ full conflict incidence profile.
 Every downward refinement can distinguish states identified by the level above.
 
 The new result is especially strong because the two fiber witnesses have the
-same local glut marginals.  Thus even knowing the proposition-by-proposition
+same local glut marginals. Thus even knowing the proposition-by-proposition
 amount of contradiction is not enough to reconstruct how contradictions
 co-occur.
 
@@ -303,24 +303,129 @@ r = (E[|A|] - 1)/(n-1).
 
 Concentration is obtained from the largest marginal.
 
+## Generic finite Lean representation
+
+`PEL4/Paradoxes/PrefaceConflictIncidenceN.lean` now represents an arbitrary
+finite incidence measure without enumerating all `2^n-1` subsets in advance.
+
+A pattern is a Boolean list of fixed length `n`:
+
+```text
+[true, false, true, ...]
+```
+
+where `true` means that the corresponding proposition is object-level `B` on
+that cell. Every stored pattern is required to be nonempty and receives a
+finite mass.
+
+The representation deliberately permits repeated patterns. It is therefore a
+finite measure representation rather than a canonical coordinate vector;
+duplicate patterns can later be merged without changing the accounting.
+
+For cells with masses `x_A`, Lean proves the general exact identity
+
+```text
+S = d + sum_A (|A|-1) * x_A.
+```
+
+The theorem is
+
+```text
+incidence_multiplicity_decomposition.
+```
+
+At profile level:
+
+```text
+ConflictIncidenceN.redundancy_decomposition.
+```
+
+It also proves the universal interval
+
+```text
+d <= S <= n*d
+```
+
+as
+
+```text
+ConflictIncidenceN.carrier_multiplicity_bounds.
+```
+
+### General singleton-face theorem
+
+The three-claim result `r = 0` extends exactly.
+
+Lean proves
+
+```text
+incidenceRedundancyExcess = 0
+```
+
+iff every positive-mass incidence cell has pattern size one:
+
+```text
+zero_redundancy_iff_singleton_support.
+```
+
+Zero-mass bookkeeping cells are ignored, as they should be.
+
+Thus for every finite `n`, the bottom edge of the Latent-Conflict Triangle is
+precisely the image of the singleton-support face of the full incidence
+simplex.
+
+## Current research picture
+
+The conflict geometry now has two complementary descriptions.
+
+### Coarse, dimension-free
+
+```text
+(q,r) in Delta^2.
+```
+
+This records peak concentration and expected multiplicity.
+
+### Fine, arity-sensitive
+
+```text
+x in Delta^(2^n-2).
+```
+
+This records the full distribution of simultaneous local-glut patterns.
+
+The projection from the fine object to the coarse object is many-to-one. The
+explicit `fiberA` / `fiberB` construction proves that the fibers are already
+nontrivial for `n = 3`, even when all local marginals are held fixed.
+
 ## Next formal targets
 
-1. Define arbitrary finite incidence patterns in Lean rather than enumerating
-   the seven three-claim coordinates.
-2. Prove the general multiplicity identity
+Completed in the current branch:
+
+1. arbitrary finite incidence-pattern representation,
+2. general multiplicity identity,
+3. general redundancy decomposition,
+4. general `r = 0` / singleton-support characterization.
+
+Next:
+
+1. Define proposition-indexed marginals for the generic Boolean-pattern model
+   and prove
 
    ```text
    sum_i b_i = sum_A |A| * x_A.
    ```
 
-3. Prove the general redundancy decomposition
-
-   ```text
-   sum_i b_i - d = sum_A (|A|-1) * x_A.
-   ```
-
-4. Characterize the `r = 0` face as support only on singleton patterns.
-5. Characterize maximal redundancy as support only on the full-set pattern.
-6. Study fibers with fixed marginals as transportation / contingency polytopes.
-7. Determine which additional assumptions, such as exchangeability or
-   independence, shrink these fibers.
+   The right-hand side is already formalized as `incidenceMultiplicity`; the
+   remaining work is the generic marginal projection.
+2. Characterize maximal redundancy for arbitrary `n` as support only on the
+   full-set pattern.
+3. Canonicalize duplicate patterns to obtain an explicit finite rational
+   simplex coordinate vector.
+4. Study fixed-marginal fibers as transportation / contingency polytopes.
+5. Measure higher-order structure inside a fiber, e.g. pair overlap, triple
+   overlap, entropy, or interaction terms.
+6. Determine which assumptions such as exchangeability, independence, or
+   bounded overlap collapse the fibers.
+7. Transfer the incidence analysis to Lottery, Moore, and Contrary-to-Duty
+   cases.
