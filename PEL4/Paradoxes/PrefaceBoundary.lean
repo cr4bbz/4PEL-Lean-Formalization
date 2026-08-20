@@ -64,10 +64,12 @@ theorem symmetric_preface_region_nonempty_iff (n : Nat) :
 
 /-- The three-claim example sits at the upper boundary `k = n = 3`. -/
 example : SymmetricPrefaceRegion 3 3 := by
-  decide
+  unfold SymmetricPrefaceRegion
+  constructor <;> omega
 
 /-- A two-claim Preface model already exists at threshold `2/3`. -/
 example : SymmetricPrefaceRegion 2 2 := by
-  decide
+  unfold SymmetricPrefaceRegion
+  constructor <;> omega
 
 end PEL4.Paradoxes
