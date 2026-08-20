@@ -87,11 +87,11 @@ theorem joint_indicator_bound_n (w : SignedPrefaceNWorld) :
     (if SignedPrefaceNWorld.jointPositive w then 1 else 0) +
       (if SignedPrefaceNWorld.jointNegative w then 1 else 0) ≤
     1 + (if SignedPrefaceNWorld.jointGlut w then 1 else 0) := by
-  cases hpos : SignedPrefaceNWorld.jointPositive w <;>
-  cases hneg : SignedPrefaceNWorld.jointNegative w <;>
-  simp [hpos, hneg, SignedPrefaceNWorld.jointGlut,
-    SignedPrefaceNWorld.jointPositive, SignedPrefaceNWorld.jointNegative,
-    isGlut]
+  cases hpos : (SignedPrefaceNWorld.joint w).pos <;>
+  cases hneg : (SignedPrefaceNWorld.joint w).neg <;>
+  simp [SignedPrefaceNWorld.jointPositive,
+    SignedPrefaceNWorld.jointNegative, SignedPrefaceNWorld.jointGlut,
+    isGlut, hpos, hneg]
 
 /-- Finite positive/negative overlap bound for arbitrary finite conjunctions. -/
 theorem joint_pos_neg_count_bound_n (ws : List SignedPrefaceNWorld) :
