@@ -25,6 +25,7 @@ import PEL4.Conservation
 import PEL4.Paradoxes.ConservationTest
 
 import PEL4.Paradoxes.Lottery
+import PEL4.Paradoxes.Preface
 
 import PEL4.Paradoxes.Moore
 
