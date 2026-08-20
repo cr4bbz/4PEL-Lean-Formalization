@@ -58,6 +58,10 @@ def jointNegative (w : SignedPrefaceTriple) : Bool := (joint w).neg
 def jointGlut (w : SignedPrefaceTriple) : Bool := isGlut (joint w)
 def localCarrier (w : SignedPrefaceTriple) : Bool := someLocalGlut3 w.p1 w.p2 w.p3
 
+def p1Glut (w : SignedPrefaceTriple) : Bool := isGlut w.p1
+def p2Glut (w : SignedPrefaceTriple) : Bool := isGlut w.p2
+def p3Glut (w : SignedPrefaceTriple) : Bool := isGlut w.p3
+
 /-- Pointwise carrier inclusion. -/
 theorem jointGlut_implies_localCarrier
     (w : SignedPrefaceTriple)
@@ -157,6 +161,77 @@ theorem strict_majority_global_glut_has_local_carrier
     (hneg : k ≤ countWhere SignedPrefaceTriple.jointNegative ws) :
     0 < countWhere SignedPrefaceTriple.localCarrier ws := by
   have hbound := latent_conflict_carrier_bound ws m k hlen hpos hneg
+  omega
+
+/-- A carrier world contributes at least one unit to the sum of the three
+local glut indicators. -/
+theorem local_carrier_indicator_le_glut_sum (w : SignedPrefaceTriple) :
+    (if SignedPrefaceTriple.localCarrier w then 1 else 0) ≤
+      (if SignedPrefaceTriple.p1Glut w then 1 else 0) +
+      (if SignedPrefaceTriple.p2Glut w then 1 else 0) +
+      (if SignedPrefaceTriple.p3Glut w then 1 else 0) := by
+  cases h1 : SignedPrefaceTriple.p1Glut w <;>
+  cases h2 : SignedPrefaceTriple.p2Glut w <;>
+  cases h3 : SignedPrefaceTriple.p3Glut w <;>
+  simp [SignedPrefaceTriple.localCarrier, someLocalGlut3,
+    SignedPrefaceTriple.p1Glut, SignedPrefaceTriple.p2Glut,
+    SignedPrefaceTriple.p3Glut] at h1 h2 h3 ⊢
+
+/-- The union mass of local conflict carriers is bounded by the sum of the
+individual local glut masses. -/
+theorem local_carrier_count_le_glut_sum (ws : List SignedPrefaceTriple) :
+    countWhere SignedPrefaceTriple.localCarrier ws ≤
+      countWhere SignedPrefaceTriple.p1Glut ws +
+      countWhere SignedPrefaceTriple.p2Glut ws +
+      countWhere SignedPrefaceTriple.p3Glut ws := by
+  induction ws with
+  | nil => simp [countWhere]
+  | cons w ws ih =>
+      simp [countWhere]
+      have hw := local_carrier_indicator_le_glut_sum w
+      omega
+
+/--
+Local Glut Budget Corollary.
+
+Global B for the conjunction forces the summed local object-level glut mass to
+pay at least the same strict-majority conflict budget. Normalized:
+
+  P_B(p1) + P_B(p2) + P_B(p3) ≥ 2c - 1.
+-/
+theorem local_glut_sum_budget
+    (ws : List SignedPrefaceTriple)
+    (m k : Nat)
+    (hlen : ws.length = m)
+    (hpos : k ≤ countWhere SignedPrefaceTriple.jointPositive ws)
+    (hneg : k ≤ countWhere SignedPrefaceTriple.jointNegative ws) :
+    2 * k ≤ m +
+      countWhere SignedPrefaceTriple.p1Glut ws +
+      countWhere SignedPrefaceTriple.p2Glut ws +
+      countWhere SignedPrefaceTriple.p3Glut ws := by
+  have hcarrier := latent_conflict_carrier_bound ws m k hlen hpos hneg
+  have hsum := local_carrier_count_le_glut_sum ws
+  omega
+
+/--
+Three-way pigeonhole consequence.
+
+At least one proposition must individually carry one third of the required
+latent conflict budget (up to integer rounding). In normalized notation, for
+some i:
+
+  P_B(pi) ≥ (2c - 1) / 3.
+-/
+theorem some_local_glut_carries_third_budget
+    (ws : List SignedPrefaceTriple)
+    (m k : Nat)
+    (hlen : ws.length = m)
+    (hpos : k ≤ countWhere SignedPrefaceTriple.jointPositive ws)
+    (hneg : k ≤ countWhere SignedPrefaceTriple.jointNegative ws) :
+    (2 * k ≤ m + 3 * countWhere SignedPrefaceTriple.p1Glut ws) ∨
+    (2 * k ≤ m + 3 * countWhere SignedPrefaceTriple.p2Glut ws) ∨
+    (2 * k ≤ m + 3 * countWhere SignedPrefaceTriple.p3Glut ws) := by
+  have hsum := local_glut_sum_budget ws m k hlen hpos hneg
   omega
 
 end PEL4.Paradoxes
