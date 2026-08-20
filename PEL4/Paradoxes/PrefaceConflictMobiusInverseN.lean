@@ -68,8 +68,15 @@ theorem mobiusRecover_add :
     have htrue := mobiusRecover_add rest
       (fun q => F (true :: q))
       (fun q => G (true :: q))
-    simp [mobiusRecover, hfalse, htrue, sub_eq_add_neg,
-      add_assoc, add_left_comm, add_comm]
+    change
+      (mobiusRecover rest (fun q => F (false :: q) + G (false :: q)) -
+        mobiusRecover rest (fun q => F (true :: q) + G (true :: q))) =
+      (mobiusRecover rest (fun q => F (false :: q)) -
+        mobiusRecover rest (fun q => F (true :: q))) +
+      (mobiusRecover rest (fun q => G (false :: q)) -
+        mobiusRecover rest (fun q => G (true :: q)))
+    rw [hfalse, htrue]
+    omega
 
 /-- On one zeta basis vector, Möbius inversion is a Kronecker delta: all
 strict supersets cancel and exactly the target pattern survives. -/
@@ -139,7 +146,8 @@ theorem mobius_reconstructs_exact_pattern {n : Nat}
       mobiusRecover target (fun q => coConflictMassInt q cells) =
         Int.ofNat (exactPatternMass target cells)
 | [] => by
-    simp [coConflictMassInt, exactPatternMass, mobiusRecover_zero]
+    change mobiusRecover target (fun _ => 0) = 0
+    exact mobiusRecover_zero target
 | c :: cs => by
     have hcellLen : target.length = c.pattern.length :=
       hlen.trans c.arity.symm
