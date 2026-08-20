@@ -41,6 +41,8 @@ import PEL4.Paradoxes.PrefaceConflictMobius3
 import PEL4.Paradoxes.PrefaceConflictMobiusN
 import PEL4.Paradoxes.PrefaceConflictMobiusInverseN
 import PEL4.Paradoxes.PrefaceConflictFiberDimensionN
+import PEL4.Paradoxes.PrefaceConflictNerveN
+import PEL4.Paradoxes.PrefaceConflictNerve3
 
 import PEL4.Paradoxes.Moore
 
