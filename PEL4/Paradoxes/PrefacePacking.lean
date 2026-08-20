@@ -63,8 +63,12 @@ theorem preface_general_packing_bound
     s.m ≤ capBudget (s.errors.length + 1) (s.m - s.k) := by
   rcases h with ⟨ha, herr⟩
   have hsum := sum_le_capBudget herr
-  simp [capBudget]
-  omega
+  calc
+    s.m = s.a + s.errors.sum := s.total.symm
+    _ ≤ (s.m - s.k) + capBudget s.errors.length (s.m - s.k) :=
+      Nat.add_le_add ha hsum
+    _ = capBudget (s.errors.length + 1) (s.m - s.k) := by
+      simp [capBudget]
 
 /-- Fixed-`n` form of the general packing theorem. -/
 theorem preface_n_claim_packing_bound
@@ -82,6 +86,7 @@ example
     (h : s.InRegion) :
     s.m ≤ 4 * (s.m - s.k) := by
   have hp := preface_n_claim_packing_bound s 3 hlen h
-  simpa [capBudget, Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using hp
+  simp [capBudget] at hp
+  omega
 
 end PEL4.Paradoxes
