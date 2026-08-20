@@ -67,6 +67,75 @@ def inSupportConflictNerve {n : Nat}
     (query : List Bool) : Prop :=
   query.length = n ∧ 0 < s.coConflict query
 
+/-- Positive co-conflict mass is exactly witnessed by a positive-mass incidence
+cell containing the whole query.  This is the finite relational semantics of
+the support nerve. -/
+theorem coConflictMass_pos_iff_exists_positive_cell {n : Nat}
+    (query : List Bool) :
+    ∀ cells : List (ConflictPatternCell n),
+      0 < coConflictMass query cells ↔
+        ∃ c, c ∈ cells ∧
+          patternContains query c.pattern = true ∧ 0 < c.mass
+| [] => by
+    simp [coConflictMass]
+| c :: cs => by
+    have ih := coConflictMass_pos_iff_exists_positive_cell query cs
+    by_cases hc : patternContains query c.pattern = true
+    · constructor
+      · intro hpos
+        by_cases hm : c.mass = 0
+        · have htail : 0 < coConflictMass query cs := by
+            simpa [coConflictMass, hc, hm] using hpos
+          rcases ih.mp htail with ⟨x, hxmem, hxcontains, hxmass⟩
+          exact ⟨x, by simp [hxmem], hxcontains, hxmass⟩
+        · have hmpos : 0 < c.mass := Nat.pos_of_ne_zero hm
+          exact ⟨c, by simp, hc, hmpos⟩
+      · rintro ⟨x, hxmem, hxcontains, hxmass⟩
+        have hx : x = c ∨ x ∈ cs := by simpa using hxmem
+        rcases hx with hxc | hxcs
+        · subst x
+          simp [coConflictMass, hc]
+          omega
+        · have htail : 0 < coConflictMass query cs :=
+            ih.mpr ⟨x, hxcs, hxcontains, hxmass⟩
+          simp [coConflictMass, hc]
+          omega
+    · have hcf : patternContains query c.pattern = false := by
+        cases hx : patternContains query c.pattern <;> simp_all
+      constructor
+      · intro hpos
+        have htail : 0 < coConflictMass query cs := by
+          simpa [coConflictMass, hcf] using hpos
+        rcases ih.mp htail with ⟨x, hxmem, hxcontains, hxmass⟩
+        exact ⟨x, by simp [hxmem], hxcontains, hxmass⟩
+      · rintro ⟨x, hxmem, hxcontains, hxmass⟩
+        have hx : x = c ∨ x ∈ cs := by simpa using hxmem
+        rcases hx with hxc | hxcs
+        · subst x
+          exact False.elim (hc hxcontains)
+        · have htail : 0 < coConflictMass query cs :=
+            ih.mpr ⟨x, hxcs, hxcontains, hxmass⟩
+          simpa [coConflictMass, hcf] using htail
+
+/-- Profile-level support membership is therefore equivalent to existence of a
+positive carrier cell jointly realizing the requested local conflicts. -/
+theorem supportConflictNerve_iff_exists_positive_cell {n : Nat}
+    (s : ConflictIncidenceN n)
+    (query : List Bool) :
+    s.inSupportConflictNerve query ↔
+      query.length = n ∧
+        ∃ c, c ∈ s.cells ∧
+          patternContains query c.pattern = true ∧ 0 < c.mass := by
+  constructor
+  · rintro ⟨hlen, hpos⟩
+    change 0 < coConflictMass query s.cells at hpos
+    exact ⟨hlen, (coConflictMass_pos_iff_exists_positive_cell query s.cells).mp hpos⟩
+  · rintro ⟨hlen, hexists⟩
+    constructor
+    · exact hlen
+    · change 0 < coConflictMass query s.cells
+      exact (coConflictMass_pos_iff_exists_positive_cell query s.cells).mpr hexists
+
 /-- The support nerve is the threshold-1 nerve for natural-valued masses. -/
 theorem supportConflictNerve_iff_threshold_one {n : Nat}
     (s : ConflictIncidenceN n)
@@ -146,6 +215,10 @@ Because `J_Q = d - f(Q)`, the complete weighted filtration is information-
 equivalent to the complete co-conflict hierarchy.  Information is lost only
 when the filtration is thresholded, reduced to support, or compressed further
 to invariants such as Betti numbers or persistence barcodes.
+
+The positive-cell witness theorem also makes the relational reading explicit:
+a support simplex is present exactly when one positive carrier cell realizes
+all of its requested claim-conflict incidences simultaneously.
 -/
 
 end ConflictIncidenceN
