@@ -56,6 +56,7 @@ theorem sharpness_decomposition
     s.m + s.carrier =
       2 * s.k + deltaPos + deltaNeg + s.n + waste := by
   simp [positive, negative] at hpos hneg
+  have htotal := s.total
   omega
 
 /-- Equality in the latent-conflict carrier bound leaves no room for positive
@@ -95,6 +96,7 @@ theorem sharp_conflict_spine
       s.f + s.k = s.m ∧
       s.m + s.b = 2 * s.k := by
   simp [positive, negative] at hpos hneg
+  have htotal := s.total
   constructor
   · omega
   constructor <;> omega
@@ -142,29 +144,29 @@ theorem total_le_three_peak (s : ConflictTopology3) :
   have h1 : s.b1 ≤ max s.b1 (max s.b2 s.b3) := Nat.le_max_left _ _
   have h2a : s.b2 ≤ max s.b2 s.b3 := Nat.le_max_left _ _
   have h2 : s.b2 ≤ max s.b1 (max s.b2 s.b3) :=
-    le_trans h2a (Nat.le_max_right _ _)
+    Nat.le_trans h2a (Nat.le_max_right _ _)
   have h3a : s.b3 ≤ max s.b2 s.b3 := Nat.le_max_right _ _
   have h3 : s.b3 ≤ max s.b1 (max s.b2 s.b3) :=
-    le_trans h3a (Nat.le_max_right _ _)
+    Nat.le_trans h3a (Nat.le_max_right _ _)
   omega
 
 /-- Distributed sharp carrier example. -/
 def distributed3 : ConflictTopology3 :=
   { d := 3, b1 := 1, b2 := 1, b3 := 1
-  , union_le_sum := by omega
-  , b1_le := by omega, b2_le := by omega, b3_le := by omega }
+  , union_le_sum := by decide
+  , b1_le := by decide, b2_le := by decide, b3_le := by decide }
 
 /-- Concentrated sharp carrier example. -/
 def concentrated3 : ConflictTopology3 :=
   { d := 3, b1 := 3, b2 := 0, b3 := 0
-  , union_le_sum := by omega
-  , b1_le := by omega, b2_le := by omega, b3_le := by omega }
+  , union_le_sum := by decide
+  , b1_le := by decide, b2_le := by decide, b3_le := by decide }
 
 /-- Maximally redundant sharp carrier example. -/
 def redundant3 : ConflictTopology3 :=
   { d := 3, b1 := 3, b2 := 3, b3 := 3
-  , union_le_sum := by omega
-  , b1_le := by omega, b2_le := by omega, b3_le := by omega }
+  , union_le_sum := by decide
+  , b1_le := by decide, b2_le := by decide, b3_le := by decide }
 
 example : distributed3.totalLocal = 3 ∧ distributed3.peak = 1 := by decide
 example : concentrated3.totalLocal = 3 ∧ concentrated3.peak = 3 := by decide
