@@ -1,3 +1,5 @@
+import Std.Tactic.Omega
+
 namespace PEL4.Paradoxes
 
 /--
