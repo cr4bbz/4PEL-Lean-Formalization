@@ -62,12 +62,14 @@ theorem cell_multiplicity_decomposition {n : Nat}
     (c : ConflictPatternCell n) :
     c.mass * conflictPatternSize c.pattern =
       c.mass + c.mass * (conflictPatternSize c.pattern - 1) := by
+  have hpos := c.nonempty
   have hs : conflictPatternSize c.pattern =
       (conflictPatternSize c.pattern - 1) + 1 := by
     omega
   calc
     c.mass * conflictPatternSize c.pattern =
-        c.mass * ((conflictPatternSize c.pattern - 1) + 1) := by rw [hs]
+        c.mass * ((conflictPatternSize c.pattern - 1) + 1) :=
+      congrArg (fun z => c.mass * z) hs
     _ = c.mass + c.mass * (conflictPatternSize c.pattern - 1) := by
       simp [Nat.mul_add, Nat.add_comm]
 
@@ -92,6 +94,7 @@ theorem incidence_multiplicity_decomposition {n : Nat} :
 theorem cell_mass_le_multiplicity {n : Nat}
     (c : ConflictPatternCell n) :
     c.mass ≤ c.mass * conflictPatternSize c.pattern := by
+  have hpos := c.nonempty
   have hone : 1 ≤ conflictPatternSize c.pattern := by omega
   have h := Nat.mul_le_mul_left c.mass hone
   simpa using h
@@ -101,8 +104,8 @@ theorem cell_multiplicity_le_n_mass {n : Nat}
     (c : ConflictPatternCell n) :
     c.mass * conflictPatternSize c.pattern ≤ n * c.mass := by
   have hsize0 := conflictPatternSize_le_length c.pattern
-  have harity := c.arity
-  have hsize : conflictPatternSize c.pattern ≤ n := by omega
+  have hsize : conflictPatternSize c.pattern ≤ n := by
+    simpa [c.arity] using hsize0
   have h := Nat.mul_le_mul_left c.mass hsize
   simpa [Nat.mul_comm] using h
 
@@ -181,13 +184,17 @@ theorem zero_redundancy_forces_singleton_support {n : Nat} :
       omega
     have htail : incidenceRedundancyExcess cs = 0 := by omega
     have hx' : x = c ∨ x ∈ cs := by simpa using hx
-    rcases hx' with rfl | hmem
-    · have hsizePos : 0 < conflictPatternSize c.pattern := c.nonempty
-      by_contra hne
-      have hgt : 1 < conflictPatternSize c.pattern := by omega
-      have hsub : 0 < conflictPatternSize c.pattern - 1 := by omega
-      have hprod : 0 < c.mass * (conflictPatternSize c.pattern - 1) :=
-        Nat.mul_pos hmass hsub
+    rcases hx' with hxc | hmem
+    · subst x
+      have hsizePos : 0 < conflictPatternSize c.pattern := c.nonempty
+      have hle : conflictPatternSize c.pattern ≤ 1 := by
+        by_cases hsmall : conflictPatternSize c.pattern ≤ 1
+        · exact hsmall
+        · have hgt : 1 < conflictPatternSize c.pattern := by omega
+          have hsub : 0 < conflictPatternSize c.pattern - 1 := by omega
+          have hprod : 0 < c.mass * (conflictPatternSize c.pattern - 1) :=
+            Nat.mul_pos hmass hsub
+          exact False.elim ((Nat.ne_of_gt hprod) hhead)
       omega
     · exact zero_redundancy_forces_singleton_support cs htail x hmem hmass
 
