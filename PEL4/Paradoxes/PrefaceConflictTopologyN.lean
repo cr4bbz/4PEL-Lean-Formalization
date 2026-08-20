@@ -1,4 +1,4 @@
-import Std.Tactic.Omega
+import Lean.Elab.Tactic.Omega
 import PEL4.Paradoxes.PrefacePacking
 import PEL4.Paradoxes.PrefaceSharpness
 
