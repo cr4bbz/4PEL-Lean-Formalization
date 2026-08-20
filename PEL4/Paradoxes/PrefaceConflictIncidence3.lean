@@ -116,7 +116,7 @@ theorem projection_triangle_chain (s : ConflictIncidence3) :
       3 * s.peak ≤ 3 * s.d := by
   have h := ConflictTopologyN.raw_triangle_chain (s.toTopologyN)
   simpa [toTopologyN, ConflictTopologyN.totalLocal, ConflictTopologyN.arity,
-    ConflictTopologyN.peak, totalLocal, peak, maxNatList] using h
+    ConflictTopologyN.peak, totalLocal, peak, maxNatList, Nat.add_assoc] using h
 
 /-- Pairwise-or-higher incidence mass.  This is information discarded by the
 marginal projection. -/
