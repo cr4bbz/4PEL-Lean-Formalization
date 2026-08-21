@@ -33,7 +33,8 @@ failure modes currently visible in the repository are:
 - nonclassical fixed points,
 - threshold phase changes,
 - dynamic status changes,
-- higher-order interaction loss.
+- higher-order interaction loss,
+- context-collapse across counterfactual epistemic branches.
 
 The phrase "failure of structural transport" is intentionally broader than
 "projection error": it includes fixed-point and dynamic cases where no simple
@@ -49,7 +50,8 @@ forgetful projection is involved.
 | Liar | self-reference in a bivalent target space | glut-compatible fixed behavior without explosion | executable + ex-falso theorem |
 | Knower | epistemic self-reference | four-valued fixed-point bifurcation | verified |
 | Sorites | continuous/small evidence change vs categorical status | threshold gap/glut geometry | verified |
-| Surprise Examination | sequential update vs preservation of present epistemic status | dynamic threshold crossing | build candidate |
+| Surprise Examination | sequential update vs preservation of present epistemic status | dynamic threshold reversal | verified |
+| Surprise backward elimination | branch-relative prediction vs initial prediction | context-collapse / failed prediction transport | build candidate |
 | Fitch | knowability vs actual knowledge | modal-epistemic transport; requires new operators | planned |
 
 ## Knower: fixed-point bifurcation
@@ -132,11 +134,11 @@ The philosophical claim is deliberately weaker than identifying vagueness with
 probability. The formal result concerns signed-evidence threshold geometry;
 Sorites is an application of that geometry.
 
-## Surprise Examination: dynamic threshold reversal
+## Surprise Examination: verified dynamic threshold reversal
 
-`PEL4/Paradoxes/SurpriseExamination.lean` is now the next build candidate. It
-uses the existing `conditionalize` machinery on three possible exam days:
-Monday, Wednesday, and Friday, initially equiprobable with threshold `2/3`.
+`PEL4/Paradoxes/SurpriseExamination.lean` uses the existing `conditionalize`
+machinery on three possible exam days: Monday, Wednesday, and Friday, initially
+equiprobable with threshold `2/3`.
 
 Successive truthful updates are:
 
@@ -145,7 +147,7 @@ E1: not Monday
 E2: not Wednesday
 ```
 
-The candidate theorem tracks belief in "exam on Friday" as
+The Lean 4.31 build verifies belief in "exam on Friday" as
 
 ```text
 F -> N -> T
@@ -157,26 +159,54 @@ and belief in "not Friday" as
 T -> N -> F.
 ```
 
-This is stronger and cleaner than the earlier target of merely finding some
-announcement whose belief is lost. It exhibits a complete categorical reversal
-through the four-valued gap state while information is added rather than
-forgotten.
+Thus additional truthful evidence does not preserve categorical belief status.
+The reversal passes through the gap state rather than jumping directly from one
+determined pole to the other.
 
 The module also separates internal FDE negation from a meta-level positive
 prediction predicate. Initially no individual exam day is positively predicted;
 after eliminating Monday and Wednesday, Friday is positively predicted.
 
-This is not yet claimed as a complete formalization of the classical Surprise
-Examination announcement, because the current language has probabilistic belief
-rather than a separate factive knowledge operator. Instead, it formalizes the
-dynamic pressure point used by the backward-elimination argument: elimination
-of alternatives can create predictability.
+This is not a complete formalization of the classical Surprise Examination
+announcement, because the current language has probabilistic belief rather
+than a separate factive knowledge operator. It formally isolates the dynamic
+pressure point: eliminating alternatives can create predictability.
 
-The standard Surprise Test literature defines surprise in terms of inability to
-know the exam day beforehand and analyzes the backward elimination from the
-last possible day. The present model should therefore be read as a belief-
-threshold analogue and a structural diagnostic, not as a replacement for a
-full knowledge-theoretic formalization.
+## Surprise backward elimination: context-indexed prediction
+
+`PEL4/Paradoxes/SurpriseBackwardElimination.lean` is the next build candidate.
+It formalizes the backward-elimination justifications in the distinct epistemic
+contexts in which they are actually obtained:
+
+```text
+Friday:    predict in the actual late-week model after not-Monday and not-Wednesday
+Wednesday: predict after hypothetically ruling out Friday and then learning not-Monday
+Monday:    predict after hypothetically ruling out Friday and Wednesday
+```
+
+Each local prediction is expected to be correct. But the original model predicts
+none of the three days individually.
+
+The target theorem is therefore not that backward reasoning contains a locally
+invalid prediction. It is that prediction fails to transport across contexts:
+
+```text
+predictable(day, its elimination context)
+```
+
+does not imply
+
+```text
+predictable(day, initial context).
+```
+
+Working diagnosis: **context-collapse**. The backward argument packages
+predictions made in distinct updated/counterfactual models into a single
+context-free eliminability judgement and transports that judgement back to the
+initial epistemic state.
+
+This would strengthen the Surprise analysis from simple non-monotonicity under
+update to a precise failure of structural transport across epistemic contexts.
 
 ## Fitch: defer until epistemic architecture is clean
 
@@ -241,7 +271,7 @@ has direct precedents.
 
 ## Immediate gate
 
-Knower and Sorites are compiler-verified under Lean 4.31. The next gate is to
-run `lake build` with `PEL4/Paradoxes/SurpriseExamination.lean` imported from
-`PEL4.lean`. Until that succeeds, the dynamic reversal results remain build
-candidates.
+Knower, Sorites, and the dynamic Surprise reversal are compiler-verified under
+Lean 4.31. The next gate is `PEL4/Paradoxes/SurpriseBackwardElimination.lean`.
+Until the next successful `lake build`, its context-collapse results remain
+build candidates.
