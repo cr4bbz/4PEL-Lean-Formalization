@@ -83,7 +83,7 @@ theorem raw_possibility_eq_knowledge_dual_iff_stable_or_raw_true
   | true =>
       constructor
       · intro _
-        exact Or.inl hs
+        exact Or.inl rfl
       · intro _
         exact raw_possibility_eq_knowledge_dual_of_stable m i w phi hs
 
