@@ -18,6 +18,7 @@ import PEL4.ModalKnowledgeStrictLaws
 import PEL4.ModalKnowledgeTransitive
 import PEL4.ModalKnowledgeNegativeIntrospection
 import PEL4.ModalKnowledgeIgnoranceBoundary
+import PEL4.ModalKnowledgeBeliefBoundary
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
