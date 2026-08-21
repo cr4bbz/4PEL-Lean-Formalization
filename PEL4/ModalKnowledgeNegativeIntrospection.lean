@@ -55,7 +55,12 @@ theorem modal_constant_profile_of_stable_nonempty
       · rw [hR] at hStable
         unfold modalAccessibleValueStable at hStable
         simp only [List.all_eq_true] at hStable
-        exact hStable x hxRest
+        have hDec := hStable x hxRest
+        by_contra hNe
+        have hFalse : decide (value x = value first) = false := by
+          simp [hNe]
+        rw [hFalse] at hDec
+        cases hDec
 
 /-- Instability of a modal formula forces its evidence-stable knowledge value to
 strict `F`. -/
@@ -80,7 +85,7 @@ theorem modal_instability_preserved_by_superset
     modalAccessibleValueStable big value = false := by
   cases hBig : modalAccessibleValueStable big value with
   | false =>
-      exact hBig
+      rfl
   | true =>
       rcases modal_constant_profile_of_stable_nonempty
           big value hBigNonempty hBig with ⟨v, hConstBig⟩
@@ -291,9 +296,9 @@ def negativeIntroP : ModalFormula NegativeIntroAtom NegativeIntroAgent :=
 theorem negative_intro_root_is_euclidean :
     ModalEuclideanAt NegativeIntroModel NegativeIntroAgent.a
       NegativeIntroWorld.root := by
-  intro u hu v hv
-  cases u <;> cases v <;>
-    simp [NegativeIntroModel, negativeIntroR] at hu hv ⊢
+  intro x hx y hy
+  cases x <;> cases y <;>
+    simp [NegativeIntroModel, negativeIntroR] at hx hy ⊢
 
 /-- Root knowledge is glutty. -/
 theorem negative_intro_root_kp_is_glut :
