@@ -188,7 +188,7 @@ For the immediate project, ordinary persistent homology of the exact filtration 
 - [x] recovery `J_A=d-f(A)`
 - [x] three-claim disconnected/cycle/filled signatures
 - [x] three-claim Euler counts
-- [ ] generic support-existence theorem connecting `J_A>0` to a positive-mass incidence cell containing `A`
+- [x] generic support-existence theorem connecting `J_A>0` to a positive-mass incidence cell containing `A`
 - [ ] explicit claim/cell Dowker relation
 - [ ] homology implementation or external verified computation bridge
 - [ ] persistent-homology export format for GUDHI
