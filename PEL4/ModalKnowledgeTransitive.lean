@@ -64,7 +64,6 @@ theorem modal_knowledge_recovers_nonempty_constant_profile
         | cons first rest =>
             have hFirst : evalModal m first phi = v :=
               hConst first (by simp [hR])
-            rw [hR]
             simp [hFirst, hp]
     | true =>
         simp only [List.all_eq_true]
@@ -91,7 +90,6 @@ theorem modal_knowledge_recovers_nonempty_constant_profile
         | cons first rest =>
             have hFirst : evalModal m first phi = v :=
               hConst first (by simp [hR])
-            rw [hR]
             simp [hFirst, hn]
   change modalKnowledgeValue m i w (fun u => evalModal m u phi) = v
   simp [modalKnowledgeValue, hStable, hAllPos, hAnyNeg]
@@ -114,15 +112,20 @@ theorem modal_positive_knowledge_value_idempotent_of_transitive
   have hNonW : m.R i w ≠ [] := model_accessibility_nonempty m i w
   have hAllPos :
       (m.R i w).all (fun u => (evalModal m u phi).pos) = true := by
+    have hKPos' := hKPos
     change ((m.R i w).all (fun u => (evalModal m u phi).pos) &&
       modalAccessibleValueStable (m.R i w)
-        (fun u => evalModal m u phi)) = true at hKPos
+        (fun u => evalModal m u phi)) = true at hKPos'
     cases hAll : (m.R i w).all (fun u => (evalModal m u phi).pos) <;>
       cases hStable : modalAccessibleValueStable (m.R i w)
         (fun u => evalModal m u phi) <;> simp_all
   have hStable :
       modalAccessibleValueStable (m.R i w)
         (fun u => evalModal m u phi) = true := by
+    have hKPos' := hKPos
+    change ((m.R i w).all (fun u => (evalModal m u phi).pos) &&
+      modalAccessibleValueStable (m.R i w)
+        (fun u => evalModal m u phi)) = true at hKPos'
     cases hAll : (m.R i w).all (fun u => (evalModal m u phi).pos) <;>
       cases hs : modalAccessibleValueStable (m.R i w)
         (fun u => evalModal m u phi) <;> simp_all
@@ -187,7 +190,13 @@ transitive. -/
 theorem introspection_countermodel_not_transitive_at_root :
     ¬ ModalTransitiveAt IntrospectionModel IntrospectionAgent.a
       IntrospectionWorld.root := by
-  native_decide
+  intro hTrans
+  have hBad :
+      IntrospectionWorld.left ∈
+        IntrospectionModel.R IntrospectionAgent.a IntrospectionWorld.root := by
+    exact hTrans IntrospectionWorld.middle (by native_decide)
+      IntrospectionWorld.left (by native_decide)
+  native_decide at hBad
 
 /-!
 ## Interpretation
