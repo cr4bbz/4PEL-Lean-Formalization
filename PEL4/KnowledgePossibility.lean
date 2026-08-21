@@ -65,7 +65,14 @@ theorem accessible_negation_preserves_stability
   | nil =>
       simp [accessibleFDEValueStable, hR]
   | cons first rest =>
-      simp [accessibleFDEValueStable, hR, decide_fde_not_eq_not_eq]
+      simp only [accessibleFDEValueStable, hR]
+      change
+        (rest.all fun w' =>
+          decide (FDEValue.not (eval m w' phi) =
+            FDEValue.not (eval m first phi))) =
+        rest.all fun w' =>
+          decide (eval m w' phi = eval m first phi)
+      simp [decide_fde_not_eq_not_eq]
 
 /-- Instability forces the internal knowledge dual of possibility to strict
 truth. This is the key reason the dual can diverge from raw accessibility
