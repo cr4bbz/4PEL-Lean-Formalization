@@ -1,12 +1,10 @@
 # Epistemic status and structural transport
 
-Status: verified core architecture with Moore/Knower integration as the next build gate on `research/preface-case-study`.
+Status: verified core architecture with verified Moore, Knower, and Surprise reuse on `research/preface-case-study`.
 
 ## Why this layer exists
 
-Several paradoxes in the repository depend on expressions such as "does not
-believe", "believes false", "is uncertain", or later "does not know". In a
-four-valued setting these notions cannot safely be collapsed.
+Several paradoxes in the repository depend on expressions such as "does not believe", "believes false", "is uncertain", or later "does not know". In a four-valued setting these notions cannot safely be collapsed.
 
 For a belief state
 
@@ -26,12 +24,11 @@ By contrast, meta-level absence of positive belief is
 not (positive support).
 ```
 
-These coincide on the classical values `T` and `F`, but disagree on `B` and
-`N`. `PEL4/EpistemicStatus.lean` makes this distinction explicit.
+These coincide on the classical values `T` and `F`, but disagree on `B` and `N`. `PEL4/EpistemicStatus.lean` makes this distinction explicit.
 
 ## Verified status vocabulary
 
-The Lean 4.31 build verifies the layer containing:
+The Lean 4.31 build verifies:
 
 ```text
 positivelyBelieves
@@ -64,9 +61,7 @@ Lean verifies
 v is classical.
 ```
 
-Equivalently, internal negation behaves like simple absence of positive support
-exactly on the classical subspace `{T,F}`. The nonclassical states are precisely
-where the distinction becomes visible:
+Equivalently, internal negation behaves like simple absence of positive support exactly on the classical subspace `{T,F}`. The nonclassical states are precisely where the distinction becomes visible:
 
 ```text
 B: internal negation remains positively supported,
@@ -76,7 +71,7 @@ N: internal negation is not positively supported,
    but positive belief is absent.
 ```
 
-This turns the earlier semantic caution into a machine-checked theorem.
+This is now a machine-checked structural fact of the 4-PEL architecture.
 
 ## Verified structural transport vocabulary
 
@@ -91,17 +86,13 @@ PreservesObservation T observeSource observeTarget
 
 with generic witness theorems for refuting preservation and commutation claims.
 
-The Surprise backward-elimination development is now the first verified
-paradox-level instantiation: its branch-relative prediction predicate fails to
-transport to the initial prediction predicate.
+The Surprise backward-elimination development is the first verified paradox-level instantiation: branch-relative prediction fails to transport to initial-context prediction.
 
-Thus "structural transport failure" is no longer used only as philosophical
-prose. It is an explicit formal property that paradox modules can instantiate.
+Thus "structural transport failure" is not only philosophical prose. It is an explicit formal property that paradox modules can instantiate.
 
-## Moore integration: next build gate
+## Verified Moore integration
 
-`PEL4/Paradoxes/Moore.lean` now separates two readings that classical notation
-can blur:
+`PEL4/Paradoxes/Moore.lean` now separates two readings that classical notation can blur:
 
 ```text
 object-language: p and not B(p)
@@ -113,7 +104,7 @@ and
 meta-level: p has positive truth support and positive belief in p is absent.
 ```
 
-In the existing 1/2--1/2 model at threshold 2/3, the new candidate theorems say:
+In the existing 1/2--1/2 model at threshold 2/3, Lean verifies:
 
 ```text
 B(p) = N
@@ -124,15 +115,13 @@ lackNegativeBelief(p) = true
 meta-level Moore condition = true.
 ```
 
-If the next build succeeds, the repository will formally distinguish a gappy
-internal Moore sentence from a satisfied meta-level absence-of-belief condition.
+Hence the internal Moore formula is gappy while the meta-level absence-of-belief condition is satisfied. This is a genuine semantic separation, not merely a terminological distinction.
 
-## Knower integration: next build gate
+## Verified Knower integration
 
-`PEL4/Paradoxes/Knower.lean` now uses the status layer to sharpen what its fixed
-point equation represents.
+`PEL4/Paradoxes/Knower.lean` uses the same status layer to sharpen what its fixed-point equation represents.
 
-The already verified map
+The verified map
 
 ```text
 T -> F
@@ -141,39 +130,39 @@ B -> B
 N -> N
 ```
 
-implements internal FDE negation of threshold belief. The new candidate theorem
-says that the positive bit of this internal negation matches meta-level absence
-of positive belief exactly on the classical states.
+implements internal FDE negation of threshold belief. Lean also verifies that the positive bit of this internal negation matches meta-level absence of positive belief exactly on the classical states.
 
-Hence the two nonclassical fixed points also witness two opposite divergences:
+Thus the two nonclassical fixed points witness opposite divergences:
 
 ```text
 B: internal not is positively supported; positive belief is not absent.
 N: internal not lacks positive support; positive belief is absent.
 ```
 
-This means a natural-language Knower sentence using "not known" or "not
-believed" cannot be treated as semantically settled until the intended notion
-of epistemic negation is specified.
+A natural-language Knower sentence using "not known" or "not believed" therefore remains semantically ambiguous until the intended epistemic negation is specified.
 
-## Roadmap toward Fitch
+## Knowledge semantics gate
 
-The intended sequence is now:
+The next stage is no longer to add more status predicates. It is to introduce knowledge only after a literature-grounded semantic choice.
 
-1. verify the Moore and Knower reuse of the status layer;
-2. perform a strict semantic/literature gate for a genuinely distinct knowledge
-   operator `K` rather than aliasing threshold belief;
-3. specify factivity and the intended conjunction principles for `K`;
-4. introduce modal possibility / knowability separately;
-5. distinguish internal `not K(phi)` from meta-level absence of knowledge;
-6. formalize Fitch only after those choices are explicit.
+See:
 
-The design constraint remains:
+```text
+docs/KNOWLEDGE_SEMANTICS_GATE.md
+```
+
+The current design constraint is:
 
 ```text
 belief != absence of belief != disbelief != knowledge.
 ```
 
-In a four-valued semantics these distinctions correspond to different bit-level
-and modal structures. Collapsing them can manufacture or erase paradoxical
-inferences.
+The preferred next sequence is:
+
+1. compare standard modal-FDE `Box` with evidence-stable knowledge semantics;
+2. introduce a distinct candidate `K` without reusing the Lockean threshold operator;
+3. test factivity, conjunction principles, classical recovery, glut/gap behavior, and negation separation;
+4. introduce raw modal possibility separately from any De-Morgan dual;
+5. only then formalize Fitch.
+
+This ordering is deliberate. In four-valued epistemic logic, collapsing these distinctions can manufacture or erase paradoxical inferences.
