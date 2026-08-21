@@ -56,11 +56,7 @@ theorem modal_constant_profile_of_stable_nonempty
         unfold modalAccessibleValueStable at hStable
         simp only [List.all_eq_true] at hStable
         have hDec := hStable x hxRest
-        by_contra hNe
-        have hFalse : decide (value x = value first) = false := by
-          simp [hNe]
-        rw [hFalse] at hDec
-        cases hDec
+        exact of_decide_eq_true hDec
 
 /-- Instability of a modal formula forces its evidence-stable knowledge value to
 strict `F`. -/
