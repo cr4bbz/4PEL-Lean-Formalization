@@ -21,6 +21,7 @@ import PEL4.ModalKnowledgeIgnoranceBoundary
 import PEL4.ModalKnowledgeBeliefBoundary
 import PEL4.ModalKnowledgeBeliefUpgrade
 import PEL4.ModalKnowledgeBeliefValueClassification
+import PEL4.ModalKnowledgeBeliefFactorization
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
