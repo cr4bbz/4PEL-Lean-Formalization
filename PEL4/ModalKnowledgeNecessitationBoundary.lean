@@ -261,7 +261,7 @@ operator still inspects.
 For merely positive/designated validity, closure is not enough:
 
 ```text
-positive validity + accessibility closure -/-> positive K-validity.
+positive validity + accessibility closure does not imply positive K-validity.
 ```
 
 The obstruction is specifically four-valued.  A globally positive profile may
