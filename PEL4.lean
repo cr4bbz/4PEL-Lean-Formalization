@@ -6,6 +6,7 @@ import PEL4.Diagnostics
 import PEL4.EpistemicStatus
 import PEL4.StructuralTransport
 import PEL4.KnowledgeSemantics
+import PEL4.KnowledgeSanity
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
