@@ -60,6 +60,7 @@ theorem conjunction_stable_of_components_stable
         (FDEValue.and (eval m w' phi) (eval m w' psi) =
           FDEValue.and (eval m first phi) (eval m first psi)) = true
       rw [hphiEq, hpsiEq]
+      simp
 
 /-- Positive evidence-stable knowledge is closed under conjunction
 introduction. No additional frame or stability assumption is needed beyond the
