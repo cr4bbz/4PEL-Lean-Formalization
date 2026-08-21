@@ -25,6 +25,26 @@ def modalPositiveBelievedAt
     (phi : ModalFormula Atom Ag) : Prop :=
   (evalModal m w (ModalFormula.bel i phi)).pos = true
 
+/-- Positive knowledge contains full-value stability directly in the core
+semantics.  This local lemma deliberately avoids importing the Fitch paradox
+module merely to reuse its decomposition theorem. -/
+theorem modal_positive_known_implies_stable
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (i : Ag) (w : W)
+    (phi : ModalFormula Atom Ag)
+    (hK : modalPositiveKnownAt m i w phi) :
+    modalAccessibleValueStable (m.R i w)
+      (fun x => evalModal m x phi) = true := by
+  unfold modalPositiveKnownAt at hK
+  change
+    ((m.R i w).all (fun x => (evalModal m x phi).pos) &&
+      modalAccessibleValueStable (m.R i w)
+        (fun x => evalModal m x phi)) = true at hK
+  cases hAll : (m.R i w).all (fun x => (evalModal m x phi).pos) <;>
+    cases hStable : modalAccessibleValueStable (m.R i w)
+      (fun x => evalModal m x phi) <;>
+    simp_all
+
 /-- Positive knowledge always agrees with probabilistic belief on the complete
 four-valued output. -/
 theorem modal_positive_knowledge_has_same_value_as_belief
@@ -34,8 +54,7 @@ theorem modal_positive_knowledge_has_same_value_as_belief
     (hK : modalPositiveKnownAt m i w phi) :
     evalModal m w (ModalFormula.know i phi) =
       evalModal m w (ModalFormula.bel i phi) := by
-  unfold modalPositiveKnownAt at hK
-  have hStable := (modal_positive_knowledge_components m i w phi hK).2
+  have hStable := modal_positive_known_implies_stable m i w phi hK
   exact modal_knowledge_equals_belief_of_stable m i w phi hStable
 
 /-- Positive evidence-stable knowledge entails positive probabilistic belief. -/
@@ -64,8 +83,7 @@ theorem modal_positive_belief_upgrades_to_knowledge_iff_stable
         (fun x => evalModal m x phi) = true := by
   constructor
   · intro hK
-    unfold modalPositiveKnownAt at hK
-    exact (modal_positive_knowledge_components m i w phi hK).2
+    exact modal_positive_known_implies_stable m i w phi hK
   · intro hStable
     have hEq := modal_knowledge_equals_belief_of_stable
       m i w phi hStable
