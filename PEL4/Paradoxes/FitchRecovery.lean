@@ -166,7 +166,10 @@ theorem fitch_witness_violates_exactly_left_stability_in_local_package :
   · exact fitch_witness_is_reflexive
   constructor
   · intro hKpos
-    have hk := fitch_witness_kp_is_false
+    have hk :
+        evalModal FitchModel FitchWorld.witness
+          (ModalFormula.know FitchAgent.a fitchP) = FDEValue.F := by
+      simpa [fitchKP] using fitch_witness_kp_is_false
     rw [hk] at hKpos
     simp at hKpos
   · exact fitch_moore_masks_component_instability.2.1
