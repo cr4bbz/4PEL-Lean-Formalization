@@ -148,7 +148,9 @@ theorem necessitation_escape_p_strict_valid :
   | root =>
       native_decide
   | hidden =>
-      native_decide at hw
+      have hImpossible : False := by
+        simpa [NecessitationEscapeModel] using hw
+      exact hImpossible.elim
 
 /-- Yet the hidden accessible counterexample makes `K p` strict `F` at root. -/
 theorem necessitation_escape_knowledge_false_at_root :
@@ -168,7 +170,7 @@ theorem necessitation_escape_breaks_strict_necessitation :
   have hRoot := hValidK NecessitationEscapeWorld.root (by native_decide)
   unfold modalStrictTrueAt at hRoot
   rw [necessitation_escape_knowledge_false_at_root] at hRoot
-  native_decide at hRoot
+  exact (by native_decide : FDEValue.F ≠ FDEValue.T) hRoot
 
 /-- The escape model refutes the unrestricted strict necessitation schema. -/
 theorem necessitation_escape_refutes_strict_schema :
@@ -195,14 +197,8 @@ necessitation.
 theorem knowledge_gate_worlds_accessibility_closed :
     ModalAccessibilityClosedForAgent
       KnowledgeGateModel KnowledgeGateAgent.a := by
-  intro _w _hw u hu
-  cases u with
-  | root =>
-      native_decide at hu
-  | left =>
-      native_decide
-  | right =>
-      native_decide
+  intro _w _hw u _hu
+  cases u <;> native_decide
 
 /-- The gate proposition is positively valid at every explicitly listed world. -/
 theorem knowledge_gate_p_positive_valid :
@@ -221,7 +217,7 @@ theorem knowledge_gate_kp_not_positive_valid :
   have hRoot := hValidK KnowledgeGateWorld.root (by native_decide)
   unfold modalPositiveAt at hRoot
   rw [modal_knowledge_gate_is_false] at hRoot
-  native_decide at hRoot
+  exact (by native_decide : FDEValue.F.pos ≠ true) hRoot
 
 /-- Positive necessitation fails even when the listed world set is perfectly
 closed under accessibility. -/
