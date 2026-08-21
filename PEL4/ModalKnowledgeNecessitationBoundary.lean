@@ -148,9 +148,7 @@ theorem necessitation_escape_p_strict_valid :
   | root =>
       native_decide
   | hidden =>
-      have hImpossible : False := by
-        simpa [NecessitationEscapeModel] using hw
-      exact hImpossible.elim
+      simp [NecessitationEscapeModel] at hw
 
 /-- Yet the hidden accessible counterexample makes `K p` strict `F` at root. -/
 theorem necessitation_escape_knowledge_false_at_root :
