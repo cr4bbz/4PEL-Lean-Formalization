@@ -98,13 +98,43 @@ def believeFri : Formula SurpriseAtom SurpriseAgent :=
 def believeNotFri : Formula SurpriseAtom SurpriseAgent :=
   Formula.bel SurpriseAgent.student notFri
 
+/-- The first update has positive evidence mass `2/3` at every local state and
+satisfies the normalization obligations required by safe conditionalization. -/
+theorem surprise_notMon_admissible :
+    ConditionalizationAdmissible SurpriseModel0 notMon := by
+  constructor
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+
 /-- First update: Monday has passed without an exam. -/
 def SurpriseModel1 : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
-  conditionalize SurpriseModel0 notMon
+  conditionalize SurpriseModel0 notMon surprise_notMon_admissible
+
+/-- After the first update, excluding Wednesday still has positive mass (`1/2`)
+and the second update is therefore admissible as a normalized model update. -/
+theorem surprise_notWed_admissible :
+    ConditionalizationAdmissible SurpriseModel1 notWed := by
+  constructor
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
 
 /-- Second update: Wednesday has also passed without an exam. -/
 def SurpriseModel2 : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
-  conditionalize SurpriseModel1 notWed
+  conditionalize SurpriseModel1 notWed surprise_notWed_admissible
 
 /-- Meta-level positive prediction status, now explicitly routed through the
 shared epistemic-status layer.  This is intentionally not internal FDE
