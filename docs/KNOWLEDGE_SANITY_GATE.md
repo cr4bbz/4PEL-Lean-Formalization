@@ -1,6 +1,6 @@
 # Knowledge sanity gate before Fitch
 
-Status: verified knowledge sanity, conjunction boundary, and conjunction introduction on `research/preface-case-study`. Raw possibility versus the internal knowledge dual is the next build gate.
+Status: verified knowledge sanity, conjunction transport, and raw-possibility versus internal-duality results on `research/preface-case-study`. The exact possibility-duality boundary is the next build gate.
 
 ## Verified knowledge semantics
 
@@ -92,8 +92,8 @@ stable compound to its components.
 
 ### Conjunction introduction
 
-`PEL4/KnowledgeConjunctionIntroduction.lean` is now also compiler-verified.
-Lean verifies both underlying closure principles:
+`PEL4/KnowledgeConjunctionIntroduction.lean` is compiler-verified. Lean verifies
+both underlying closure principles:
 
 ```text
 Box+(phi) and Box+(psi)
@@ -110,57 +110,121 @@ K+(phi) and K+(psi)
   -> K+(phi and psi).
 ```
 
-The conjunction behaviour is therefore genuinely directional:
+The conjunction behaviour is genuinely directional:
 
 ```text
 composition preserves epistemic stability,
 decomposition need not reflect epistemic stability.
 ```
 
-This is the current sharp structural diagnosis of the conjunction step relevant
-to Fitch.
+## Verified possibility-duality results
 
-## New possibility-duality gate
+`PEL4/KnowledgePossibility.lean` is now compiler-verified.
 
-Fitch also needs a possibility / knowability operator. The project should not
-identify raw accessibility possibility with the internal dual
-
-```text
-not K(not phi)
-```
-
-without checking the four-valued semantics.
-
-`PEL4/KnowledgePossibility.lean` therefore introduces two semantic candidates
-without yet changing the object language.
-
-Raw accessibility possibility:
+Raw accessibility possibility is kept distinct from the internal De-Morgan
+candidate:
 
 ```text
 Diamond_raw+(phi) = some accessible world positively supports phi
-Diamond_raw-(phi) = every accessible world negatively supports phi.
-```
+Diamond_raw-(phi) = every accessible world negatively supports phi
 
-Internal knowledge dual:
-
-```text
 Diamond_K(phi) = FDE.not (K*(not phi)).
 ```
 
-The key build candidates are:
+Lean verifies:
 
-1. FDE negation preserves accessible value stability;
-2. if `phi` is unstable across the accessible range, then
-   `Diamond_K(phi) = T`;
-3. on homogeneous two-world profiles both notions recover the same full FDE
-   value;
-4. on a `B/F` profile raw possibility is `B` while the knowledge dual is `T`;
-5. on an `N/F` profile raw possibility is `N` while the knowledge dual is `T`.
+```text
+Stable(not phi) = Stable(phi).
+```
 
-If these compile, the internal dual has a precise failure mode: evidence-stable
-knowledge turns heterogeneity of `not phi` into `F`, and outer negation then
-turns that failure into strict `T`. The dual can therefore erase glut/gap
-structure that raw accessibility possibility still records.
+It also verifies the key instability collapse:
+
+```text
+not Stable(phi)
+  -> Diamond_K(phi) = T.
+```
+
+Hence the internal knowledge dual treats accessible FDE-value heterogeneity very
+differently from raw accessibility possibility.
+
+The finite witnesses are verified:
+
+```text
+accessible B/F profile:
+  Diamond_raw(phi) = B
+  Diamond_K(phi)   = T
+
+accessible N/F profile:
+  Diamond_raw(phi) = N
+  Diamond_K(phi)   = T.
+```
+
+On homogeneous two-world profiles both operators recover the same underlying
+FDE value `T`, `F`, `B`, or `N`.
+
+Thus the classical-looking abbreviation
+
+```text
+Diamond phi := not K(not phi)
+```
+
+is not globally semantics-preserving for the evidence-stable knowledge
+candidate. It can erase glut/gap structure by turning instability into strict
+truth.
+
+## New exact possibility-duality boundary gate
+
+`PEL4/KnowledgePossibilityBoundary.lean` sharpens the previous result.
+
+The internal dual has the target component form:
+
+```text
+Diamond_K+(phi)
+  = not Stable(phi) OR Diamond_raw+(phi)
+
+Diamond_K-(phi)
+  = Diamond_raw-(phi) AND Stable(phi).
+```
+
+This predicts two regimes.
+
+### Stable regime
+
+```text
+Stable(phi)
+  -> Diamond_raw(phi) = Diamond_K(phi).
+```
+
+Here the classical-looking duality is genuinely recovered.
+
+### Unstable regime
+
+```text
+not Stable(phi)
+  -> Diamond_K(phi) = T.
+```
+
+Therefore equality can survive instability only when raw possibility is already
+strict `T`.
+
+The exact target theorem is:
+
+```text
+Diamond_raw(phi) = Diamond_K(phi)
+iff
+Stable(phi) OR Diamond_raw(phi) = T.
+```
+
+The second disjunct is important. An unstable `T/F` profile has
+
+```text
+Diamond_raw(phi) = T
+Diamond_K(phi)   = T,
+```
+
+so equality holds extensionally even though it is not stability-based modal
+duality. The boundary theorem therefore distinguishes genuine stable recovery
+from accidental agreement after the dual's instability collapse.
 
 ## Why this matters for Fitch
 
@@ -174,25 +238,29 @@ conjunction elimination
 factivity.
 ```
 
-The current verified development already shows that the conjunction-elimination
-step is licensed only under a component-stability condition. The new possibility
-gate asks whether the modal possibility step also imports a hidden transport
-assumption.
+The verified development now identifies two independent structural pressure
+points:
 
-If raw possibility and `not K(not _)` diverge, a future 4-PEL Fitch
-formalization should use an explicit accessibility-based possibility operator
-and compare the internal dual only as a derived notion on fragments where an
-equivalence theorem is available.
+1. knowledge of a conjunction does not generally decompose without
+   component-level stability;
+2. raw possibility does not generally equal `not K(not _)` outside the stable
+   fragment.
+
+A future 4-PEL Fitch formalization should therefore use explicit raw
+accessibility possibility and explicit evidence-stable knowledge. Any use of
+conjunction elimination or modal duality should be justified by a theorem or
+stated as an additional transport principle.
 
 ## Next sequence
 
-After a successful possibility build:
+After a successful `KnowledgePossibilityBoundary.lean` build:
 
-1. characterize a fragment where raw possibility and the knowledge dual agree;
-2. identify the corresponding classical / stable recovery conditions;
-3. promote `K` and raw possibility to object-language syntax;
-4. encode the Fitch derivation step by step, recording exactly which transports
-   are theorems and which require extra assumptions.
+1. promote evidence-stable `K` and raw possibility to object-language syntax;
+2. encode the Fitch derivation step by step;
+3. record for each classical proof move whether it is a theorem of the chosen
+   semantics, valid only on a stable/reflexive fragment, or an extra assumption;
+4. isolate the minimal package of transport principles needed to recover the
+   classical paradox.
 
 The methodological question remains:
 
