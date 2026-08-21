@@ -1,6 +1,6 @@
 # Knowledge sanity gate before Fitch
 
-Status: all semantic knowledge/conjunction/possibility gates below are compiler-verified on `research/preface-case-study`. `PEL4/ModalLanguage.lean` is the next build gate.
+Status: all semantic knowledge/conjunction/possibility gates and the conservative modal object language are compiler-verified on `research/preface-case-study`. `PEL4/Paradoxes/Fitch.lean` is the current build gate.
 
 ## Verified knowledge semantics
 
@@ -162,7 +162,7 @@ FDE value `T`, `F`, `B`, or `N`.
 
 ### Exact possibility-duality boundary
 
-Lean now verifies the component form:
+Lean verifies:
 
 ```text
 Diamond_K+(phi)
@@ -180,64 +180,30 @@ iff
 Stable(phi) OR Diamond_raw(phi) = T.
 ```
 
-This separates two qualitatively different forms of agreement.
+This separates genuine stable recovery from accidental extensional agreement
+under instability.
 
-```text
-Stable(phi):
-  genuine structural recovery of the classical-looking duality.
+## Verified modal object language
 
-not Stable(phi) and Diamond_raw(phi) = T:
-  accidental extensional agreement after the internal dual collapses to T.
-```
-
-An unstable `T/F` profile witnesses the second case.
-
-## Why this matters for Fitch
-
-The standard Fitch derivation combines:
-
-```text
-p and not K(p)
-possibility / knowability
-knowledge of a conjunction
-conjunction elimination
-factivity.
-```
-
-The verified development identifies two independent structural pressure points:
-
-1. knowledge of a conjunction does not generally decompose without
-   component-level stability;
-2. raw possibility does not generally equal `not K(not _)` outside the stable
-   fragment.
-
-A 4-PEL Fitch formalization should therefore use explicit raw accessibility
-possibility and explicit evidence-stable knowledge. Any use of conjunction
-elimination or modal duality must be justified by a theorem or stated as an
-additional transport principle.
-
-## Current object-language gate
-
-`PEL4/ModalLanguage.lean` adds a conservative modal object language rather than
-mutating the already verified legacy `Formula` type across the entire project.
-
-The new syntax is:
+`PEL4/ModalLanguage.lean` is compiler-verified. The legacy `Formula` language is
+left unchanged and embeds conservatively into a modal extension:
 
 ```text
 ModalFormula ::= p | not phi | phi and psi | B_i(phi) | K_i(phi) | Diamond_i(phi)
 ```
 
-where:
+where primitive `K` uses evidence-stable four-valued knowledge and primitive
+`Diamond` uses raw accessibility possibility.
+
+Lean verifies the conservative bridge:
 
 ```text
-K_i(phi)
-  = primitive evidence-stable four-valued knowledge
-
-Diamond_i(phi)
-  = primitive raw accessibility possibility.
+evalModal(embed(phi)) = eval(phi).
 ```
 
-The internal expression
+It also verifies that modal `K` and modal raw `Diamond` reproduce the previously
+analyzed semantic operators on every embedded legacy formula. The internal
+expression
 
 ```text
 not K_i(not phi)
@@ -245,32 +211,72 @@ not K_i(not phi)
 
 remains syntactically and semantically distinct from primitive `Diamond_i(phi)`.
 
-The build candidates are:
+## Current object-language Fitch gate
 
-1. every legacy `Formula` embeds into `ModalFormula` without changing its value;
-2. primitive modal `K` on embedded formulas reproduces
-   `evidenceStableKnowledgeValue`;
-3. primitive modal `Diamond` on embedded formulas reproduces
-   `rawPossibilityValue`;
-4. the previous `B/F` possibility-divergence witness is expressible entirely
-   inside the modal object language.
+`PEL4/Paradoxes/Fitch.lean` now encodes the Moorean Fitch sentence directly:
 
-This conservative layer avoids mixing the Fitch experiment with a repository-wide
-syntax refactor. If the gate compiles, Fitch can be encoded directly in this
-language while all existing results remain untouched.
+```text
+M(p) = p and not K(p).
+```
+
+The finite model is designed to test the classical extraction step from
+
+```text
+K(M(p))
+```
+
+to
+
+```text
+K(p)
+and
+K(not K(p)).
+```
+
+The critical possible `witness` world is reflexive. The candidate profile is:
+
+```text
+at the actual world:
+  M(p) = T
+  Diamond_raw K(M(p)) = B
+
+at the reflexive witness:
+  M(p)       = B
+  K(M(p))    = B
+  K(p)       = F
+  K(not K(p)) = F.
+```
+
+The intended structural witness is:
+
+```text
+Stable(M(p))       = true
+Stable(p)          = false
+Stable(not K(p))   = false.
+```
+
+If the build succeeds, this will be the first fully object-language Fitch
+fracture result: positive knowledge of the Moorean conjunction is present, but
+positive knowledge of either component cannot be extracted even at a reflexive
+point. The classical contradiction-shaped formula `K(p) and not K(p)` should
+remain `F` rather than becoming a glut.
+
+This is not yet a general anti-Fitch theorem. It is a concrete model showing
+that unrestricted knowledge-conjunction elimination is not available in the
+actual Fitch-shaped formula under the chosen semantics.
 
 ## Next sequence
 
-After a successful `ModalLanguage.lean` build:
+After a successful `PEL4/Paradoxes/Fitch.lean` build:
 
-1. encode the Fitch sentence `p and not K(p)` in the modal object language;
-2. encode raw knowability using primitive `Diamond`;
-3. formalize the classical Fitch proof moves one by one;
-4. mark each move as a semantic theorem, a stable/reflexive-fragment theorem,
-   or an additional transport assumption;
-5. isolate the minimal package that restores the classical paradox.
+1. characterize the exact extra conditions that restore extraction from
+   `K(p and not K(p))`;
+2. distinguish positive/designated Fitch premises from strict-`T` premises;
+3. formulate the minimal transport package needed for the classical collapse;
+4. prove either a restricted Fitch theorem under that package or a general
+   non-collapse result when one of the required transports is absent.
 
-The methodological question is now ready to be asked inside one object language:
+The central question is now fully object-linguistic:
 
 ```text
 Which Fitch steps are theorems of evidence-stable four-valued knowledge,
