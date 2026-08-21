@@ -2,14 +2,14 @@
 
 This document collects the currently compiler-verified modal laws of the primitive evidence-stable knowledge operator `K` on the active Lean 4.31 branch.
 
-The purpose is to separate four ingredients that classical modal slogans often blur together:
+The central lesson is that familiar epistemic principles split across four independent structural axes:
 
-1. frame geometry such as reflexivity, transitivity, and Euclideanness;
-2. four-valued information status `T`, `F`, `B`, `N`;
-3. the internal object-language negation `not K phi` versus meta-level absence of positive knowledge;
-4. qualitative evidence stability versus probabilistic threshold aggregation.
+1. frame geometry (`R`);
+2. four-valued information status (`T`, `F`, `B`, `N`);
+3. qualitative full-value stability;
+4. probabilistic threshold aggregation and update.
 
-## 1. Core semantic facts
+## 1. Core knowledge semantics
 
 For an accessible profile of complete FDE values:
 
@@ -21,9 +21,9 @@ homogeneous N -> K(phi) = N
 heterogeneous profile -> K(phi) = F
 ```
 
-Thus `K` is an evidence-stability operator, not merely a universal positive-support operator.
+Thus `K` is an evidence-stability operator, not merely universal positive support.
 
-A second structural fact is forced by the probability axioms themselves:
+Probability normalization also forces seriality:
 
 ```text
 mu(R_i(w)) = 1
@@ -36,191 +36,47 @@ imply
 R_i(w) != []
 ```
 
-for every agent and world. Seriality is therefore not an additional frame assumption in the present model class; it is induced by probability normalization.
+for every agent and world.
 
-## 2. Classification table
+## 2. Compiler-verified classification table
 
-| Assumptions | Compiler-verified consequence | Boundary / failure |
+| Assumptions | Consequence | Boundary / failure |
 |---|---|---|
-| none beyond the 4-PEL model axioms | every accessibility list is nonempty | induced by `mu_total` and `mu_empty` |
-| homogeneous accessible `phi` profile | `K phi` recovers the complete common FDE value | heterogeneity forces strict `F` |
-| reflexivity at `w` | `K phi = T -> phi = T` at `w` | this is strict factivity, not unrestricted designated factivity |
+| model axioms | every accessibility list is nonempty | seriality is induced by probability normalization |
+| homogeneous accessible `phi` profile | `K phi` recovers the common complete FDE value | heterogeneity forces strict `F` |
+| reflexivity at `w` | `K phi = T -> phi = T` | strict factivity only |
 | none | `K(phi and psi) = T -> K phi = T` and `K psi = T` | strict conjunction decomposition survives |
-| none | `K+ phi` and `K+ psi -> K+(phi and psi)` | positive conjunction elimination fails in general |
-| `K+(phi and psi)` | `K+ phi iff Stable(phi)` and analogously right | component stability is the exact extraction boundary |
-| local transitivity at `w` | `K+ phi -> value(K K phi) = value(K phi)` | preserves both positive values `T` and `B` exactly |
-| local transitivity at `w` | positive axiom 4: `K+ phi -> K+ K phi` | unrestricted positive introspection fails without the frame condition |
-| local Euclideanness only | no general positive internal negative introspection | finite countermodel: `not K p` is positive but `K(not K p)` is not |
-| local transitivity + local Euclideanness | `value(K K phi) = value(K phi)` for all four values | full-value idempotence |
-| local transitivity + local Euclideanness | `value(K(not K phi)) = value(not K phi)` | full-value internal negative introspection |
-| local transitivity + local Euclideanness + negative support for `K phi` | `K+(not K phi)` | internal axiom-5 style recovery |
-| reflexive + transitive + Euclidean singleton with `K phi = N` | meta-level lack of positive knowledge does not imply `(not K phi)+` | frame geometry cannot eliminate the gap |
-| transitive + Euclidean + local NoGap bridge | meta-level lack of positive knowledge implies `K+(not K phi)` | NoGap is an information-status assumption, not a frame condition |
-| stable accessible `phi` profile | `K phi = B phi` | both operators recover the same full FDE value |
-| arbitrary profile | `K phi = B phi iff Stable(phi) OR B phi = F` | under instability, equality survives only by accidental agreement at `F` |
-| positive knowledge | `K+ phi -> B+ phi` | positive belief alone does not imply positive knowledge |
-| positive belief | `K+ phi iff Stable(phi)` | stability is the exact upgrade condition |
-| `v != F` | `K phi = v iff Stable(phi) AND B phi = v` | all non-false knowledge values require stability |
-| arbitrary profile | `K phi = F iff Unstable(phi) OR B phi = F` | `F` is the unique instability-absorbing value |
-| arbitrary profile | `K phi = if Stable(phi) then B phi else F` | exact factorization of knowledge through belief plus stability |
-| strict validity + accessibility closure | strict validity of `K phi` | closure keeps epistemic inspection inside the validity domain |
-| no accessibility closure | strict necessitation can fail | a hidden accessible `F` world can escape `m.worlds` |
-| positive validity + accessibility closure | positive necessitation can still fail | `T/B` heterogeneity remains positively designated but unstable |
+| none | `K+ phi` and `K+ psi -> K+(phi and psi)` | positive elimination fails in general |
+| `K+(phi and psi)` | `K+ phi iff Stable(phi)` and analogously right | component stability is exact extraction boundary |
+| local transitivity | `K+ phi -> value(K K phi) = value(K phi)` | unrestricted positive introspection fails without it |
+| local transitivity + Euclidean | `K K phi = K phi` for all four values | Euclidean alone is insufficient |
+| local transitivity + Euclidean | `K(not K phi) = not K phi` | full internal negative introspection |
+| transitive + Euclidean + NoGap | lack of positive knowledge implies `K+(not K phi)` | NoGap is information-status, not frame geometry |
+| stable profile | `K phi = B phi` | instability may separate them |
+| arbitrary profile | `K phi = B phi iff Stable(phi) OR B phi = F` | accidental equality survives only at `F` |
+| positive knowledge | `K+ phi -> B+ phi` | positive belief does not imply knowledge |
+| positive belief | `K+ phi iff Stable(phi)` | exact belief-to-knowledge upgrade condition |
+| `v != F` | `K phi = v iff Stable(phi) AND B phi = v` | every non-false K-value requires stability |
+| arbitrary profile | `K phi = F iff Unstable(phi) OR B phi = F` | `F` is the instability absorber |
+| arbitrary profile | `K phi = if Stable(phi) then B phi else F` | complete K/B factorization |
+| strict validity + accessibility closure | strict validity of `K phi` | hidden accessible worlds otherwise refute necessitation |
+| positive validity + accessibility closure | `K phi` positive-valid iff `phi` is stable on every listed accessible range | exact positive necessitation boundary |
+| admissible conditionalization + probability-free modal formula | complete FDE value is invariant | `bel` is the only current entry point for `mu`-sensitivity |
+| same conditions | accessible stability, outer `K`, and raw possibility are invariant | current update changes only `mu` |
+| finite belief-mediated witness | conditionalization can change `B p : T/T/T -> T/N/T` | creates instability |
+| same witness | `K(B p) : T -> F` | probabilistic instability is amplified by the K stability gate |
 
 Here `K+ phi` abbreviates positive/designated support for `K phi`.
 
-## 3. Axiom 4 phase
+## 3. K/B factorization
 
-Without frame conditions, positive introspection fails: a formula can be stable on the first epistemic horizon and unstable on the second.
-
-Ordinary local transitivity repairs this. The verified result is stronger than the usual positive axiom 4:
-
-```text
-K+ phi
-+ local transitivity
--> value(K K phi) = value(K phi)
-```
-
-Because positive knowledge in FDE can be either `T` or `B`, the theorem gives two fixed points:
-
-```text
-K phi = T -> K K phi = T
-K phi = B -> K K phi = B
-```
-
-The glutty value is not classicalized by introspection.
-
-## 4. Axiom 5 phase
-
-Local Euclideanness alone does not suffice for the present evidence-stable `K`.
-
-The finite countermodel has a root whose successors all see the root successor region, so the root is locally Euclidean. One successor, however, sees an additional world. This changes the complete value of `K p` across the root successors:
-
-```text
-K p at root = B
-K p at u    = B
-K p at v    = F
-```
-
-Hence the internal negation varies:
-
-```text
-not K p at u = B
-not K p at v = T
-```
-
-and outer knowledge rejects the heterogeneous profile:
-
-```text
-K(not K p) at root = F.
-```
-
-Transitivity closes the extra-successor escape route. Together with Euclideanness, source and successor neighborhoods coincide extensionally. The resulting theorem is full-value rather than merely designated:
-
-```text
-transitivity + Euclideanness
--> K K phi = K phi
--> K(not K phi) = not K phi.
-```
-
-## 5. Meta-level ignorance is a separate axis
-
-The following notions are not identified in 4-PEL:
-
-```text
-meta-level: K+ phi = false
-object-level: (not K phi)+ = true
-negative support: (K phi).neg = true
-```
-
-A one-world model with
-
-```text
-p = N
-R(w) = [w]
-```
-
-is reflexive, transitive, and Euclidean, yet:
-
-```text
-K p        = N
-not K p    = N
-K(not K p) = N.
-```
-
-Thus even S5-like frame geometry cannot convert lack of positive knowledge into internal negative evidence.
-
-The missing bridge is exactly a NoGap-style semantic condition:
-
-```text
-K+ phi = false -> (K phi).neg = true.
-```
-
-With this bridge plus transitivity and Euclideanness, positive knowledge of internal ignorance follows.
-
-This yields a two-axis architecture:
-
-```text
-frame geometry         -> transport of epistemic values
-FDE information status -> interpretation of absence / negation / ignorance
-```
-
-## 6. Relation to conjunction and possibility
-
-The same stability mechanism explains two earlier boundaries.
-
-For conjunction:
-
-```text
-K+ phi and K+ psi -> K+(phi and psi)
-K+(phi and psi) does not imply K+ phi
-K+(phi and psi) -> (K+ phi iff Stable(phi)).
-```
-
-For possibility, primitive raw accessibility possibility and the internal dual `not K(not phi)` agree exactly when:
-
-```text
-Stable(phi) OR Diamond_raw(phi) = T.
-```
-
-If the accessible `phi` profile is unstable, internal dualization can force strict `T` even when raw possibility carries a different four-valued profile.
-
-## 7. Knowledge as stability-filtered probabilistic belief
-
-Primitive knowledge `K` and probabilistic threshold belief `B` process the same accessible evidence differently:
-
-```text
-K -> requires complete FDE-value stability
-B -> thresholds positive and negative probability mass separately.
-```
-
-The complete verified theory compresses to one operator equation:
+The complete verified relation between evidence-stable knowledge and probabilistic threshold belief is:
 
 ```text
 K(phi) = if Stable(phi) then B(phi) else F.
 ```
 
-This factorization subsumes the earlier equality, upgrade, and four-value classification theorems.
-
-On stable profiles:
-
-```text
-K(phi) = B(phi).
-```
-
-For positive/designated support:
-
-```text
-K+(phi) -> B+(phi)
-```
-
-and, assuming positive belief,
-
-```text
-K+(phi) iff Stable(phi).
-```
-
-At the complete-value level:
+Equivalently:
 
 ```text
 K(phi) = T iff Stable(phi) and B(phi) = T
@@ -229,62 +85,78 @@ K(phi) = N iff Stable(phi) and B(phi) = N
 K(phi) = F iff Unstable(phi) or B(phi) = F.
 ```
 
-Thus instability is not low confidence. It is a qualitative failure mode that overrides threshold aggregation and sends knowledge to strict `F`.
+This supports the structural reading:
 
-## 8. Necessitation phase
+> knowledge is probabilistic belief passed through a qualitative full-value stability gate.
 
-The necessitation boundary is now compiler-verified.
+Instability is therefore not low probability. It is a separate qualitative failure mode that overrides threshold aggregation.
 
-The current `Model` structure carries an explicit list `m.worlds`, but it does not itself require accessibility to remain inside that list. Since model-validity quantifies over `m.worlds`, strict necessitation needs a domain-coverage condition:
+## 4. Introspection and ignorance
+
+Local transitivity repairs positive axiom 4 and preserves complete positive K-values:
 
 ```text
-w in worlds and w R_i u -> u in worlds.
+K phi = T -> K K phi = T
+K phi = B -> K K phi = B
 ```
 
-Under that accessibility-closure condition:
+For axiom 5, Euclideanness alone is insufficient because a successor may acquire additional evidence worlds. Transitivity closes this extra-successor drift. Together:
 
 ```text
-strict validity of phi
+transitivity + Euclidean
+-> K K phi = K phi
+-> K(not K phi) = not K phi.
+```
+
+Meta-level ignorance remains independent:
+
+```text
+K+ phi = false
+```
+
+is not the same as
+
+```text
+(not K phi)+ = true.
+```
+
+Even reflexive, transitive, Euclidean frames can leave `K phi = N`. A NoGap bridge is required to convert lack of positive knowledge into internal negative epistemic support.
+
+## 5. Necessitation phase
+
+The necessitation phase is now complete at the current level of abstraction.
+
+### Strict necessitation
+
+Because model validity quantifies only over the explicit list `m.worlds`, strict necessitation requires accessibility closure:
+
+```text
+w in worlds and u in R_i(w) -> u in worlds.
+```
+
+Under this condition:
+
+```text
+strict-valid(phi) -> strict-valid(K phi).
+```
+
+Without it, an unlisted accessible `F` world gives a finite countermodel.
+
+### Positive necessitation
+
+Accessibility closure alone is insufficient because positive validity permits mixtures such as `T/B`.
+
+The exact compiler-verified formula-level boundary is:
+
+```text
+positive-valid(phi)
++ accessibility closure
 ->
-strict validity of K phi.
+(positive-valid(K phi) iff
+ phi is full-value stable on every listed accessible range).
 ```
 
-A finite escape model proves that closure cannot simply be omitted from this theorem: `root` is the only listed world, `p(root)=T`, but `root` accesses an unlisted `hidden` world with `p(hidden)=F`. Thus `p` is strictly valid over `m.worlds` while `K p` fails there.
-
-Positive necessitation has a second obstruction. The existing `KnowledgeGateModel` is accessibility-closed and `p` is positively true at every listed world, but its accessible values are `T` and `B`. Hence the profile is unstable and:
-
-```text
-K p = F.
-```
-
-Therefore:
-
-```text
-positive validity + accessibility closure
-```
-
-does not by itself imply positive validity of `K phi`.
-
-This establishes the structural split:
-
-```text
-strict necessitation   -> domain coverage is enough
-positive necessitation -> domain coverage is not enough; full-value stability also matters
-```
-
-## 9. Exact positive necessitation build gate
-
-`PEL4/ModalKnowledgePositiveNecessitation.lean` is the next local build gate and is not yet counted as compiler-verified.
-
-It tests the exact formula-level boundary under accessibility closure and positive validity:
-
-```text
-positive validity of K phi
-iff
-phi is full-value stable on every listed world's accessible range.
-```
-
-It also packages the corresponding model-schema candidate:
+The corresponding schema-level equivalence is also verified:
 
 ```text
 positive necessitation
@@ -294,33 +166,126 @@ every positively valid formula is accessibility-stable
 
 under accessibility closure.
 
-If verified, this would complete the necessitation phase with an exact stability characterization rather than only a failure witness.
+Thus:
 
-## 10. Current structural picture
+```text
+strict necessitation   = domain coverage
+positive necessitation = domain coverage + full-value stability.
+```
 
-The verified modal fragment can now be summarized as follows:
+## 6. Dynamic conditionalization phase
+
+The old dynamics prototype had an unsafe zero-evidence boundary: raw conditionalization returned `0` at zero evidence mass while model normalization had been postulated unconditionally. This has been repaired.
+
+`conditionalize` now requires an explicit:
+
+```text
+ConditionalizationAdmissible m E
+```
+
+witness containing positive local evidence mass and normalization obligations. The Liar, Surprise Examination, and Surprise Backward Elimination updates compile through this safe interface.
+
+### 6.1 Probability-free invariance
+
+Current conditionalization changes only the local probability measure `mu`. It leaves:
+
+```text
+worlds, R, val, c
+```
+
+unchanged.
+
+Define `ModalProbabilityFree(phi)` to mean that `phi` contains no `bel` constructor, while arbitrary nesting of `K`, negation, conjunction, and raw possibility is allowed.
+
+Compiler-verified:
+
+```text
+ModalProbabilityFree(phi)
+-> evalModal(M|E, w, phi) = evalModal(M, w, phi)
+```
+
+for every world `w` and every admissible conditionalization.
+
+Therefore:
+
+```text
+Stable_(M|E)(phi) = Stable_M(phi)
+K_(M|E)(phi)      = K_M(phi)
+Diamond_(M|E)(phi)= Diamond_M(phi)
+```
+
+for the probability-free fragment.
+
+### 6.2 Belief-mediated stability fracture
+
+A finite three-world witness gives:
+
+```text
+before: B p = T, T, T
+update on admissible evidence e
+after:  B p = T, N, T
+```
+
+Hence:
+
+```text
+Stable(B p): true -> false
+K(B p):       T   -> F
+```
+
+while atomic `p` itself remains dynamically invariant under the same update.
+
+This establishes the first two-sided syntactic dynamic boundary:
+
+```text
+probability-free -> complete update invariance
+contains bel     -> update may inject knowledge-relevant instability.
+```
+
+Working diagnosis: **Probabilistic Instability Injection** or **Belief-Mediated Stability Fracture**.
+
+## 7. Current structural picture
+
+The verified modal fragment can be compressed to:
 
 ```text
 probability normalization -> seriality
 reflexivity                -> strict factivity
-transitivity               -> positive/full-value-preserving axiom 4 on T/B
-Euclideanness alone        -> insufficient for axiom 5
-transitivity + Euclidean   -> full K-idempotence and internal negative introspection
-NoGap                      -> bridges meta-level ignorance to negative epistemic support
+transitivity               -> positive/full-value-preserving axiom 4
+transitivity + Euclidean   -> full K-idempotence and internal axiom 5
+NoGap                      -> bridges meta-level ignorance to negative support
 stability                  -> K/B agreement and belief-to-knowledge upgrade
-K                          -> exactly stability-filtered B
-instability                -> overrides B and forces K = F
+K                          -> stability-filtered B
+instability                -> forces K = F unless B already equals F
 accessibility closure      -> restores strict necessitation
-positive validity          -> still needs accessible full-value stability for K-validity
+closure + stability        -> exact positive necessitation boundary
+safe conditionalization   -> requires admissible positive evidence
+probability-free fragment  -> dynamically invariant under current update
+belief-mediated formulas   -> can acquire heterogeneous posterior values
+posterior heterogeneity    -> can collapse outer K from T to F
 ```
 
-The notable feature is that familiar epistemic laws split into frame transport, information status, domain coverage, and evidence aggregation. This is a specifically four-valued refinement of the classical correspondence picture.
+The broad research interpretation is increasingly precise: familiar epistemic laws are preservation laws for different structural layers, and failures occur when one layer is transported as though another were invariant.
 
-## 11. Next research questions
+## 8. Current build gate
 
-The highest-value remaining questions are now:
+`PEL4/ModalDynamicsBeliefRestoration.lean` is the next unverified local gate.
 
-1. verify the exact positive necessitation stability boundary;
-2. study dynamic preservation or destruction of epistemic stability under update;
-3. determine whether the current local frame conditions admit sharper necessity/minimality theorems;
-4. compare the verified 4-PEL correspondence pattern systematically with nonstandard Belnap-Dunn knowledge logics before making novelty claims.
+It tests the converse dynamic phase:
+
+```text
+before: B p = T, N, T -> unstable -> K(B p) = F
+after:  B p = T, T, T -> stable   -> K(B p) = T
+```
+
+If compiler-verified, admissible conditionalization will be shown to move epistemic stability in both directions: fracture and restoration.
+
+## 9. Next research questions
+
+Highest-value next questions:
+
+1. verify belief-mediated stability restoration;
+2. package fracture/restoration into a general dynamic K-change classification;
+3. determine exact sufficient conditions for conditionalization to preserve stability even when `bel` occurs;
+4. classify which K/B values are dynamically reachable under fixed `R` and valuation;
+5. compare the resulting dynamic correspondence pattern with four-valued dynamic epistemic logics before making novelty claims.
