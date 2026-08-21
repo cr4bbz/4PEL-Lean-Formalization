@@ -1,4 +1,5 @@
 import PEL4.Dynamics
+import PEL4.EpistemicStatus
 
 namespace PEL4.Paradoxes
 
@@ -105,13 +106,14 @@ def SurpriseModel1 : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
 def SurpriseModel2 : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
   conditionalize SurpriseModel1 notWed
 
-/-- Meta-level positive prediction status.  This is intentionally not encoded
-as internal FDE negation: absence of positive belief and `not B(phi)` are
-semantically different notions in a four-valued setting. -/
+/-- Meta-level positive prediction status, now explicitly routed through the
+shared epistemic-status layer.  This is intentionally not internal FDE
+negation: absence of positive belief and `not B(phi)` are distinct outside the
+classical subspace. -/
 def positivelyPredicts
     (m : Model SurpriseWorld SurpriseAgent SurpriseAtom)
     (phi : Formula SurpriseAtom SurpriseAgent) : Bool :=
-  (eval m SurpriseWorld.fri (Formula.bel SurpriseAgent.student phi)).pos
+  positivelyBelieves m SurpriseAgent.student SurpriseWorld.fri phi
 
 #eval! eval SurpriseModel0 SurpriseWorld.fri believeFri
 #eval! eval SurpriseModel1 SurpriseWorld.fri believeFri
