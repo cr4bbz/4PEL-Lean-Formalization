@@ -1,4 +1,5 @@
 import PEL4.Syntax
+import PEL4.EpistemicStatus
 
 namespace PEL4.Paradoxes
 
@@ -16,9 +17,13 @@ The self-referential right-hand side therefore induces the map
 
   v |-> not B(v).
 
-Classically, T and F fail to stabilize.  In the four-valued space, however,
-both the glut B and the gap N are fixed points.  This module makes that
+Classically, T and F fail to stabilize. In the four-valued space, however,
+both the glut B and the gap N are fixed points. This module makes that
 bifurcation explicit inside the actual 4-PEL evaluator.
+
+The epistemic-status layer also lets us distinguish this internal FDE negation
+from the meta-level absence of positive belief. Those notions agree exactly on
+the classical values and diverge on the two nonclassical fixed points.
 -/
 
 inductive KnowerAtom where
@@ -77,6 +82,11 @@ semantics rather than by a hand-written truth table. -/
 def knowerStep (v : FDEValue) : FDEValue :=
   eval (KnowerModel v) KnowerWorld.w knowerRhs
 
+/-- Meta-level signal that positive threshold belief in the Knower atom is
+absent. This is intentionally distinct from internal `not B(k)`. -/
+def knowerLacksPositiveBelief (v : FDEValue) : Bool :=
+  lacksPositiveBelief (KnowerModel v) KnowerAgent.a KnowerWorld.w knowerAtomFormula
+
 #eval! knowerStep FDEValue.T
 #eval! knowerStep FDEValue.F
 #eval! knowerStep FDEValue.B
@@ -111,18 +121,43 @@ theorem knower_fixed_iff_glut_or_gap (v : FDEValue) :
   rcases v with ⟨pos, neg⟩
   cases pos <;> cases neg <;> native_decide
 
+/-- Internal Knower negation and meta-level absence of positive belief agree
+exactly on the classical subspace. -/
+theorem knower_internal_negation_matches_absence_iff_classical
+    (v : FDEValue) :
+    (knowerStep v).pos = knowerLacksPositiveBelief v ↔
+      isClassical v = true := by
+  rcases v with ⟨pos, neg⟩
+  cases pos <;> cases neg <;> native_decide
+
+/-- At the glut fixed point, internal negation remains positively supported,
+while positive belief is not absent. -/
+theorem knower_glut_internal_not_differs_from_absence :
+    (knowerStep FDEValue.B).pos = true ∧
+    knowerLacksPositiveBelief FDEValue.B = false := by
+  native_decide
+
+/-- At the gap fixed point, internal negation lacks positive support, while
+positive belief is absent. -/
+theorem knower_gap_internal_not_differs_from_absence :
+    (knowerStep FDEValue.N).pos = false ∧
+    knowerLacksPositiveBelief FDEValue.N = true := by
+  native_decide
+
 /-!
 ## Interpretation
 
-The paradox does not force a unique collapse.  Four-valued semantics exposes
+The paradox does not force a unique collapse. Four-valued semantics exposes
 a bifurcation between two stable responses to epistemic self-reference:
 
 * B: overdetermination -- both positive and negative epistemic support;
 * N: underdetermination -- neither positive nor negative epistemic support.
 
-The distinction also highlights a semantic caution for later Fitch work:
-internal FDE negation `not B(phi)` is not automatically the same notion as the
-meta-level absence of positive belief in `phi`.
+The status layer sharpens the interpretation. The equation implemented here is
+an internal-negation equation, not an absence-of-belief equation. Those readings
+coincide in classical states but split exactly at B and N. Therefore a later
+formalization of the natural-language Knower should make explicit which notion
+of "not known" or "not believed" it intends to represent.
 -/
 
 end PEL4.Paradoxes
