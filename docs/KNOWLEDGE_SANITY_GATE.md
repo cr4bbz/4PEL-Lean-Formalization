@@ -1,11 +1,12 @@
 # Knowledge sanity gate before Fitch
 
-Status: build candidate on `research/preface-case-study`.
+Status: verified sanity gate; conjunction-boundary characterization is the next build gate on `research/preface-case-study`.
 
 ## Verified input
 
-The previous `lake build` verifies the complete evidence-stable four-valued
-knowledge candidate in `PEL4/KnowledgeSemantics.lean`.
+The current `lake build` verifies the complete evidence-stable four-valued
+knowledge candidate in `PEL4/KnowledgeSemantics.lean` and the sanity checks in
+`PEL4/KnowledgeSanity.lean`.
 
 Its semantic value is
 
@@ -33,14 +34,11 @@ heterogeneous accessible FDE status -> K*(phi) = F.
 Thus the knowledge candidate can itself be glutty or gappy. It is not a
 Boolean-valued wrapper around FDE.
 
-## Current sanity gate
-
-`PEL4/KnowledgeSanity.lean` now tests three properties before the semantics is
-promoted to a primitive object-language operator.
+## Verified sanity results
 
 ### 1. Reflexive factivity
 
-Candidate theorem:
+Lean verifies:
 
 ```text
 w in R_i(w)
@@ -62,7 +60,7 @@ lacksPositiveKnowledge(phi) = not K+(phi)
 at the meta level, and compare it with the positive bit of internal FDE
 negation of the full knowledge value.
 
-The candidate theorem is
+Lean verifies
 
 ```text
 (FDE.not K*(phi)).pos = lacksPositiveKnowledge(phi)
@@ -70,17 +68,13 @@ The candidate theorem is
 K*(phi) is classical.
 ```
 
-Hence the same separation already proved for threshold belief is expected to
-reappear at the knowledge level. If `K*(phi)` is `B` or `N`, internal negation
-and absence of positive knowledge diverge.
+Hence the same separation already proved for threshold belief reappears at the
+knowledge level. If `K*(phi)` is `B` or `N`, internal negation and absence of
+positive knowledge diverge.
 
-### 3. Conjunction elimination
+### 3. Unrestricted conjunction elimination fails
 
-The literature-motivated non-standard Belnap-Dunn knowledge modality is not a
-normal compositional modal operator. In particular, knowledge of a conjunction
-need not entail knowledge of each conjunct on arbitrary frames.
-
-The finite 4-PEL witness uses two accessible worlds:
+The verified finite witness uses two accessible worlds:
 
 ```text
 left:   p = T, q = B
@@ -93,22 +87,20 @@ At both worlds,
 p and q = B.
 ```
 
-Therefore the conjunction has a stable complete FDE value and the candidate
-predicts
+Therefore
 
 ```text
-K*(p and q) = B.
+K*(p and q) = B,
 ```
 
-But each conjunct separately varies between `T` and `B`, so the candidate
-predicts
+while the individual conjuncts are unstable and hence
 
 ```text
 K*(p) = F
 K*(q) = F.
 ```
 
-The target result is therefore
+Lean verifies the positive transport failure:
 
 ```text
 K+(p and q) = true
@@ -124,6 +116,37 @@ positive knowledge of conjunction
 positive knowledge of conjunct.
 ```
 
+## New conjunction-boundary gate
+
+The countermodel suggests a sharper result than simple non-distributivity.
+`K+(phi and psi)` already guarantees universal positive support for both
+conjuncts. What can fail is only the stability requirement of the individual
+conjunct.
+
+`PEL4/KnowledgeConjunctionBoundary.lean` therefore targets the exact local
+characterization:
+
+```text
+assuming K+(phi and psi):
+
+K+(phi) iff Stable(phi)
+K+(psi) iff Stable(psi).
+```
+
+Equivalently, conjunction elimination is restored as soon as the target
+conjunct has a stable full FDE value across the accessible range.
+
+The existing crossed `T/B` countermodel should sit exactly on the failure side:
+
+```text
+Stable(p and q) = true
+Stable(p)       = false
+Stable(q)       = false.
+```
+
+If this builds, the knowledge/conjunction failure receives an exact structural
+boundary: the conjunction can mask component-level information instability.
+
 ## Why this matters for Fitch
 
 The standard Fitch derivation considers possible knowledge of a conjunction of
@@ -134,35 +157,47 @@ p and not K(p)
 ```
 
 and then uses knowledge/conjunction principles to extract epistemic claims about
-its conjuncts. If the selected four-valued knowledge operator does not validate
-unrestricted conjunction elimination, that step must be stated as an explicit
-additional principle rather than silently inherited from normal modal logic.
+its conjuncts. Under evidence-stable four-valued knowledge, that extraction is
+not automatic.
 
-This does not by itself refute or solve Fitch. It identifies the first exact
-transport principle that the four-valued semantics places under pressure.
+The sharper question is now:
+
+```text
+Does the relevant Fitch conjunction satisfy the component-stability condition
+needed for conjunction elimination?
+```
+
+If yes, the classical step may be recovered locally. If not, Fitch relies on a
+transport principle that the semantics rejects.
+
+This does not by itself refute or solve Fitch. It identifies an exact semantic
+condition under which one of the standard proof moves is licensed.
 
 ## Literature alignment
 
 Kozhemiachenko and Vashentseva explicitly note that their non-standard
 Belnap-Dunn knowledge modality is non-compositional with respect to conjunction
-in the presence of paradoxical values. They show that the unrestricted
-conjunction-elimination pattern is valid only on partial-functional frames and
-explain that the source of failure is precisely the requirement that the full
-Belnapian value remain the same across accessible states.
+in the presence of paradoxical values. They show that unrestricted
+conjunction-elimination behaviour requires additional frame restrictions and
+explain the failure through variation of full Belnapian values across accessible
+states.
 
-This means the 4-PEL countermodel is intended as an implementation-level
-realization of an established semantic phenomenon, not as a novelty claim.
+The present 4-PEL development therefore treats the finite countermodel as an
+implementation-level realization of an established semantic phenomenon, while
+the new contribution of the current gate is to characterize the exact local
+stability condition inside this implementation.
 
 ## Next gate after a successful build
 
-If the current sanity module compiles, the next decision is architectural:
+If `KnowledgeConjunctionBoundary.lean` compiles, the next sequence is:
 
-1. characterize conditions under which conjunction elimination is restored;
-2. test conjunction introduction separately;
-3. compare raw accessibility possibility with the internal dual of knowledge;
+1. test conjunction introduction separately;
+2. compare raw accessibility possibility with the internal dual of knowledge;
+3. characterize classical fragments / frame conditions where normal modal
+   behaviour is recovered;
 4. only then add object-language `K` / possibility syntax and encode Fitch.
 
-The key methodological question becomes:
+The key methodological question remains:
 
 ```text
 Which Fitch steps are semantic theorems of evidence-stable four-valued
