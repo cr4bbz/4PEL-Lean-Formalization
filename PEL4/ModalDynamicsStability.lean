@@ -76,13 +76,13 @@ theorem evalModal_conditionalize_of_probabilityFree
       simp only [evalModal]
       unfold modalKnowledgeValue
       simp only [conditionalize]
-      simp_rw [ih]
+      simp only [ih]
   | poss i hPhi ih =>
       intro w
       simp only [evalModal]
       unfold modalRawPossibilityValue
       simp only [conditionalize]
-      simp_rw [ih]
+      simp only [ih]
 
 /-- Accessible full-value stability of a probability-free formula is invariant
 under admissible probabilistic conditionalization. -/
