@@ -34,6 +34,7 @@ import PEL4.Paradoxes.SurpriseExamination
 import PEL4.Paradoxes.SurpriseBackwardElimination
 import PEL4.Paradoxes.Fitch
 import PEL4.Paradoxes.FitchRecovery
+import PEL4.Paradoxes.FitchRecoveryIndependence
 import PEL4.Paradoxes.FitchKnowabilityBoundary
 
 import PEL4.Conservation
