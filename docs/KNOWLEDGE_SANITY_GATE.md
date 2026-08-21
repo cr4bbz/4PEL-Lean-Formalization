@@ -1,23 +1,15 @@
 # Knowledge sanity gate before Fitch
 
-Status: verified sanity and conjunction-boundary results; conjunction introduction is the next build gate on `research/preface-case-study`.
+Status: verified knowledge sanity, conjunction boundary, and conjunction introduction on `research/preface-case-study`. Raw possibility versus the internal knowledge dual is the next build gate.
 
-## Verified input
+## Verified knowledge semantics
 
 The current `lake build` verifies the complete evidence-stable four-valued
-knowledge candidate in `PEL4/KnowledgeSemantics.lean`, the sanity checks in
-`PEL4/KnowledgeSanity.lean`, and the exact conjunction-elimination boundary in
-`PEL4/KnowledgeConjunctionBoundary.lean`.
-
-Its semantic value is
+knowledge candidate in `PEL4/KnowledgeSemantics.lean`.
 
 ```text
 K*(phi) = (K+(phi), K-(phi))
-```
 
-with
-
-```text
 K+(phi) = universal positive support AND stable complete FDE value
 K-(phi) = accessible negative support OR unstable complete FDE value.
 ```
@@ -37,7 +29,7 @@ Boolean-valued wrapper around FDE.
 
 ## Verified sanity results
 
-### 1. Reflexive factivity
+### Reflexive factivity
 
 Lean verifies:
 
@@ -47,12 +39,9 @@ and K+(phi) at w
 implies phi+ at w.
 ```
 
-This is the positive four-valued form of factivity. It requires reflexivity at
-the actual point rather than being built into the generic `Model` structure.
+### Internal negation versus absence of knowledge
 
-### 2. Internal negation versus absence of knowledge
-
-Lean verifies
+Lean verifies:
 
 ```text
 (FDE.not K*(phi)).pos = lacksPositiveKnowledge(phi)
@@ -63,47 +52,33 @@ K*(phi) is classical.
 Hence internal negation and meta-level absence of positive knowledge diverge
 exactly at the nonclassical knowledge values `B` and `N`.
 
-### 3. Unrestricted conjunction elimination fails
+## Verified conjunction transport
 
-The verified finite witness uses two accessible worlds:
+### Unrestricted conjunction elimination fails
+
+The verified crossed witness is:
 
 ```text
 left:   p = T, q = B
 right:  p = B, q = T.
 ```
 
-At both worlds,
+At both worlds `p and q = B`, so
 
 ```text
-p and q = B.
+K*(p and q) = B
+K*(p)       = F
+K*(q)       = F.
 ```
 
-Therefore
+Therefore positive knowledge of a conjunction does not in general transport to
+positive knowledge of its conjuncts.
 
-```text
-K*(p and q) = B,
-```
+### Exact elimination boundary
 
-while the individual conjuncts are unstable and hence
-
-```text
-K*(p) = F
-K*(q) = F.
-```
-
-Lean verifies:
-
-```text
-K+(p and q) = true
-K+(p)       = false
-K+(q)       = false.
-```
-
-## Verified conjunction-elimination boundary
-
-The stronger result is now compiler-verified. Assuming positive knowledge of a
-conjunction, the positive-support part already transports to each conjunct.
-The only remaining requirement is component-level FDE stability:
+`PEL4/KnowledgeConjunctionBoundary.lean` is compiler-verified. Assuming
+`K+(phi and psi)`, positive support has already transported to each component.
+The only remaining condition is component-level FDE stability:
 
 ```text
 assuming K+(phi and psi):
@@ -112,95 +87,116 @@ K+(phi) iff Stable(phi)
 K+(psi) iff Stable(psi).
 ```
 
-Hence conjunction elimination fails exactly when a stable compound masks an
-unstable component. The crossed `T/B` witness sits precisely on that boundary:
+The failure is therefore precisely a failure of stability reflection from a
+stable compound to its components.
 
-```text
-Stable(p and q) = true
-Stable(p)       = false
-Stable(q)       = false.
-```
+### Conjunction introduction
 
-This is a structural-transport boundary theorem rather than merely a
-counterexample to modal distribution.
-
-## New conjunction-introduction gate
-
-`PEL4/KnowledgeConjunctionIntroduction.lean` tests the reverse transport
-direction. The candidate proof decomposes the result into two closure facts:
+`PEL4/KnowledgeConjunctionIntroduction.lean` is now also compiler-verified.
+Lean verifies both underlying closure principles:
 
 ```text
 Box+(phi) and Box+(psi)
   -> Box+(phi and psi)
 
 Stable(phi) and Stable(psi)
-  -> Stable(phi and psi).
+  -> Stable(phi and psi),
 ```
 
-Together these should yield the unrestricted positive knowledge rule
+and hence the unrestricted positive knowledge rule:
 
 ```text
 K+(phi) and K+(psi)
   -> K+(phi and psi).
 ```
 
-If the build succeeds, the conjunction behaviour is directionally asymmetric:
+The conjunction behaviour is therefore genuinely directional:
 
 ```text
 composition preserves epistemic stability,
 decomposition need not reflect epistemic stability.
 ```
 
-The existing crossed `T/B` model is included as a witness to this asymmetry:
-conjunction introduction is a general theorem, while conjunction elimination
-fails in that concrete model.
+This is the current sharp structural diagnosis of the conjunction step relevant
+to Fitch.
+
+## New possibility-duality gate
+
+Fitch also needs a possibility / knowability operator. The project should not
+identify raw accessibility possibility with the internal dual
+
+```text
+not K(not phi)
+```
+
+without checking the four-valued semantics.
+
+`PEL4/KnowledgePossibility.lean` therefore introduces two semantic candidates
+without yet changing the object language.
+
+Raw accessibility possibility:
+
+```text
+Diamond_raw+(phi) = some accessible world positively supports phi
+Diamond_raw-(phi) = every accessible world negatively supports phi.
+```
+
+Internal knowledge dual:
+
+```text
+Diamond_K(phi) = FDE.not (K*(not phi)).
+```
+
+The key build candidates are:
+
+1. FDE negation preserves accessible value stability;
+2. if `phi` is unstable across the accessible range, then
+   `Diamond_K(phi) = T`;
+3. on homogeneous two-world profiles both notions recover the same full FDE
+   value;
+4. on a `B/F` profile raw possibility is `B` while the knowledge dual is `T`;
+5. on an `N/F` profile raw possibility is `N` while the knowledge dual is `T`.
+
+If these compile, the internal dual has a precise failure mode: evidence-stable
+knowledge turns heterogeneity of `not phi` into `F`, and outer negation then
+turns that failure into strict `T`. The dual can therefore erase glut/gap
+structure that raw accessibility possibility still records.
 
 ## Why this matters for Fitch
 
-The standard Fitch derivation considers possible knowledge of a conjunction of
-the form
+The standard Fitch derivation combines:
 
 ```text
 p and not K(p)
+possibility / knowability
+knowledge of a conjunction
+conjunction elimination
+factivity.
 ```
 
-and then extracts epistemic claims about its conjuncts. The verified boundary
-shows that this eliminative step needs component stability under the present
-knowledge semantics.
+The current verified development already shows that the conjunction-elimination
+step is licensed only under a component-stability condition. The new possibility
+gate asks whether the modal possibility step also imports a hidden transport
+assumption.
 
-Conjunction introduction appears to behave differently: if both components are
-already positively known, their stability composes forward. Thus the likely
-Fitch pressure point is specifically decomposition of knowledge, not formation
-of knowledge from already stable known components.
+If raw possibility and `not K(not _)` diverge, a future 4-PEL Fitch
+formalization should use an explicit accessibility-based possibility operator
+and compare the internal dual only as a derived notion on fragments where an
+equivalence theorem is available.
 
-This does not yet settle Fitch. It identifies which direction of the
-knowledge/conjunction transport is structurally fragile.
+## Next sequence
 
-## Literature alignment
+After a successful possibility build:
 
-Kozhemiachenko and Vashentseva explicitly note that their non-standard
-Belnap-Dunn knowledge modality is non-compositional with respect to conjunction
-in the presence of paradoxical values. They show that unrestricted
-conjunction-elimination behaviour requires additional frame restrictions and
-explain the failure through variation of full Belnapian values across accessible
-states.
+1. characterize a fragment where raw possibility and the knowledge dual agree;
+2. identify the corresponding classical / stable recovery conditions;
+3. promote `K` and raw possibility to object-language syntax;
+4. encode the Fitch derivation step by step, recording exactly which transports
+   are theorems and which require extra assumptions.
 
-The current 4-PEL development should therefore be read as a machine-checked
-implementation and local structural analysis of that phenomenon, not as a
-claim that the general non-compositionality itself is novel.
-
-## Next gate after a successful build
-
-If `KnowledgeConjunctionIntroduction.lean` compiles, the next sequence is:
-
-1. compare raw accessibility possibility with the internal dual of knowledge;
-2. characterize classical fragments / frame conditions where normal modal
-   behaviour is recovered;
-3. only then add object-language `K` / possibility syntax and encode Fitch.
-
-The key methodological question remains:
+The methodological question remains:
 
 ```text
 Which Fitch steps are semantic theorems of evidence-stable four-valued
-knowledge, and which require extra classical or modal transport principles?
+knowledge, and which are imported classical transport principles?
 ```
