@@ -1,12 +1,13 @@
 # Knowledge sanity gate before Fitch
 
-Status: verified sanity gate; conjunction-boundary characterization is the next build gate on `research/preface-case-study`.
+Status: verified sanity and conjunction-boundary results; conjunction introduction is the next build gate on `research/preface-case-study`.
 
 ## Verified input
 
 The current `lake build` verifies the complete evidence-stable four-valued
-knowledge candidate in `PEL4/KnowledgeSemantics.lean` and the sanity checks in
-`PEL4/KnowledgeSanity.lean`.
+knowledge candidate in `PEL4/KnowledgeSemantics.lean`, the sanity checks in
+`PEL4/KnowledgeSanity.lean`, and the exact conjunction-elimination boundary in
+`PEL4/KnowledgeConjunctionBoundary.lean`.
 
 Its semantic value is
 
@@ -21,7 +22,7 @@ K+(phi) = universal positive support AND stable complete FDE value
 K-(phi) = accessible negative support OR unstable complete FDE value.
 ```
 
-The verified finite gate establishes:
+The verified finite semantics establishes:
 
 ```text
 homogeneous T -> K*(phi) = T
@@ -51,15 +52,6 @@ the actual point rather than being built into the generic `Model` structure.
 
 ### 2. Internal negation versus absence of knowledge
 
-Define
-
-```text
-lacksPositiveKnowledge(phi) = not K+(phi)
-```
-
-at the meta level, and compare it with the positive bit of internal FDE
-negation of the full knowledge value.
-
 Lean verifies
 
 ```text
@@ -68,9 +60,8 @@ Lean verifies
 K*(phi) is classical.
 ```
 
-Hence the same separation already proved for threshold belief reappears at the
-knowledge level. If `K*(phi)` is `B` or `N`, internal negation and absence of
-positive knowledge diverge.
+Hence internal negation and meta-level absence of positive knowledge diverge
+exactly at the nonclassical knowledge values `B` and `N`.
 
 ### 3. Unrestricted conjunction elimination fails
 
@@ -100,7 +91,7 @@ K*(p) = F
 K*(q) = F.
 ```
 
-Lean verifies the positive transport failure:
+Lean verifies:
 
 ```text
 K+(p and q) = true
@@ -108,23 +99,11 @@ K+(p)       = false
 K+(q)       = false.
 ```
 
-This isolates a structural transport failure:
+## Verified conjunction-elimination boundary
 
-```text
-positive knowledge of conjunction
-  -/->
-positive knowledge of conjunct.
-```
-
-## New conjunction-boundary gate
-
-The countermodel suggests a sharper result than simple non-distributivity.
-`K+(phi and psi)` already guarantees universal positive support for both
-conjuncts. What can fail is only the stability requirement of the individual
-conjunct.
-
-`PEL4/KnowledgeConjunctionBoundary.lean` therefore targets the exact local
-characterization:
+The stronger result is now compiler-verified. Assuming positive knowledge of a
+conjunction, the positive-support part already transports to each conjunct.
+The only remaining requirement is component-level FDE stability:
 
 ```text
 assuming K+(phi and psi):
@@ -133,10 +112,8 @@ K+(phi) iff Stable(phi)
 K+(psi) iff Stable(psi).
 ```
 
-Equivalently, conjunction elimination is restored as soon as the target
-conjunct has a stable full FDE value across the accessible range.
-
-The existing crossed `T/B` countermodel should sit exactly on the failure side:
+Hence conjunction elimination fails exactly when a stable compound masks an
+unstable component. The crossed `T/B` witness sits precisely on that boundary:
 
 ```text
 Stable(p and q) = true
@@ -144,8 +121,39 @@ Stable(p)       = false
 Stable(q)       = false.
 ```
 
-If this builds, the knowledge/conjunction failure receives an exact structural
-boundary: the conjunction can mask component-level information instability.
+This is a structural-transport boundary theorem rather than merely a
+counterexample to modal distribution.
+
+## New conjunction-introduction gate
+
+`PEL4/KnowledgeConjunctionIntroduction.lean` tests the reverse transport
+direction. The candidate proof decomposes the result into two closure facts:
+
+```text
+Box+(phi) and Box+(psi)
+  -> Box+(phi and psi)
+
+Stable(phi) and Stable(psi)
+  -> Stable(phi and psi).
+```
+
+Together these should yield the unrestricted positive knowledge rule
+
+```text
+K+(phi) and K+(psi)
+  -> K+(phi and psi).
+```
+
+If the build succeeds, the conjunction behaviour is directionally asymmetric:
+
+```text
+composition preserves epistemic stability,
+decomposition need not reflect epistemic stability.
+```
+
+The existing crossed `T/B` model is included as a witness to this asymmetry:
+conjunction introduction is a general theorem, while conjunction elimination
+fails in that concrete model.
 
 ## Why this matters for Fitch
 
@@ -156,22 +164,17 @@ the form
 p and not K(p)
 ```
 
-and then uses knowledge/conjunction principles to extract epistemic claims about
-its conjuncts. Under evidence-stable four-valued knowledge, that extraction is
-not automatic.
+and then extracts epistemic claims about its conjuncts. The verified boundary
+shows that this eliminative step needs component stability under the present
+knowledge semantics.
 
-The sharper question is now:
+Conjunction introduction appears to behave differently: if both components are
+already positively known, their stability composes forward. Thus the likely
+Fitch pressure point is specifically decomposition of knowledge, not formation
+of knowledge from already stable known components.
 
-```text
-Does the relevant Fitch conjunction satisfy the component-stability condition
-needed for conjunction elimination?
-```
-
-If yes, the classical step may be recovered locally. If not, Fitch relies on a
-transport principle that the semantics rejects.
-
-This does not by itself refute or solve Fitch. It identifies an exact semantic
-condition under which one of the standard proof moves is licensed.
+This does not yet settle Fitch. It identifies which direction of the
+knowledge/conjunction transport is structurally fragile.
 
 ## Literature alignment
 
@@ -182,20 +185,18 @@ conjunction-elimination behaviour requires additional frame restrictions and
 explain the failure through variation of full Belnapian values across accessible
 states.
 
-The present 4-PEL development therefore treats the finite countermodel as an
-implementation-level realization of an established semantic phenomenon, while
-the new contribution of the current gate is to characterize the exact local
-stability condition inside this implementation.
+The current 4-PEL development should therefore be read as a machine-checked
+implementation and local structural analysis of that phenomenon, not as a
+claim that the general non-compositionality itself is novel.
 
 ## Next gate after a successful build
 
-If `KnowledgeConjunctionBoundary.lean` compiles, the next sequence is:
+If `KnowledgeConjunctionIntroduction.lean` compiles, the next sequence is:
 
-1. test conjunction introduction separately;
-2. compare raw accessibility possibility with the internal dual of knowledge;
-3. characterize classical fragments / frame conditions where normal modal
+1. compare raw accessibility possibility with the internal dual of knowledge;
+2. characterize classical fragments / frame conditions where normal modal
    behaviour is recovered;
-4. only then add object-language `K` / possibility syntax and encode Fitch.
+3. only then add object-language `K` / possibility syntax and encode Fitch.
 
 The key methodological question remains:
 
