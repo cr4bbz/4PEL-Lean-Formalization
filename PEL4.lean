@@ -39,6 +39,7 @@ import PEL4.Paradoxes.FitchRecoveryIndependence
 import PEL4.Paradoxes.FitchKnowabilityBoundary
 import PEL4.Paradoxes.ChurchFitch
 import PEL4.Paradoxes.ChurchFitchNoGapIndependence
+import PEL4.Paradoxes.ChurchFitchPhaseLandscape
 
 import PEL4.Conservation
 
