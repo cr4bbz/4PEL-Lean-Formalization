@@ -63,6 +63,9 @@ for every agent and world. Seriality is therefore not an additional frame assump
 | `v != F` | `K phi = v iff Stable(phi) AND B phi = v` | all non-false knowledge values require stability |
 | arbitrary profile | `K phi = F iff Unstable(phi) OR B phi = F` | `F` is the unique instability-absorbing value |
 | arbitrary profile | `K phi = if Stable(phi) then B phi else F` | exact factorization of knowledge through belief plus stability |
+| strict validity + accessibility closure | strict validity of `K phi` | closure keeps epistemic inspection inside the validity domain |
+| no accessibility closure | strict necessitation can fail | a hidden accessible `F` world can escape `m.worlds` |
+| positive validity + accessibility closure | positive necessitation can still fail | `T/B` heterogeneity remains positively designated but unstable |
 
 Here `K+ phi` abbreviates positive/designated support for `K phi`.
 
@@ -228,35 +231,72 @@ K(phi) = F iff Unstable(phi) or B(phi) = F.
 
 Thus instability is not low confidence. It is a qualitative failure mode that overrides threshold aggregation and sends knowledge to strict `F`.
 
-## 8. Current necessitation build gate
+## 8. Necessitation phase
 
-`PEL4/ModalKnowledgeNecessitationBoundary.lean` is the next local build gate and is not yet counted as compiler-verified.
+The necessitation boundary is now compiler-verified.
 
-It tests two distinct possible failures of the classical rule from validity to knowledge-validity.
-
-First, the current `Model` structure does not formally require the explicitly listed `m.worlds` to be closed under accessibility. A candidate strict theorem therefore adds:
+The current `Model` structure carries an explicit list `m.worlds`, but it does not itself require accessibility to remain inside that list. Since model-validity quantifies over `m.worlds`, strict necessitation needs a domain-coverage condition:
 
 ```text
-w in worlds and w R_i u -> u in worlds
+w in worlds and w R_i u -> u in worlds.
 ```
 
-and aims to recover:
+Under that accessibility-closure condition:
 
 ```text
-strict validity + accessibility closure -> strict K-validity.
+strict validity of phi
+->
+strict validity of K phi.
 ```
 
-Second, the existing `T/B` knowledge gate is already accessibility-closed while `p` is positively true at every listed world. The candidate counterexample tests whether:
+A finite escape model proves that closure cannot simply be omitted from this theorem: `root` is the only listed world, `p(root)=T`, but `root` accesses an unlisted `hidden` world with `p(hidden)=F`. Thus `p` is strictly valid over `m.worlds` while `K p` fails there.
+
+Positive necessitation has a second obstruction. The existing `KnowledgeGateModel` is accessibility-closed and `p` is positively true at every listed world, but its accessible values are `T` and `B`. Hence the profile is unstable and:
+
+```text
+K p = F.
+```
+
+Therefore:
 
 ```text
 positive validity + accessibility closure
 ```
 
-can still fail to yield positive `K`-validity because the complete accessible values vary between `T` and `B`.
+does not by itself imply positive validity of `K phi`.
 
-If the gate builds, necessitation will split into a domain-closure problem for strict validity and an additional stability problem for the positive fragment.
+This establishes the structural split:
 
-## 9. Current structural picture
+```text
+strict necessitation   -> domain coverage is enough
+positive necessitation -> domain coverage is not enough; full-value stability also matters
+```
+
+## 9. Exact positive necessitation build gate
+
+`PEL4/ModalKnowledgePositiveNecessitation.lean` is the next local build gate and is not yet counted as compiler-verified.
+
+It tests the exact formula-level boundary under accessibility closure and positive validity:
+
+```text
+positive validity of K phi
+iff
+phi is full-value stable on every listed world's accessible range.
+```
+
+It also packages the corresponding model-schema candidate:
+
+```text
+positive necessitation
+iff
+every positively valid formula is accessibility-stable
+```
+
+under accessibility closure.
+
+If verified, this would complete the necessitation phase with an exact stability characterization rather than only a failure witness.
+
+## 10. Current structural picture
 
 The verified modal fragment can now be summarized as follows:
 
@@ -270,15 +310,17 @@ NoGap                      -> bridges meta-level ignorance to negative epistemic
 stability                  -> K/B agreement and belief-to-knowledge upgrade
 K                          -> exactly stability-filtered B
 instability                -> overrides B and forces K = F
+accessibility closure      -> restores strict necessitation
+positive validity          -> still needs accessible full-value stability for K-validity
 ```
 
 The notable feature is that familiar epistemic laws split into frame transport, information status, domain coverage, and evidence aggregation. This is a specifically four-valued refinement of the classical correspondence picture.
 
-## 10. Next research questions
+## 11. Next research questions
 
 The highest-value remaining questions are now:
 
-1. verify the strict-versus-positive necessitation boundary;
+1. verify the exact positive necessitation stability boundary;
 2. study dynamic preservation or destruction of epistemic stability under update;
 3. determine whether the current local frame conditions admit sharper necessity/minimality theorems;
 4. compare the verified 4-PEL correspondence pattern systematically with nonstandard Belnap-Dunn knowledge logics before making novelty claims.
