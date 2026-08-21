@@ -2,11 +2,12 @@
 
 This document collects the currently compiler-verified modal laws of the primitive evidence-stable knowledge operator `K` on the active Lean 4.31 branch.
 
-The purpose is to separate three ingredients that classical modal slogans often blur together:
+The purpose is to separate four ingredients that classical modal slogans often blur together:
 
 1. frame geometry such as reflexivity, transitivity, and Euclideanness;
 2. four-valued information status `T`, `F`, `B`, `N`;
-3. the internal object-language negation `not K phi` versus meta-level absence of positive knowledge.
+3. the internal object-language negation `not K phi` versus meta-level absence of positive knowledge;
+4. qualitative evidence stability versus probabilistic threshold aggregation.
 
 ## 1. Core semantic facts
 
@@ -55,6 +56,8 @@ for every agent and world. Seriality is therefore not an additional frame assump
 | local transitivity + local Euclideanness + negative support for `K phi` | `K+(not K phi)` | internal axiom-5 style recovery |
 | reflexive + transitive + Euclidean singleton with `K phi = N` | meta-level lack of positive knowledge does not imply `(not K phi)+` | frame geometry cannot eliminate the gap |
 | transitive + Euclidean + local NoGap bridge | meta-level lack of positive knowledge implies `K+(not K phi)` | NoGap is an information-status assumption, not a frame condition |
+| stable accessible `phi` profile | `K phi = B phi` | both operators recover the same full FDE value |
+| arbitrary profile | `K phi = B phi iff Stable(phi) OR B phi = F` | under instability, equality survives only by accidental agreement at `F` |
 
 Here `K+ phi` abbreviates positive/designated support for `K phi`.
 
@@ -150,7 +153,7 @@ With this bridge plus transitivity and Euclideanness, positive knowledge of inte
 This yields a two-axis architecture:
 
 ```text
-frame geometry        -> transport of epistemic values
+frame geometry         -> transport of epistemic values
 FDE information status -> interpretation of absence / negation / ignorance
 ```
 
@@ -174,7 +177,41 @@ Stable(phi) OR Diamond_raw(phi) = T.
 
 If the accessible `phi` profile is unstable, internal dualization can force strict `T` even when raw possibility carries a different four-valued profile.
 
-## 7. Current structural picture
+## 7. Knowledge versus probabilistic belief
+
+Primitive knowledge `K` and probabilistic threshold belief `B` are not ordered by simple modal strength. They process the same accessible evidence differently:
+
+```text
+K -> requires complete FDE-value stability
+B -> thresholds positive and negative probability mass separately.
+```
+
+On stable profiles, the measured positive and negative evidence sets are each either the full accessibility list or the empty list. Since these have probability `1` and `0`, and every threshold satisfies `0 < c <= 1`, both operators recover exactly the same value:
+
+```text
+Stable(phi) -> K(phi) = B(phi).
+```
+
+The exact verified boundary is stronger:
+
+```text
+K(phi) = B(phi)
+iff
+Stable(phi) OR B(phi) = F.
+```
+
+Under instability, `K(phi)` is forced to strict `F`. Equality can therefore survive only when probabilistic thresholding independently also yields `F`.
+
+The heterogeneous `T/B` witness shows genuine divergence:
+
+```text
+K(p) = F
+B(p) = T.
+```
+
+So qualitative invariance is the bridge on which the two epistemic projections commute.
+
+## 8. Current structural picture
 
 The verified modal fragment can be summarized as follows:
 
@@ -185,16 +222,18 @@ transitivity              -> positive/full-value-preserving axiom 4 on T/B
 Euclideanness alone       -> insufficient for axiom 5
 transitivity + Euclidean  -> full K-idempotence and internal negative introspection
 NoGap                     -> bridges meta-level ignorance to negative epistemic support
+stability                 -> exact K/B agreement
+instability               -> K = F while B continues probabilistic aggregation
 ```
 
-The notable feature is that familiar modal laws split into a frame-transport component and an information-status component. This is a specifically four-valued refinement of the classical correspondence picture.
+The notable feature is that familiar epistemic laws split into frame transport, information status, and evidence aggregation. This is a specifically four-valued refinement of the classical correspondence picture.
 
-## 8. Next research questions
+## 9. Next research questions
 
 The modal-law program is no longer at the basic axiom-4/axiom-5 discovery stage. The highest-value remaining questions are now:
 
-1. characterize necessitation-like principles for positive versus strict truth;
-2. classify `K`/probabilistic-`B` interaction, including when knowledge entails threshold belief;
+1. classify the positive upgrade boundary from probabilistic belief to knowledge;
+2. characterize necessitation-like principles for positive versus strict truth;
 3. study dynamic preservation or destruction of epistemic stability under update;
 4. determine whether the current local frame conditions admit sharper necessity/minimality theorems;
 5. compare the verified 4-PEL correspondence pattern systematically with nonstandard Belnap-Dunn knowledge logics before making novelty claims.
