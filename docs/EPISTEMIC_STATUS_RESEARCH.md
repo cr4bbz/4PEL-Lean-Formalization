@@ -1,6 +1,6 @@
 # Epistemic status and structural transport
 
-Status: active build candidate on `research/preface-case-study`.
+Status: verified core architecture with Moore/Knower integration as the next build gate on `research/preface-case-study`.
 
 ## Why this layer exists
 
@@ -27,11 +27,11 @@ not (positive support).
 ```
 
 These coincide on the classical values `T` and `F`, but disagree on `B` and
-`N`. The new `PEL4/EpistemicStatus.lean` module makes this distinction explicit.
+`N`. `PEL4/EpistemicStatus.lean` makes this distinction explicit.
 
-## Build-candidate status vocabulary
+## Verified status vocabulary
 
-The current layer names:
+The Lean 4.31 build verifies the layer containing:
 
 ```text
 positivelyBelieves
@@ -52,11 +52,11 @@ The intended interpretation is deliberately modest:
 - strict disbelief = negative support without positive support;
 - glut and gap retain the ordinary four-valued readings.
 
-None of these is yet identified with factive knowledge.
+None of these is identified with factive knowledge.
 
-## Separation theorem
+## Verified separation theorem
 
-The principal candidate theorem is
+Lean verifies
 
 ```text
 (FDE.not v).pos = not v.pos
@@ -76,12 +76,11 @@ N: internal negation is not positively supported,
    but positive belief is absent.
 ```
 
-If the next `lake build` succeeds, this turns an earlier semantic caution into
-a machine-checked theorem.
+This turns the earlier semantic caution into a machine-checked theorem.
 
-## Structural transport as a formal object
+## Verified structural transport vocabulary
 
-`PEL4/StructuralTransport.lean` introduces a domain-agnostic vocabulary:
+`PEL4/StructuralTransport.lean` introduces the domain-agnostic notions
 
 ```text
 TransportsPredicate T P Q
@@ -90,66 +89,91 @@ Commutes pi T Tstar
 PreservesObservation T observeSource observeTarget
 ```
 
-with generic witness theorems for refuting each preservation claim.
+with generic witness theorems for refuting preservation and commutation claims.
 
-The point is to stop using "transport failure" only as philosophical prose.
-Paradox modules should increasingly instantiate these generic definitions.
+The Surprise backward-elimination development is now the first verified
+paradox-level instantiation: its branch-relative prediction predicate fails to
+transport to the initial prediction predicate.
 
-## First paradox-level instantiation
+Thus "structural transport failure" is no longer used only as philosophical
+prose. It is an explicit formal property that paradox modules can instantiate.
 
-The Surprise backward-elimination module now defines
+## Moore integration: next build gate
 
-```text
-backwardPredictionTransport
-```
-
-as transport from
-
-```text
-predictable in the day-specific elimination context
-```
-
-to
+`PEL4/Paradoxes/Moore.lean` now separates two readings that classical notation
+can blur:
 
 ```text
-predictable in the initial context.
+object-language: p and not B(p)
 ```
 
-The new candidate theorem
+and
 
 ```text
-not backwardPredictionTransport
+meta-level: p has positive truth support and positive belief in p is absent.
 ```
 
-uses the already verified Friday witness:
+In the existing 1/2--1/2 model at threshold 2/3, the new candidate theorems say:
 
 ```text
-backward-context prediction = true
-initial-context prediction  = false.
+B(p) = N
+not B(p) = N
+p and not B(p) = N
+lackPositiveBelief(p) = true
+lackNegativeBelief(p) = true
+meta-level Moore condition = true.
 ```
 
-If this builds, Surprise becomes the first paradox for which the repository
-proves a failure using the generic structural-transport language itself.
+If the next build succeeds, the repository will formally distinguish a gappy
+internal Moore sentence from a satisfied meta-level absence-of-belief condition.
+
+## Knower integration: next build gate
+
+`PEL4/Paradoxes/Knower.lean` now uses the status layer to sharpen what its fixed
+point equation represents.
+
+The already verified map
+
+```text
+T -> F
+F -> T
+B -> B
+N -> N
+```
+
+implements internal FDE negation of threshold belief. The new candidate theorem
+says that the positive bit of this internal negation matches meta-level absence
+of positive belief exactly on the classical states.
+
+Hence the two nonclassical fixed points also witness two opposite divergences:
+
+```text
+B: internal not is positively supported; positive belief is not absent.
+N: internal not lacks positive support; positive belief is absent.
+```
+
+This means a natural-language Knower sentence using "not known" or "not
+believed" cannot be treated as semantically settled until the intended notion
+of epistemic negation is specified.
 
 ## Roadmap toward Fitch
 
-The intended sequence is:
+The intended sequence is now:
 
-1. verify the epistemic-status separation layer;
-2. reuse it in Moore, Knower, and Surprise where appropriate;
-3. specify a genuinely distinct knowledge operator `K` rather than aliasing
-   threshold belief;
-4. specify factivity and the intended conjunction principles for `K`;
-5. introduce modal possibility / knowability separately;
-6. formalize Fitch only after the meanings of
-   `not K(phi)` and absence of knowledge are explicitly distinguished.
+1. verify the Moore and Knower reuse of the status layer;
+2. perform a strict semantic/literature gate for a genuinely distinct knowledge
+   operator `K` rather than aliasing threshold belief;
+3. specify factivity and the intended conjunction principles for `K`;
+4. introduce modal possibility / knowability separately;
+5. distinguish internal `not K(phi)` from meta-level absence of knowledge;
+6. formalize Fitch only after those choices are explicit.
 
-The design constraint is simple:
+The design constraint remains:
 
 ```text
 belief != absence of belief != disbelief != knowledge.
 ```
 
-This is not merely terminology. In a four-valued semantics these distinctions
-correspond to different bit-level and modal structures, and collapsing them can
-manufacture or erase paradoxical inferences.
+In a four-valued semantics these distinctions correspond to different bit-level
+and modal structures. Collapsing them can manufacture or erase paradoxical
+inferences.
