@@ -1,10 +1,10 @@
 # Knowledge semantics gate before Fitch
 
-Status: literature-grounded design gate. No `K` operator has been added to the Lean object language yet.
+Status: positive knowledge comparison **Lean-verified**; full four-valued evidence-stable knowledge semantics is the next build gate on `research/preface-case-study`. No primitive object-language `K` has been added yet.
 
 ## Why a gate is necessary
 
-The current 4-PEL language contains probabilistic threshold belief `B`, internal FDE negation, and an explicit meta-level epistemic-status layer. The recent verified results show that
+The current 4-PEL language contains probabilistic threshold belief `B`, internal FDE negation, and an explicit meta-level epistemic-status layer. Lean verifies that
 
 ```text
 internal not B(phi)
@@ -26,27 +26,35 @@ A knowledge operator must therefore not be introduced by simply renaming `B` or 
 
 Standard modal expansions of Belnap-Dunn / FDE use a `Box`-like operator whose positive condition is universal positive support over accessible worlds and whose negative condition is existential negative support over accessible worlds.
 
-This is mathematically established modal-FDE machinery, but recent epistemic work argues that the ordinary `Box` is not always a good formalization of knowledge or belief in a Belnap-Dunn information setting.
+Kozhemiachenko and Vashentseva, *Knowledge and ignorance in Belnap--Dunn logic*, argue that the ordinary `Box` is not always a good formalization of knowledge or belief in a Belnap-Dunn information setting. In particular, `Box phi` may be positively supported while the complete Belnapian value of `phi` varies across accessible states.
 
-Kozhemiachenko and Vashentseva, *Knowledge and ignorance in Belnap--Dunn logic* (2023/2024), explicitly argue that standard `Box` can treat a proposition as known even while its full Belnapian value varies across accessible states. They introduce a non-standard modality, written `blacksquare`, intended for knowledge/belief.
-
-The key epistemic intuition is stronger than ordinary universal positive support:
+They motivate a non-standard modality `blacksquare` whose positive support requires both:
 
 ```text
-K(phi) should require phi to be positively supported throughout the accessible range
-AND the Belnapian status of phi should be stable throughout that range.
+phi is positively supported at every accessible state
+AND
+phi has the same complete Belnapian value at every accessible state.
 ```
 
-On suitable S5-style frames their operator supports truthfulness and positive/negative introspection.
+Their semantic analysis also shows that falsity of this knowledge modality is sensitive not merely to explicit negative support but to instability of the Belnapian value itself. In particular, accessible states with different non-false values can still refute knowledge.
+
+This motivates the current 4-PEL candidate:
+
+```text
+K+.pos := universal positive support AND FDE-value stability
+K-.neg := accessible negative support OR FDE-value instability.
+```
+
+On suitable S5-style frames the literature modality supports truthfulness and positive/negative introspection. It also behaves classically when all formulas have classical values throughout the model.
 
 ### Four-valued dynamic epistemic logic
 
-Santos, *A Four-Valued Dynamic Epistemic Logic* (2020), also shows why negated modal formulas require care in a four-valued epistemic language. In that framework, a formula such as `not Box phi` need not mean simple absence of knowledge; it can instead have a possibility/evidence-against reading after normalization.
+Santos, *A Four-Valued Dynamic Epistemic Logic* (2020), independently shows why negated modal formulas require care in a four-valued epistemic language. The modal layer concerns agents' knowledge about potentially incomplete or conflicting evidence, and internal negation cannot automatically be read as simple absence of knowledge.
 
-This independently reinforces the design constraint already proved inside 4-PEL:
+This reinforces the design constraint already proved inside 4-PEL:
 
 ```text
-internal epistemic negation != meta-level epistemic absence
+internal epistemic negation != meta-level epistemic absence.
 ```
 
 ### Fitch and paraconsistent revision
@@ -63,66 +71,98 @@ and then considers possible knowledge of that conjunction. The crucial reductio 
 K(p) and not K(p).
 ```
 
-The Stanford Encyclopedia survey of Fitch's paradox notes a paraconsistent line, associated especially with Beall, according to which the proof relies on treating such epistemic contradictions as impossible. If contradiction is non-explosive and epistemic gluts are possible, that reductio step becomes a substantive semantic assumption rather than an automatic endpoint.
+The Stanford Encyclopedia survey notes the paraconsistent line associated especially with Beall: the proof relies on treating epistemic contradictions of this sort as impossible. If contradiction is non-explosive and epistemic gluts are possible, that impossibility becomes a substantive semantic assumption rather than an automatic endpoint.
 
-This makes Fitch a particularly strong test for 4-PEL, but only after `K` and epistemic negation are kept distinct.
+This makes Fitch a particularly strong test for 4-PEL, but only after `K`, internal negation, knowledge absence, and possibility are kept distinct.
 
-## Candidate architecture for 4-PEL knowledge
+## Verified positive comparison gate
 
-The current preferred design is to keep three levels separate.
-
-### 1. Probabilistic belief `B`
-
-Existing operator:
+`PEL4/KnowledgeSemantics.lean` already contains two positive conditions:
 
 ```text
-B_i(phi) = independent thresholding of positive and negative probability mass.
+standardBoxPositive
+evidenceStableKnowledgePositive
 ```
 
-This operator is non-factive and explicitly probabilistic.
-
-### 2. Epistemic status predicates
-
-Already verified:
+Lean 4.31 verifies:
 
 ```text
-positivelyBelieves
-negativelyBelieves
-lacksPositiveBelief
-lacksNegativeBelief
-strictlyPositivelyBelieves
-strictlyNegativelyBelieves
-hasGluttyBelief
-hasGappyBelief
+evidenceStableKnowledgePositive(phi)
+  -> standardBoxPositive(phi).
 ```
 
-These remain meta-level diagnostics and are not modal knowledge.
-
-### 3. Distinct knowledge operator `K`
-
-A future `K_i(phi)` should be evaluated independently of the Lockean threshold. The preferred first candidate is an evidence-stability semantics inspired by non-standard Belnap-Dunn epistemic modalities:
+It also verifies a finite contrast model with accessible values
 
 ```text
-positive K_i(phi) at w
-iff
-  phi is positively supported at every world accessible from w
-  AND phi has the same complete FDE value at every accessible world.
+T, B
 ```
 
-The negative component must be specified separately rather than assumed to be Boolean complement. This is an open design choice and should be tested against factivity, conjunction behavior, introspection, and Fitch.
+where ordinary positive `Box` succeeds but evidence-stable positive knowledge fails. Thus universal positive support does not by itself guarantee epistemically stable knowledge.
+
+## Full evidence-stable knowledge candidate: next build gate
+
+The module now adds a candidate negative component:
+
+```text
+standardBoxNegative(phi)
+  := some accessible world negatively supports phi
+
+evidenceStableKnowledgeNegative(phi)
+  := not FDEValueStable(phi) OR standardBoxNegative(phi).
+```
+
+The full candidate is the FDE value
+
+```text
+K*(phi) = (K+(phi), K-(phi)).
+```
+
+The instability disjunct is essential. For example, accessible values `T` and `N` contain no negative support, but they disagree about the complete information state and should therefore fail stable knowledge.
+
+### Candidate Knowledge Stability Principle
+
+The new build candidate predicts that homogeneous accessible information recovers its complete four-valued status:
+
+```text
+all accessible values T -> K*(phi) = T
+all accessible values F -> K*(phi) = F
+all accessible values B -> K*(phi) = B
+all accessible values N -> K*(phi) = N.
+```
+
+A parameterized Lean theorem attempts to prove all four cases at once.
+
+### Candidate instability theorem
+
+The second key target is:
+
+```text
+FDE-value instability -> K*(phi) = F.
+```
+
+Thus heterogeneity does not merely remove positive knowledge. It supplies negative epistemic support against the claim that the proposition is stably known.
+
+If this gate builds, the resulting finite semantics has a particularly simple form:
+
+```text
+homogeneous accessible status -> recover that FDE value
+heterogeneous accessible status -> F.
+```
+
+This is the working **Knowledge Stability Principle**.
 
 ## Knowledge absence must remain separate
 
-Even after `K` is introduced, the project should distinguish at least:
+Even if `K*` survives the semantic gates, the project will continue to distinguish:
 
 ```text
 internal not K(phi)
 lacksPositiveKnowledge(phi)
 negative knowledge-support for phi
-ignorance / not knowing whether phi
+ignorance / not knowing whether phi.
 ```
 
-The literature on Belnap-Dunn knowledge and ignorance supports treating these as genuinely different notions rather than syntactic variants.
+The Belnap-Dunn literature explicitly treats knowledge, unknown truth, knowing whether, and factive ignorance as distinct modal notions.
 
 ## Modal possibility / knowability
 
@@ -132,7 +172,7 @@ Fitch also requires a possibility operator. The project should not define knowab
 Diamond phi := not K(not phi)
 ```
 
-until the semantics of internal negation around `K` is understood. In four-valued settings this dual can encode more than simple existential accessibility.
+until the semantics of internal negation around `K` is understood. In paraconsistent settings, the classical inference from necessary falsity to impossibility can fail, which is directly relevant to paraconsistent responses to Fitch.
 
 Preferred implementation sequence:
 
@@ -143,10 +183,10 @@ Preferred implementation sequence:
 
 ## Tests required before Fitch
 
-Any proposed `K` should be checked for:
+After the full knowledge-value gate, the next tests are:
 
 ```text
-Factivity:
+Factivity on reflexive frames:
   positive K(phi) -> positive phi at the actual world
 
 Conjunction elimination:
@@ -157,19 +197,19 @@ Conjunction introduction / distribution:
   determine whether K(phi) and K(psi) imply K(phi and psi)
 
 Classical recovery:
-  on fully classical models, compare the operator with ordinary S5-style knowledge
+  on fully classical models, compare K with ordinary S5-style knowledge
 
 Glut behavior:
-  can K(phi) itself be B?
+  verify that K(phi) can be B
 
 Gap behavior:
-  can K(phi) itself be N?
+  verify that K(phi) can be N
 
 Negation separation:
   compare internal not K(phi) with lacksPositiveKnowledge(phi)
 
 Possibility duality:
-  compare raw Diamond with not K(not phi)
+  compare raw Diamond with not K(not phi).
 ```
 
 Only after these tests should the actual Fitch derivation be encoded.
@@ -183,31 +223,19 @@ Which preservation principle fails, or which additional impossibility assumption
 when knowability is transported through conjunction, knowledge, negation, and modal possibility?
 ```
 
-In particular, 4-PEL should isolate whether the classical step
+In particular, 4-PEL should isolate whether
 
 ```text
-K(p) and not K(p)  =>  impossible
+K(p) and not K(p) => impossible
 ```
 
 is a theorem of the chosen knowledge semantics or an additional classicality condition.
-
-## Current recommendation
-
-Do not implement Fitch yet.
-
-Next Lean gate:
-
-1. introduce a small `KnowledgeSemantics.lean` module with a candidate evidence-stability operator;
-2. keep its positive and negative conditions explicit;
-3. prove the semantic sanity checks above on finite models;
-4. compare standard FDE `Box`-style knowledge with evidence-stable `K` using countermodels;
-5. only then introduce knowability and the Fitch construction.
-
-This preserves the project's core methodological rule: theorem, model, interpretation, and philosophical identification must remain distinct layers.
 
 ## Literature anchors
 
 - Daniil Kozhemiachenko and Liubov Vashentseva, *Knowledge and ignorance in Belnap--Dunn logic*, Journal of Logic and Computation / arXiv:2309.01449.
 - Yuri David Santos, *A Four-Valued Dynamic Epistemic Logic*, Journal of Logic, Language and Information 29 (2020), 451--489.
 - Stanford Encyclopedia of Philosophy, *Fitch's Paradox of Knowability*, especially the sections on the standard derivation and paraconsistent revision.
-- Jc Beall, work on paraconsistent responses to the knowability paradox and possible epistemic oddities.
+- Jc Beall, work on paraconsistent responses to the knowability paradox and epistemic contradictions.
+
+The methodological rule remains unchanged: theorem, model, interpretation, and philosophical identification must remain distinct layers.
