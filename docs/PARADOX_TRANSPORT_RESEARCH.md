@@ -51,7 +51,7 @@ forgetful projection is involved.
 | Knower | epistemic self-reference | four-valued fixed-point bifurcation | verified |
 | Sorites | continuous/small evidence change vs categorical status | threshold gap/glut geometry | verified |
 | Surprise Examination | sequential update vs preservation of present epistemic status | dynamic threshold reversal | verified |
-| Surprise backward elimination | branch-relative prediction vs initial prediction | context-collapse / failed prediction transport | build candidate |
+| Surprise backward elimination | branch-relative prediction vs initial prediction | context-collapse / failed prediction transport | verified |
 | Fitch | knowability vs actual knowledge | modal-epistemic transport; requires new operators | planned |
 
 ## Knower: fixed-point bifurcation
@@ -172,11 +172,11 @@ announcement, because the current language has probabilistic belief rather
 than a separate factive knowledge operator. It formally isolates the dynamic
 pressure point: eliminating alternatives can create predictability.
 
-## Surprise backward elimination: context-indexed prediction
+## Surprise backward elimination: verified context-indexed prediction transport failure
 
-`PEL4/Paradoxes/SurpriseBackwardElimination.lean` is the next build candidate.
-It formalizes the backward-elimination justifications in the distinct epistemic
-contexts in which they are actually obtained:
+`PEL4/Paradoxes/SurpriseBackwardElimination.lean` formalizes the backward-
+elimination justifications in the distinct epistemic contexts in which they are
+actually obtained:
 
 ```text
 Friday:    predict in the actual late-week model after not-Monday and not-Wednesday
@@ -184,20 +184,13 @@ Wednesday: predict after hypothetically ruling out Friday and then learning not-
 Monday:    predict after hypothetically ruling out Friday and Wednesday
 ```
 
-Each local prediction is expected to be correct. But the original model predicts
-none of the three days individually.
-
-The target theorem is therefore not that backward reasoning contains a locally
-invalid prediction. It is that prediction fails to transport across contexts:
+The Lean 4.31 build verifies that each local prediction is correct in its own
+context while the initial model positively predicts none of the three days.
+Hence, for every day,
 
 ```text
-predictable(day, its elimination context)
-```
-
-does not imply
-
-```text
-predictable(day, initial context).
+predictable(day, its elimination context) = true
+predictable(day, initial context)         = false.
 ```
 
 Working diagnosis: **context-collapse**. The backward argument packages
@@ -205,7 +198,7 @@ predictions made in distinct updated/counterfactual models into a single
 context-free eliminability judgement and transports that judgement back to the
 initial epistemic state.
 
-This would strengthen the Surprise analysis from simple non-monotonicity under
+This strengthens the Surprise analysis from simple non-monotonicity under
 update to a precise failure of structural transport across epistemic contexts.
 
 ## Fitch: defer until epistemic architecture is clean
@@ -271,7 +264,8 @@ has direct precedents.
 
 ## Immediate gate
 
-Knower, Sorites, and the dynamic Surprise reversal are compiler-verified under
-Lean 4.31. The next gate is `PEL4/Paradoxes/SurpriseBackwardElimination.lean`.
-Until the next successful `lake build`, its context-collapse results remain
-build candidates.
+Knower, Sorites, Surprise dynamic reversal, and Surprise backward context
+transport are compiler-verified under Lean 4.31. The next major gate is to make
+the epistemic architecture explicit enough to distinguish probabilistic belief,
+knowledge, modal knowability, internal negation, and meta-level absence of
+support before attempting a faithful Fitch formalization.
