@@ -58,6 +58,8 @@ theorem modal_moore_positive_of_truth_unknown_no_gap
     modalPositiveAt m w (modalMooreFormula i phi) := by
   have hNeg : modalNegativeKnowledgeAt m i w phi :=
     hNoGap hUnknown
+  change (evalModal m w phi).pos = true at hTrue
+  change (evalModal m w (ModalFormula.know i phi)).neg = true at hNeg
   unfold modalPositiveAt modalMooreFormula
   change ((evalModal m w phi).pos &&
     (evalModal m w (ModalFormula.know i phi)).neg) = true
