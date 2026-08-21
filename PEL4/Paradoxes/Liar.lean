@@ -22,16 +22,17 @@ def liar_val : World → LiarAtom → FDEValue
 | World.wN, _ => FDEValue.N
 
 -- Prior Probability: P_T = 1/4, P_F = 1/4, P_B = 1/2, P_N = 0
--- This sum to 1 over the four accessible worlds.
+-- This sums to 1 over the four accessible worlds.
 def prior_mu : FiniteSet World → Rat
-| S => 
+| S =>
   let t := if S.contains World.wT then (1:Rat)/4 else 0
   let f := if S.contains World.wF then (1:Rat)/4 else 0
   let b := if S.contains World.wB then (1:Rat)/2 else 0
   let n := if S.contains World.wN then (0:Rat)   else 0
   t + f + b + n
 
-axiom liar_mu_total : ∀ (_ : Agent) (_ : World), prior_mu [World.wT, World.wF, World.wB, World.wN] = 1
+axiom liar_mu_total : ∀ (_ : Agent) (_ : World),
+  prior_mu [World.wT, World.wF, World.wB, World.wN] = 1
 axiom liar_mu_empty : ∀ (_ : Agent) (_ : World), prior_mu [] = 0
 axiom liar_c_gt_half : ∀ (_ : Agent), (3:Rat)/4 > 1/2
 axiom liar_c_le_one : ∀ (_ : Agent), (3:Rat)/4 ≤ 1
@@ -56,6 +57,25 @@ def LiarEvidence : Formula LiarAtom Agent :=
   let not_p := Formula.not p
   Formula.and (Formula.implies p not_p) (Formula.implies not_p p)
 
-#eval! (conditionalize LiarModel LiarEvidence).mu Agent.a World.wT [World.wB]
+/-- The Liar evidence has nonzero local mass and its finite conditionalized
+measure satisfies the normalization obligations required for a model update. -/
+theorem liar_conditionalization_admissible :
+    ConditionalizationAdmissible LiarModel LiarEvidence := by
+  refine
+    { positive_mass := ?_
+    , mu_total := ?_
+    , mu_empty := ?_ }
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+
+#eval! (conditionalize LiarModel LiarEvidence
+  liar_conditionalization_admissible).mu Agent.a World.wT [World.wB]
 
 end PEL4.Paradoxes
