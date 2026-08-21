@@ -96,7 +96,7 @@ theorem modal_positive_introspection_of_constant_successor_neighborhood
     intro u hu
     change modalKnowledgeValue m i u (fun x => evalModal m x phi) =
       modalKnowledgeValue m i w (fun x => evalModal m x phi)
-    rw [hCluster u hu]
+    simp [modalKnowledgeValue, hCluster u hu]
   have hAll :
       (m.R i w).all
         (fun u => (evalModal m u (ModalFormula.know i phi)).pos) = true := by
@@ -112,15 +112,13 @@ theorem modal_positive_introspection_of_constant_successor_neighborhood
         rfl
     | cons first rest =>
         unfold modalAccessibleValueStable
-        rw [hR]
         simp only [List.all_eq_true]
         intro u hu
         have hFirst : first ∈ m.R i w := by
           simp [hR]
         have hU : u ∈ m.R i w := by
           simp [hR, hu]
-        rw [hEvalEq u hU, hEvalEq first hFirst]
-        simp
+        simp [hEvalEq u hU, hEvalEq first hFirst]
   change ((m.R i w).all
       (fun u => (evalModal m u (ModalFormula.know i phi)).pos) &&
       modalAccessibleValueStable (m.R i w)
