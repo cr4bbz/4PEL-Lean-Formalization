@@ -1,3 +1,4 @@
+import Init.Data.Order.Lemmas
 import PEL4.ModalKnowledgeIgnoranceBoundary
 
 namespace PEL4
@@ -44,7 +45,7 @@ theorem filterWorlds_constant_component
         exact hConst x (by simp [hx])
       specialize ih hRest
       cases hComponent : component v <;>
-        simp [filterWorlds, hFirst, hComponent, ih]
+        simp [filterWorlds, hFirst, hComponent]
       all_goals
         intro x hx
         rw [hRest x hx, hComponent]
@@ -60,22 +61,14 @@ theorem modal_belief_recovers_constant_profile
     (m.R i w) value v (fun z => z.pos) hConst
   have hNegFilter := filterWorlds_constant_component
     (m.R i w) value v (fun z => z.neg) hConst
-  have hZeroLt : (0 : Rat) < m.c i := by
-    calc
-      (0 : Rat) < 1 / 2 := by native_decide
-      _ < m.c i := m.c_gt_half i
-  have hZeroNotGe : ¬ (0 : Rat) ≥ m.c i := by
-    intro hGe
-    have hImpossible : (0 : Rat) < 0 := by
-      calc
-        (0 : Rat) < 1 / 2 := by native_decide
-        _ < m.c i := m.c_gt_half i
-        _ ≤ 0 := hGe
-    exact (by native_decide : ¬ ((0 : Rat) < 0)) hImpossible
+  have hZeroLt : (0 : Rat) < m.c i :=
+    lt_trans (by native_decide : (0 : Rat) < 1 / 2) (m.c_gt_half i)
+  have hZeroNotGe : ¬ (0 : Rat) ≥ m.c i :=
+    not_le_of_gt hZeroLt
   have hOneGe : (1 : Rat) ≥ m.c i := m.c_le_one i
   rcases v with ⟨vp, vn⟩
   cases vp <;> cases vn <;>
-    simp [belief, hPosFilter, hNegFilter, hZeroLt, hZeroNotGe, hOneGe,
+    simp [belief, hPosFilter, hNegFilter, hZeroNotGe, hOneGe,
       m.mu_total, m.mu_empty]
 
 /-- On every stable accessible profile, primitive evidence-stable knowledge and
