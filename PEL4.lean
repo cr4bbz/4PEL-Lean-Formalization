@@ -32,6 +32,7 @@ import PEL4.Paradoxes.Knower
 import PEL4.Paradoxes.Sorites
 import PEL4.Paradoxes.SurpriseExamination
 import PEL4.Paradoxes.SurpriseBackwardElimination
+import PEL4.Paradoxes.Fitch
 
 import PEL4.Conservation
 
