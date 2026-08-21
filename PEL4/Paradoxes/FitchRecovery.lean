@@ -89,7 +89,7 @@ theorem modal_positive_knowledge_conjunction_left_of_stable
     have h := hallAnd w' hw'
     change ((evalModal m w' phi).pos && (evalModal m w' psi).pos) = true at h
     cases hp : (evalModal m w' phi).pos <;> simp_all
-  simpa [evalModal, modalKnowledgeValue, hallPhi, hstable]
+  simp [evalModal, modalKnowledgeValue, hallPhi, hstable]
 
 /-- Exact modal left-extraction boundary.  Under positive knowledge of a
 conjunction, positive knowledge of the left conjunct is equivalent to stability
