@@ -73,28 +73,16 @@ theorem evalModal_conditionalize_of_probabilityFree
       rw [ihPhi w, ihPsi w]
   | know i hPhi ih =>
       intro w
-      change modalKnowledgeValue (conditionalize m E hAdm) i w
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-        modalKnowledgeValue m i w (fun u => evalModal m u _)
-      have hValues :
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-            (fun u => evalModal m u _) := by
-        funext u
-        exact ih u
-      rw [hValues]
-      rfl
+      simp only [evalModal]
+      unfold modalKnowledgeValue
+      simp only [conditionalize]
+      simp_rw [ih]
   | poss i hPhi ih =>
       intro w
-      change modalRawPossibilityValue (conditionalize m E hAdm) i w
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-        modalRawPossibilityValue m i w (fun u => evalModal m u _)
-      have hValues :
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-            (fun u => evalModal m u _) := by
-        funext u
-        exact ih u
-      rw [hValues]
-      rfl
+      simp only [evalModal]
+      unfold modalRawPossibilityValue
+      simp only [conditionalize]
+      simp_rw [ih]
 
 /-- Accessible full-value stability of a probability-free formula is invariant
 under admissible probabilistic conditionalization. -/
