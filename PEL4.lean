@@ -26,6 +26,7 @@ import PEL4.ModalKnowledgeNecessitationBoundary
 import PEL4.ModalKnowledgePositiveNecessitation
 import PEL4.ModalDynamicsStability
 import PEL4.ModalDynamicsBeliefInstability
+import PEL4.ModalDynamicsBeliefRestoration
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
