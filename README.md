@@ -1,11 +1,11 @@
 # 4-PEL: Four-Valued Probabilistic Epistemic Logic
 
-4-PEL is a **Lean 4 formalized framework for studying epistemic paradoxes** through the interaction of probabilistic evidence, four-valued semantics, threshold belief, knowledge, modal possibility, aggregation, self-reference, conflict structure, and information update.
+4-PEL is a **Lean 4 formalized framework for studying epistemic paradoxes** through the interaction of probabilistic evidence, four-valued semantics, threshold belief, evidence-stable knowledge, modal possibility, aggregation, self-reference, conflict structure, and information update.
 
-The project began as the formal backbone for *The Cartography of Paradoxes: Unifying Probabilistic Epistemic Logic and Non-Bivalent Validity*. The active research branch now goes substantially beyond that original scope, especially through the Preface conflict-geometry program, a four-valued knowledge/knowability layer, and a broader investigation of **paradoxes as failures of structural transport**.
+The project began as the formal backbone for *The Cartography of Paradoxes: Unifying Probabilistic Epistemic Logic and Non-Bivalent Validity*. The active research branch now goes substantially beyond that original scope, especially through the Preface conflict-geometry program, a four-valued modal knowledge/knowability layer, and a broader investigation of **paradoxes as failures of structural transport**.
 
 > [!IMPORTANT]
-> **Research status:** This repository contains a mixture of machine-checked theorems, executable finite models, and explicitly marked research directions. Claims described below as **Lean-verified** have been successfully compiled on the active research branch with Lean 4.31. Interpretive names and broader philosophical theses remain working research terminology unless stated otherwise.
+> **Research status:** This repository contains machine-checked theorems, executable finite models, and explicitly marked research directions. Claims described as **Lean-verified** have compiled successfully on the active research branch with Lean 4.31. Interpretive names and broader philosophical theses remain working research terminology unless stated otherwise.
 
 > [!NOTE]
 > The paper PDF in the repository is a snapshot of an earlier stage. The active branch contains substantial results not yet incorporated into that manuscript.
@@ -30,13 +30,13 @@ B_i(phi).pos iff P_pos(phi) >= c_i
 B_i(phi).neg iff P_neg(phi) >= c_i.
 ```
 
-The newer modal layer also contains an evidence-stable knowledge operator `K_i` and primitive raw accessibility possibility `Diamond_i`. These are deliberately kept distinct from probabilistic belief and from the internal abbreviation `not K_i(not phi)`.
+The modal layer contains an evidence-stable primitive knowledge operator `K_i` and primitive raw accessibility possibility `Diamond_i`. These are deliberately distinct from probabilistic belief and from the internal abbreviation `not K_i(not phi)`.
 
 ---
 
 ## Verified research results
 
-### 1. Glut Boundary
+### 1. Glut boundary
 
 If positive and negative belief both cross the threshold, a minimum amount of glut mass is unavoidable:
 
@@ -66,15 +66,7 @@ For exact conflict masses `x_A` and shared co-conflict masses `J_A`:
 J_Q = sum_{A superset Q} x_A.
 ```
 
-Generic Möbius reconstruction recovers exact incidence from the full hierarchy. At full resolution:
-
-```text
-exact incidence x_A
-<-> co-conflict hierarchy J_A
-<-> weighted conflict filtration f(A).
-```
-
-The fixed-marginal affine fiber has generic freedom:
+Generic Möbius reconstruction recovers exact incidence from the full hierarchy. The fixed-marginal affine fiber has generic freedom:
 
 ```text
 2^n - n - 2
@@ -82,21 +74,11 @@ The fixed-marginal affine fiber has generic freedom:
 
 for `n >= 2`.
 
-### 4. Conflict Nerve
+Positive co-conflict support forms downward-closed simplicial complexes. In the three-claim fixed-marginal fiber, Lean verifies profiles with identical coarse data but different support-nerve signatures and Euler counts. General homology and persistence remain open.
 
-Positive co-conflict support forms downward-closed simplicial complexes. In the three-claim fixed-marginal fiber, Lean verifies profiles with identical coarse data but different support-nerve signatures and Euler counts, including:
+### 4. Knowledge Stability Principle
 
-```text
-edge + isolated vertex     chi = 2
-triangle boundary          chi = 0
-filled triangle            chi = 1.
-```
-
-This is the finite combinatorial core of the working **topological conflict underdetermination** result. General homology and persistence remain open.
-
-### 5. Knowledge Stability Principle
-
-The evidence-stable four-valued knowledge candidate recovers homogeneous accessible status exactly:
+The evidence-stable four-valued knowledge operator recovers homogeneous accessible status exactly:
 
 ```text
 homogeneous T -> K(phi) = T
@@ -107,9 +89,9 @@ homogeneous N -> K(phi) = N.
 
 Heterogeneous complete FDE status forces `K(phi) = F`.
 
-Internal negation of knowledge is not generally identical to absence of positive knowledge. Lean verifies that the two coincide exactly when the knowledge value is classical.
+Internal negation of knowledge is not generally identical to meta-level absence of positive knowledge.
 
-### 6. Knowledge conjunction boundary
+### 5. Knowledge conjunction boundary
 
 Positive knowledge is closed under conjunction introduction:
 
@@ -117,24 +99,22 @@ Positive knowledge is closed under conjunction introduction:
 K+(phi) and K+(psi) -> K+(phi and psi).
 ```
 
-Unrestricted positive conjunction elimination fails. Under the premise `K+(phi and psi)`, the exact boundary is:
+Unrestricted positive conjunction elimination fails. Under `K+(phi and psi)`, the exact boundary is:
 
 ```text
 K+(phi) iff Stable(phi)
 K+(psi) iff Stable(psi).
 ```
 
-Working diagnosis: **stability reflection boundary**.
-
-### 7. Raw possibility versus the internal knowledge dual
-
-Primitive raw possibility is not globally equivalent to:
+At the strict layer, however:
 
 ```text
-not K(not phi).
+K(phi and psi) = T -> K(phi) = T and K(psi) = T.
 ```
 
-Lean verifies the exact boundary:
+### 6. Raw possibility versus the internal knowledge dual
+
+Primitive raw possibility is not globally equivalent to `not K(not phi)`. Lean verifies:
 
 ```text
 Diamond_raw(phi) = not K(not phi)
@@ -142,25 +122,53 @@ iff
 Stable(phi) OR Diamond_raw(phi) = T.
 ```
 
-Under instability, the internal dual collapses to strict `T`, which can erase glut/gap information carried by raw possibility.
+Under instability, the internal dual can collapse to strict `T`, erasing four-valued information carried by raw possibility.
 
-### 8. Conservative modal object language
+### 7. Modal frame classification of `K`
 
-`PEL4/ModalLanguage.lean` adds primitive `K` and primitive raw `Diamond` without mutating the legacy `Formula` syntax. Every old formula embeds conservatively:
-
-```text
-evalModal(embed(phi)) = eval(phi).
-```
-
-### 9. Fitch: object-language fracture and local recovery
-
-`PEL4/Paradoxes/Fitch.lean` encodes the actual Moorean formula:
+The main factivity and introspection boundaries are now Lean-verified:
 
 ```text
-M(p) = p and not K(p).
+probability normalization -> every accessibility list is nonempty
+reflexivity               -> strict factivity
+transitivity              -> K+ phi implies value(K K phi) = value(K phi)
+Euclideanness alone       -> insufficient for positive internal axiom 5
+transitivity + Euclidean  -> K K phi = K phi for all four values
+transitivity + Euclidean  -> K(not K phi) = not K phi
+NoGap                     -> bridges meta-level ignorance to negative support
 ```
 
-A Lean-verified finite model has a reflexive critical witness where:
+Thus the glutty positive value `B` is preserved by positive introspection rather than classicalized. A separate reflexive-transitive-Euclidean singleton witness with `K phi = N` shows that even S5-like frame geometry cannot turn meta-level lack of positive knowledge into internal negative evidence.
+
+See `docs/MODAL_KNOWLEDGE_CLASSIFICATION.md` for the full table and countermodel map.
+
+### 8. Church-Fitch phase classification
+
+The modal satisfaction/validity layer, raw knowability principle, local/global Fitch recovery, no-gap independence, strict-truth phase, raw-vs-dual separation, and final Church-Fitch classification are Lean-verified.
+
+A representative positive raw collapse has the form:
+
+```text
+positive raw knowability
++ global source NoGap
++ uniform Fitch recovery
++ global source NoGlut
+-> positive omniscience
+   + strict-truth positive omniscience
+   + strict knowledge omniscience.
+```
+
+Raw possibility and internal dual possibility are not interchangeable. The repository contains a finite witness where dualized knowability is positive although witness-bearing raw knowability is not.
+
+### 9. Fitch: object-language fracture and recovery
+
+For the Moorean formula
+
+```text
+M(p) = p and not K(p)
+```
+
+a finite model verifies:
 
 ```text
 K(M(p))       = B
@@ -168,15 +176,7 @@ K(p)          = F
 K(not K(p))   = F.
 ```
 
-Thus:
-
-```text
-K+(p and not K p) -/-> K+(p)
-```
-
-in exactly the Fitch-shaped case. The compound is stable while its components are unstable.
-
-`PEL4/Paradoxes/FitchRecovery.lean` proves the converse local boundary: positive knowledge of `phi and not K(phi)` is inconsistent with the combined assumptions
+Thus positive conjunction extraction fails in exactly the Fitch-shaped case. Recovery is obtained under the local package:
 
 ```text
 reflexivity
@@ -184,9 +184,7 @@ reflexivity
 + no-glut for K(phi).
 ```
 
-The concrete Fitch countermodel satisfies reflexivity and no-glut but violates `Stable(p)`, isolating component instability as its escape route.
-
-`PEL4/Paradoxes/FitchKnowabilityBoundary.lean` is the current build gate. It lifts the local result through primitive raw possibility and must not be marked verified until a successful build is reported.
+The repository also contains finite independence witnesses and global raw-knowability transport theorems.
 
 ### 10. Knower fixed-point bifurcation
 
@@ -199,7 +197,7 @@ B -> B
 N -> N.
 ```
 
-Thus the nonclassical values are fixed points while the classical values form a two-cycle.
+The nonclassical values are fixed points while the classical values form a two-cycle.
 
 ### 11. Sorites threshold geometry
 
@@ -209,7 +207,7 @@ For exclusive signed evidence on a 0--100 scale and `c > 50`, the gappy region i
 100 - c < x < c
 ```
 
-with width `2c - 100`. The same slack occurs as the minimum glut-overlap lower bound when positive and negative support both reach threshold.
+with width `2c - 100`. The same slack occurs as the minimum glut-overlap lower bound.
 
 ### 12. Surprise Examination: dynamic reversal and context transport
 
@@ -235,13 +233,13 @@ The backward-elimination extension verifies that each day is predictable in its 
 | Knower | epistemic self-reference | nonclassical fixed-point bifurcation | Lean-verified |
 | Sorites | gradual evidence vs categorical status | threshold gap/glut geometry | Lean-verified |
 | Surprise Examination | update and backward elimination | dynamic reversal + context transport failure | Lean-verified |
-| Fitch | knowability, knowledge and Moorean conjunction | stability-reflection failure + duality boundary | local fracture/recovery Lean-verified; global gate active |
+| Fitch / Church-Fitch | knowability, Moorean conjunction, possibility duality | stability reflection + transport + NoGap/NoGlut phase boundaries | Lean-verified conditional classification |
 
 ---
 
 ## Paradoxes as failures of structural transport
 
-The earlier heuristic, **paradoxes as projection errors**, explains Lottery and Preface but is too narrow. A broader pattern is that paradoxical reasoning often assumes that some epistemically important property survives a transformation.
+A recurring pattern is that paradoxical reasoning assumes that some epistemically important property survives a transformation.
 
 Schematically:
 
@@ -259,27 +257,15 @@ A paradoxical inference may behave as if:
 pi(T(E)) = T*(pi(E))
 ```
 
-must hold. The repository now exhibits:
+must hold. The repository now exhibits projection loss, non-commutation, nonclassical fixed points, threshold phase changes, dynamic status reversal, context-indexed transport failure, higher-order interaction loss, stability-reflection failure, and modal-duality collapse under epistemic instability.
 
-- projection loss,
-- non-commutation,
-- nonclassical fixed points,
-- threshold phase changes,
-- dynamic status reversal,
-- context-indexed transport failure,
-- higher-order interaction loss,
-- stability-reflection failure,
-- modal-duality collapse under epistemic instability.
-
-The strongest case studies increasingly follow a three-stage pattern:
+The strongest case studies follow a three-stage pattern:
 
 ```text
 identify a hidden transport principle
 -> build a countermodel
 -> characterize hypotheses that recover the transport.
 ```
-
-Fitch is currently the clearest example of this pattern.
 
 ---
 
@@ -291,38 +277,39 @@ Core and epistemic modules include:
 PEL4/FDE.lean
 PEL4/Model.lean
 PEL4/Belief.lean
-PEL4/Syntax.lean
 PEL4/EpistemicStatus.lean
-PEL4/StructuralTransport.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
 PEL4/KnowledgeConjunctionIntroduction.lean
-PEL4/KnowledgePossibility.lean
 PEL4/KnowledgePossibilityBoundary.lean
 PEL4/ModalLanguage.lean
+PEL4/ModalValidity.lean
+PEL4/ModalKnowledgeLaws.lean
+PEL4/ModalKnowledgeStrictLaws.lean
+PEL4/ModalKnowledgeTransitive.lean
+PEL4/ModalKnowledgeNegativeIntrospection.lean
+PEL4/ModalKnowledgeIgnoranceBoundary.lean
 PEL4/Dynamics.lean
 ```
 
-Paradox and research modules include:
+Church-Fitch modules include:
 
 ```text
-PEL4/Paradoxes/Lottery.lean
-PEL4/Paradoxes/Preface*.lean
-PEL4/Paradoxes/Moore.lean
-PEL4/Paradoxes/Liar.lean
-PEL4/Paradoxes/Knower.lean
-PEL4/Paradoxes/Sorites.lean
-PEL4/Paradoxes/SurpriseExamination.lean
-PEL4/Paradoxes/SurpriseBackwardElimination.lean
 PEL4/Paradoxes/Fitch.lean
 PEL4/Paradoxes/FitchRecovery.lean
+PEL4/Paradoxes/FitchRecoveryIndependence.lean
 PEL4/Paradoxes/FitchKnowabilityBoundary.lean
+PEL4/Paradoxes/ChurchFitch.lean
+PEL4/Paradoxes/ChurchFitchNoGapIndependence.lean
+PEL4/Paradoxes/ChurchFitchPhaseLandscape.lean
+PEL4/Paradoxes/ChurchFitchClassification.lean
 ```
 
 Research notes:
 
 ```text
+docs/MODAL_KNOWLEDGE_CLASSIFICATION.md
 docs/PARADOX_TRANSPORT_RESEARCH.md
 docs/RESEARCH_QUESTIONS.md
 docs/CONFLICT_NERVE_RESEARCH.md
@@ -332,9 +319,7 @@ docs/CONFLICT_NERVE_RESEARCH.md
 
 ## Build and verification
 
-The project intentionally avoids a Mathlib dependency. Finite models use exact rational probabilities where convenient, while several generic inequalities use scaled integer encodings.
-
-For the active branch:
+The project intentionally avoids a Mathlib dependency. For the active branch:
 
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
@@ -356,9 +341,10 @@ Several distinctions remain explicit:
 - Primitive raw `Diamond` is not definitionally the same as `not K not`.
 - The Liar and Gödel-inspired modules are not complete formalizations of semantic diagonalization or incompleteness.
 - Conflict-Nerve Euler/signature results are formalized; general homology and persistence are not.
-- Surprise currently studies dynamic threshold belief; dynamic evidence-stable knowledge remains open.
-- The local Fitch fracture and recovery results are verified, but a full Church-Fitch theorem schema still requires a modal satisfaction/validity layer and an explicit formula-quantified knowability principle.
-- Novelty claims for the combined structural terminology require a systematic literature audit.
+- Dynamic evidence-stable knowledge remains largely open.
+- The zero-evidence conditionalization boundary in the dynamics layer still needs repair before strong general dynamic claims.
+- Exact necessity/minimality of every modal frame correspondence is not yet proved.
+- Novelty claims for the combined structural and modal terminology require a systematic literature audit.
 
 The project aims to distinguish **theorem, finite model, interpretation, and novelty claim** rather than collapse them into one layer.
 
@@ -366,15 +352,15 @@ The project aims to distinguish **theorem, finite model, interpretation, and nov
 
 ## Current research direction
 
-The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. Near-term priorities are:
+The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axiom-4/axiom-5 discovery phase is now consolidated. Near-term priorities are:
 
-1. compile and repair the global Fitch knowability boundary;
-2. prove independence/minimality of the local Fitch recovery assumptions;
-3. add modal satisfaction/validity and formulate full Church-Fitch schemas;
-4. classify modal laws of evidence-stable `K` and raw `Diamond`;
-5. repair the zero-evidence conditionalization boundary and study dynamic `K`;
-6. generalize the structural-transport abstraction across paradox families;
+1. classify interaction between evidence-stable `K` and probabilistic `B`;
+2. prove sharper necessity/minimality results for modal frame correspondences;
+3. repair the zero-evidence conditionalization boundary;
+4. study dynamic preservation and destruction of `K` under update;
+5. prove global independence/minimality results for Church-Fitch packages;
+6. expand the structural-transport abstraction across paradox families;
 7. deepen Conflict-Nerve topology to homology and persistence;
 8. perform a systematic literature/novelty audit before publication claims.
 
-4-PEL is therefore best read as a machine-checkable laboratory for the geometry, dynamics, modal structure, and information loss behind epistemic paradoxes.
+4-PEL is best read as a machine-checkable laboratory for the geometry, dynamics, modal structure, and information loss behind epistemic paradoxes.
