@@ -88,18 +88,18 @@ def ignoranceMu : IgnoranceWorld → FiniteSet IgnoranceWorld → Rat
 def IgnoranceGapModel : Model IgnoranceWorld IgnoranceAgent IgnoranceAtom :=
   { worlds := [IgnoranceWorld.w]
   , R := ignoranceR
-  , mu := fun _ w => ignoranceMu w
+  , mu := fun _ world => ignoranceMu world
   , val := ignoranceVal
   , c := fun _ => 2 / 3
   , mu_total := by
-      intro i w
+      intro i world
       cases i
-      cases w
+      cases world
       native_decide
   , mu_empty := by
-      intro i w
+      intro i world
       cases i
-      cases w
+      cases world
       native_decide
   , c_gt_half := by
       intro i
