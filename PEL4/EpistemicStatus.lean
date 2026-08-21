@@ -97,9 +97,12 @@ theorem internal_not_belief_matches_absence_iff_classical
     (eval m w (Formula.not (Formula.bel i phi))).pos =
         lacksPositiveBelief m i w phi ↔
       isClassical (eval m w (Formula.bel i phi)) = true := by
-  simpa [lacksPositiveBelief, positivelyBelieves] using
-    internal_negation_matches_positive_absence_iff_classical
-      (eval m w (Formula.bel i phi))
+  change
+    (FDEValue.not (eval m w (Formula.bel i phi))).pos =
+        !(eval m w (Formula.bel i phi)).pos ↔
+      isClassical (eval m w (Formula.bel i phi)) = true
+  exact internal_negation_matches_positive_absence_iff_classical
+    (eval m w (Formula.bel i phi))
 
 /-- The glut state witnesses one direction of the nonclassical divergence. -/
 example : (FDEValue.not FDEValue.B).pos ≠ !FDEValue.B.pos := by
