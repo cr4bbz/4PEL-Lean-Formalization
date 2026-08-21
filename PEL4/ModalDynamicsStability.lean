@@ -43,6 +43,40 @@ inductive ModalProbabilityFree {Atom Ag : Type} :
       ModalProbabilityFree phi →
       ModalProbabilityFree (ModalFormula.poss i phi)
 
+/-- Conditionalization leaves accessibility unchanged. -/
+theorem conditionalize_accessibility_eq
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (E : Formula Atom Ag)
+    (hAdm : ConditionalizationAdmissible m E)
+    (i : Ag) (w : W) :
+    (conditionalize m E hAdm).R i w = m.R i w := by
+  rfl
+
+/-- Knowledge depends on the model only through the local accessibility range
+once the interpreted value function is fixed. -/
+theorem modalKnowledgeValue_congr
+    {W Ag Atom : Type} [DecidableEq W]
+    (m n : Model W Ag Atom) (i : Ag) (w : W)
+    (vM vN : W → FDEValue)
+    (hR : n.R i w = m.R i w)
+    (hV : vN = vM) :
+    modalKnowledgeValue n i w vN = modalKnowledgeValue m i w vM := by
+  unfold modalKnowledgeValue
+  rw [hR, hV]
+
+/-- Raw possibility likewise depends only on accessibility and the interpreted
+value function. -/
+theorem modalRawPossibilityValue_congr
+    {W Ag Atom : Type} [DecidableEq W]
+    (m n : Model W Ag Atom) (i : Ag) (w : W)
+    (vM vN : W → FDEValue)
+    (hR : n.R i w = m.R i w)
+    (hV : vN = vM) :
+    modalRawPossibilityValue n i w vN =
+      modalRawPossibilityValue m i w vM := by
+  unfold modalRawPossibilityValue
+  rw [hR, hV]
+
 /-- Conditionalization preserves the complete FDE value of every
 probability-free modal formula at every world. -/
 theorem evalModal_conditionalize_of_probabilityFree
@@ -73,16 +107,34 @@ theorem evalModal_conditionalize_of_probabilityFree
       rw [ihPhi w, ihPsi w]
   | know i hPhi ih =>
       intro w
-      simp only [evalModal]
-      unfold modalKnowledgeValue
-      simp only [conditionalize]
-      simp only [ih]
+      change modalKnowledgeValue (conditionalize m E hAdm) i w
+          (fun u => evalModal (conditionalize m E hAdm) u _) =
+        modalKnowledgeValue m i w (fun u => evalModal m u _)
+      have hValues :
+          (fun u => evalModal (conditionalize m E hAdm) u _) =
+            (fun u => evalModal m u _) := by
+        funext u
+        exact ih u
+      exact modalKnowledgeValue_congr
+        m (conditionalize m E hAdm) i w
+        (fun u => evalModal m u _)
+        (fun u => evalModal (conditionalize m E hAdm) u _)
+        (conditionalize_accessibility_eq m E hAdm i w) hValues
   | poss i hPhi ih =>
       intro w
-      simp only [evalModal]
-      unfold modalRawPossibilityValue
-      simp only [conditionalize]
-      simp only [ih]
+      change modalRawPossibilityValue (conditionalize m E hAdm) i w
+          (fun u => evalModal (conditionalize m E hAdm) u _) =
+        modalRawPossibilityValue m i w (fun u => evalModal m u _)
+      have hValues :
+          (fun u => evalModal (conditionalize m E hAdm) u _) =
+            (fun u => evalModal m u _) := by
+        funext u
+        exact ih u
+      exact modalRawPossibilityValue_congr
+        m (conditionalize m E hAdm) i w
+        (fun u => evalModal m u _)
+        (fun u => evalModal (conditionalize m E hAdm) u _)
+        (conditionalize_accessibility_eq m E hAdm i w) hValues
 
 /-- Accessible full-value stability of a probability-free formula is invariant
 under admissible probabilistic conditionalization. -/
@@ -105,8 +157,7 @@ theorem modal_stability_conditionalize_of_probabilityFree
     funext u
     exact evalModal_conditionalize_of_probabilityFree
       m E hAdm hFree u
-  rw [hValues]
-  rfl
+  rw [conditionalize_accessibility_eq m E hAdm i w, hValues]
 
 /-- In particular, knowledge of a probability-free formula has exactly the
 same complete FDE value before and after conditionalization. -/
