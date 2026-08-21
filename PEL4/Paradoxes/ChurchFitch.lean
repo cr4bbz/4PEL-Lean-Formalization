@@ -63,7 +63,7 @@ theorem modal_moore_positive_of_truth_unknown_no_gap
   unfold modalPositiveAt modalMooreFormula
   change ((evalModal m w phi).pos &&
     (evalModal m w (ModalFormula.know i phi)).neg) = true
-  rw [hTrue, hNeg]
+  simp [hTrue, hNeg]
 
 /-- Positive Church--Fitch collapse theorem.
 
@@ -87,7 +87,7 @@ theorem church_fitch_positive_omniscience_of_knowability
   unfold modalPositiveKnownAt
   cases hK : (evalModal m w (ModalFormula.know i phi)).pos with
   | true =>
-      exact hK
+      rfl
   | false =>
       have hUnknown : modalLacksPositiveKnowledgeAt m i w phi := hK
       have hMoore : modalPositiveAt m w (modalMooreFormula i phi) :=
