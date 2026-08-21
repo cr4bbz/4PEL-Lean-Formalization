@@ -19,6 +19,8 @@ import PEL4.ProductUpdate
 import PEL4.ProductTheorems
 import PEL4.Paradoxes.ParadoxicalAction
 import PEL4.Paradoxes.Liar
+import PEL4.Paradoxes.Knower
+import PEL4.Paradoxes.Sorites
 
 import PEL4.Conservation
 
