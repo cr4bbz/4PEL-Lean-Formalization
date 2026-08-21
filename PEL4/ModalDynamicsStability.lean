@@ -105,35 +105,35 @@ theorem evalModal_conditionalize_of_probabilityFree
           (evalModal (conditionalize m E hAdm) w _) =
         FDEValue.and (evalModal m w _) (evalModal m w _)
       rw [ihPhi w, ihPsi w]
-  | know i hPhi ih =>
+  | @know i phi hPhi ih =>
       intro w
       change modalKnowledgeValue (conditionalize m E hAdm) i w
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-        modalKnowledgeValue m i w (fun u => evalModal m u _)
+          (fun u => evalModal (conditionalize m E hAdm) u phi) =
+        modalKnowledgeValue m i w (fun u => evalModal m u phi)
       have hValues :
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-            (fun u => evalModal m u _) := by
+          (fun u => evalModal (conditionalize m E hAdm) u phi) =
+            (fun u => evalModal m u phi) := by
         funext u
         exact ih u
       exact modalKnowledgeValue_congr
         m (conditionalize m E hAdm) i w
-        (fun u => evalModal m u _)
-        (fun u => evalModal (conditionalize m E hAdm) u _)
+        (fun u => evalModal m u phi)
+        (fun u => evalModal (conditionalize m E hAdm) u phi)
         (conditionalize_accessibility_eq m E hAdm i w) hValues
-  | poss i hPhi ih =>
+  | @poss i phi hPhi ih =>
       intro w
       change modalRawPossibilityValue (conditionalize m E hAdm) i w
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-        modalRawPossibilityValue m i w (fun u => evalModal m u _)
+          (fun u => evalModal (conditionalize m E hAdm) u phi) =
+        modalRawPossibilityValue m i w (fun u => evalModal m u phi)
       have hValues :
-          (fun u => evalModal (conditionalize m E hAdm) u _) =
-            (fun u => evalModal m u _) := by
+          (fun u => evalModal (conditionalize m E hAdm) u phi) =
+            (fun u => evalModal m u phi) := by
         funext u
         exact ih u
       exact modalRawPossibilityValue_congr
         m (conditionalize m E hAdm) i w
-        (fun u => evalModal m u _)
-        (fun u => evalModal (conditionalize m E hAdm) u _)
+        (fun u => evalModal m u phi)
+        (fun u => evalModal (conditionalize m E hAdm) u phi)
         (conditionalize_accessibility_eq m E hAdm i w) hValues
 
 /-- Accessible full-value stability of a probability-free formula is invariant
