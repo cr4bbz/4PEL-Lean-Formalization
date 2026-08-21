@@ -139,7 +139,8 @@ theorem fde_strict_conjunction_decomposes
 knowledge of both conjuncts with no frame assumption.
 
 This sharply contrasts with the already verified positive/designated failure
-`K+ (phi and psi) -/-> K+ phi`: that failure lives in the non-strict phase. -/
+`K+ (phi and psi)` does not imply `K+ phi`: that failure lives in the non-strict
+phase. -/
 theorem modal_strict_knowledge_conjunction_decomposes
     {W Ag Atom : Type} [DecidableEq W]
     (m : Model W Ag Atom) (i : Ag) (w : W)
