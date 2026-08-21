@@ -95,16 +95,20 @@ def FitchModel : Model FitchWorld FitchAgent FitchAtom :=
   , val := fitchVal
   , c := fun _ => 2 / 3
   , mu_total := by
-      intro _ w
+      intro i w
+      cases i
       cases w <;> native_decide
   , mu_empty := by
-      intro _ w
+      intro i w
+      cases i
       cases w <;> native_decide
   , c_gt_half := by
-      intro _
+      intro i
+      cases i
       native_decide
   , c_le_one := by
-      intro _
+      intro i
+      cases i
       native_decide
   }
 
