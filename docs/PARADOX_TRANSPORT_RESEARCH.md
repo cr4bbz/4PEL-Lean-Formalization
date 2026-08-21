@@ -5,7 +5,7 @@ Status: active research program on `research/preface-case-study`.
 ## Working thesis
 
 The original heuristic, "paradoxes as projection errors", explains the Lottery
-and Preface cases well but is too narrow.  The broader pattern is that a
+and Preface cases well but is too narrow. The broader pattern is that a
 paradoxical argument often presupposes that some epistemically relevant
 property is preserved across a transformation.
 
@@ -25,7 +25,7 @@ A paradoxical inference often behaves as if
 pi (T E) = T* (pi E)
 ```
 
-must hold.  4-PEL lets us test this rather than assume it.  The characteristic
+must hold. 4-PEL lets us test this rather than assume it. The characteristic
 failure modes currently visible in the repository are:
 
 - projection loss,
@@ -41,16 +41,16 @@ forgetful projection is involved.
 
 ## Current paradox map
 
-| Paradox / family | Transformation under pressure | 4-PEL diagnosis |
-| --- | --- | --- |
-| Lottery | thresholding vs conjunction | non-commutation |
-| Preface | local marginals vs global interaction structure | projection loss / fiber underdetermination |
-| Moore | object-level truth vs belief status | level separation |
-| Liar | self-reference in a bivalent target space | glut-compatible fixed behavior without explosion |
-| Knower | epistemic self-reference | four-valued fixed-point bifurcation |
-| Sorites | continuous/small evidence change vs categorical status | threshold gap/glut geometry |
-| Surprise Examination | sequential update vs preservation of present epistemic status | dynamic threshold crossing (planned) |
-| Fitch | knowability vs actual knowledge | modal-epistemic transport; requires new operators (planned) |
+| Paradox / family | Transformation under pressure | 4-PEL diagnosis | Status |
+| --- | --- | --- | --- |
+| Lottery | thresholding vs conjunction | non-commutation | verified |
+| Preface | local marginals vs global interaction structure | projection loss / fiber underdetermination | verified |
+| Moore | object-level truth vs belief status | level separation | executable model |
+| Liar | self-reference in a bivalent target space | glut-compatible fixed behavior without explosion | executable + ex-falso theorem |
+| Knower | epistemic self-reference | four-valued fixed-point bifurcation | verified |
+| Sorites | continuous/small evidence change vs categorical status | threshold gap/glut geometry | verified |
+| Surprise Examination | sequential update vs preservation of present epistemic status | dynamic threshold crossing | build candidate |
+| Fitch | knowability vs actual knowledge | modal-epistemic transport; requires new operators | planned |
 
 ## Knower: fixed-point bifurcation
 
@@ -61,7 +61,7 @@ forgetful projection is involved.
 K := not B(K).
 ```
 
-The candidate classification is:
+The Lean 4.31 build verifies the complete classification:
 
 ```text
 T -> F
@@ -71,8 +71,7 @@ N -> N
 ```
 
 Thus the two nonclassical values are fixed points while the two classical
-values form a 2-cycle.  If the module builds, the result supports the following
-interpretation:
+values form a 2-cycle:
 
 - `B` is stabilization by epistemic overdetermination;
 - `N` is stabilization by epistemic underdetermination.
@@ -101,7 +100,8 @@ positive = x
 negative = 100 - x.
 ```
 
-For a majority threshold `c > 50`, the gappy band is
+The Lean 4.31 build verifies that for a majority threshold `c > 50`, the gappy
+band is exactly
 
 ```text
 100 - c < x < c.
@@ -129,42 +129,62 @@ Hence the same threshold slack controls two opposite regimes:
 Working name: **Gap--Glut Threshold Duality**.
 
 The philosophical claim is deliberately weaker than identifying vagueness with
-probability.  The formal result concerns signed-evidence threshold geometry;
+probability. The formal result concerns signed-evidence threshold geometry;
 Sorites is an application of that geometry.
 
-## Surprise Examination: next dynamic target
+## Surprise Examination: dynamic threshold reversal
 
-The repository already has `conditionalize` and product-update machinery.  A
-minimal Surprise model should represent possible exam days as worlds and model
-successive public evidence such as "no exam today" by updates.
+`PEL4/Paradoxes/SurpriseExamination.lean` is now the next build candidate. It
+uses the existing `conditionalize` machinery on three possible exam days:
+Monday, Wednesday, and Friday, initially equiprobable with threshold `2/3`.
 
-The target phenomenon is not simple forgetting.  We want a formula `A`
-representing the original announcement such that, along an update path,
-
-```text
-B_M0(A) = T
-```
-
-but at a later state
+Successive truthful updates are:
 
 ```text
-B_Mk(A) = N or F.
+E1: not Monday
+E2: not Wednesday
 ```
 
-This would make the Surprise paradox a dynamic version of the existing
-Cartography idea: the epistemic state moves through probability space and
-crosses a threshold boundary.
+The candidate theorem tracks belief in "exam on Friday" as
 
-A stronger later target is to compare backward-elimination reasoning with the
-actual update trajectory and identify the exact non-commuting square.
+```text
+F -> N -> T
+```
+
+and belief in "not Friday" as
+
+```text
+T -> N -> F.
+```
+
+This is stronger and cleaner than the earlier target of merely finding some
+announcement whose belief is lost. It exhibits a complete categorical reversal
+through the four-valued gap state while information is added rather than
+forgotten.
+
+The module also separates internal FDE negation from a meta-level positive
+prediction predicate. Initially no individual exam day is positively predicted;
+after eliminating Monday and Wednesday, Friday is positively predicted.
+
+This is not yet claimed as a complete formalization of the classical Surprise
+Examination announcement, because the current language has probabilistic belief
+rather than a separate factive knowledge operator. Instead, it formalizes the
+dynamic pressure point used by the backward-elimination argument: elimination
+of alternatives can create predictability.
+
+The standard Surprise Test literature defines surprise in terms of inability to
+know the exam day beforehand and analyzes the backward elimination from the
+last possible day. The present model should therefore be read as a belief-
+threshold analogue and a structural diagnostic, not as a replacement for a
+full knowledge-theoretic formalization.
 
 ## Fitch: defer until epistemic architecture is clean
 
-Standard Fitch reasoning needs more than the present language supplies.  In
+Standard Fitch reasoning needs more than the present language supplies. In
 particular it uses a knowledge operator `K`, modal possibility `Diamond`,
 factivity, and distribution of knowledge over conjunction.
 
-The current object language only has a threshold-belief operator.  Therefore a
+The current object language only has a threshold-belief operator. Therefore a
 faithful Fitch formalization should not be simulated by silently reusing `bel`.
 Instead, Fitch should motivate a principled extension separating:
 
@@ -180,8 +200,8 @@ a controlled glut.
 
 ## Conflict Nerve connection
 
-The new transport thesis also subsumes the Preface conflict geometry.  The
-full representations
+The transport thesis also subsumes the Preface conflict geometry. The full
+representations
 
 ```text
 exact incidence x_A
@@ -209,7 +229,9 @@ than rename it:
 - the Stanford Encyclopedia of Philosophy entries on self-reference and
   epistemic paradoxes;
 - gap, glut, many-valued and paraconsistent approaches to the Sorites;
-- standard dynamic analyses of the Surprise Examination;
+- Surprise Test work centered on backward elimination and advance
+  predictability;
+- dynamic epistemic logic and public-announcement style model transformations;
 - Church/Fitch knowability reasoning and paraconsistent revisions of its
   reductio step.
 
@@ -219,6 +241,7 @@ has direct precedents.
 
 ## Immediate gate
 
-Before extending to Surprise Examination, run `lake build` with the new Knower
-and Sorites modules imported from `PEL4.lean`.  Until that succeeds, their
-results are build candidates rather than compiler-verified theorems.
+Knower and Sorites are compiler-verified under Lean 4.31. The next gate is to
+run `lake build` with `PEL4/Paradoxes/SurpriseExamination.lean` imported from
+`PEL4.lean`. Until that succeeds, the dynamic reversal results remain build
+candidates.
