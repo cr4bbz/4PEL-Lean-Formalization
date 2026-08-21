@@ -79,12 +79,17 @@ theorem modal_moore_strict_true_of_strict_truth_unknown_no_gap
     hNoGap hUnknown
   have hK :
       evalModal m w (ModalFormula.know i phi) = FDEValue.F := by
-    apply FDEValue.ext
-    · simpa [FDEValue.F, modalLacksPositiveKnowledgeAt] using hUnknown
-    · simpa [FDEValue.F, modalNegativeKnowledgeAt] using hNeg
-  unfold modalStrictTrueAt modalMooreFormula
-  simp [evalModal, hTrue, hK, FDEValue.and, FDEValue.not, FDEValue.T,
-    FDEValue.F]
+    unfold modalLacksPositiveKnowledgeAt at hUnknown
+    unfold modalNegativeKnowledgeAt at hNeg
+    cases hVal : evalModal m w (ModalFormula.know i phi) with
+    | mk pos neg =>
+        cases pos <;> cases neg <;> simp_all [FDEValue.F]
+  unfold modalStrictTrueAt at hTrue ⊢
+  unfold modalMooreFormula
+  change FDEValue.and (evalModal m w phi)
+      (FDEValue.not (evalModal m w (ModalFormula.know i phi))) = FDEValue.T
+  rw [hTrue, hK]
+  rfl
 
 /-- Strict-truth Church--Fitch phase.
 
@@ -143,9 +148,9 @@ theorem church_fitch_strict_knowledge_omniscience_of_strict_knowability
       (evalModal m w (ModalFormula.know i phi)).neg = false :=
     hSourceNoGlut w phi hw hPos
   unfold modalPositiveKnownAt at hPos
-  apply FDEValue.ext
-  · simpa [FDEValue.T] using hPos
-  · simpa [FDEValue.T] using hNegFalse
+  cases hVal : evalModal m w (ModalFormula.know i phi) with
+  | mk pos neg =>
+      cases pos <;> cases neg <;> simp_all [FDEValue.T]
 
 /-!
 ## 2. Raw possibility versus internal dual phase
