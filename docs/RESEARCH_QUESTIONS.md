@@ -7,178 +7,131 @@ Status legend:
 - **OPEN**: no satisfactory formal answer yet.
 - **INTERPRETIVE**: a working philosophical diagnosis supported by formal results, not itself a machine-checked theorem.
 
-This document separates machine-checked results from open mathematical,
-philosophical, semantic, and literature questions.
-
-For the consolidated modal-law picture, see
-`docs/MODAL_KNOWLEDGE_CLASSIFICATION.md`.
+For the consolidated modal picture, see `docs/MODAL_KNOWLEDGE_CLASSIFICATION.md`.
 
 ## A. Questions already answered formally
 
-### A1. Can four-valued knowledge preserve nonclassical information rather than Booleanize it?
+### A1. Does four-valued knowledge preserve complete information status?
 
-**VERIFIED.** On homogeneous accessible profiles, evidence-stable knowledge
-recovers the complete FDE value:
+**VERIFIED.** On homogeneous accessible profiles:
 
 ```text
-homogeneous T -> K(phi) = T
-homogeneous F -> K(phi) = F
-homogeneous B -> K(phi) = B
-homogeneous N -> K(phi) = N
+T -> K(phi)=T
+F -> K(phi)=F
+B -> K(phi)=B
+N -> K(phi)=N
 ```
 
-Heterogeneous full FDE status forces strict `F`.
+Heterogeneous full-value profiles force `K(phi)=F`.
 
-This is the current **Knowledge Stability Principle**.
+### A2. Is internal `not K phi` the same as meta-level lack of positive knowledge?
 
-### A2. Is internal negation of knowledge the same as absence of positive knowledge?
-
-**VERIFIED: no.** The repository distinguishes:
+**VERIFIED: no.** The repository separates:
 
 ```text
-meta-level lack of positive knowledge: (K phi).pos = false
-negative support for knowledge:       (K phi).neg = true
-positive internal not-K:              (not K phi).pos = true
+(K phi).pos = false
+(K phi).neg = true
+(not K phi).pos = true
 ```
 
-These collapse only under additional information-status assumptions. A
-reflexive, transitive, Euclidean singleton model with `K phi = N` verifies that
-frame geometry alone cannot identify them.
+Even reflexive, transitive, Euclidean frames do not collapse these notions. A NoGap bridge is semantically independent of frame geometry.
 
-### A3. Does evidence-stable knowledge distribute over conjunction?
+### A3. What is the conjunction boundary for `K`?
 
-**VERIFIED, asymmetrically.** Positive introduction holds:
+**VERIFIED.** Positive introduction holds:
 
 ```text
-K+(phi) and K+(psi) -> K+(phi and psi).
+K+ phi and K+ psi -> K+(phi and psi)
 ```
 
-Positive elimination fails in general. Under `K+(phi and psi)`, the exact left
-boundary is:
+but positive elimination fails. Under `K+(phi and psi)`:
 
 ```text
-K+(phi) iff Stable(phi)
+K+ phi iff Stable(phi)
+K+ psi iff Stable(psi).
 ```
 
-and analogously for the right conjunct.
+Strict conjunction decomposition survives.
 
-At the strict layer, however:
+### A4. Is raw possibility identical to `not K(not phi)`?
+
+**VERIFIED: no.** They agree exactly when:
 
 ```text
-K(phi and psi) = T -> K(phi) = T and K(psi) = T.
+Stable(phi) OR Diamond_raw(phi)=T.
 ```
 
-Thus strict conjunction decomposition survives even though designated
-elimination does not.
+Under instability, internal dualization can collapse to strict `T`.
 
-### A4. Can raw modal possibility be identified with `not K(not phi)`?
+### A5. What is the Church-Fitch boundary?
 
-**VERIFIED: not globally.** Primitive raw accessibility possibility and the
-internal knowledge dual agree exactly when:
+**VERIFIED conditionally.** Raw knowability, strict-truth phases, NoGap dependence, raw/dual separation, local Fitch recovery, and global Church-Fitch classification all compile. Positive raw knowability yields omniscience only with the required information-status and recovery assumptions.
 
-```text
-Stable(phi) OR Diamond_raw(phi) = T.
-```
+### A6. What frame laws does evidence-stable knowledge satisfy?
 
-Under instability, internal dualization can collapse to strict `T`, erasing the
-raw four-valued modal profile.
-
-### A5. Can knowledge and raw possibility be represented in one object language conservatively?
-
-**VERIFIED.** `PEL4/ModalLanguage.lean` adds primitive `K` and primitive raw
-`Diamond` without changing values of embedded legacy formulas.
-
-### A6. Does the classical Fitch conjunction-extraction step hold for the actual Moorean formula `p and not K p`?
-
-**VERIFIED: no.** A finite object-language model has:
+**VERIFIED for the main boundaries.** Current classification:
 
 ```text
-K(p and not K p) = B
-K(p)             = F
-K(not K p)       = F.
-```
-
-The compound is stable while its components are not.
-
-### A7. Which local assumptions restore the Fitch collision?
-
-**VERIFIED.** Positive knowledge of `phi and not K phi` is incompatible with the
-local package:
-
-```text
-reflexivity
-+ Stable(phi)
-+ no-glut for K(phi).
-```
-
-The repository also contains independent finite witnesses showing the local
-role of the recovery assumptions rather than merely one successful model.
-
-### A8. What is the global Church-Fitch boundary in the modal language?
-
-**VERIFIED conditionally.** The modal validity/satisfaction layer, raw
-knowability principle, local-to-global recovery theorem, no-gap independence,
-strict-truth phase, raw-vs-dual separation, and Church-Fitch classification are
-all compiled.
-
-In particular, the positive raw phase verifies a conditional collapse of the
-form:
-
-```text
-positive raw knowability
-+ global source NoGap
-+ uniform Fitch recovery
-+ global source NoGlut
--> positive omniscience
-   and strict-truth positive omniscience
-   and strict knowledge omniscience.
-```
-
-Strict-truth raw knowability yields the corresponding strict-truth collapse.
-Raw possibility and internal dual possibility remain distinct: dualized
-knowability can be positive even where witness-bearing raw knowability is not.
-
-### A9. What modal laws does evidence-stable knowledge satisfy?
-
-**VERIFIED for the main factivity/introspection boundaries.** The current
-classification is:
-
-```text
-probability normalization -> accessibility is nonempty
+probability normalization -> seriality
 reflexivity               -> strict factivity
-transitivity              -> K+ phi implies value(K K phi) = value(K phi)
-Euclideanness alone       -> insufficient for positive internal axiom 5
-transitivity + Euclidean  -> K K phi = K phi for all four values
-transitivity + Euclidean  -> K(not K phi) = not K phi
+transitivity              -> positive axiom 4 / value preservation on T,B
+Euclideanness alone       -> insufficient for internal axiom 5
+transitivity + Euclidean  -> full K-idempotence and K(not K phi)=not K phi
 NoGap                     -> bridges meta-level ignorance to negative support
 ```
 
-A finite unrestricted-introspection model verifies that positive axiom 4 fails
-without an appropriate frame condition. A separate finite model verifies that
-local Euclideanness alone does not suffice for positive internal negative
-introspection.
+### A7. How do probabilistic belief `B` and evidence-stable knowledge `K` interact?
 
-### A10. Does probability normalization constrain the modal frame?
-
-**VERIFIED.** From
+**VERIFIED, complete at the pointwise value level.** The central factorization is:
 
 ```text
-mu(R_i(w)) = 1
-mu([])     = 0
+K(phi) = if Stable(phi) then B(phi) else F.
 ```
 
-it follows that
+Hence:
 
 ```text
-R_i(w) != []
+K+ phi -> B+ phi
+B+ phi -> (K+ phi iff Stable(phi))
+K phi = v, v != F iff Stable(phi) and B phi = v
+K phi = F iff Unstable(phi) or B phi = F.
 ```
 
-for every agent and world. Seriality is therefore induced by the probabilistic
-model axioms rather than added independently.
+Working interpretation: **knowledge is stability-filtered belief**.
 
-### A11. What happens to the Knower fixed point in four values?
+### A8. Does necessitation survive in 4-PEL?
 
-**VERIFIED.** The induced map has:
+**VERIFIED with an exact phase split.** Strict necessitation requires accessibility closure of the explicit validity domain:
+
+```text
+strict-valid(phi) + closure -> strict-valid(K phi).
+```
+
+Without closure, a hidden accessible counterworld refutes the rule.
+
+For positive validity, closure alone is insufficient. Under closure and positive validity:
+
+```text
+positive-valid(K phi)
+iff
+phi is full-value stable on every listed accessible range.
+```
+
+At schema level:
+
+```text
+positive necessitation
+iff
+every positively valid formula is accessibility-stable.
+```
+
+### A9. Does probability normalization constrain the frame?
+
+**VERIFIED.** `mu(R)=1` together with `mu([])=0` implies every accessibility list is nonempty.
+
+### A10. What happens to the Knower fixed point?
+
+**VERIFIED.** The induced map is:
 
 ```text
 T -> F
@@ -187,181 +140,138 @@ B -> B
 N -> N.
 ```
 
-The classical values form a two-cycle, while both nonclassical values are fixed
-points. Working interpretation: **epistemic fixed-point bifurcation**.
+Working diagnosis: **epistemic fixed-point bifurcation**.
 
-### A12. What is the exact Sorites borderline created by a threshold above one half?
+### A11. What is the Sorites threshold geometry?
 
-**VERIFIED** in the scaled signed-evidence model. For `c > 50`, the gap interval
-is exactly:
+**VERIFIED.** For scaled threshold `c > 50`, the gap interval is exactly:
 
 ```text
-100 - c < x < c
+100-c < x < c
 ```
 
-with width `2c - 100`. The same slack appears as the lower bound on overlap
-needed for a glut when both positive and negative evidence cross threshold.
+with width `2c-100`. The same threshold slack controls glut overlap.
 
-Working interpretation: **Gap--Glut Threshold Duality**.
+### A12. What fails in Surprise backward elimination?
 
-### A13. What fails in Surprise backward elimination?
+**VERIFIED.** Each day can be predicted only in its own branch-relative updated context; these predictions do not transport back to the initial model. Working diagnosis: **context-collapse / prediction-transport failure**.
 
-**VERIFIED** in the finite model. Each day is predictable only in the special
-counterfactual/updated context used to eliminate it, while no day is positively
-predicted in the initial model.
+### A13. How much Preface conflict structure is invisible to marginals?
 
-Working diagnosis: **context-collapse / prediction-transport failure**.
-
-### A14. How much higher-order Preface conflict structure is invisible to first-order marginals?
-
-**VERIFIED** for the finite incidence formalization. The generic fixed-marginal
-fiber has freedom:
+**VERIFIED.** Fixed first-order marginals leave freedom:
 
 ```text
 2^n - n - 2
 ```
 
-for `n >= 2`. Full co-conflict data reconstructs exact incidence by Möbius
-inversion, while coarse marginals leave exponentially growing interaction
-freedom.
+for `n >= 2`. Full co-conflict data reconstructs exact incidence by Möbius inversion. Support nerves with identical coarse data can have different Euler signatures.
 
-### A15. Can identical coarse Preface data support different conflict topology?
+### A14. Is the old conditionalization operator semantically safe at zero evidence mass?
 
-**VERIFIED** at the support-nerve/Euler level. Finite profiles with the same
-coarse data can realize different simplicial support signatures and Euler
-counts. General homology and persistence are not yet formalized.
+**VERIFIED: the old prototype was not.** Raw conditionalization returned `0` for zero mass while normalization had been postulated unconditionally.
 
-## B. Questions with a substantial but incomplete answer
-
-### B1. Is the current modal correspondence picture minimal?
-
-**PARTIAL.** Sufficiency and several countermodels are verified, but exact
-necessity/minimality is not yet classified for every law.
-
-Examples still worth proving include:
+The active API now requires:
 
 ```text
-Is local transitivity necessary for positive K-idempotence on the full model class?
-What is the weakest condition for full four-value K-idempotence?
-Can Euclidean recovery be weakened while preserving K(not K phi) = not K phi?
+ConditionalizationAdmissible m E
 ```
 
-The current theorems establish sharp failures for important weaker conditions,
-but not a complete correspondence theorem.
+with positive local evidence mass and explicit normalization proofs. Liar, Surprise Examination, and Surprise Backward Elimination compile through this safe interface.
+
+### A15. Which modal formulas are invariant under probabilistic conditionalization?
+
+**VERIFIED.** If `phi` contains no `bel` constructor, then admissible conditionalization preserves its complete FDE value at every world:
+
+```text
+ModalProbabilityFree(phi)
+-> value_after(phi)=value_before(phi).
+```
+
+Consequently stability, outer `K`, and raw possibility are invariant for this fragment.
+
+### A16. Can conditionalization create epistemic instability indirectly through belief?
+
+**VERIFIED.** A finite three-world witness gives:
+
+```text
+before: B p = T,T,T
+ after: B p = T,N,T
+```
+
+under admissible evidence update. Therefore:
+
+```text
+Stable(B p): true -> false
+K(B p):       T   -> F.
+```
+
+Atomic `p` remains invariant in the same update. Working diagnosis: **Probabilistic Instability Injection** / **Belief-Mediated Stability Fracture**.
+
+## B. Questions with substantial but incomplete answers
+
+### B1. Is the modal correspondence picture minimal?
+
+**PARTIAL.** Sufficiency and important countermodels are verified, but exact weakest frame conditions are not classified for every law. Open examples include minimal conditions for full K-idempotence and internal axiom 5.
 
 ### B2. Is "paradox as structural-transport failure" a genuine common theory?
 
-**PARTIAL / INTERPRETIVE.** The repository verifies distinct transport failures:
-projection loss, non-commutation, stability reflection failure, context
-transport failure, possibility-duality collapse, threshold phase change,
-fixed-point bifurcation, and higher-order interaction loss.
-
-What is still missing is a sufficiently general theorem schema proving that a
-family of paradoxical arguments depends on a shared preservation/commutation
-property.
+**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, and higher-order interaction loss are all represented formally in different modules. A sufficiently general theorem schema connecting these families remains open.
 
 ### B3. How novel are the combined results?
 
-**OPEN LITERATURE QUESTION.** Individual ingredients have precedents in
-Belnap-Dunn logic, paraconsistent epistemic logic, nonstandard knowledge
-modalities, Fitch literature, dynamic epistemic logic, threshold belief,
-simplicial methods, Möbius inversion, and conflict geometry.
+**OPEN LITERATURE QUESTION.** Individual ingredients have precedents in Belnap-Dunn logic, paraconsistent epistemic logic, nonstandard knowledge modalities, Fitch literature, dynamic epistemic logic, threshold belief, simplicial methods, and Möbius inversion. No strong novelty claim should precede a systematic comparison.
 
-No novelty claim should be made without a systematic comparison of at least:
+### B4. What is the epistemological reading of `K phi = B` and `K phi = N`?
 
-```text
-Knowledge Stability Principle
-strict/designated modal phase split
-probability-induced seriality
-four-valued axiom-4/axiom-5 correspondence pattern
-Possibility Duality Collapse
-Church-Fitch raw/dual classification
-Gap--Glut Threshold Duality
-Topological Conflict Underdetermination
-paradox-as-structural-transport synthesis
-```
-
-### B4. What is the philosophical status of `B` and `N` at the knowledge level?
-
-**PARTIAL / INTERPRETIVE.** The formal distinctions are now precise, but the
-epistemological reading remains open. In particular, the project must defend
-how to interpret:
-
-```text
-K phi = B
-K phi = N
-meta-level lack of positive knowledge
-negative support for K phi
-positive internal not K phi
-```
-
-without silently importing classical notions of ignorance or contradiction.
+**PARTIAL / INTERPRETIVE.** The formal distinctions are exact; the philosophical interpretation of glutty knowledge, gappy knowledge, internal ignorance, and meta-level lack of knowledge remains open.
 
 ## C. High-priority open research questions
 
-### C1. Necessitation and global modal principles
+### C1. Can conditionalization also restore epistemic stability?
 
-**OPEN.** Classify necessitation-like principles separately for strict truth and
-positive/designated truth. Determine which global validity assumptions imply
-local or global knowledge and which fail because stability is not preserved.
-
-### C2. Interaction of probabilistic belief `B` and evidence-stable knowledge `K`
-
-**OPEN, high priority.** 4-PEL now has mature separate semantics for both
-operators, but their joint logic is largely unexplored.
-
-Questions include:
+**OPEN, active build gate.** `PEL4/ModalDynamicsBeliefRestoration.lean` tests:
 
 ```text
-When does K(phi) imply B(phi)?
-Does K(phi) = T force B(phi) = T under current thresholds?
-When can B(phi) coexist with K(not phi)?
-Can B be glutty where K is strict, or conversely?
-What frame/probability assumptions connect the operators?
+before: B p = T,N,T -> unstable -> K(B p)=F
+after:  B p = T,T,T -> stable   -> K(B p)=T.
 ```
 
-### C3. Dynamic knowledge
+If verified, probabilistic conditionalization will be shown to move stability in both directions rather than being monotone knowledge gain or loss.
 
-**OPEN, high priority.** The Surprise development updates probabilistic belief
-models. The modal `K` layer should now be studied under announcement and
-evidence update.
+### C2. What is the general dynamic K-change classification?
 
-Questions include whether update:
+**OPEN, high priority.** Once fracture and restoration are established, classify dynamic change by the pair:
 
 ```text
-preserves accessibility-induced seriality,
-preserves or destroys epistemic stability,
-creates or removes K-gluts/K-gaps,
-changes Fitch recovery conditions,
-preserves transitive/Euclidean modal phases.
+belief-value change
+stability change.
 ```
 
-### C4. Repair the zero-evidence conditionalization boundary
+The K/B factorization suggests a phase table in which all knowledge changes arise from one or both of these channels.
 
-**OPEN INFRASTRUCTURE / SEMANTICS.** The current dynamics layer defines a
-zero-mass conditionalization fallback but also assumes unconditional
-normalization of the conditionalized measure. A principled treatment should
-require positive evidence mass or use a safe update subtype.
+### C3. When do formulas containing `bel` nevertheless remain dynamically stable?
 
-This should be repaired before strong general dynamic-epistemic theorems are
-claimed.
+**OPEN.** `ModalProbabilityFree` is a strong syntactic sufficient condition, not an exact semantic characterization. Seek weaker conditions such as posterior-uniformity of relevant belief subformulas across accessible worlds.
 
-### C5. Algebraic characterization of stability
+### C4. Which K/B values are dynamically reachable under fixed `R` and valuation?
 
-**OPEN.** Stability is currently semantic over accessible FDE profiles. Research
-should seek a more intrinsic algebraic or categorical characterization and
-classify which operators preserve or reflect it.
+**OPEN.** Current witnesses show at least `K(Bp): T -> F` and the active restoration gate tests `F -> T`. A complete reachability graph over `T,F,B,N` would expose the geometry of dynamic epistemic phases.
 
-### C6. Global independence/minimality of the Church-Fitch assumptions
+### C5. Can dynamic updates create or remove K-gluts and K-gaps?
 
-**OPEN.** Local recovery assumptions now have finite independence evidence, but
-the fully quantified global Church-Fitch packages still deserve an explicit
-minimality/independence table.
+**OPEN.** The current witnesses focus on strict `T/F`. Construct and classify updates involving `B` and `N` at the knowledge level.
 
-### C7. General theorem of structural transport
+### C6. Algebraic characterization of stability
 
-**OPEN, foundational.** Formalize transformations and observations generally
-enough to state theorem families of the form:
+**OPEN.** Stability is currently semantic over accessible FDE profiles. Seek intrinsic algebraic, bilattice, or categorical descriptions and classify operators that preserve or reflect it.
+
+### C7. Global independence/minimality of Church-Fitch assumptions
+
+**OPEN.** Local independence witnesses exist, but the fully quantified global packages still deserve an explicit minimality table.
+
+### C8. General theorem of structural transport
+
+**OPEN, foundational.** Formalize transformations and observations generally enough to derive theorem families of the form:
 
 ```text
 paradoxical inference requires preservation property P;
@@ -369,50 +279,36 @@ finite witness refutes P;
 restricted hypotheses recover P.
 ```
 
-Fitch is currently the clearest worked example.
+### C9. Conflict topology beyond Euler signatures
 
-### C8. Conflict topology beyond Euler signatures
+**OPEN.** Add actual simplicial homology, Betti numbers, persistence, and realizability inside fixed-marginal fibers.
 
-**OPEN.** Add actual simplicial homology, Betti numbers, persistence, and
-realizability questions inside fixed-marginal fibers.
+### C10. Continuous / measure-theoretic generalization
 
-### C9. Continuous / measure-theoretic generalization
+**OPEN.** Determine which finite rational results survive on countable or general probability spaces.
 
-**OPEN.** Current models are finite and often use exact rational or scaled
-integer arithmetic. Determine which results survive on countable or general
-probability spaces.
+### C11. Automated finite-model search
 
-### C10. Automated finite-model search
+**OPEN, methodological.** A bounded generator over FDE valuations, relations, thresholds, and local measures could search for minimal witnesses and test conjectured correspondence laws.
 
-**OPEN, methodological.** A bounded generator could search FDE valuations,
-relations, thresholds, and frame properties for minimal countermodels. The modal
-law and Church-Fitch classifications now provide good benchmark targets.
+### C12. Literature-grounded modal and dynamic comparison
 
-### C11. Literature-grounded modal comparison
-
-**OPEN, publication-critical.** Compare the current primitive `K` semantics and
-verified frame laws with nonstandard Belnap-Dunn knowledge modalities and
-paraconsistent epistemic systems. The goal is to distinguish genuine new
-correspondence results from expected consequences of known semantics.
+**OPEN, publication-critical.** Compare primitive evidence-stable `K`, the K/B factorization, exact positive necessitation boundary, and dynamic stability fracture/restoration pattern with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
 
 ## D. Suggested research order
 
-The previous Fitch-first sequence is complete enough to retire. A disciplined
-near-term sequence is now:
-
 ```text
-1. consolidate and audit the verified modal-law classification
-2. classify interaction between K and probabilistic B
-3. prove sharper necessity/minimality results for frame correspondences
-4. repair zero-evidence conditionalization
-5. study dynamic preservation of K under updates
-6. prove global independence/minimality results for Church-Fitch packages
-7. expand the structural-transport abstraction across paradox families
+1. verify belief-mediated stability restoration
+2. derive a general dynamic K-change phase classification
+3. sharpen semantic preservation conditions beyond ModalProbabilityFree
+4. classify dynamic reachability of T/F/B/N
+5. revisit frame-law minimality
+6. perform literature/novelty audit
+7. strengthen the general structural-transport abstraction
 8. deepen conflict topology and persistence
-9. perform a systematic literature/novelty audit before publication claims
 ```
 
-The central methodological principle remains to keep four layers distinct:
+The methodological separation remains essential:
 
 ```text
 machine-checked theorem
@@ -420,6 +316,3 @@ finite executable witness
 structural/philosophical interpretation
 literature/novelty claim.
 ```
-
-4-PEL is strongest when those layers inform one another without being silently
-identified.
