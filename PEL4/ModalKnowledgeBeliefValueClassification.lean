@@ -33,18 +33,20 @@ theorem modal_knowledge_nonfalse_value_iff_stable_and_belief_value
   · intro hK
     have hStable : modalAccessibleValueStable (m.R i w)
         (fun x => evalModal m x phi) = true := by
-      cases hS : modalAccessibleValueStable (m.R i w)
-          (fun x => evalModal m x phi) with
-      | true =>
-          exact hS
-      | false =>
-          have hKF := modal_knowledge_false_of_instability
-            m i w phi hS
-          have hVF : v = FDEValue.F := by
-            calc
-              v = evalModal m w (ModalFormula.know i phi) := hK.symm
-              _ = FDEValue.F := hKF
-          exact (hv hVF).elim
+      by_cases hStable : modalAccessibleValueStable (m.R i w)
+          (fun x => evalModal m x phi) = true
+      · exact hStable
+      · have hUnstable : modalAccessibleValueStable (m.R i w)
+            (fun x => evalModal m x phi) = false := by
+          cases hValue : modalAccessibleValueStable (m.R i w)
+              (fun x => evalModal m x phi) <;> simp_all
+        have hKF := modal_knowledge_false_of_instability
+          m i w phi hUnstable
+        have hVF : v = FDEValue.F := by
+          calc
+            v = evalModal m w (ModalFormula.know i phi) := hK.symm
+            _ = FDEValue.F := hKF
+        exact (hv hVF).elim
     have hEq := modal_knowledge_equals_belief_of_stable
       m i w phi hStable
     refine ⟨hStable, ?_⟩
@@ -73,32 +75,34 @@ theorem modal_knowledge_false_iff_unstable_or_belief_false
       evalModal m w (ModalFormula.bel i phi) = FDEValue.F := by
   constructor
   · intro hK
-    cases hS : modalAccessibleValueStable (m.R i w)
-        (fun x => evalModal m x phi) with
-    | false =>
-        exact Or.inl hS
-    | true =>
-        right
-        have hEq := modal_knowledge_equals_belief_of_stable
-          m i w phi hS
-        calc
-          evalModal m w (ModalFormula.bel i phi) =
-              evalModal m w (ModalFormula.know i phi) := hEq.symm
-          _ = FDEValue.F := hK
+    by_cases hStable : modalAccessibleValueStable (m.R i w)
+        (fun x => evalModal m x phi) = true
+    · right
+      have hEq := modal_knowledge_equals_belief_of_stable
+        m i w phi hStable
+      calc
+        evalModal m w (ModalFormula.bel i phi) =
+            evalModal m w (ModalFormula.know i phi) := hEq.symm
+        _ = FDEValue.F := hK
+    · left
+      cases hValue : modalAccessibleValueStable (m.R i w)
+          (fun x => evalModal m x phi) <;> simp_all
   · intro h
     rcases h with hUnstable | hBFalse
     · exact modal_knowledge_false_of_instability m i w phi hUnstable
-    · cases hS : modalAccessibleValueStable (m.R i w)
-          (fun x => evalModal m x phi) with
-      | false =>
-          exact modal_knowledge_false_of_instability m i w phi hS
-      | true =>
-          have hEq := modal_knowledge_equals_belief_of_stable
-            m i w phi hS
-          calc
-            evalModal m w (ModalFormula.know i phi) =
-                evalModal m w (ModalFormula.bel i phi) := hEq
-            _ = FDEValue.F := hBFalse
+    · by_cases hStable : modalAccessibleValueStable (m.R i w)
+          (fun x => evalModal m x phi) = true
+      · have hEq := modal_knowledge_equals_belief_of_stable
+          m i w phi hStable
+        calc
+          evalModal m w (ModalFormula.know i phi) =
+              evalModal m w (ModalFormula.bel i phi) := hEq
+          _ = FDEValue.F := hBFalse
+      · have hUnstable : modalAccessibleValueStable (m.R i w)
+            (fun x => evalModal m x phi) = false := by
+          cases hValue : modalAccessibleValueStable (m.R i w)
+              (fun x => evalModal m x phi) <;> simp_all
+        exact modal_knowledge_false_of_instability m i w phi hUnstable
 
 /-- Exact `T` phase. -/
 theorem modal_knowledge_true_iff_stable_and_belief_true
