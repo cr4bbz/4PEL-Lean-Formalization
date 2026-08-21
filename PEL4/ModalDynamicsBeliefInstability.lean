@@ -81,20 +81,20 @@ def DynamicInstabilityModel :
   , val := dynamicInstabilityVal
   , c := fun _ => 2 / 3
   , mu_total := by
-      intro i w
-      cases i
+      intro ag w
+      cases ag
       cases w <;> native_decide
   , mu_empty := by
-      intro i w
-      cases i
+      intro ag w
+      cases ag
       cases w <;> native_decide
   , c_gt_half := by
-      intro i
-      cases i
+      intro ag
+      cases ag
       native_decide
   , c_le_one := by
-      intro i
-      cases i
+      intro ag
+      cases ag
       native_decide
   }
 
@@ -109,14 +109,14 @@ theorem dynamic_instability_evidence_admissible :
     ConditionalizationAdmissible
       DynamicInstabilityModel dynamicInstabilityEvidence := by
   constructor
-  · intro i w
-    cases i
+  · intro ag w
+    cases ag
     cases w <;> native_decide
-  · intro i w
-    cases i
+  · intro ag w
+    cases ag
     cases w <;> native_decide
-  · intro i w
-    cases i
+  · intro ag w
+    cases ag
     cases w <;> native_decide
 
 /-- Updated model after learning `e`. -/
