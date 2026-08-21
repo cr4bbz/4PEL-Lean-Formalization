@@ -12,6 +12,7 @@ import PEL4.KnowledgeConjunctionIntroduction
 import PEL4.KnowledgePossibility
 import PEL4.KnowledgePossibilityBoundary
 import PEL4.ModalLanguage
+import PEL4.ModalValidity
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
@@ -36,6 +37,7 @@ import PEL4.Paradoxes.Fitch
 import PEL4.Paradoxes.FitchRecovery
 import PEL4.Paradoxes.FitchRecoveryIndependence
 import PEL4.Paradoxes.FitchKnowabilityBoundary
+import PEL4.Paradoxes.ChurchFitch
 
 import PEL4.Conservation
 
