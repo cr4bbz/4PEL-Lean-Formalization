@@ -1,4 +1,5 @@
 import PEL4.Paradoxes.SurpriseExamination
+import PEL4.StructuralTransport
 
 namespace PEL4.Paradoxes
 
@@ -13,7 +14,7 @@ and, for the Friday proposition, the belief path
 
   F -> N -> T.
 
-This file isolates the backward-elimination reasoning itself.  The crucial
+This file isolates the backward-elimination reasoning itself. The crucial
 observation is that its three prediction steps are made in three different
 counterfactual epistemic contexts:
 
@@ -22,7 +23,7 @@ counterfactual epistemic contexts:
   has been excluded;
 * Monday is predictable after Friday and Wednesday are hypothetically ruled out.
 
-Each prediction is correct inside its own context.  The transport error appears
+Each prediction is correct inside its own context. The transport error appears
 when those context-indexed predictions are treated as if they were predictions
 already available in the original model M0.
 -/
@@ -68,7 +69,7 @@ def initiallyPredicts (day : SurpriseAtom) : Bool :=
   | SurpriseAtom.wed => positivelyPredicts SurpriseModel0 examWed
   | SurpriseAtom.fri => positivelyPredicts SurpriseModel0 examFri
 
-/-- Branch-relative backward prediction status.  This deliberately packages
+/-- Branch-relative backward prediction status. This deliberately packages
 three different epistemic contexts into one meta-level classifier. -/
 def backwardContextPredicts (day : SurpriseAtom) : Bool :=
   match day with
@@ -104,11 +105,35 @@ theorem backward_prediction_is_context_created :
     backwardPredictsMonday = true := by
   native_decide
 
+/-- Structural-transport formulation of the backward-elimination mistake.
+
+The identity map on exam days does not transport the predicate "predictable in
+the day-specific elimination context" to the predicate "predictable in the
+initial context". -/
+def backwardPredictionTransport : Prop :=
+  TransportsPredicate
+    (fun day : SurpriseAtom => day)
+    (fun day => backwardContextPredicts day = true)
+    (fun day => initiallyPredicts day = true)
+
+/-- The Surprise backward argument gives the first direct paradox-level witness
+that the generic structural-transport predicate can fail. -/
+theorem backward_prediction_transport_fails :
+    ¬ backwardPredictionTransport := by
+  unfold backwardPredictionTransport
+  apply transport_fails_of_witness
+    (T := fun day : SurpriseAtom => day)
+    (P := fun day => backwardContextPredicts day = true)
+    (Q := fun day => initiallyPredicts day = true)
+    (x := SurpriseAtom.fri)
+  · native_decide
+  · native_decide
+
 /-!
 ## Interpretation
 
-The backward argument need not contain a locally invalid inference.  Its local
-prediction claims can all be correct.  What fails is structural transport across
+The backward argument need not contain a locally invalid inference. Its local
+prediction claims can all be correct. What fails is structural transport across
 contexts.
 
 The three claims
@@ -117,7 +142,7 @@ The three claims
   predict Wednesday in C_W,
   predict Monday in C_M
 
-are evaluated in distinct updated/counterfactual models.  They do not entail
+are evaluated in distinct updated/counterfactual models. They do not entail
 
   predict Friday in M0,
   predict Wednesday in M0,
@@ -126,6 +151,10 @@ are evaluated in distinct updated/counterfactual models.  They do not entail
 Thus the paradox can be diagnosed as a context-collapse error: branch-relative
 predictability is projected into a context-free eliminability judgement and
 then transported back to the initial epistemic state.
+
+The theorem `backward_prediction_transport_fails` now states this diagnosis in
+the shared generic language of `StructuralTransport.lean`, rather than leaving
+"transport failure" as interpretation alone.
 
 This is stronger than saying merely that belief is non-monotone under update.
 The earlier Surprise module establishes dynamic threshold crossing; this module
