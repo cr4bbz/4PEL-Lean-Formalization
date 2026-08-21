@@ -25,8 +25,9 @@ A paradoxical inference often behaves as if
 pi (T E) = T* (pi E)
 ```
 
-must hold. 4-PEL lets us test this rather than assume it. The characteristic
-failure modes currently visible in the repository are:
+must hold. 4-PEL lets us test this rather than assume it.
+
+The characteristic failure modes currently visible in the repository are:
 
 - projection loss,
 - non-commutation,
@@ -34,11 +35,13 @@ failure modes currently visible in the repository are:
 - threshold phase changes,
 - dynamic status changes,
 - higher-order interaction loss,
-- context-collapse across counterfactual epistemic branches.
+- context-collapse across counterfactual epistemic branches,
+- stability-reflection failure from compounds to components,
+- collapse of four-valued modal information under internal dualization.
 
-The phrase "failure of structural transport" is intentionally broader than
-"projection error": it includes fixed-point and dynamic cases where no simple
-forgetful projection is involved.
+The phrase **failure of structural transport** is intentionally broader than
+"projection error": it includes fixed-point, modal, and dynamic cases where no
+simple forgetful projection is involved.
 
 ## Current paradox map
 
@@ -52,7 +55,134 @@ forgetful projection is involved.
 | Sorites | continuous/small evidence change vs categorical status | threshold gap/glut geometry | verified |
 | Surprise Examination | sequential update vs preservation of present epistemic status | dynamic threshold reversal | verified |
 | Surprise backward elimination | branch-relative prediction vs initial prediction | context-collapse / failed prediction transport | verified |
-| Fitch | knowability vs actual knowledge | modal-epistemic transport; requires new operators | planned |
+| Fitch | knowledge of a Moorean compound vs knowledge of components | stability-reflection failure; modal duality boundary | local fracture + recovery verified; global boundary current gate |
+
+## Knowledge as a transport-sensitive operator
+
+The Fitch project forced the repository to distinguish probabilistic belief from
+knowledge. The evidence-stable knowledge candidate evaluates the complete FDE
+profile across accessible worlds.
+
+Compiler-verified behavior includes:
+
+```text
+homogeneous T -> K(phi) = T
+homogeneous F -> K(phi) = F
+homogeneous B -> K(phi) = B
+homogeneous N -> K(phi) = N
+heterogeneous full FDE status -> K(phi) = F.
+```
+
+The key structural predicate is therefore full-value stability.
+
+This produces a directional conjunction law:
+
+```text
+K+(phi) and K+(psi) -> K+(phi and psi)
+```
+
+but not unrestricted elimination. Under positive knowledge of the conjunction,
+Lean verifies the exact boundary:
+
+```text
+K+(phi) iff Stable(phi)
+K+(psi) iff Stable(psi).
+```
+
+Working diagnosis: **stability reflection boundary**. Composition preserves
+stability, but a stable compound need not reveal stable components.
+
+## Modal possibility: verified duality boundary
+
+The modal extension keeps primitive raw accessibility possibility separate from
+the internal expression
+
+```text
+not K(not phi).
+```
+
+Lean verifies that internal negation preserves accessible full-value stability.
+Under instability, evidence-stable knowledge of `not phi` becomes strict `F`, so
+its internal negation becomes strict `T`.
+
+Hence raw possibility and the internal knowledge dual can diverge on glutty and
+gappy profiles. The exact verified boundary is:
+
+```text
+Diamond_raw(phi) = not K(not phi)
+iff
+Stable(phi) OR Diamond_raw(phi) = T.
+```
+
+This reveals a second transport failure relevant to Fitch: classical modal
+dualization can erase four-valued information by converting epistemic
+heterogeneity into strict truth.
+
+## Fitch: verified local fracture and recovery boundary
+
+`PEL4/ModalLanguage.lean` introduces primitive object-language `K` and primitive
+raw `Diamond` as a conservative extension of the earlier formula language.
+
+`PEL4/Paradoxes/Fitch.lean` then formalizes the actual Moorean formula
+
+```text
+M(phi) = phi and not K(phi).
+```
+
+The finite Fitch model contains a reflexive critical witness with:
+
+```text
+K(M(p)) = B
+K(p)    = F
+K(not K(p)) = F.
+```
+
+Thus positive knowledge of the Moorean conjunction does not transport to
+positive knowledge of either component, even at a reflexive point.
+
+The semantic mechanism is verified directly:
+
+```text
+Stable(M(p))     = true
+Stable(p)        = false
+Stable(not K(p)) = false.
+```
+
+The classical Fitch contradiction therefore fails to arise in that model not
+because factivity is absent, but because compound stability fails to reflect to
+its components.
+
+`PEL4/Paradoxes/FitchRecovery.lean` proves the converse local result. At a point
+with positive knowledge of
+
+```text
+phi and not K(phi),
+```
+
+the package
+
+```text
+reflexivity
++ Stable(phi)
++ no-glut condition for K(phi)
+```
+
+is inconsistent.
+
+The existing Fitch witness satisfies reflexivity and local no-glut while
+violating `Stable(p)`. Thus its concrete escape route from the classical
+collision is specifically component instability.
+
+The next build gate, `PEL4/Paradoxes/FitchKnowabilityBoundary.lean`, lifts this
+through primitive raw possibility. Its target global statement is:
+
+```text
+Diamond_raw+ K(phi and not K phi)
+-> some accessible positive knowledge witness violates the local recovery package.
+```
+
+The global module must not be marked verified until a successful local build is
+reported.
 
 ## Knower: fixed-point bifurcation
 
@@ -63,7 +193,7 @@ forgetful projection is involved.
 K := not B(K).
 ```
 
-The Lean 4.31 build verifies the complete classification:
+The Lean 4.31 build verifies:
 
 ```text
 T -> F
@@ -78,19 +208,7 @@ values form a 2-cycle:
 - `B` is stabilization by epistemic overdetermination;
 - `N` is stabilization by epistemic underdetermination.
 
-This also exposes a crucial semantic distinction for later work:
-
-```text
-internal FDE negation of B(phi)
-```
-
-is not automatically identical to
-
-```text
-absence of positive belief in phi.
-```
-
-That distinction matters for Moore, Knower, Fitch and Surprise-style formulas.
+Working diagnosis: **epistemic fixed-point bifurcation**.
 
 ## Sorites: the threshold slack 2c - 100
 
@@ -102,52 +220,30 @@ positive = x
 negative = 100 - x.
 ```
 
-The Lean 4.31 build verifies that for a majority threshold `c > 50`, the gappy
-band is exactly
+For a majority threshold `c > 50`, Lean verifies that the gappy band is exactly
 
 ```text
-100 - c < x < c.
+100 - c < x < c
 ```
 
-Its algebraic width is
+with width
 
 ```text
-c - (100 - c) = 2c - 100.
+2c - 100.
 ```
 
-The existing 4-PEL glut-boundary theorem already proves that when positive and
-negative evidence overlap sufficiently for both to reach threshold, the glut
-mass must satisfy
+The existing glut-boundary theorem shows that the same threshold slack is the
+minimum overlap mass required when positive and negative evidence both reach
+threshold.
 
-```text
-P_B >= 2c - 100.
-```
-
-Hence the same threshold slack controls two opposite regimes:
-
-- exclusive evidence: `2c - 100` is the gap width;
-- overlapping evidence: `2c - 100` is the compulsory glut-overlap lower bound.
-
-Working name: **Gap--Glut Threshold Duality**.
-
-The philosophical claim is deliberately weaker than identifying vagueness with
-probability. The formal result concerns signed-evidence threshold geometry;
-Sorites is an application of that geometry.
+Working diagnosis: **Gap--Glut Threshold Duality**.
 
 ## Surprise Examination: verified dynamic threshold reversal
 
 `PEL4/Paradoxes/SurpriseExamination.lean` uses the existing `conditionalize`
-machinery on three possible exam days: Monday, Wednesday, and Friday, initially
-equiprobable with threshold `2/3`.
+machinery on three possible exam days with threshold `2/3`.
 
-Successive truthful updates are:
-
-```text
-E1: not Monday
-E2: not Wednesday
-```
-
-The Lean 4.31 build verifies belief in "exam on Friday" as
+Successive truthful updates verify belief in "exam on Friday" as
 
 ```text
 F -> N -> T
@@ -159,71 +255,29 @@ and belief in "not Friday" as
 T -> N -> F.
 ```
 
-Thus additional truthful evidence does not preserve categorical belief status.
-The reversal passes through the gap state rather than jumping directly from one
-determined pole to the other.
+Additional truthful evidence therefore need not preserve categorical epistemic
+status. The reversal passes through the gap state.
 
-The module also separates internal FDE negation from a meta-level positive
-prediction predicate. Initially no individual exam day is positively predicted;
-after eliminating Monday and Wednesday, Friday is positively predicted.
+## Surprise backward elimination: verified context transport failure
 
-This is not a complete formalization of the classical Surprise Examination
-announcement, because the current language has probabilistic belief rather
-than a separate factive knowledge operator. It formally isolates the dynamic
-pressure point: eliminating alternatives can create predictability.
+`PEL4/Paradoxes/SurpriseBackwardElimination.lean` formalizes the local
+justifications in their actual updated/counterfactual contexts.
 
-## Surprise backward elimination: verified context-indexed prediction transport failure
-
-`PEL4/Paradoxes/SurpriseBackwardElimination.lean` formalizes the backward-
-elimination justifications in the distinct epistemic contexts in which they are
-actually obtained:
+Each day is positively predictable in the context used to eliminate it while
+none is positively predicted in the initial model. Thus:
 
 ```text
-Friday:    predict in the actual late-week model after not-Monday and not-Wednesday
-Wednesday: predict after hypothetically ruling out Friday and then learning not-Monday
-Monday:    predict after hypothetically ruling out Friday and Wednesday
+predictable(day, elimination-context(day)) = true
+predictable(day, initial context)          = false.
 ```
 
-The Lean 4.31 build verifies that each local prediction is correct in its own
-context while the initial model positively predicts none of the three days.
-Hence, for every day,
+Working diagnosis: **context-collapse**. The classical backward argument
+packages branch-relative predictions into one context-free eliminability
+judgement and transports them back to the initial state.
 
-```text
-predictable(day, its elimination context) = true
-predictable(day, initial context)         = false.
-```
+## Preface conflict geometry and topology
 
-Working diagnosis: **context-collapse**. The backward argument packages
-predictions made in distinct updated/counterfactual models into a single
-context-free eliminability judgement and transports that judgement back to the
-initial epistemic state.
-
-This strengthens the Surprise analysis from simple non-monotonicity under
-update to a precise failure of structural transport across epistemic contexts.
-
-## Fitch: defer until epistemic architecture is clean
-
-Standard Fitch reasoning needs more than the present language supplies. In
-particular it uses a knowledge operator `K`, modal possibility `Diamond`,
-factivity, and distribution of knowledge over conjunction.
-
-The current object language only has a threshold-belief operator. Therefore a
-faithful Fitch formalization should not be simulated by silently reusing `bel`.
-Instead, Fitch should motivate a principled extension separating:
-
-- probabilistic belief `B`,
-- knowledge `K`,
-- modal possibility / knowability,
-- internal negation,
-- meta-level absence of epistemic support.
-
-Only after these distinctions are explicit should the paraconsistent Fitch
-question be tested: whether `Kp and not Kp` must be impossible or may instead be
-a controlled glut.
-
-## Conflict Nerve connection
-
-The transport thesis also subsumes the Preface conflict geometry. The full
+The transport thesis also subsumes the Preface conflict program. The full
 representations
 
 ```text
@@ -233,39 +287,75 @@ exact incidence x_A
 ```
 
 are information-equivalent, whereas first-order marginals, `(q,r)`, support
-nerves, Euler characteristics and later persistence summaries are progressively
-coarser projections.
+nerves, Euler characteristics, and later persistence summaries are progressively
+coarser observations.
 
-This gives a precise family of maps at which epistemic structure can be lost.
-The emerging research question is therefore:
+The generic fixed-marginal fiber has freedom
 
-> Which paradoxes are generated or amplified when a rich epistemic structure
-> is replaced by a coarser representation that fails to preserve the operation
-> used in the argument?
+```text
+2^n - n - 2
+```
 
-## Literature anchors
+for `n >= 2`, quantifying the higher-order interaction structure invisible to
+first-order marginals.
 
-The research direction is intended to connect with established work rather
-than rename it:
+Lean also verifies finite profiles with identical coarse data but distinct
+Conflict-Nerve support signatures and Euler counts. Working diagnosis:
+**topological conflict underdetermination**.
 
-- Kaplan and Montague on the Knower paradox;
-- the Stanford Encyclopedia of Philosophy entries on self-reference and
-  epistemic paradoxes;
-- gap, glut, many-valued and paraconsistent approaches to the Sorites;
-- Surprise Test work centered on backward elimination and advance
-  predictability;
-- dynamic epistemic logic and public-announcement style model transformations;
-- Church/Fitch knowability reasoning and paraconsistent revisions of its
-  reductio step.
+General simplicial homology and persistence remain open.
+
+## Emerging cross-paradox pattern
+
+The strongest examples now share a three-stage research shape:
+
+```text
+1. identify a transport principle silently used by a paradoxical argument;
+2. construct a finite witness where that transport fails;
+3. characterize the additional hypotheses that recover the transport.
+```
+
+Fitch currently realizes this pattern most sharply:
+
+```text
+unrestricted K-conjunction extraction fails;
+component stability restores extraction;
+reflexivity + stability + no-glut restores the local classical collision.
+```
+
+The foundational next question is whether this pattern can itself be expressed
+as reusable abstract Lean theorems over `StructuralTransport.lean` rather than
+remaining a family resemblance between case studies.
+
+## Literature and novelty boundary
+
+The research direction is intended to connect with established work rather than
+rename it. Relevant anchors include Belnap-Dunn logic, nonstandard epistemic
+modalities, paraconsistent epistemic logic, Church-Fitch knowability, dynamic
+epistemic logic, Lockean threshold belief, Möbius inversion, and simplicial
+methods.
 
 Novelty claims should be withheld until a systematic literature review checks
-whether the combined signed-threshold / conflict-fiber / transport framework
-has direct precedents.
+the exact status of the combined results and terminology. In particular, names
+such as **Knowledge Stability Principle**, **Possibility Duality Collapse**,
+**Stability Reflection Boundary**, and **Topological Conflict
+Underdetermination** are currently project terminology.
 
-## Immediate gate
+## Research agenda
 
-Knower, Sorites, Surprise dynamic reversal, and Surprise backward context
-transport are compiler-verified under Lean 4.31. The next major gate is to make
-the epistemic architecture explicit enough to distinguish probabilistic belief,
-knowledge, modal knowability, internal negation, and meta-level absence of
-support before attempting a faithful Fitch formalization.
+The detailed question map is maintained in `docs/RESEARCH_QUESTIONS.md`.
+Near-term priorities are:
+
+```text
+1. compile the global Fitch knowability boundary
+2. prove independence/minimality of the local Fitch recovery assumptions
+3. formalize modal satisfaction/validity and the full Church-Fitch theorem schema
+4. classify modal laws of evidence-stable K and raw Diamond
+5. repair the zero-evidence update boundary before strong dynamic-K claims
+6. generalize the structural-transport abstraction across paradox families
+7. deepen conflict topology to homology and persistence
+8. perform a systematic literature/novelty audit
+```
+
+The methodological rule remains: distinguish machine-checked theorem, finite
+witness, structural interpretation, and novelty claim.
