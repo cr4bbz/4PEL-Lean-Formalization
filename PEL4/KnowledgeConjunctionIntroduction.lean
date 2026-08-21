@@ -46,9 +46,9 @@ theorem conjunction_stable_of_components_stable
   unfold accessibleFDEValueStable at hphi hpsi ⊢
   cases hR : m.R i w with
   | nil =>
-      simp [hR]
+      simp
   | cons first rest =>
-      simp only [hR, List.all_eq_true] at hphi hpsi ⊢
+      simp only [List.all_eq_true] at hphi hpsi ⊢
       intro w' hw'
       have hphi' := hphi w' hw'
       have hpsi' := hpsi w' hw'
@@ -56,7 +56,9 @@ theorem conjunction_stable_of_components_stable
         of_decide_eq_true hphi'
       have hpsiEq : eval m w' psi = eval m first psi :=
         of_decide_eq_true hpsi'
-      simp [hphiEq, hpsiEq]
+      change FDEValue.and (eval m w' phi) (eval m w' psi) =
+        FDEValue.and (eval m first phi) (eval m first psi)
+      rw [hphiEq, hpsiEq]
 
 /-- Positive evidence-stable knowledge is closed under conjunction
 introduction. No additional frame or stability assumption is needed beyond the
