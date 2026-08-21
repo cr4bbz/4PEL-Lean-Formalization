@@ -51,8 +51,8 @@ theorem evidence_stable_knowledge_implies_standard_box
     (m : Model W Ag Atom) (i : Ag) (w : W) (phi : Formula Atom Ag)
     (h : evidenceStableKnowledgePositive m i w phi = true) :
     standardBoxPositive m i w phi = true := by
-  simpa [evidenceStableKnowledgePositive] using And.left
-    (Bool.and_eq_true.mp h)
+  cases hbox : standardBoxPositive m i w phi <;>
+    simp_all [evidenceStableKnowledgePositive]
 
 /-!
 ## A finite contrast model
