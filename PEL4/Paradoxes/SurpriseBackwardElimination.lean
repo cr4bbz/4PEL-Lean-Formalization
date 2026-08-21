@@ -28,17 +28,62 @@ when those context-indexed predictions are treated as if they were predictions
 already available in the original model M0.
 -/
 
+/-- Excluding Friday from the initial model has positive mass `2/3` everywhere
+and yields a normalized admissible conditionalization. -/
+theorem surprise_notFri_admissible :
+    ConditionalizationAdmissible SurpriseModel0 notFri := by
+  constructor
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+
 /-- Counterfactual branch used after the backward reasoner rules out Friday. -/
 def SurpriseNoFri : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
-  conditionalize SurpriseModel0 notFri
+  conditionalize SurpriseModel0 notFri surprise_notFri_admissible
+
+/-- Inside the no-Friday branch, excluding Monday still has positive mass
+`1/2` and satisfies the normalization obligations. -/
+theorem surprise_noFri_notMon_admissible :
+    ConditionalizationAdmissible SurpriseNoFri notMon := by
+  constructor
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
 
 /-- In the no-Friday branch, Monday has also passed without an exam. -/
 def SurpriseNoFriNoMon : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
-  conditionalize SurpriseNoFri notMon
+  conditionalize SurpriseNoFri notMon surprise_noFri_notMon_admissible
+
+/-- Inside the no-Friday branch, excluding Wednesday likewise has positive mass
+`1/2` and defines an admissible normalized update. -/
+theorem surprise_noFri_notWed_admissible :
+    ConditionalizationAdmissible SurpriseNoFri notWed := by
+  constructor
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
+  · intro i w
+    cases i
+    cases w <;> native_decide
 
 /-- Counterfactual branch after Friday and Wednesday have both been ruled out. -/
 def SurpriseNoFriNoWed : Model SurpriseWorld SurpriseAgent SurpriseAtom :=
-  conditionalize SurpriseNoFri notWed
+  conditionalize SurpriseNoFri notWed surprise_noFri_notWed_admissible
 
 /-- Friday is predictable in the actual late-week context. -/
 def backwardPredictsFriday : Bool :=
