@@ -63,8 +63,10 @@ for every agent and world.
 | positive validity + accessibility closure | `K phi` positive-valid iff `phi` is stable on every listed accessible range | exact positive necessitation boundary |
 | admissible conditionalization + probability-free modal formula | complete FDE value is invariant | `bel` is the only current entry point for `mu`-sensitivity |
 | same conditions | accessible stability, outer `K`, and raw possibility are invariant | current update changes only `mu` |
-| finite belief-mediated witness | conditionalization can change `B p : T/T/T -> T/N/T` | creates instability |
-| same witness | `K(B p) : T -> F` | probabilistic instability is amplified by the K stability gate |
+| finite fracture witness | `B p : T/T/T -> T/N/T` | conditionalization can create instability |
+| same fracture witness | `K(B p) : T -> F` | instability is amplified by the K gate |
+| finite restoration witness | `B p : T/N/T -> T/T/T` | conditionalization can restore stability |
+| same restoration witness | `K(B p) : F -> T` | restored stability reopens the belief channel |
 
 Here `K+ phi` abbreviates positive/designated support for `K phi`.
 
@@ -124,7 +126,7 @@ Even reflexive, transitive, Euclidean frames can leave `K phi = N`. A NoGap brid
 
 ## 5. Necessitation phase
 
-The necessitation phase is now complete at the current level of abstraction.
+The necessitation phase is complete at the current level of abstraction.
 
 ### Strict necessitation
 
@@ -183,11 +185,11 @@ The old dynamics prototype had an unsafe zero-evidence boundary: raw conditional
 ConditionalizationAdmissible m E
 ```
 
-witness containing positive local evidence mass and normalization obligations. The Liar, Surprise Examination, and Surprise Backward Elimination updates compile through this safe interface.
+witness containing positive local evidence mass and normalization obligations. Liar, Surprise Examination, and Surprise Backward Elimination compile through this safe interface.
 
 ### 6.1 Probability-free invariance
 
-Current conditionalization changes only the local probability measure `mu`. It leaves:
+Current conditionalization changes only `mu` and leaves:
 
 ```text
 worlds, R, val, c
@@ -195,54 +197,63 @@ worlds, R, val, c
 
 unchanged.
 
-Define `ModalProbabilityFree(phi)` to mean that `phi` contains no `bel` constructor, while arbitrary nesting of `K`, negation, conjunction, and raw possibility is allowed.
-
-Compiler-verified:
+For `ModalProbabilityFree(phi)`, meaning that `phi` contains no `bel` constructor:
 
 ```text
-ModalProbabilityFree(phi)
--> evalModal(M|E, w, phi) = evalModal(M, w, phi)
+value_after(phi) = value_before(phi)
+Stable_after(phi) = Stable_before(phi)
+K_after(phi) = K_before(phi)
+Diamond_after(phi) = Diamond_before(phi).
 ```
 
-for every world `w` and every admissible conditionalization.
-
-Therefore:
-
-```text
-Stable_(M|E)(phi) = Stable_M(phi)
-K_(M|E)(phi)      = K_M(phi)
-Diamond_(M|E)(phi)= Diamond_M(phi)
-```
-
-for the probability-free fragment.
+This is compiler-verified for arbitrary nesting of `K`, negation, conjunction, and raw possibility.
 
 ### 6.2 Belief-mediated stability fracture
 
 A finite three-world witness gives:
 
 ```text
-before: B p = T, T, T
-update on admissible evidence e
-after:  B p = T, N, T
+before: B p = T,T,T
+after:  B p = T,N,T
 ```
 
 Hence:
 
 ```text
 Stable(B p): true -> false
-K(B p):       T   -> F
+K(B p):       T   -> F.
 ```
 
-while atomic `p` itself remains dynamically invariant under the same update.
+Atomic `p` itself remains invariant under the same update.
 
-This establishes the first two-sided syntactic dynamic boundary:
+### 6.3 Belief-mediated stability restoration
+
+A second finite three-world witness gives the converse phase. Before update:
 
 ```text
-probability-free -> complete update invariance
-contains bel     -> update may inject knowledge-relevant instability.
+B p = T,N,T
+Stable(B p) = false
+K(B p) = F.
 ```
 
-Working diagnosis: **Probabilistic Instability Injection** or **Belief-Mediated Stability Fracture**.
+After admissible conditionalization on `p`:
+
+```text
+B p = T,T,T
+Stable(B p) = true
+K(B p) = T.
+```
+
+Thus conditionalization can both create and remove knowledge-relevant instability while leaving `R` and atomic valuation fixed.
+
+The dynamic picture is therefore genuinely bidirectional:
+
+```text
+fracture:    stable   -> unstable   -> K(B p): T -> F
+restoration: unstable -> stable     -> K(B p): F -> T
+```
+
+Working interpretation: **epistemic stability-phase transition**. Conditionalization is neither monotone knowledge gain nor monotone knowledge loss in the current semantics.
 
 ## 7. Current structural picture
 
@@ -261,31 +272,34 @@ accessibility closure      -> restores strict necessitation
 closure + stability        -> exact positive necessitation boundary
 safe conditionalization   -> requires admissible positive evidence
 probability-free fragment  -> dynamically invariant under current update
-belief-mediated formulas   -> can acquire heterogeneous posterior values
-posterior heterogeneity    -> can collapse outer K from T to F
+belief-mediated formulas   -> can cross stability boundaries
+stable -> unstable         -> can collapse outer K from T to F
+unstable -> stable         -> can restore outer K from F to T
 ```
 
 The broad research interpretation is increasingly precise: familiar epistemic laws are preservation laws for different structural layers, and failures occur when one layer is transported as though another were invariant.
 
 ## 8. Current build gate
 
-`PEL4/ModalDynamicsBeliefRestoration.lean` is the next unverified local gate.
+`PEL4/ModalDynamicsPhaseClassification.lean` is the next unverified local gate.
 
-It tests the converse dynamic phase:
+It lifts the pointwise K/B factorization to a two-state 2x2 stability table:
 
 ```text
-before: B p = T, N, T -> unstable -> K(B p) = F
-after:  B p = T, T, T -> stable   -> K(B p) = T
+stable -> stable     : K tracks B on both sides
+stable -> unstable   : posterior K is forced to F
+unstable -> stable   : prior K = F; posterior K tracks posterior B
+unstable -> unstable : K = F on both sides
 ```
 
-If compiler-verified, admissible conditionalization will be shown to move epistemic stability in both directions: fracture and restoration.
+The gate also packages the fracture and restoration models as witnesses that admissible conditionalization realizes both off-diagonal transitions.
 
 ## 9. Next research questions
 
 Highest-value next questions:
 
-1. verify belief-mediated stability restoration;
-2. package fracture/restoration into a general dynamic K-change classification;
-3. determine exact sufficient conditions for conditionalization to preserve stability even when `bel` occurs;
-4. classify which K/B values are dynamically reachable under fixed `R` and valuation;
+1. verify the general dynamic K phase classification;
+2. determine exact sufficient conditions for conditionalization to preserve stability even when `bel` occurs;
+3. classify which K/B values are dynamically reachable under fixed `R` and valuation;
+4. investigate dynamic creation/removal of K-gluts and K-gaps;
 5. compare the resulting dynamic correspondence pattern with four-valued dynamic epistemic logics before making novelty claims.
