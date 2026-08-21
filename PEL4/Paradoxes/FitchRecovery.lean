@@ -171,7 +171,8 @@ theorem fitch_witness_violates_exactly_left_stability_in_local_package :
           (ModalFormula.know FitchAgent.a fitchP) = FDEValue.F := by
       simpa [fitchKP] using fitch_witness_kp_is_false
     rw [hk] at hKpos
-    simp at hKpos
+    change false = true at hKpos
+    cases hKpos
   · exact fitch_moore_masks_component_instability.2.1
 
 /-!
