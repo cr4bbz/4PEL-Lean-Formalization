@@ -58,6 +58,10 @@ for every agent and world. Seriality is therefore not an additional frame assump
 | transitive + Euclidean + local NoGap bridge | meta-level lack of positive knowledge implies `K+(not K phi)` | NoGap is an information-status assumption, not a frame condition |
 | stable accessible `phi` profile | `K phi = B phi` | both operators recover the same full FDE value |
 | arbitrary profile | `K phi = B phi iff Stable(phi) OR B phi = F` | under instability, equality survives only by accidental agreement at `F` |
+| positive knowledge | `K+ phi -> B+ phi` | positive belief alone does not imply positive knowledge |
+| positive belief | `K+ phi iff Stable(phi)` | stability is the exact upgrade condition |
+| `v != F` | `K phi = v iff Stable(phi) AND B phi = v` | all non-false knowledge values require stability |
+| arbitrary profile | `K phi = F iff Unstable(phi) OR B phi = F` | `F` is the unique instability-absorbing value |
 
 Here `K+ phi` abbreviates positive/designated support for `K phi`.
 
@@ -179,7 +183,7 @@ If the accessible `phi` profile is unstable, internal dualization can force stri
 
 ## 7. Knowledge versus probabilistic belief
 
-Primitive knowledge `K` and probabilistic threshold belief `B` are not ordered by simple modal strength. They process the same accessible evidence differently:
+Primitive knowledge `K` and probabilistic threshold belief `B` process the same accessible evidence differently:
 
 ```text
 K -> requires complete FDE-value stability
@@ -192,7 +196,7 @@ On stable profiles, the measured positive and negative evidence sets are each ei
 Stable(phi) -> K(phi) = B(phi).
 ```
 
-The exact verified boundary is stronger:
+The exact equality boundary is:
 
 ```text
 K(phi) = B(phi)
@@ -200,16 +204,44 @@ iff
 Stable(phi) OR B(phi) = F.
 ```
 
-Under instability, `K(phi)` is forced to strict `F`. Equality can therefore survive only when probabilistic thresholding independently also yields `F`.
-
-The heterogeneous `T/B` witness shows genuine divergence:
+The positive upgrade theorem sharpens the relation:
 
 ```text
-K(p) = F
-B(p) = T.
+K+(phi) -> B+(phi)
 ```
 
-So qualitative invariance is the bridge on which the two epistemic projections commute.
+and, assuming positive belief,
+
+```text
+K+(phi) iff Stable(phi).
+```
+
+The complete four-valued classification is:
+
+```text
+K(phi) = T iff Stable(phi) and B(phi) = T
+K(phi) = B iff Stable(phi) and B(phi) = B
+K(phi) = N iff Stable(phi) and B(phi) = N
+K(phi) = F iff Unstable(phi) or  B(phi) = F.
+```
+
+Equivalently, for every non-false value `v`:
+
+```text
+v != F
+->
+(K(phi) = v iff Stable(phi) and B(phi) = v).
+```
+
+Thus `F` is the unique instability absorber of the knowledge operator. The other three values are transparent through the stability gate.
+
+This entire theory is summarized by the factorization candidate now isolated in `ModalKnowledgeBeliefFactorization.lean`:
+
+```text
+K(phi) = if Stable(phi) then B(phi) else F.
+```
+
+The factorization module is the next build gate and is not yet counted as compiler-verified here.
 
 ## 8. Current structural picture
 
@@ -222,7 +254,7 @@ transitivity              -> positive/full-value-preserving axiom 4 on T/B
 Euclideanness alone       -> insufficient for axiom 5
 transitivity + Euclidean  -> full K-idempotence and internal negative introspection
 NoGap                     -> bridges meta-level ignorance to negative epistemic support
-stability                 -> exact K/B agreement
+stability                 -> exact K/B agreement and belief-to-knowledge upgrade
 instability               -> K = F while B continues probabilistic aggregation
 ```
 
@@ -232,7 +264,7 @@ The notable feature is that familiar epistemic laws split into frame transport, 
 
 The modal-law program is no longer at the basic axiom-4/axiom-5 discovery stage. The highest-value remaining questions are now:
 
-1. classify the positive upgrade boundary from probabilistic belief to knowledge;
+1. verify and then use the compact factorization `K = stability-filtered B` as the central interface theorem;
 2. characterize necessitation-like principles for positive versus strict truth;
 3. study dynamic preservation or destruction of epistemic stability under update;
 4. determine whether the current local frame conditions admit sharper necessity/minimality theorems;
