@@ -45,6 +45,9 @@ theorem filterWorlds_constant_component
       specialize ih hRest
       cases hComponent : component v <;>
         simp [filterWorlds, hFirst, hComponent, ih]
+      all_goals
+        intro x hx
+        rw [hRest x hx, hComponent]
 
 /-- Threshold belief recovers an arbitrary constant FDE profile exactly. -/
 theorem modal_belief_recovers_constant_profile
@@ -57,14 +60,22 @@ theorem modal_belief_recovers_constant_profile
     (m.R i w) value v (fun z => z.pos) hConst
   have hNegFilter := filterWorlds_constant_component
     (m.R i w) value v (fun z => z.neg) hConst
-  have hZeroLt : (0 : Rat) < m.c i :=
-    lt_trans (by native_decide : (0 : Rat) < 1 / 2) (m.c_gt_half i)
+  have hZeroLt : (0 : Rat) < m.c i := by
+    calc
+      (0 : Rat) < 1 / 2 := by native_decide
+      _ < m.c i := m.c_gt_half i
   have hZeroNotGe : ¬ (0 : Rat) ≥ m.c i := by
-    exact not_le_of_gt hZeroLt
+    intro hGe
+    have hImpossible : (0 : Rat) < 0 := by
+      calc
+        (0 : Rat) < 1 / 2 := by native_decide
+        _ < m.c i := m.c_gt_half i
+        _ ≤ 0 := hGe
+    exact (by native_decide : ¬ ((0 : Rat) < 0)) hImpossible
   have hOneGe : (1 : Rat) ≥ m.c i := m.c_le_one i
   rcases v with ⟨vp, vn⟩
   cases vp <;> cases vn <;>
-    simp [belief, hPosFilter, hNegFilter, hZeroNotGe, hOneGe,
+    simp [belief, hPosFilter, hNegFilter, hZeroLt, hZeroNotGe, hOneGe,
       m.mu_total, m.mu_empty]
 
 /-- On every stable accessible profile, primitive evidence-stable knowledge and
@@ -104,29 +115,33 @@ theorem modal_knowledge_equals_belief_iff_stable_or_belief_false
       evalModal m w (ModalFormula.bel i phi) = FDEValue.F := by
   constructor
   · intro hEq
-    cases hStable : modalAccessibleValueStable (m.R i w)
-        (fun x => evalModal m x phi) with
-    | true =>
-        exact Or.inl hStable
-    | false =>
-        right
-        have hKFalse := modal_knowledge_false_of_instability
-          m i w phi hStable
-        calc
-          evalModal m w (ModalFormula.bel i phi) =
-              evalModal m w (ModalFormula.know i phi) := hEq.symm
-          _ = FDEValue.F := hKFalse
+    by_cases hStable : modalAccessibleValueStable (m.R i w)
+        (fun x => evalModal m x phi) = true
+    · exact Or.inl hStable
+    · right
+      have hUnstable : modalAccessibleValueStable (m.R i w)
+          (fun x => evalModal m x phi) = false := by
+        cases hValue : modalAccessibleValueStable (m.R i w)
+            (fun x => evalModal m x phi) <;> simp_all
+      have hKFalse := modal_knowledge_false_of_instability
+        m i w phi hUnstable
+      calc
+        evalModal m w (ModalFormula.bel i phi) =
+            evalModal m w (ModalFormula.know i phi) := hEq.symm
+        _ = FDEValue.F := hKFalse
   · intro h
     rcases h with hStable | hBeliefFalse
     · exact modal_knowledge_equals_belief_of_stable m i w phi hStable
-    · cases hStable : modalAccessibleValueStable (m.R i w)
-          (fun x => evalModal m x phi) with
-      | true =>
-          exact modal_knowledge_equals_belief_of_stable m i w phi hStable
-      | false =>
-          have hKFalse := modal_knowledge_false_of_instability
-            m i w phi hStable
-          rw [hKFalse, hBeliefFalse]
+    · by_cases hStable : modalAccessibleValueStable (m.R i w)
+          (fun x => evalModal m x phi) = true
+      · exact modal_knowledge_equals_belief_of_stable m i w phi hStable
+      · have hUnstable : modalAccessibleValueStable (m.R i w)
+            (fun x => evalModal m x phi) = false := by
+          cases hValue : modalAccessibleValueStable (m.R i w)
+              (fun x => evalModal m x phi) <;> simp_all
+        have hKFalse := modal_knowledge_false_of_instability
+          m i w phi hUnstable
+        rw [hKFalse, hBeliefFalse]
 
 /-!
 ## Instability witness
