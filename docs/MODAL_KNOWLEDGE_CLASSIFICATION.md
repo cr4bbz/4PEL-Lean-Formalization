@@ -62,6 +62,7 @@ for every agent and world. Seriality is therefore not an additional frame assump
 | positive belief | `K+ phi iff Stable(phi)` | stability is the exact upgrade condition |
 | `v != F` | `K phi = v iff Stable(phi) AND B phi = v` | all non-false knowledge values require stability |
 | arbitrary profile | `K phi = F iff Unstable(phi) OR B phi = F` | `F` is the unique instability-absorbing value |
+| arbitrary profile | `K phi = if Stable(phi) then B phi else F` | exact factorization of knowledge through belief plus stability |
 
 Here `K+ phi` abbreviates positive/designated support for `K phi`.
 
@@ -139,9 +140,9 @@ R(w) = [w]
 is reflexive, transitive, and Euclidean, yet:
 
 ```text
-K p       = N
-not K p   = N
-K(not K p)= N.
+K p        = N
+not K p    = N
+K(not K p) = N.
 ```
 
 Thus even S5-like frame geometry cannot convert lack of positive knowledge into internal negative evidence.
@@ -181,7 +182,7 @@ Stable(phi) OR Diamond_raw(phi) = T.
 
 If the accessible `phi` profile is unstable, internal dualization can force strict `T` even when raw possibility carries a different four-valued profile.
 
-## 7. Knowledge versus probabilistic belief
+## 7. Knowledge as stability-filtered probabilistic belief
 
 Primitive knowledge `K` and probabilistic threshold belief `B` process the same accessible evidence differently:
 
@@ -190,21 +191,21 @@ K -> requires complete FDE-value stability
 B -> thresholds positive and negative probability mass separately.
 ```
 
-On stable profiles, the measured positive and negative evidence sets are each either the full accessibility list or the empty list. Since these have probability `1` and `0`, and every threshold satisfies `0 < c <= 1`, both operators recover exactly the same value:
+The complete verified theory compresses to one operator equation:
 
 ```text
-Stable(phi) -> K(phi) = B(phi).
+K(phi) = if Stable(phi) then B(phi) else F.
 ```
 
-The exact equality boundary is:
+This factorization subsumes the earlier equality, upgrade, and four-value classification theorems.
+
+On stable profiles:
 
 ```text
-K(phi) = B(phi)
-iff
-Stable(phi) OR B(phi) = F.
+K(phi) = B(phi).
 ```
 
-The positive upgrade theorem sharpens the relation:
+For positive/designated support:
 
 ```text
 K+(phi) -> B+(phi)
@@ -216,56 +217,68 @@ and, assuming positive belief,
 K+(phi) iff Stable(phi).
 ```
 
-The complete four-valued classification is:
+At the complete-value level:
 
 ```text
 K(phi) = T iff Stable(phi) and B(phi) = T
 K(phi) = B iff Stable(phi) and B(phi) = B
 K(phi) = N iff Stable(phi) and B(phi) = N
-K(phi) = F iff Unstable(phi) or  B(phi) = F.
+K(phi) = F iff Unstable(phi) or B(phi) = F.
 ```
 
-Equivalently, for every non-false value `v`:
+Thus instability is not low confidence. It is a qualitative failure mode that overrides threshold aggregation and sends knowledge to strict `F`.
+
+## 8. Current necessitation build gate
+
+`PEL4/ModalKnowledgeNecessitationBoundary.lean` is the next local build gate and is not yet counted as compiler-verified.
+
+It tests two distinct possible failures of the classical rule from validity to knowledge-validity.
+
+First, the current `Model` structure does not formally require the explicitly listed `m.worlds` to be closed under accessibility. A candidate strict theorem therefore adds:
 
 ```text
-v != F
-->
-(K(phi) = v iff Stable(phi) and B(phi) = v).
+w in worlds and w R_i u -> u in worlds
 ```
 
-Thus `F` is the unique instability absorber of the knowledge operator. The other three values are transparent through the stability gate.
-
-This entire theory is summarized by the factorization candidate now isolated in `ModalKnowledgeBeliefFactorization.lean`:
+and aims to recover:
 
 ```text
-K(phi) = if Stable(phi) then B(phi) else F.
+strict validity + accessibility closure -> strict K-validity.
 ```
 
-The factorization module is the next build gate and is not yet counted as compiler-verified here.
+Second, the existing `T/B` knowledge gate is already accessibility-closed while `p` is positively true at every listed world. The candidate counterexample tests whether:
 
-## 8. Current structural picture
+```text
+positive validity + accessibility closure
+```
 
-The verified modal fragment can be summarized as follows:
+can still fail to yield positive `K`-validity because the complete accessible values vary between `T` and `B`.
+
+If the gate builds, necessitation will split into a domain-closure problem for strict validity and an additional stability problem for the positive fragment.
+
+## 9. Current structural picture
+
+The verified modal fragment can now be summarized as follows:
 
 ```text
 probability normalization -> seriality
-reflexivity               -> strict factivity
-transitivity              -> positive/full-value-preserving axiom 4 on T/B
-Euclideanness alone       -> insufficient for axiom 5
-transitivity + Euclidean  -> full K-idempotence and internal negative introspection
-NoGap                     -> bridges meta-level ignorance to negative epistemic support
-stability                 -> exact K/B agreement and belief-to-knowledge upgrade
-instability               -> K = F while B continues probabilistic aggregation
+reflexivity                -> strict factivity
+transitivity               -> positive/full-value-preserving axiom 4 on T/B
+Euclideanness alone        -> insufficient for axiom 5
+transitivity + Euclidean   -> full K-idempotence and internal negative introspection
+NoGap                      -> bridges meta-level ignorance to negative epistemic support
+stability                  -> K/B agreement and belief-to-knowledge upgrade
+K                          -> exactly stability-filtered B
+instability                -> overrides B and forces K = F
 ```
 
-The notable feature is that familiar epistemic laws split into frame transport, information status, and evidence aggregation. This is a specifically four-valued refinement of the classical correspondence picture.
+The notable feature is that familiar epistemic laws split into frame transport, information status, domain coverage, and evidence aggregation. This is a specifically four-valued refinement of the classical correspondence picture.
 
-## 9. Next research questions
+## 10. Next research questions
 
-The modal-law program is no longer at the basic axiom-4/axiom-5 discovery stage. The highest-value remaining questions are now:
+The highest-value remaining questions are now:
 
-1. verify and then use the compact factorization `K = stability-filtered B` as the central interface theorem;
-2. characterize necessitation-like principles for positive versus strict truth;
-3. study dynamic preservation or destruction of epistemic stability under update;
-4. determine whether the current local frame conditions admit sharper necessity/minimality theorems;
-5. compare the verified 4-PEL correspondence pattern systematically with nonstandard Belnap-Dunn knowledge logics before making novelty claims.
+1. verify the strict-versus-positive necessitation boundary;
+2. study dynamic preservation or destruction of epistemic stability under update;
+3. determine whether the current local frame conditions admit sharper necessity/minimality theorems;
+4. compare the verified 4-PEL correspondence pattern systematically with nonstandard Belnap-Dunn knowledge logics before making novelty claims.
