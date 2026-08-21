@@ -196,7 +196,7 @@ theorem introspection_countermodel_not_transitive_at_root :
         IntrospectionModel.R IntrospectionAgent.a IntrospectionWorld.root := by
     exact hTrans IntrospectionWorld.middle (by native_decide)
       IntrospectionWorld.left (by native_decide)
-  native_decide at hBad
+  simpa [IntrospectionModel, introspectionR] using hBad
 
 /-!
 ## Interpretation
