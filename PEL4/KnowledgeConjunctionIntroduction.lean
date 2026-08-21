@@ -43,12 +43,11 @@ theorem conjunction_stable_of_components_stable
     (hphi : accessibleFDEValueStable m i w phi = true)
     (hpsi : accessibleFDEValueStable m i w psi = true) :
     accessibleFDEValueStable m i w (Formula.and phi psi) = true := by
-  unfold accessibleFDEValueStable at hphi hpsi ⊢
   cases hR : m.R i w with
   | nil =>
-      simp
+      simp [accessibleFDEValueStable, hR]
   | cons first rest =>
-      simp only [List.all_eq_true] at hphi hpsi ⊢
+      simp only [accessibleFDEValueStable, hR, List.all_eq_true] at hphi hpsi ⊢
       intro w' hw'
       have hphi' := hphi w' hw'
       have hpsi' := hpsi w' hw'
