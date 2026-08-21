@@ -91,7 +91,7 @@ theorem knowledge_instability_forces_false
     (h : accessibleFDEValueStable m i w phi = false) :
     evidenceStableKnowledgeValue m i w phi = FDEValue.F := by
   simp [evidenceStableKnowledgeValue, evidenceStableKnowledgePositive,
-    evidenceStableKnowledgeNegative, h]
+    evidenceStableKnowledgeNegative, h, FDEValue.F]
 
 /-!
 ## A finite contrast model
