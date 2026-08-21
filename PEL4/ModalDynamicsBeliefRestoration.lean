@@ -11,8 +11,9 @@ fracture a homogeneous belief profile and thereby turn outer knowledge from
 
 The accessibility relation and valuation again remain fixed.  Before update,
 local probability measures make `B p` take the profile `T/N/T` across three
-mutually accessible worlds.  Conditioning on positive evidence concentrated on
-the two `p`-worlds makes the posterior belief profile homogeneous `T/T/T`.
+mutually accessible worlds.  Conditioning directly on positive evidence `p`,
+whose positive extension is exactly the two `p`-worlds `a,c`, makes the
+posterior belief profile homogeneous `T/T/T`.
 If the finite calculations compile, conditionalization can therefore restore
 full-value stability and move outer evidence-stable knowledge from `F` to `T`.
 -/
@@ -74,11 +75,17 @@ def DynamicRestorationModel :
       native_decide
   }
 
-/-- Evidence `e` selects worlds `a,c`.  Its prior mass is `4/5` at `a,c` and
-`3/5` at `b`, so conditioning is admissible everywhere. -/
+/-- Restoration evidence is `p` itself.  Its positive extension is exactly
+`[a,c]`, the two worlds where `p = T`. -/
+def dynamicRestorationEvidence :
+    Formula DynamicInstabilityAtom DynamicInstabilityAgent :=
+  Formula.prop DynamicInstabilityAtom.p
+
+/-- Evidence `p` has prior mass `4/5` at `a,c` and `3/5` at `b`, so
+conditioning on it is admissible everywhere. -/
 theorem dynamic_restoration_evidence_admissible :
     ConditionalizationAdmissible
-      DynamicRestorationModel dynamicInstabilityEvidence := by
+      DynamicRestorationModel dynamicRestorationEvidence := by
   constructor
   · intro ag w
     cases ag
@@ -90,10 +97,10 @@ theorem dynamic_restoration_evidence_admissible :
     cases ag
     cases w <;> native_decide
 
-/-- Posterior model after learning `e`. -/
+/-- Posterior model after learning `p`. -/
 def DynamicRestorationUpdated :
     Model DynamicInstabilityWorld DynamicInstabilityAgent DynamicInstabilityAtom :=
-  conditionalize DynamicRestorationModel dynamicInstabilityEvidence
+  conditionalize DynamicRestorationModel dynamicRestorationEvidence
     dynamic_restoration_evidence_admissible
 
 /-- Before update the belief profile is heterogeneous `T/N/T`. -/
@@ -115,8 +122,8 @@ theorem dynamic_restoration_unstable_before :
       false := by
   native_decide
 
-/-- Conditioning on `e` removes the local threshold difference: `B p` becomes
-`T` at all three worlds. -/
+/-- Conditioning on `p` makes the posterior probability of `p` equal to one at
+every local state, so `B p` becomes `T` at all three worlds. -/
 theorem dynamic_restoration_belief_profile_after :
     evalModal DynamicRestorationUpdated DynamicInstabilityWorld.a
         dynamicInstabilityBelP = FDEValue.T ∧
