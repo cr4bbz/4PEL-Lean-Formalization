@@ -47,7 +47,8 @@ theorem conjunction_stable_of_components_stable
   | nil =>
       simp [accessibleFDEValueStable, hR]
   | cons first rest =>
-      simp only [accessibleFDEValueStable, hR, List.all_eq_true] at hphi hpsi ⊢
+      simp only [accessibleFDEValueStable, hR, List.all_eq_true]
+        at hphi hpsi ⊢
       intro w' hw'
       have hphi' := hphi w' hw'
       have hpsi' := hpsi w' hw'
@@ -55,8 +56,9 @@ theorem conjunction_stable_of_components_stable
         of_decide_eq_true hphi'
       have hpsiEq : eval m w' psi = eval m first psi :=
         of_decide_eq_true hpsi'
-      change FDEValue.and (eval m w' phi) (eval m w' psi) =
-        FDEValue.and (eval m first phi) (eval m first psi)
+      change decide
+        (FDEValue.and (eval m w' phi) (eval m w' psi) =
+          FDEValue.and (eval m first phi) (eval m first psi)) = true
       rw [hphiEq, hpsiEq]
 
 /-- Positive evidence-stable knowledge is closed under conjunction
