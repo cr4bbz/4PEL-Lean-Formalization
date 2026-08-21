@@ -26,32 +26,11 @@ Heterogeneous full-value profiles force `K(phi)=F`.
 
 ### A2. Is internal `not K phi` the same as meta-level lack of positive knowledge?
 
-**VERIFIED: no.** The repository separates:
-
-```text
-(K phi).pos = false
-(K phi).neg = true
-(not K phi).pos = true
-```
-
-Even reflexive, transitive, Euclidean frames do not collapse these notions. A NoGap bridge is semantically independent of frame geometry.
+**VERIFIED: no.** Even reflexive, transitive, Euclidean frames do not collapse lack of positive knowledge, negative support for knowledge, and positive support for internal `not K phi`. A NoGap bridge is semantically independent of frame geometry.
 
 ### A3. What is the conjunction boundary for `K`?
 
-**VERIFIED.** Positive introduction holds:
-
-```text
-K+ phi and K+ psi -> K+(phi and psi)
-```
-
-but positive elimination fails. Under `K+(phi and psi)`:
-
-```text
-K+ phi iff Stable(phi)
-K+ psi iff Stable(psi).
-```
-
-Strict conjunction decomposition survives.
+**VERIFIED.** Positive introduction holds, positive elimination fails in general, and under `K+(phi and psi)` the exact extraction boundary is component stability. Strict conjunction decomposition survives.
 
 ### A4. Is raw possibility identical to `not K(not phi)`?
 
@@ -65,7 +44,7 @@ Under instability, internal dualization can collapse to strict `T`.
 
 ### A5. What is the Church-Fitch boundary?
 
-**VERIFIED conditionally.** Raw knowability, strict-truth phases, NoGap dependence, raw/dual separation, local Fitch recovery, and global Church-Fitch classification all compile. Positive raw knowability yields omniscience only with the required information-status and recovery assumptions.
+**VERIFIED conditionally.** Raw knowability, strict-truth phases, NoGap dependence, raw/dual separation, local Fitch recovery, and global Church-Fitch classification all compile.
 
 ### A6. What frame laws does evidence-stable knowledge satisfy?
 
@@ -88,41 +67,16 @@ NoGap                     -> bridges meta-level ignorance to negative support
 K(phi) = if Stable(phi) then B(phi) else F.
 ```
 
-Hence:
-
-```text
-K+ phi -> B+ phi
-B+ phi -> (K+ phi iff Stable(phi))
-K phi = v, v != F iff Stable(phi) and B phi = v
-K phi = F iff Unstable(phi) or B phi = F.
-```
-
-Working interpretation: **knowledge is stability-filtered belief**.
+Hence positive knowledge implies positive belief, positive belief upgrades to knowledge exactly under stability, all non-`F` K-values require stability, and instability is absorbed into strict `F`.
 
 ### A8. Does necessitation survive in 4-PEL?
 
-**VERIFIED with an exact phase split.** Strict necessitation requires accessibility closure of the explicit validity domain:
-
-```text
-strict-valid(phi) + closure -> strict-valid(K phi).
-```
-
-Without closure, a hidden accessible counterworld refutes the rule.
-
-For positive validity, closure alone is insufficient. Under closure and positive validity:
+**VERIFIED with an exact phase split.** Strict necessitation requires accessibility closure of the explicit validity domain. Positive necessitation additionally requires full-value stability. Under closure and positive validity:
 
 ```text
 positive-valid(K phi)
 iff
 phi is full-value stable on every listed accessible range.
-```
-
-At schema level:
-
-```text
-positive necessitation
-iff
-every positively valid formula is accessibility-stable.
 ```
 
 ### A9. Does probability normalization constrain the frame?
@@ -144,13 +98,7 @@ Working diagnosis: **epistemic fixed-point bifurcation**.
 
 ### A11. What is the Sorites threshold geometry?
 
-**VERIFIED.** For scaled threshold `c > 50`, the gap interval is exactly:
-
-```text
-100-c < x < c
-```
-
-with width `2c-100`. The same threshold slack controls glut overlap.
+**VERIFIED.** For scaled threshold `c > 50`, the gap interval is exactly `100-c < x < c`, with width `2c-100`. The same threshold slack controls glut overlap.
 
 ### A12. What fails in Surprise backward elimination?
 
@@ -158,19 +106,11 @@ with width `2c-100`. The same threshold slack controls glut overlap.
 
 ### A13. How much Preface conflict structure is invisible to marginals?
 
-**VERIFIED.** Fixed first-order marginals leave freedom:
+**VERIFIED.** Fixed first-order marginals leave freedom `2^n - n - 2` for `n >= 2`. Full co-conflict data reconstructs exact incidence by Möbius inversion. Support nerves with identical coarse data can have different Euler signatures.
 
-```text
-2^n - n - 2
-```
+### A14. Is conditionalization safe at zero evidence mass?
 
-for `n >= 2`. Full co-conflict data reconstructs exact incidence by Möbius inversion. Support nerves with identical coarse data can have different Euler signatures.
-
-### A14. Is the old conditionalization operator semantically safe at zero evidence mass?
-
-**VERIFIED: the old prototype was not.** Raw conditionalization returned `0` for zero mass while normalization had been postulated unconditionally.
-
-The active API now requires:
+**VERIFIED: the old prototype was not.** The active API now requires:
 
 ```text
 ConditionalizationAdmissible m E
@@ -180,14 +120,7 @@ with positive local evidence mass and explicit normalization proofs. Liar, Surpr
 
 ### A15. Which modal formulas are invariant under probabilistic conditionalization?
 
-**VERIFIED.** If `phi` contains no `bel` constructor, then admissible conditionalization preserves its complete FDE value at every world:
-
-```text
-ModalProbabilityFree(phi)
--> value_after(phi)=value_before(phi).
-```
-
-Consequently stability, outer `K`, and raw possibility are invariant for this fragment.
+**VERIFIED.** If `phi` contains no `bel` constructor, admissible conditionalization preserves its complete FDE value at every world. Consequently stability, outer `K`, and raw possibility are invariant for this fragment.
 
 ### A16. Can conditionalization create epistemic instability indirectly through belief?
 
@@ -195,27 +128,37 @@ Consequently stability, outer `K`, and raw possibility are invariant for this fr
 
 ```text
 before: B p = T,T,T
- after: B p = T,N,T
-```
-
-under admissible evidence update. Therefore:
-
-```text
+after:  B p = T,N,T
 Stable(B p): true -> false
 K(B p):       T   -> F.
 ```
 
 Atomic `p` remains invariant in the same update. Working diagnosis: **Probabilistic Instability Injection** / **Belief-Mediated Stability Fracture**.
 
+### A17. Can conditionalization restore epistemic stability?
+
+**VERIFIED.** A second finite witness gives the converse transition:
+
+```text
+before: B p = T,N,T
+after:  B p = T,T,T
+Stable(B p): false -> true
+K(B p):       F    -> T.
+```
+
+The restoration update conditions directly on positive `p`-evidence. Accessibility and atomic valuation remain fixed.
+
+Together A16 and A17 show that conditionalization is neither monotone knowledge gain nor monotone knowledge loss. Working interpretation: **epistemic stability-phase transition**.
+
 ## B. Questions with substantial but incomplete answers
 
 ### B1. Is the modal correspondence picture minimal?
 
-**PARTIAL.** Sufficiency and important countermodels are verified, but exact weakest frame conditions are not classified for every law. Open examples include minimal conditions for full K-idempotence and internal axiom 5.
+**PARTIAL.** Sufficiency and important countermodels are verified, but exact weakest frame conditions are not classified for every law.
 
 ### B2. Is "paradox as structural-transport failure" a genuine common theory?
 
-**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, and higher-order interaction loss are all represented formally in different modules. A sufficiently general theorem schema connecting these families remains open.
+**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, and higher-order interaction loss are represented formally. A sufficiently general theorem schema connecting these families remains open.
 
 ### B3. How novel are the combined results?
 
@@ -227,49 +170,40 @@ Atomic `p` remains invariant in the same update. Working diagnosis: **Probabilis
 
 ## C. High-priority open research questions
 
-### C1. Can conditionalization also restore epistemic stability?
+### C1. What is the general dynamic K-change classification?
 
-**OPEN, active build gate.** `PEL4/ModalDynamicsBeliefRestoration.lean` tests:
-
-```text
-before: B p = T,N,T -> unstable -> K(B p)=F
-after:  B p = T,T,T -> stable   -> K(B p)=T.
-```
-
-If verified, probabilistic conditionalization will be shown to move stability in both directions rather than being monotone knowledge gain or loss.
-
-### C2. What is the general dynamic K-change classification?
-
-**OPEN, high priority.** Once fracture and restoration are established, classify dynamic change by the pair:
+**OPEN, active build gate.** `PEL4/ModalDynamicsPhaseClassification.lean` lifts the pointwise K/B factorization into a two-state stability table:
 
 ```text
-belief-value change
-stability change.
+stable -> stable     : K tracks B on both sides
+stable -> unstable   : posterior K is forced to F
+unstable -> stable   : prior K = F; posterior K tracks posterior B
+unstable -> unstable : K = F on both sides
 ```
 
-The K/B factorization suggests a phase table in which all knowledge changes arise from one or both of these channels.
+The gate also packages the verified fracture and restoration models as witnesses that admissible conditionalization realizes both off-diagonal phases.
 
-### C3. When do formulas containing `bel` nevertheless remain dynamically stable?
+### C2. When do formulas containing `bel` nevertheless remain dynamically stable?
 
 **OPEN.** `ModalProbabilityFree` is a strong syntactic sufficient condition, not an exact semantic characterization. Seek weaker conditions such as posterior-uniformity of relevant belief subformulas across accessible worlds.
 
-### C4. Which K/B values are dynamically reachable under fixed `R` and valuation?
+### C3. Which K/B values are dynamically reachable under fixed `R` and valuation?
 
-**OPEN.** Current witnesses show at least `K(Bp): T -> F` and the active restoration gate tests `F -> T`. A complete reachability graph over `T,F,B,N` would expose the geometry of dynamic epistemic phases.
+**OPEN.** Current witnesses establish at least `K(Bp): T -> F` and `F -> T`. A complete reachability graph over `T,F,B,N` would expose the geometry of dynamic epistemic phases.
 
-### C5. Can dynamic updates create or remove K-gluts and K-gaps?
+### C4. Can dynamic updates create or remove K-gluts and K-gaps?
 
 **OPEN.** The current witnesses focus on strict `T/F`. Construct and classify updates involving `B` and `N` at the knowledge level.
 
-### C6. Algebraic characterization of stability
+### C5. Algebraic characterization of stability
 
 **OPEN.** Stability is currently semantic over accessible FDE profiles. Seek intrinsic algebraic, bilattice, or categorical descriptions and classify operators that preserve or reflect it.
 
-### C7. Global independence/minimality of Church-Fitch assumptions
+### C6. Global independence/minimality of Church-Fitch assumptions
 
 **OPEN.** Local independence witnesses exist, but the fully quantified global packages still deserve an explicit minimality table.
 
-### C8. General theorem of structural transport
+### C7. General theorem of structural transport
 
 **OPEN, foundational.** Formalize transformations and observations generally enough to derive theorem families of the form:
 
@@ -279,29 +213,29 @@ finite witness refutes P;
 restricted hypotheses recover P.
 ```
 
-### C9. Conflict topology beyond Euler signatures
+### C8. Conflict topology beyond Euler signatures
 
 **OPEN.** Add actual simplicial homology, Betti numbers, persistence, and realizability inside fixed-marginal fibers.
 
-### C10. Continuous / measure-theoretic generalization
+### C9. Continuous / measure-theoretic generalization
 
 **OPEN.** Determine which finite rational results survive on countable or general probability spaces.
 
-### C11. Automated finite-model search
+### C10. Automated finite-model search
 
 **OPEN, methodological.** A bounded generator over FDE valuations, relations, thresholds, and local measures could search for minimal witnesses and test conjectured correspondence laws.
 
-### C12. Literature-grounded modal and dynamic comparison
+### C11. Literature-grounded modal and dynamic comparison
 
-**OPEN, publication-critical.** Compare primitive evidence-stable `K`, the K/B factorization, exact positive necessitation boundary, and dynamic stability fracture/restoration pattern with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
+**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, and bidirectional stability transitions with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
 
 ## D. Suggested research order
 
 ```text
-1. verify belief-mediated stability restoration
-2. derive a general dynamic K-change phase classification
-3. sharpen semantic preservation conditions beyond ModalProbabilityFree
-4. classify dynamic reachability of T/F/B/N
+1. verify the general dynamic K phase classification
+2. sharpen semantic preservation conditions beyond ModalProbabilityFree
+3. classify dynamic reachability of T/F/B/N
+4. construct K-glut/K-gap dynamic witnesses
 5. revisit frame-law minimality
 6. perform literature/novelty audit
 7. strengthen the general structural-transport abstraction
