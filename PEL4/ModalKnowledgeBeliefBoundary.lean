@@ -62,9 +62,9 @@ theorem modal_belief_recovers_constant_profile
   have hNegFilter := filterWorlds_constant_component
     (m.R i w) value v (fun z => z.neg) hConst
   have hZeroLt : (0 : Rat) < m.c i :=
-    lt_trans (by native_decide : (0 : Rat) < 1 / 2) (m.c_gt_half i)
+    Std.lt_trans (by native_decide : (0 : Rat) < 1 / 2) (m.c_gt_half i)
   have hZeroNotGe : ¬ (0 : Rat) ≥ m.c i :=
-    not_le_of_gt hZeroLt
+    Std.not_le_of_gt hZeroLt
   have hOneGe : (1 : Rat) ≥ m.c i := m.c_le_one i
   rcases v with ⟨vp, vn⟩
   cases vp <;> cases vn <;>
