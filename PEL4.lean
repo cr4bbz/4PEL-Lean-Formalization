@@ -13,6 +13,7 @@ import PEL4.KnowledgePossibility
 import PEL4.KnowledgePossibilityBoundary
 import PEL4.ModalLanguage
 import PEL4.ModalValidity
+import PEL4.ModalKnowledgeLaws
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
