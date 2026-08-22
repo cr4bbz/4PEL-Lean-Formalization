@@ -8,27 +8,25 @@ The threshold connection between all-or-nothing belief and degrees of belief bel
 The update perspective is adjacent to dynamic epistemic logic, where informational actions transform epistemic models and knowledge states \cite{vanDitmarschHoekKooi2007}. The conditionalization operator studied here is narrower: it preserves worlds, accessibility, valuation, and threshold and changes only local probabilities. Conversely, the four-valued signed-support geometry developed here is not part of the standard DEL vocabulary. The manuscript reports this construction without claiming that it is novel relative to all probabilistic or nonclassical dynamic epistemic systems.
 
 \paragraph{Novelty boundary.}
-No strong novelty claim is made in this version. The individual mathematical ingredients are elementary: Boolean pairs, threshold comparisons, affine interpolation, linear order, and midpoint arguments. The research contribution currently established internally to the project is the machine-checked composition of these ingredients into one dependency chain connecting admissible probabilistic update to four-valued categorical reachability, robustness, crossing order, and intermediate phase structure. A systematic literature audit is publication-critical.
+No strong novelty claim is made in this version. The individual mathematical ingredients are elementary: Boolean pairs, threshold comparisons, affine interpolation, finite convex probability, linear order, and midpoint arguments. The research contribution currently established internally to the project is the machine-checked composition of these ingredients into one dependency chain connecting admissible probabilistic update to four-valued categorical reachability, robustness, crossing order, intermediate phase structure, and a model-valued rational probability path. A systematic literature audit is publication-critical.
 
-\subsection{Open problem 1: model-path realizability}
+\subsection{Verified model-path layer and remaining realization questions}
 
-The sharpest current boundary lies between the support trajectory and the model semantics.
+The earlier support-to-model existence problem now has a positive answer for a precise class. Given two weight-generated strong endpoint models on the same semantic skeleton, rational convex interpolation of their local weights produces a \texttt{StrongProbabilityModel} for every \(t\in[0,1]\cap\mathbb{Q}\). Worlds, accessibility, valuation, and threshold remain fixed, and the probability of every fixed event varies affinely.
 
-\begin{question}[Admissible model-path realization]
-Given an admissible conditionalization with pre-update and post-update support pairs, can the affine support interpolation
-\[
-  (\Ppos_t,\Pneg_t)
-\]
-be realized by a family of full 4-PEL models \(M_t\) satisfying the model constraints for all \(t\in[0,1]\cap\mathbb{Q}\), while preserving the intended structural fields?
+Two stronger realization questions remain open.
+
+\begin{question}[Formula-level support realization]
+For which modal formulas \(\varphi\) are the positive and negative support events invariant along a convex strong model path, so that the verified affine fixed-event theorem applies directly to \(\Ppos_t(\varphi)\) and \(\Pneg_t(\varphi)\)?
 \end{question}
 
-A positive answer would upgrade the verified intermediate support phase to an actual intermediate model state. It would justify literal model-dynamic readings such as
-\[
-  \Nval\to\Tval\to\Bval
-\]
-rather than only the present thresholded support-path reading.
+Atomic propositions are the natural first case because their valuation is fixed by construction. A broader probability-free fragment is plausible but requires an explicit theorem connecting path-invariance of \texttt{evalModal} to fixed support-event membership.
 
-A subtlety is that several distinct realization notions are possible. One may interpolate local probability functions directly, require every intermediate model to arise from an admissible conditionalization of the original model, or construct a parametrized sequence of evidence events. These are mathematically different claims and should not be conflated.
+\begin{question}[Update-generated path]
+When can the intermediate models of a convex strong model path themselves be obtained by admissible conditionalization of the source model, possibly using a parameterized family of evidence events?
+\end{question}
+
+A model-valued path and an update-generated path are different notions. C17D verifies the former and deliberately does not infer the latter.
 
 \subsection{Open problem 2: arbitrary continuous paths}
 
