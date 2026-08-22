@@ -151,7 +151,7 @@ Together A16 and A17 show that conditionalization is neither monotone knowledge 
 
 ### B2. Is "paradox as structural-transport failure" a genuine common theory?
 
-**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, higher-order interaction loss, dynamic reachability, and threshold-wall crossing are represented formally. A sufficiently general theorem schema connecting these families remains open.
+**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, higher-order interaction loss, dynamic reachability, threshold-wall crossing, and crossing-order structure are represented formally. A sufficiently general theorem schema connecting these families remains open.
 
 ### B3. How novel are the combined results?
 
@@ -226,7 +226,7 @@ restricted hypotheses recover P.
 
 ### C9. Continuous / measure-theoretic generalization
 
-**OPEN.** Determine which finite rational results survive on countable or general probability spaces. The verified threshold-straddling endpoint theorem and the active affine crossing gate provide a natural bridge toward a continuous path layer.
+**OPEN.** Determine which finite rational results survive on countable or general probability spaces. The verified endpoint-straddling, affine threshold-hit, and affine crossing-order results now provide a concrete finite-dimensional path prototype before any general topology dependency is introduced.
 
 ### C10. Automated finite-model search
 
@@ -234,7 +234,7 @@ restricted hypotheses recover P.
 
 ### C11. Literature-grounded modal and dynamic comparison
 
-**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, threshold-square geometry, threshold-straddling, and affine threshold crossing with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
+**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, threshold-square geometry, threshold-straddling, affine threshold crossing, and crossing-order geometry with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
 
 ### C12. What is the geometry of categorical dynamic displacement?
 
@@ -288,13 +288,13 @@ Working name: **Threshold-Straddle Geometry**.
 
 ### C14. Does endpoint straddling force a literal threshold hit along an explicit path?
 
-**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsAffineCrossing.lean` defines the directed rational affine interpolation
+**VERIFIED.** `PEL4/ModalDynamicsAffineCrossing.lean` defines the directed rational affine interpolation
 
 ```text
 gamma(t) = x + t * (y - x)
 ```
 
-and attempts to prove, using only Lean Core rational arithmetic, that threshold-straddling endpoints admit an explicit rational crossing parameter:
+and proves using only Lean Core rational arithmetic that threshold-straddling endpoints admit a rational crossing parameter:
 
 ```text
 ThresholdStraddles c x y
@@ -303,17 +303,55 @@ exists t : Rat,
   0 <= t and t <= 1 and gamma(t) = c.
 ```
 
-The gate then lifts the result to conditionalized belief support masses. A genuine belief-status change should force an affine threshold hit on at least one support coordinate; a two-wall transition should force hits on both coordinates, possibly at different parameters.
+The result lifts to conditionalized belief support masses: every genuine categorical belief change forces a literal affine threshold hit on at least one support coordinate, and every two-wall transition forces hits on both coordinates.
 
-This would be a unit-interval crossing theorem for the chosen affine interpolation, not yet an abstract continuity or intermediate-value theorem over arbitrary paths.
+This is a unit-interval crossing theorem for the chosen affine interpolation, not yet an abstract continuity theorem over arbitrary paths.
 
 Working name: **Affine Threshold Crossing**.
+
+### C15. Are the two affine wall crossings simultaneous or temporally ordered?
+
+**VERIFIED.** `PEL4/ModalDynamicsCrossingOrder.lean` proves that a nonconstant affine support path hits a fixed threshold at at most one parameter. Hence each straddling coordinate has an intrinsic crossing time. Every two-wall belief transition admits a unique-time crossing pair with the exhaustive order:
+
+```text
+tp < tn   positive wall first
+tp = tn   simultaneous
+tn < tp   negative wall first.
+```
+
+The simultaneous case is equivalent to a common affine support parameter at which both coordinates equal the threshold, i.e. the two-dimensional path passes through `(c,c)`.
+
+Working name: **Affine Crossing-Order Geometry**.
+
+### C16. Which FDE phase appears between two nonsimultaneous affine wall crossings?
+
+**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsIntermediatePhase.lean` chooses the rational midpoint between the two unique crossing times and targets the exact intermediate-state classification.
+
+For positive-first order, the midpoint should have
+
+```text
+positive coordinate = target threshold side
+negative coordinate = source threshold side.
+```
+
+For negative-first order the roles reverse. Thus every sequential diagonal transition should pass through a vertex adjacent to both endpoints along the affine support interpolation. The concrete target table is:
+
+```text
+N -> B : positive first -> T ; negative first -> F
+B -> N : positive first -> F ; negative first -> T
+T -> F : positive first -> N ; negative first -> B
+F -> T : positive first -> B ; negative first -> N.
+```
+
+The module deliberately classifies the constructed affine **support-mass path**. It does not yet claim that the midpoint corresponds to a full admissible intermediate probabilistic model.
+
+Working name: **Affine Intermediate-Phase Geometry**.
 
 ## D. Suggested research order
 
 ```text
-1. compile Affine Threshold Crossing
-2. if successful, characterize simultaneous vs sequential two-coordinate crossings in the support plane
+1. compile Affine Intermediate-Phase Geometry
+2. if successful, ask whether the intermediate support phase is realizable by a genuine admissible model path
 3. decide whether general path continuity now justifies a topology dependency
 4. seek algebraic/bilattice characterization of stability
 5. revisit frame-law and Church-Fitch minimality
