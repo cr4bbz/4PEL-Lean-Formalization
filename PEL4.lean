@@ -29,6 +29,7 @@ import PEL4.ModalDynamicsBeliefInstability
 import PEL4.ModalDynamicsBeliefRestoration
 import PEL4.ModalDynamicsPhaseClassification
 import PEL4.ModalDynamicsReachability
+import PEL4.ModalDynamicsRobustness
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
