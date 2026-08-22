@@ -31,11 +31,22 @@ def moore_mu : FiniteSet M_World → Rat
   let p2 := if S.contains M_World.w2 then (1 : Rat) / 2 else 0
   p1 + p2
 
-axiom moore_mu_total : ∀ (_ : M_Agent) (_ : M_World),
-  moore_mu [M_World.w1, M_World.w2] = 1
-axiom moore_mu_empty : ∀ (_ : M_Agent) (_ : M_World), moore_mu [] = 0
-axiom moore_c_gt_half : ∀ (_ : M_Agent), (2 : Rat) / 3 > 1 / 2
-axiom moore_c_le_one : ∀ (_ : M_Agent), (2 : Rat) / 3 ≤ 1
+theorem moore_mu_total : ∀ (_ : M_Agent) (_ : M_World),
+    moore_mu [M_World.w1, M_World.w2] = 1 := by
+  intro _ _
+  native_decide
+
+theorem moore_mu_empty : ∀ (_ : M_Agent) (_ : M_World), moore_mu [] = 0 := by
+  intro _ _
+  native_decide
+
+theorem moore_c_gt_half : ∀ (_ : M_Agent), (2 : Rat) / 3 > 1 / 2 := by
+  intro _
+  native_decide
+
+theorem moore_c_le_one : ∀ (_ : M_Agent), (2 : Rat) / 3 ≤ 1 := by
+  intro _
+  native_decide
 
 def MooreModel : Model M_World M_Agent MooreAtom :=
   { worlds := [M_World.w1, M_World.w2]
