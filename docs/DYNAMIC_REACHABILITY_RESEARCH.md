@@ -1,9 +1,10 @@
 # Complete Dynamic Epistemic Reachability
 
-Status: **active build gate** on `research/preface-case-study`.
+Status: **VERIFIED** on `research/preface-case-study` with Lean 4.31.
 
-Do not mark the main theorem as compiler-verified until the branch has passed a
-fresh local `lake build` after importing `PEL4/ModalDynamicsReachability.lean`.
+The imported `PEL4/ModalDynamicsReachability.lean` gate has passed a fresh local
+`lake build` after the free-variable proof repair. The generic reachability
+result and its concrete glut/gap consequences are therefore compiler-verified.
 
 ## Question
 
@@ -91,7 +92,7 @@ Again the profile is homogeneous across source worlds, so
 K(B p) after = target.
 ```
 
-The proposed generic theorem is therefore
+The verified generic theorem is therefore
 
 ```text
 for every source target : FDEValue,
@@ -115,15 +116,14 @@ N     | x   x   x   x
 source
 ```
 
-## Consequences if the build passes
-
-A successful build would answer two current research questions at once.
+## Verified consequences
 
 1. **Dynamic reachability:** the K(Bp) reachability graph over T/F/B/N is
    complete at the level of the semantics. No ordered pair is forbidden in
    principle by admissible conditionalization.
 2. **Dynamic gluts and gaps:** conditionalization can create and remove both
-   knowledge-level B and N states while keeping R and atomic valuation fixed.
+   knowledge-level B and N states while keeping R, atomic valuation, and the
+   Lockean threshold fixed.
 
 This does **not** claim that every fixed concrete model can realize every
 transition. It is an existential model-family result: for each ordered pair
@@ -135,5 +135,5 @@ Working name: **Complete Dynamic Epistemic Reachability**.
 
 No novelty claim is made here. The construction should later be compared with
 four-valued dynamic epistemic logics, probabilistic belief revision, and
-bilattice-valued dynamic systems. The immediate claim is only the internal
-formal result, conditional on successful Lean compilation.
+bilattice-valued dynamic systems. The current claim is the internal
+compiler-verified result only.
