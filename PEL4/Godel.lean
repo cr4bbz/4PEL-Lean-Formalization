@@ -27,18 +27,31 @@ def godel_val : G_World → G_Atom → FDEValue
 def godel_mu : FiniteSet G_World → Rat
 | S => if S.contains G_World.w then 1 else 0
 
-axiom godel_mu_total : ∀ (_ : G_Agent) (_ : G_World), godel_mu [G_World.w] = 1
-axiom godel_mu_empty : ∀ (_ : G_Agent) (_ : G_World), godel_mu [] = 0
+theorem godel_mu_total :
+    ∀ (_ : G_Agent) (_ : G_World), godel_mu [G_World.w] = 1 := by
+  intro _ _
+  rfl
+
+theorem godel_mu_empty :
+    ∀ (_ : G_Agent) (_ : G_World), godel_mu [] = 0 := by
+  intro _ _
+  rfl
+
 -- We use c = 1 to represent strict "Beweisbarkeit" (Provability).
-axiom godel_c_gt_half : ∀ (_ : G_Agent), (1:Rat) > 1/2
-axiom godel_c_le_one : ∀ (_ : G_Agent), (1:Rat) ≤ 1
+theorem godel_c_gt_half : ∀ (_ : G_Agent), (1 : Rat) > 1 / 2 := by
+  intro _
+  native_decide
+
+theorem godel_c_le_one : ∀ (_ : G_Agent), (1 : Rat) ≤ 1 := by
+  intro _
+  native_decide
 
 def GodelModel : Model G_World G_Agent G_Atom :=
   { worlds := [G_World.w]
   , R := fun _ _ => [G_World.w]
   , mu := fun _ _ => godel_mu
   , val := godel_val
-  , c := fun _ => 1 
+  , c := fun _ => 1
   , mu_total := godel_mu_total
   , mu_empty := godel_mu_empty
   , c_gt_half := godel_c_gt_half
@@ -59,7 +72,7 @@ def not_B_G := Formula.not B_G
 -- We have verified computationally that:
 -- v(G) = B
 -- v(¬B_a(G)) = B
--- Thus, v(G) = v(¬B_a(G)) holds. The Glut state is the stable fixpoint 
+-- Thus, v(G) = v(¬B_a(G)) holds. The Glut state is the stable fixpoint
 -- of the Epistemic Gödel Sentence. The system is "Inconsistent" (Glut)
 -- rather than "Incomplete" (Gap) under these boundary conditions.
 
