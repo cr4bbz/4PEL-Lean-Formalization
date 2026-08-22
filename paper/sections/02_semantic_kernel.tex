@@ -1,0 +1,86 @@
+\section{Four-Valued Probabilistic Epistemic Semantics}
+\label{sec:kernel}
+
+The formal development uses a finite Kripke-style model
+\[
+  M=(W,R,\mu,v,c),
+\]
+where \(W\) is a finite list of worlds, \(R_i(w)\) is the finite accessible range for agent \(i\) at world \(w\), \(\mu_{i,w}\) is a rational local set function, \(v\) assigns complete FDE values to atoms, and \(c_i\) is a Lockean threshold satisfying
+\[
+  \frac12<c_i\le 1.
+\]
+The model interface requires normalization on the accessible range and on the empty set.
+
+\subsection{Bilateral four-valued information}
+
+A semantic value is a pair of Boolean coordinates
+\[
+  x=(x^+,x^-),
+\]
+with the four canonical values
+\[
+  \Tval=(1,0),\qquad
+  \Fval=(0,1),\qquad
+  \Bval=(1,1),\qquad
+  \Nval=(0,0).
+\]
+The positive coordinate records support for the formula and the negative coordinate records support against it. Thus \(\Bval\) is a glut and \(\Nval\) is a gap. Negation exchanges the two coordinates, while conjunction takes conjunction on positive support and disjunction on negative support.
+
+This bilateral representation is crucial for the dynamic analysis. The two coordinates can cross a probabilistic threshold at different times, producing a temporal structure that would be invisible in a single Boolean belief status.
+
+\subsection{Threshold belief}
+
+For a modal formula \(\varphi\), define its positive and negative accessible extensions at \((i,w)\) by
+\[
+  E^+_{i,w}(\varphi)
+  =\{u\in R_i(w):\llbracket\varphi\rrbracket_u^+=1\},
+\]
+\[
+  E^-_{i,w}(\varphi)
+  =\{u\in R_i(w):\llbracket\varphi\rrbracket_u^-=1\}.
+\]
+The corresponding support masses are
+\[
+  \Ppos_{i,w}(\varphi)=\mu_{i,w}(E^+_{i,w}(\varphi)),
+  \qquad
+  \Pneg_{i,w}(\varphi)=\mu_{i,w}(E^-_{i,w}(\varphi)).
+\]
+Probabilistic belief thresholds the two masses independently:
+\[
+  \Bel_i\varphi
+  =
+  \left(
+  [\Ppos_{i,w}(\varphi)\ge c_i],
+  [\Pneg_{i,w}(\varphi)\ge c_i]
+  \right).
+\]
+Accordingly, \(\Bel_i\varphi=\Bval\) is possible when both signed support masses cross the threshold, while \(\Bel_i\varphi=\Nval\) occurs when neither does.
+
+\subsection{Evidence-stable knowledge}
+
+The modal object language contains primitive probabilistic belief \(\Bel\), primitive evidence-stable knowledge \(\Know\), and primitive raw accessibility possibility. The latter is kept distinct from the internal expression \(\neg\Know\neg\varphi\), because the two need not agree in a four-valued setting.
+
+For the present paper, the central modal predicate is full-value stability. Let
+\[
+  \Stable_i^M(w,\varphi)
+\]
+mean that every world in \(R_i(w)\) gives \(\varphi\) the same complete FDE value. The formal knowledge semantics treats heterogeneity itself as negative evidence against knowledge.
+
+The resulting relationship between knowledge and belief is exact.
+
+\begin{theorem}[Knowledge as stability-filtered belief]
+For every finite 4-PEL model, agent, world, and modal formula,
+\[
+  \Know_i\varphi
+  =
+  \begin{cases}
+    \Bel_i\varphi,&\Stable_i(\varphi),\\
+    \Fval,&\neg\Stable_i(\varphi).
+  \end{cases}
+\]
+\statusverified
+\end{theorem}
+
+Hence an unstable accessible profile is not merely low-confidence evidence. It is a structural failure mode that absorbs every probabilistic belief value into strict \(\Fval\) at the knowledge layer. Conversely, on a homogeneous profile the stability filter is transparent and \(\Know_i\varphi\) preserves the complete four-valued belief state.
+
+This factorization will later separate two dynamic channels: probability can move the threshold belief value, and updates can also move a formula between stable and unstable profile phases.
