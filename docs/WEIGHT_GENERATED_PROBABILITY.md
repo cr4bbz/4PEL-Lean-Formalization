@@ -1,6 +1,6 @@
 # Weight-Generated Finite Probability
 
-Status: **ACTIVE BUILD GATE**
+Status: **VERIFIED**
 
 ## Goal
 
@@ -26,7 +26,7 @@ q(x) >= 0 for every x in R
 mu_q(R) = 1
 ```
 
-The target theorem is:
+The verified theorem is:
 
 ```text
 FiniteWeightDistribution R q
@@ -34,7 +34,9 @@ FiniteWeightDistribution R q
 FiniteProbabilityIntegrity (weightGeneratedMeasure R q) R.
 ```
 
-If the gate compiles, the following integrity laws are inherited generically:
+A fresh local Lean 4.31 `lake build` compiled the module through the root
+`PEL4.lean` import. The weight-generated constructor therefore inherits the
+following integrity laws generically:
 
 ```text
 nonnegative event mass
@@ -48,19 +50,19 @@ total support mass one.
 ## Why this matters
 
 C17A verified a stronger semantic contract but did not yet explain where valid
-measures come from.  C17B supplies the constructive source.  Concrete models
-can then be promoted by exhibiting normalized nonnegative world weights rather
-than reproving the probability laws ad hoc at every world.
+measures come from. C17B now supplies that constructive source. Concrete models
+can be promoted by exhibiting normalized nonnegative world weights rather than
+reproving the probability laws ad hoc at every world.
 
-## Next gate after verification
+## Next gate
 
-The intended next step is convex rational interpolation on a fixed support:
+The next step is convex rational interpolation on a fixed support:
 
 ```text
 q_t(x) = (1-t) q_0(x) + t q_1(x),   0 <= t <= 1.
 ```
 
-The key target will be:
+The key target is:
 
 ```text
 FiniteWeightDistribution R q_0
