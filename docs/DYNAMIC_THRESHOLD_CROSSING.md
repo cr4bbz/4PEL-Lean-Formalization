@@ -1,16 +1,10 @@
 # Threshold-Straddle Geometry
 
-Status: **active build gate** on `research/preface-case-study`.
-
-Do not mark `PEL4/ModalDynamicsThresholdCrossing.lean` compiler-verified until a fresh local Lean 4.31 `lake build` succeeds with the module imported through `PEL4.lean`.
+Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsThresholdCrossing.lean` imported through `PEL4.lean`.
 
 ## Question
 
-`Threshold Square Geometry` classifies categorical endpoint displacement by the number of changed positive/negative threshold bits. The next question is numerical:
-
-```text
-what must happen to the underlying support masses when one of those bits changes?
-```
+`Threshold Square Geometry` classifies categorical endpoint displacement by the number of changed positive/negative threshold bits. Threshold-Straddle Geometry reconnects those categorical walls to the underlying support masses.
 
 For threshold `c` and rational endpoint masses `x,y`, define
 
@@ -18,15 +12,17 @@ For threshold `c` and rational endpoint masses `x,y`, define
 ThresholdStraddles c x y
 ```
 
-by
+in core-compatible form by
 
 ```text
-x < c <= y
+(c <= x and not (c <= y))
 or
-y < c <= x.
+(c <= y and not (c <= x)).
 ```
 
-The target core theorem is the exact equivalence
+On the ordered rationals this says that one endpoint reaches or exceeds the threshold while the other remains below it.
+
+Lean verifies the exact equivalence
 
 ```text
 decide(c <= x) != decide(c <= y)
@@ -45,7 +41,7 @@ M+ = positive support mass
 M- = negative support mass.
 ```
 
-For one admissible conditionalization, the proposed theorem decomposes the Boolean-square wall count into two one-dimensional support wall counts:
+For every admissible conditionalization, Lean verifies that the Boolean-square wall count decomposes into the two one-dimensional support wall counts:
 
 ```text
 wallCount(B phi before, B phi after)
@@ -53,7 +49,7 @@ wallCount(B phi before, B phi after)
 posWallCount + negWallCount.
 ```
 
-This yields the endpoint classification:
+Hence:
 
 ```text
 0 walls -> neither M+ nor M- straddles threshold
@@ -61,36 +57,52 @@ This yields the endpoint classification:
 2 walls -> both M+ and M- straddle threshold.
 ```
 
-A further target theorem states that any genuine categorical belief change must therefore be accompanied by threshold straddling on at least one support coordinate.
+A further verified theorem states:
+
+```text
+B phi changes categorically
+->
+M+ straddles threshold or M- straddles threshold.
+```
+
+So every genuine belief-status change has a numerical witness in at least one support coordinate.
 
 ## Relation to robustness
 
-Threshold-Side Robustness says that unchanged threshold bits protect categorical belief value. Threshold-Straddle Geometry supplies the numerical converse view:
+Threshold-Side Robustness and Threshold-Straddle Geometry now describe the same dynamic boundary from complementary directions:
 
 ```text
-no support straddling -> zero categorical displacement
-categorical change    -> at least one support straddles threshold.
+threshold bits unchanged -> belief value invariant
+no support straddling     -> zero categorical displacement
+categorical change        -> at least one support coordinate straddles threshold.
 ```
 
-The two results therefore describe the same boundary from Boolean and ordered-rational perspectives.
+Together with Complete Dynamic Epistemic Reachability and Threshold Square Geometry, this closes the finite endpoint chain
 
-## Relation to continuity
+```text
+support masses
+  -> threshold sides
+  -> Boolean-square wall count
+  -> FDE belief status.
+```
 
-This gate deliberately stops at endpoint order theory. It does **not** yet prove that a continuously varying support mass attains the threshold at an intermediate parameter.
+## Current boundary
 
-The later continuous statement would have the form:
+This result is still endpoint order theory. It does **not** yet prove that a continuously varying support mass attains the threshold at an intermediate parameter.
+
+The next genuinely stronger statement would have the form
 
 ```text
 continuous f : [0,1] -> support mass
-f(0) < c <= f(1)
+f(0) and f(1) straddle c
 ->
 exists t, f(t) = c.
 ```
 
-That requires a topology/continuity layer and an intermediate-value theorem. The present straddling theorem is intended to provide the exact endpoint hypothesis for such a future extension.
+That requires a path/continuity layer and an intermediate-value principle. The verified straddling theorem supplies the exact endpoint hypothesis for such an extension.
 
 Working name: **Threshold-Straddle Geometry**.
 
 ## Novelty boundary
 
-No novelty claim is made. The immediate result is an internal structural theorem connecting Lockean threshold decisions, rational support order, and the previously verified Boolean-square geometry.
+No novelty claim is made. The current result is an internal structural theorem connecting Lockean threshold decisions, rational support order, and the verified Boolean-square geometry. A publication-level novelty assessment still requires systematic comparison with threshold belief revision, bilattice-valued dynamics, and related four-valued epistemic systems.
