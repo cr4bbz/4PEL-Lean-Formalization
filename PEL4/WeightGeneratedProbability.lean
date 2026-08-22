@@ -46,7 +46,7 @@ theorem weightedEventMass_empty
   induction support with
   | nil => rfl
   | cons x xs ih =>
-      simp [weightedEventMass, ih]
+      simp [weightedEventMass, ih, Rat.zero_add, Rat.add_zero]
 
 /-- Generated mass depends only on event membership, not list presentation. -/
 theorem weightedEventMass_extensional
@@ -77,7 +77,7 @@ theorem weightedEventMass_nonnegative
     0 ≤ weightedEventMass support weight event := by
   induction support with
   | nil =>
-      exact Rat.le_refl 0
+      exact Rat.le_refl
   | cons x xs ih =>
       have hx : 0 ≤ weight x := hWeight x (by simp)
       have hxs : ∀ y, y ∈ xs → 0 ≤ weight y := by
@@ -86,7 +86,7 @@ theorem weightedEventMass_nonnegative
       have hTail : 0 ≤ weightedEventMass xs weight event := ih hxs
       by_cases hMem : x ∈ event
       · simpa [weightedEventMass, hMem] using Rat.add_nonneg hx hTail
-      · simpa [weightedEventMass, hMem] using hTail
+      · simpa [weightedEventMass, hMem, Rat.zero_add] using hTail
 
 /-- Event inclusion is monotone for nonnegative generated measures. -/
 theorem weightedEventMass_monotone
@@ -99,7 +99,7 @@ theorem weightedEventMass_monotone
       weightedEventMass support weight B := by
   induction support with
   | nil =>
-      exact Rat.le_refl 0
+      exact Rat.le_refl
   | cons x xs ih =>
       have hx : 0 ≤ weight x := hWeight x (by simp)
       have hxs : ∀ y, y ∈ xs → 0 ≤ weight y := by
@@ -125,13 +125,13 @@ theorem weightedEventMass_monotone
               (Rat.add_le_add_right
                 (a := 0) (b := weight x)
                 (c := weightedEventMass xs weight B)).2 hx
-            simpa using hAdd
+            simpa [Rat.zero_add] using hAdd
           have hStep :
               weightedEventMass xs weight A ≤
                 weight x + weightedEventMass xs weight B :=
             Rat.le_trans hTail hRight
-          simpa [weightedEventMass, hA, hB] using hStep
-        · simpa [weightedEventMass, hA, hB] using hTail
+          simpa [weightedEventMass, hA, hB, Rat.zero_add] using hStep
+        · simpa [weightedEventMass, hA, hB, Rat.zero_add] using hTail
 
 /-- Generated mass is finitely additive on disjoint event lists. -/
 theorem weightedEventMass_add_disjoint
@@ -144,17 +144,20 @@ theorem weightedEventMass_add_disjoint
         weightedEventMass support weight B := by
   induction support with
   | nil =>
-      simp [weightedEventMass]
+      simp [weightedEventMass, Rat.zero_add, Rat.add_zero]
   | cons x xs ih =>
       by_cases hA : x ∈ A
       · have hB : x ∉ B := by
           intro hBin
           exact hDis x hA hBin
-        simp [weightedEventMass, hA, hB, ih, Rat.add_assoc]
+        simp [weightedEventMass, hA, hB, ih,
+          Rat.zero_add, Rat.add_zero, Rat.add_assoc]
       · by_cases hB : x ∈ B
         · simp [weightedEventMass, hA, hB, ih,
+            Rat.zero_add, Rat.add_zero,
             Rat.add_assoc, Rat.add_comm, Rat.add_left_comm]
-        · simp [weightedEventMass, hA, hB, ih]
+        · simp [weightedEventMass, hA, hB, ih,
+            Rat.zero_add, Rat.add_zero]
 
 /-- A normalized nonnegative rational weight vector on a duplicate-free support. -/
 structure FiniteWeightDistribution
