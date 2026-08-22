@@ -111,13 +111,7 @@ Working diagnosis: **epistemic fixed-point bifurcation**.
 
 ### A14. Is conditionalization safe at zero evidence mass?
 
-**VERIFIED: the old prototype was not.** The active API now requires:
-
-```text
-ConditionalizationAdmissible m E
-```
-
-with positive local evidence mass and explicit normalization proofs. Liar, Surprise Examination, and Surprise Backward Elimination compile through this safe interface.
+**VERIFIED.** The active API requires `ConditionalizationAdmissible m E` with positive local evidence mass and explicit normalization proofs. Liar, Surprise Examination, Surprise Backward Elimination, and the later dynamic modules compile through this safe interface.
 
 ### A15. Which modal formulas are invariant under probabilistic conditionalization?
 
@@ -147,9 +141,7 @@ Stable(B p): false -> true
 K(B p):       F    -> T.
 ```
 
-The restoration update conditions directly on positive `p`-evidence. Accessibility and atomic valuation remain fixed.
-
-Together A16 and A17 show that conditionalization is neither monotone knowledge gain nor monotone knowledge loss. Working interpretation: **epistemic stability-phase transition**.
+Together A16 and A17 show that conditionalization is neither monotone knowledge gain nor monotone knowledge loss.
 
 ## B. Questions with substantial but incomplete answers
 
@@ -159,7 +151,7 @@ Together A16 and A17 show that conditionalization is neither monotone knowledge 
 
 ### B2. Is "paradox as structural-transport failure" a genuine common theory?
 
-**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, and higher-order interaction loss are represented formally. A sufficiently general theorem schema connecting these families remains open.
+**PARTIAL / INTERPRETIVE.** Projection loss, non-commutation, stability failure, context transport failure, possibility-duality collapse, threshold phase change, fixed-point bifurcation, higher-order interaction loss, dynamic reachability, and threshold-wall crossing are represented formally. A sufficiently general theorem schema connecting these families remains open.
 
 ### B3. How novel are the combined results?
 
@@ -173,7 +165,7 @@ Together A16 and A17 show that conditionalization is neither monotone knowledge 
 
 ### C1. What is the general dynamic K-change classification?
 
-**VERIFIED.** `PEL4/ModalDynamicsPhaseClassification.lean` lifts the pointwise K/B factorization into the complete two-state stability table:
+**VERIFIED.** `PEL4/ModalDynamicsPhaseClassification.lean` gives the complete stability table:
 
 ```text
 stable -> stable     : K tracks B on both sides
@@ -182,43 +174,33 @@ unstable -> stable   : prior K = F; posterior K tracks posterior B
 unstable -> unstable : K = F on both sides
 ```
 
-The verified fracture and restoration models realize both off-diagonal phases.
-
 ### C2. When do formulas containing `bel` nevertheless remain dynamically robust?
 
-**VERIFIED at the threshold-semantic level.** `PEL4/ModalDynamicsRobustness.lean` proves that a belief value is invariant exactly when its positive and negative Lockean threshold bits are both invariant. `ModalConditionalizationRobust` propagates this protection compositionally through negation, conjunction, `K`, and raw possibility. A diagonal reachability witness proves the condition strictly extends `ModalProbabilityFree`: a formula containing `bel` can be robust under a nontrivial probability update.
+**VERIFIED at the threshold-semantic level.** `PEL4/ModalDynamicsRobustness.lean` proves that a belief value is invariant exactly when its positive and negative Lockean threshold bits are both invariant. `ModalConditionalizationRobust` propagates this protection compositionally through negation, conjunction, `K`, and raw possibility. A diagonal reachability witness proves the condition strictly extends `ModalProbabilityFree`.
 
 Working diagnosis: **Threshold-Side Robustness**.
 
 ### C3. Which K/B values are dynamically reachable under fixed `R` and valuation?
 
-**VERIFIED, complete.** `PEL4/ModalDynamicsReachability.lean` gives a fixed six-world model family such that for every ordered pair
+**VERIFIED, complete.** `PEL4/ModalDynamicsReachability.lean` gives a fixed six-world model family such that every ordered pair
 
 ```text
 source,target in {T,F,B,N}
 ```
 
-safe conditionalization changes only the probability measure and realizes
+is realized by safe conditionalization changing only probability:
 
 ```text
 K(B p): source -> target.
 ```
 
-Thus the categorical reachability graph has all 16 directed transitions.
+Thus the categorical reachability graph contains all 16 directed transitions.
 
 Working name: **Complete Dynamic Epistemic Reachability**.
 
 ### C4. Can dynamic updates create or remove K-gluts and K-gaps?
 
-**VERIFIED: yes, in both directions.** The complete reachability theorem includes creation and removal of both `B` and `N`, including explicit witnesses such as
-
-```text
-T -> B
-B -> N
-N -> T.
-```
-
-No FDE status is dynamically terminal under the semantics of admissible probabilistic conditionalization alone.
+**VERIFIED: yes, in both directions.** The complete reachability theorem includes creation and removal of both `B` and `N`, including explicit witnesses such as `T -> B`, `B -> N`, and `N -> T`. No FDE status is dynamically terminal under admissible probabilistic conditionalization alone.
 
 ### C5. Algebraic characterization of stability
 
@@ -244,7 +226,7 @@ restricted hypotheses recover P.
 
 ### C9. Continuous / measure-theoretic generalization
 
-**OPEN.** Determine which finite rational results survive on countable or general probability spaces.
+**OPEN.** Determine which finite rational results survive on countable or general probability spaces. The newly verified threshold-straddling endpoint theorem provides a natural starting point for a continuous path layer.
 
 ### C10. Automated finite-model search
 
@@ -252,31 +234,63 @@ restricted hypotheses recover P.
 
 ### C11. Literature-grounded modal and dynamic comparison
 
-**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, and bidirectional stability transitions with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
+**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, threshold-square geometry, and threshold-straddling with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
 
 ### C12. What is the geometry of categorical dynamic displacement?
 
-**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsGeometry.lean` treats
+**VERIFIED.** `PEL4/ModalDynamicsGeometry.lean` treats
 
 ```text
 N=(0,0), T=(1,0), F=(0,1), B=(1,1)
 ```
 
-as the Boolean threshold square and defines `thresholdWallCount` as the number of positive/negative threshold coordinates that differ. The target classification is:
+as the Boolean threshold square. `thresholdWallCount` is the Hamming-style number of positive/negative threshold coordinates that differ:
 
 ```text
 0 walls -> same categorical state / robustness
 1 wall  -> edge move in the threshold square
-2 walls -> diagonal move (T<->F or N<->B)
+2 walls -> diagonal move (T<->F or N<->B).
 ```
 
-The module also connects zero displacement to Threshold-Side Robustness and the complete reachability family to arbitrary 0/1/2 displacement. Do not mark this gate verified until a fresh local `lake build` succeeds.
+The module proves symmetry, diameter two, zero-distance iff equality, and connects zero displacement to Threshold-Side Robustness. Complete Dynamic Epistemic Reachability realizes all three displacement classes.
+
+Working name: **Threshold Square Geometry**.
+
+### C13. What numerical event lies behind a categorical threshold-wall crossing?
+
+**VERIFIED.** `PEL4/ModalDynamicsThresholdCrossing.lean` reconnects the Boolean square to the rational support masses. For one support coordinate:
+
+```text
+decide(c <= x) != decide(c <= y)
+iff
+one endpoint is on/above c and the other is below c.
+```
+
+At belief level the total wall count decomposes into positive and negative support wall counts. Lean verifies:
+
+```text
+0 walls -> neither support coordinate straddles threshold
+1 wall  -> exactly one support coordinate straddles threshold
+2 walls -> both support coordinates straddle threshold
+belief value changes -> at least one support coordinate straddles threshold.
+```
+
+This closes the finite endpoint chain:
+
+```text
+support masses
+  -> threshold sides
+  -> threshold-wall count
+  -> FDE belief status.
+```
+
+Working name: **Threshold-Straddle Geometry**.
 
 ## D. Suggested research order
 
 ```text
-1. compile Threshold Square Geometry
-2. ask whether continuous probability paths force literal threshold-wall crossings
+1. construct a minimal parameterized support path and isolate the exact assumptions needed for literal threshold hits
+2. decide whether to add a continuity library or keep a small bespoke path theorem
 3. seek algebraic/bilattice characterization of stability
 4. revisit frame-law and Church-Fitch minimality
 5. strengthen the general structural-transport abstraction
