@@ -1,0 +1,74 @@
+\section{From Probability Simplexes to Strong Model Paths}
+\label{sec:model-paths}
+
+The affine crossing results of the previous sections are formulated at the level of signed support masses. To interpret those trajectories as genuine probabilistic model trajectories, the probability layer must first satisfy more than the lightweight normalization contract built into the original \texttt{Model} structure. This section records the stronger layer and the verified lift from rational weight vectors to complete 4-PEL models.
+
+\subsection{Finite probability integrity}
+
+The compatibility predicate \texttt{FiniteProbabilityIntegrity} strengthens one local measure by requiring duplicate-free support, nonnegative event masses, extensionality with respect to event membership, monotonicity, disjoint finite additivity, empty-event mass zero, and total support mass one. The wrapper \texttt{StrongProbabilityModel} equips an ordinary 4-PEL model with this stronger certification.
+
+The stronger contract is deliberately additive rather than a replacement of the legacy model interface. Earlier finite witnesses therefore remain available, while later geometric results can state explicitly when genuine finite-probability behavior is required.
+
+\begin{proposition}[Weight-generated finite probability]
+Let \(R\) be a duplicate-free finite support and let \(q:R\to\mathbb{Q}\) be nonnegative with total mass one. Define the mass of a finite event \(S\) by summing the weights of the points of \(R\) that belong to \(S\). Then the resulting local measure satisfies \texttt{FiniteProbabilityIntegrity}.
+\statusverified
+\end{proposition}
+
+The implementation iterates over the fixed support rather than over the event list. Consequently event order and duplicate presentation do not alter the generated mass.
+
+\subsection{Convexity of the finite probability simplex}
+
+For two valid weight distributions \(q_0,q_1\) on the same support and rational \(t\in[0,1]\), define
+\[
+  q_t(x)=(1-t)q_0(x)+tq_1(x).
+\]
+Lean verifies that \(q_t\) is again a valid finite weight distribution. Hence the full rational line segment between two valid endpoints remains in the finite probability simplex.
+
+More strongly, every fixed event mass is affine in the same parameter:
+\[
+  \mu_t(S)
+  =(1-t)\mu_0(S)+t\mu_1(S).
+\]
+
+\begin{theorem}[Affine event mass on the probability simplex]
+For every fixed event \(S\), the weight-generated mass along the convex distribution path satisfies
+\[
+  \mu_{q_t}(S)
+  =(1-t)\mu_{q_0}(S)+t\mu_{q_1}(S).
+\]
+\statusverified
+\end{theorem}
+
+This identity is the formal bridge between the probability simplex and the affine scalar paths used in the threshold-crossing theorems.
+
+\subsection{A model-valued rational path}
+
+The probability path can be lifted to the complete model structure. Fix a world list \(W\), an accessibility field \(R\), an atomic valuation \(v\), and Lockean thresholds \(c\). Let \(q_0\) and \(q_1\) provide valid local weight distributions at every agent/world pair. For every rational \(t\in[0,1]\), define
+\[
+  M_t=(W,R,\mu_t,v,c),
+\]
+where each local measure is generated from the interpolated weights \(q_t\).
+
+\begin{theorem}[Convex strong model path]
+Every rational \(t\in[0,1]\) determines a \texttt{StrongProbabilityModel} \(M_t\). Along the entire path,
+\[
+  W_t=W,
+  \qquad
+  R_t=R,
+  \qquad
+  v_t=v,
+  \qquad
+  c_t=c,
+\]
+and every fixed local event has affine probability mass.
+\statusverified
+\end{theorem}
+
+Thus the geometric probability path is realized by complete probabilistically certified 4-PEL models, rather than merely by pairs of numbers in a support plane.
+
+\paragraph{Exact scope of the realization.}
+Two distinctions remain essential. First, this theorem concerns weight-generated strong endpoint models on a common semantic skeleton. It does not retroactively prove that every legacy witness in the repository satisfies the stronger probability contract. Second, a convex model path is not the same thing as an update-generated path: the theorem does not claim that every intermediate \(M_t\) arises by conditionalizing the source model on some evidence event.
+
+There is also a formula-level boundary. The affine theorem applies directly to a \emph{fixed event} \(S\). For an arbitrary modal formula containing probabilistic belief, the set of worlds that positively or negatively support the formula can itself vary with \(t\). In that case the event whose mass is measured is no longer fixed, so affine event mass alone does not imply affine \texttt{modalPositiveBeliefMass} or \texttt{modalNegativeBeliefMass}.
+
+The next formal step is therefore narrower and sharper: identify a path-invariant formula fragment, beginning with atomic propositions and probability-free formulas, and lift the verified threshold-crossing and intermediate-phase geometry to those genuine model paths.
