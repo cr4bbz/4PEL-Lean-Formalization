@@ -89,7 +89,8 @@ theorem affineCrossingPair_order_trichotomy
     {c p0 p1 n0 n1 : Rat}
     (pair : AffineThresholdCrossingPair c p0 p1 n0 n1) :
     pair.tp < pair.tn ∨ pair.tp = pair.tn ∨ pair.tn < pair.tp := by
-  rcases Rat.le_total pair.tp pair.tn with h | h
+  have htotal : pair.tp ≤ pair.tn ∨ pair.tn ≤ pair.tp := Rat.le_total
+  rcases htotal with h | h
   · rcases (Rat.le_iff_lt_or_eq).1 h with hlt | heq
     · exact Or.inl hlt
     · exact Or.inr (Or.inl heq)
@@ -127,9 +128,13 @@ theorem affineCrossingPair_sequential_order
   · exact False.elim (hNotSim heq)
   · exact Or.inr hgt
 
-/-- Every two-wall conditionalized belief transition determines an intrinsic
-pair of affine crossing times for its positive and negative support masses. -/
-def conditionalizationBeliefTwoWallCrossingPair
+/-- Every two-wall conditionalized belief transition admits an intrinsic pair
+of affine crossing times, and that pair has exactly one temporal order.
+
+This is stated propositionally rather than as a data-valued `def`: the unique
+crossing witnesses come from existential theorems, and Lean's constructive
+`Exists` eliminator is intentionally restricted to propositions. -/
+theorem conditionalization_belief_two_walls_crossing_order
     {W Ag Atom : Type} [DecidableEq W]
     (m : Model W Ag Atom) (E : Formula Atom Ag)
     (hAdm : ConditionalizationAdmissible m E)
@@ -138,12 +143,13 @@ def conditionalizationBeliefTwoWallCrossingPair
       thresholdWallCount
         (evalModal m w (ModalFormula.bel i phi))
         (evalModal (conditionalize m E hAdm) w (ModalFormula.bel i phi)) = 2) :
-    AffineThresholdCrossingPair
-      (m.c i)
-      (modalPositiveBeliefMass m i w phi)
-      (modalPositiveBeliefMass (conditionalize m E hAdm) i w phi)
-      (modalNegativeBeliefMass m i w phi)
-      (modalNegativeBeliefMass (conditionalize m E hAdm) i w phi) := by
+    ∃ pair : AffineThresholdCrossingPair
+        (m.c i)
+        (modalPositiveBeliefMass m i w phi)
+        (modalPositiveBeliefMass (conditionalize m E hAdm) i w phi)
+        (modalNegativeBeliefMass m i w phi)
+        (modalNegativeBeliefMass (conditionalize m E hAdm) i w phi),
+      pair.tp < pair.tn ∨ pair.tp = pair.tn ∨ pair.tn < pair.tp := by
   have hBoth :=
     (conditionalization_belief_two_walls_iff_both_supports_straddle
       m E hAdm i w phi).1 hTwo
@@ -161,7 +167,12 @@ def conditionalizationBeliefTwoWallCrossingPair
       (modalNegativeBeliefMass m i w phi)
       (modalNegativeBeliefMass (conditionalize m E hAdm) i w phi)
       hNeg with ⟨tn, htn0, htn1, hnHit, hnUnique⟩
-  exact
+  let pair : AffineThresholdCrossingPair
+      (m.c i)
+      (modalPositiveBeliefMass m i w phi)
+      (modalPositiveBeliefMass (conditionalize m E hAdm) i w phi)
+      (modalNegativeBeliefMass m i w phi)
+      (modalNegativeBeliefMass (conditionalize m E hAdm) i w phi) :=
     { tp := tp
     , tn := tn
     , tp_nonneg := htp0
@@ -173,24 +184,7 @@ def conditionalizationBeliefTwoWallCrossingPair
     , positive_unique := hpUnique
     , negative_unique := hnUnique
     }
-
-/-- Every two-wall belief transition is therefore temporally classified as
-positive-first, simultaneous, or negative-first along the affine support path. -/
-theorem conditionalization_belief_two_walls_crossing_order
-    {W Ag Atom : Type} [DecidableEq W]
-    (m : Model W Ag Atom) (E : Formula Atom Ag)
-    (hAdm : ConditionalizationAdmissible m E)
-    (i : Ag) (w : W) (phi : ModalFormula Atom Ag)
-    (hTwo :
-      thresholdWallCount
-        (evalModal m w (ModalFormula.bel i phi))
-        (evalModal (conditionalize m E hAdm) w (ModalFormula.bel i phi)) = 2) :
-    let pair := conditionalizationBeliefTwoWallCrossingPair
-      m E hAdm i w phi hTwo
-    pair.tp < pair.tn ∨ pair.tp = pair.tn ∨ pair.tn < pair.tp := by
-  dsimp
-  exact affineCrossingPair_order_trichotomy
-    (conditionalizationBeliefTwoWallCrossingPair m E hAdm i w phi hTwo)
+  exact ⟨pair, affineCrossingPair_order_trichotomy pair⟩
 
 /-!
 ## Interpretation
