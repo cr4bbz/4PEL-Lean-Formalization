@@ -25,13 +25,19 @@ def cart_val : C_World → C_Atom → FDEValue
 
 -- P(w1) = 0.7, P(w2) = 0.3
 def cart_mu : FiniteSet C_World → Rat
-| S => 
+| S =>
   let p1 := if S.contains C_World.w1 then (7:Rat)/10 else 0
   let p2 := if S.contains C_World.w2 then (3:Rat)/10 else 0
   p1 + p2
 
-axiom cart_mu_total : ∀ (_ : C_Agent) (_ : C_World), cart_mu [C_World.w1, C_World.w2] = 1
-axiom cart_mu_empty : ∀ (_ : C_Agent) (_ : C_World), cart_mu [] = 0
+theorem cart_mu_total : ∀ (_ : C_Agent) (_ : C_World),
+    cart_mu [C_World.w1, C_World.w2] = 1 := by
+  intro _ _
+  native_decide
+
+theorem cart_mu_empty : ∀ (_ : C_Agent) (_ : C_World), cart_mu [] = 0 := by
+  intro _ _
+  native_decide
 
 -- Agent a has threshold 0.6
 -- Agent b has threshold 0.9
@@ -39,8 +45,13 @@ def cart_c : C_Agent → Rat
 | C_Agent.a => (6:Rat)/10
 | C_Agent.b => (9:Rat)/10
 
-axiom cart_c_gt_half : ∀ i, cart_c i > 1/2
-axiom cart_c_le_one : ∀ i, cart_c i ≤ 1
+theorem cart_c_gt_half : ∀ i, cart_c i > 1 / 2 := by
+  intro i
+  cases i <;> native_decide
+
+theorem cart_c_le_one : ∀ i, cart_c i ≤ 1 := by
+  intro i
+  cases i <;> native_decide
 
 def CartographyModel : Model C_World C_Agent C_Atom :=
   { worlds := [C_World.w1, C_World.w2]
