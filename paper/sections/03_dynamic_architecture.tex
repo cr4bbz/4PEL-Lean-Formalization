@@ -1,0 +1,74 @@
+\section{Admissible Conditionalization and Dynamic Knowledge Phases}
+\label{sec:dynamics}
+
+The update operator conditions each local probability function on the positive extension of an evidence formula \(E\). Let
+\[
+  E^+_{i,w}
+  =\{u\in R_i(w):\llbracket E\rrbracket_u^+=1\}.
+\]
+For a finite set \(S\subseteq W\), the raw updated local probability is
+\[
+  \mu^{E}_{i,w}(S)
+  =
+  \frac{\mu_{i,w}(S\cap E^+_{i,w})}
+       {\mu_{i,w}(E^+_{i,w})}
+\]
+whenever the denominator is nonzero. At the model level, the Lean constructor requires an explicit \emph{ConditionalizationAdmissible} proof. This supplies positive evidence mass at every local state together with the normalization obligations of the updated measure.
+
+The update is intentionally conservative:
+\[
+  W^E=W,\qquad
+  R^E=R,\qquad
+  v^E=v,\qquad
+  c^E=c,
+\]
+and only \(\mu\) changes. Thus any dynamic change in a formula must ultimately be mediated by a semantic dependency on probability.
+
+\subsection{A syntactic invariant sector}
+
+The modal language has a probability-free fragment containing atoms, negation, conjunction, primitive knowledge, and raw possibility, but no occurrence of the probabilistic belief constructor. Lean proves that every such formula preserves its complete FDE value under admissible conditionalization. Its accessible stability profile, outer knowledge, and raw possibility are therefore preserved as well.
+
+This result isolates a first dynamic boundary:
+\[
+  \text{no probabilistic belief occurrence}
+  \quad\Longrightarrow\quad
+  \text{complete value invariant under conditionalization}.
+\]
+The converse is false. Later sections exhibit formulas containing \(\Bel\) whose probabilities change while their threshold status remains invariant.
+
+\subsection{Two dynamic channels for knowledge}
+
+The factorization theorem from Section~\ref{sec:kernel} yields a complete two-state classification for \(\Know_i\varphi\). Let \(M_0\) and \(M_1\) be two models on the same modal language. The stability states of \(\varphi\) determine how the belief channel is exposed at the knowledge layer:
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+\(\Stable_{M_0}\) & \(\Stable_{M_1}\) & knowledge phase \\
+\midrule
+true & true & \(\Know=\Bel\) on both sides \\
+true & false & posterior \(\Know=\Fval\) \\
+false & true & prior \(\Know=\Fval\), posterior \(\Know=\Bel\) \\
+false & false & \(\Know=\Fval\) on both sides \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The classification is update-independent: it follows directly from the pointwise factorization. The conditionalization development additionally contains finite witnesses for both off-diagonal phases. One update fractures a homogeneous \(\Bel p\) profile into a heterogeneous profile, giving
+\[
+  \Stable(\Bel p):\ \text{true}\to\text{false},
+  \qquad
+  \Know(\Bel p):\ \Tval\to\Fval.
+\]
+A second witness restores stability in the opposite direction:
+\[
+  \Stable(\Bel p):\ \text{false}\to\text{true},
+  \qquad
+  \Know(\Bel p):\ \Fval\to\Tval.
+\]
+
+\begin{corollary}[No monotone knowledge direction]
+Admissible probabilistic conditionalization is neither intrinsically monotone knowledge gain nor intrinsically monotone knowledge loss in the evidence-stable semantics.
+\statusverified
+\end{corollary}
+
+This phase table motivates the stronger question addressed next. Instead of asking only whether stability can fracture or recover, one can ask which complete four-valued endpoints are reachable when the belief profile is kept homogeneous so that the outer knowledge filter remains transparent.
