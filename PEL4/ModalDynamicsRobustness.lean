@@ -53,6 +53,22 @@ theorem evalModal_bel_eq_threshold_pair
       , neg := decide (modalNegativeBeliefMass m i w phi ≥ m.c i) } := by
   rfl
 
+/-- Equality of concrete FDE values is exactly coordinatewise Boolean equality.
+This local helper avoids relying on an automatically generated structure
+extensionality lemma. -/
+theorem fdeValue_mk_eq_iff
+    (ap an bp bn : Bool) :
+    ({ pos := ap, neg := an } : FDEValue) =
+        { pos := bp, neg := bn } ↔
+      ap = bp ∧ an = bn := by
+  constructor
+  · intro h
+    exact ⟨congrArg FDEValue.pos h, congrArg FDEValue.neg h⟩
+  · rintro ⟨hPos, hNeg⟩
+    cases hPos
+    cases hNeg
+    rfl
+
 /-- Exact pointwise robustness boundary for a probabilistic belief formula.
 
 The belief value is unchanged between two models iff neither its positive nor
@@ -69,13 +85,7 @@ theorem modal_belief_value_eq_iff_threshold_bits_eq
       decide (modalNegativeBeliefMass after i w phi ≥ after.c i) =
           decide (modalNegativeBeliefMass before i w phi ≥ before.c i) := by
   rw [evalModal_bel_eq_threshold_pair, evalModal_bel_eq_threshold_pair]
-  constructor
-  · intro h
-    exact ⟨congrArg FDEValue.pos h, congrArg FDEValue.neg h⟩
-  · rintro ⟨hPos, hNeg⟩
-    apply FDEValue.ext
-    · exact hPos
-    · exact hNeg
+  exact fdeValue_mk_eq_iff _ _ _ _
 
 /-- A formula is robust for one specific admissible conditionalization when its
 complete value is protected compositionally.
