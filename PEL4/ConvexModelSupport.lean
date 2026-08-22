@@ -168,6 +168,20 @@ theorem convexStrongModelAt_positiveBeliefMass_probabilityFree
   have hEvent1 :=
     positiveSupportEvent_probabilityFree_of_same_skeleton
       m0 m1 h10 hV10 i w hFree
+  have hEventTR :
+      filterWorlds (R i w) (fun u => (evalModal mt u phi).pos) =
+        filterWorlds (R i w) (fun u => (evalModal m0 u phi).pos) := by
+    change
+      filterWorlds (mt.R i w) (fun u => (evalModal mt u phi).pos) =
+        filterWorlds (m0.R i w) (fun u => (evalModal m0 u phi).pos)
+    exact hEventT
+  have hEvent1R :
+      filterWorlds (R i w) (fun u => (evalModal m1 u phi).pos) =
+        filterWorlds (R i w) (fun u => (evalModal m0 u phi).pos) := by
+    change
+      filterWorlds (m1.R i w) (fun u => (evalModal m1 u phi).pos) =
+        filterWorlds (m0.R i w) (fun u => (evalModal m0 u phi).pos)
+    exact hEvent1
   unfold modalPositiveBeliefMass
   change
     weightedEventMass (R i w) (convexWeight t (q0 i w) (q1 i w))
@@ -177,7 +191,7 @@ theorem convexStrongModelAt_positiveBeliefMass_probabilityFree
             (filterWorlds (R i w) (fun u => (evalModal m0 u phi).pos)) +
         t * weightedEventMass (R i w) (q1 i w)
             (filterWorlds (R i w) (fun u => (evalModal m1 u phi).pos))
-  rw [hEventT, hEvent1]
+  rw [hEventTR, hEvent1R]
   exact weightedEventMass_convex
     (R i w) (q0 i w) (q1 i w)
     (filterWorlds (R i w) (fun u => (evalModal m0 u phi).pos)) t
@@ -224,6 +238,20 @@ theorem convexStrongModelAt_negativeBeliefMass_probabilityFree
   have hEvent1 :=
     negativeSupportEvent_probabilityFree_of_same_skeleton
       m0 m1 h10 hV10 i w hFree
+  have hEventTR :
+      filterWorlds (R i w) (fun u => (evalModal mt u phi).neg) =
+        filterWorlds (R i w) (fun u => (evalModal m0 u phi).neg) := by
+    change
+      filterWorlds (mt.R i w) (fun u => (evalModal mt u phi).neg) =
+        filterWorlds (m0.R i w) (fun u => (evalModal m0 u phi).neg)
+    exact hEventT
+  have hEvent1R :
+      filterWorlds (R i w) (fun u => (evalModal m1 u phi).neg) =
+        filterWorlds (R i w) (fun u => (evalModal m0 u phi).neg) := by
+    change
+      filterWorlds (m1.R i w) (fun u => (evalModal m1 u phi).neg) =
+        filterWorlds (m0.R i w) (fun u => (evalModal m0 u phi).neg)
+    exact hEvent1
   unfold modalNegativeBeliefMass
   change
     weightedEventMass (R i w) (convexWeight t (q0 i w) (q1 i w))
@@ -233,7 +261,7 @@ theorem convexStrongModelAt_negativeBeliefMass_probabilityFree
             (filterWorlds (R i w) (fun u => (evalModal m0 u phi).neg)) +
         t * weightedEventMass (R i w) (q1 i w)
             (filterWorlds (R i w) (fun u => (evalModal m1 u phi).neg))
-  rw [hEventT, hEvent1]
+  rw [hEventTR, hEvent1R]
   exact weightedEventMass_convex
     (R i w) (q0 i w) (q1 i w)
     (filterWorlds (R i w) (fun u => (evalModal m0 u phi).neg)) t
