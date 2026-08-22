@@ -1,0 +1,93 @@
+\section{Unique Crossing Times and Temporal Order}
+\label{sec:crossing-order}
+
+A two-wall transition gives one affine threshold hit on the positive support coordinate and one on the negative coordinate. To turn these hits into a temporal classification, the crossing parameter must be intrinsic rather than an arbitrary existential witness.
+
+\subsection{Uniqueness}
+
+Suppose \(x\neq y\). The affine map
+\[
+  \gamma_{x,y}(t)=x+t(y-x)
+\]
+is injective in its parameter. Lean proves this directly over the rationals by cancelling the nonzero factor \(y-x\).
+
+\begin{theorem}[Unique affine threshold time]
+Let \(x\neq y\). If
+\[
+  \gamma_{x,y}(t)=c
+  \qquad\text{and}\qquad
+  \gamma_{x,y}(s)=c,
+\]
+then
+\[
+  t=s.
+\]
+Consequently every straddling affine segment has a unique threshold crossing parameter in \([0,1]\cap\mathbb{Q}\).
+\statusverified
+\end{theorem}
+
+For a two-wall belief transition write
+\[
+  t_+=\text{the unique positive-support crossing time},
+\]
+\[
+  t_-=\text{the unique negative-support crossing time}.
+\]
+Both lie in the rational unit interval.
+
+\subsection{Crossing-order trichotomy}
+
+The linear order on \(\mathbb{Q}\) now yields an exhaustive classification:
+\[
+  t_+<t_-,
+  \qquad
+  t_+=t_-,
+  \qquad
+  t_-<t_+.
+\]
+
+\begin{theorem}[Affine crossing-order trichotomy]
+Every two-wall conditionalized belief transition admits intrinsic positive and negative crossing times satisfying exactly one of
+\[
+  t_+<t_-,\qquad
+  t_+=t_-,\qquad
+  t_-<t_+.
+\]
+\statusverified
+\end{theorem}
+
+The three cases have immediate event readings:
+\[
+\begin{array}{ccl}
+ t_+<t_- &:& \text{positive threshold wall first},\\
+ t_+=t_- &:& \text{simultaneous crossing},\\
+ t_-<t_+ &:& \text{negative threshold wall first}.
+\end{array}
+\]
+
+\subsection{The simultaneous case}
+
+The equality case has a geometric characterization stronger than mere coincidence of two stored parameters.
+
+\begin{theorem}[Simultaneity as the wall intersection]
+For a two-coordinate affine crossing pair,
+\[
+  t_+=t_-
+\]
+if and only if there exists one rational parameter \(t\) such that
+\[
+  \Ppos_t=c
+  \qquad\text{and}\qquad
+  \Pneg_t=c.
+\]
+Equivalently, the support path passes through the wall-intersection point
+\[
+  (c,c).
+\]
+\statusverified
+\end{theorem}
+
+Thus simultaneous diagonal motion is geometrically exceptional. If \(t_+\neq t_-\), there is a nonempty rational interval between the two wall events. The next section proves that this interval carries a forced categorical phase.
+
+\paragraph{Why order matters.}
+The endpoint projection forgets which threshold coordinate changes first. Yet for a diagonal transition both bits must change. The temporal order of those changes therefore contains information absent from the pair \((\text{source},\text{target})\). Crossing-order geometry recovers exactly that lost information.
