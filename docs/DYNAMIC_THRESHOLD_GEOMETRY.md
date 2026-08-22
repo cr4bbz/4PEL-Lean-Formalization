@@ -1,8 +1,6 @@
 # Threshold Square Geometry
 
-Status: **active build gate** on `research/preface-case-study`.
-
-Do not mark `PEL4/ModalDynamicsGeometry.lean` compiler-verified until a fresh local Lean 4.31 `lake build` succeeds with the module imported through `PEL4.lean`.
+Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsGeometry.lean` imported through `PEL4.lean`.
 
 ## Core representation
 
@@ -30,10 +28,12 @@ F ---- B
 
 `thresholdWallCount a b` counts how many coordinates differ between two FDE values.
 
-Target verified range:
+Lean verifies:
 
 ```text
-0, 1, or 2 only.
+thresholdWallCount(a,b) is always 0, 1, or 2.
+thresholdWallCount(a,b) = 0 iff a = b.
+thresholdWallCount(a,b) = 2 iff both coordinates differ.
 ```
 
 Interpretation:
@@ -64,7 +64,7 @@ N <-> B.
 
 Threshold-Side Robustness proves that a probabilistic belief is invariant exactly when both threshold bits are invariant.
 
-The geometry module restates this as:
+The geometry module verifies the geometric restatement:
 
 ```text
 belief robust at a point
@@ -76,9 +76,9 @@ It also proves that every compositionally robust modal formula has zero categori
 
 ## Connection to complete reachability
 
-The six-world reachability family already realizes every ordered pair of FDE values by safe probability-only conditionalization.
+The six-world reachability family realizes every ordered pair of FDE values by safe probability-only conditionalization.
 
-The geometry gate packages this as:
+The geometry gate verifies:
 
 ```text
 displacement(realized source -> target)
@@ -94,15 +94,15 @@ Hence admissible conditionalization realizes all three combinatorial displacemen
 2-wall transitions.
 ```
 
-## What is not yet claimed
+## Current boundary
 
-The word "wall" is currently combinatorial. The model has rational endpoint probability measures, not a formal continuous path between them.
+The word "wall" is compiler-verified at the combinatorial level. The model still has rational endpoint probability measures rather than a formal continuous path between them.
 
-A later theorem could introduce a parameterized path of positive/negative support masses and ask whether a transition of wall count `k` forces at least `k` threshold-equality events along the path. That would require an ordered/continuous path layer and should not be inferred from the present finite endpoint theorem.
+The next gate, `PEL4/ModalDynamicsThresholdCrossing.lean`, reconnects these walls to the numerical support masses. Its target theorem says that a changed threshold bit is equivalent to endpoint masses straddling the Lockean threshold. That order-theoretic straddling result is the intended bridge toward a later genuine continuity theorem.
 
 ## Research payoff
 
-The dynamic results now suggest a three-level picture:
+The dynamic results now support a three-level picture:
 
 ```text
 probability state
