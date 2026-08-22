@@ -16,6 +16,10 @@ Lean module & role in the paper\\
 \midrule
 \texttt{PEL4/FDE.lean} & four bilateral values and basic operations\\
 \texttt{PEL4/Model.lean} & finite probabilistic Kripke model interface\\
+\texttt{PEL4/FiniteProbabilityIntegrity.lean} & stronger finite-probability compatibility layer\\
+\texttt{PEL4/WeightGeneratedProbability.lean} & weight-generated measures and generic integrity theorem\\
+\texttt{PEL4/ConvexProbabilitySimplex.lean} & convex rational distributions and affine event masses\\
+\texttt{PEL4/ConvexModelPath.lean} & complete strong model-valued convex paths\\
 \texttt{PEL4/Belief.lean} & signed Lockean threshold belief\\
 \texttt{PEL4/ModalLanguage.lean} & primitive \(\Bel\), \(\Know\), and raw possibility\\
 \texttt{PEL4/ModalKnowledgeBeliefFactorization.lean} & exact \(\Know=\Stable\)-filtered \(\Bel\) theorem\\
@@ -35,11 +39,11 @@ Lean module & role in the paper\\
 
 \subsection{Proof style}
 
-The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, and midpoint phase classification. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
+The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, and construction of complete strong model paths. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
 
-Several of the finite cases are discharged by \texttt{native\_decide}. This does not weaken their status: the corresponding propositions are closed finite statements, and Lean’s kernel checks the resulting proof term. The paper nevertheless distinguishes these executable witnesses from general symbolic theorems because their quantifier structure is different.
+Several of the finite cases are discharged by \texttt{native\_decide}. This does not weaken their status: the corresponding propositions are closed finite statements, and Lean's kernel checks the resulting proof term. The paper nevertheless distinguishes these executable witnesses from general symbolic theorems because their quantifier structure is different.
 
-The affine path development intentionally avoids adding Mathlib. It imports Lean Core rational lemmas and proves the required unit-interval and monotonicity facts directly. This keeps the current result lightweight and makes the boundary to a future topology-heavy development explicit.
+The affine path development intentionally avoids adding Mathlib. It imports Lean Core rational lemmas and proves the required unit-interval, linearity, and monotonicity facts directly. This keeps the current result lightweight and makes the boundary to a future topology-heavy development explicit.
 
 \subsection{Status discipline}
 
@@ -51,7 +55,7 @@ The manuscript uses the following hierarchy:
   \item \textbf{Literature or novelty claim}: a comparative scholarly assertion requiring an external audit.
 \end{enumerate}
 
-The central dynamic modules through \texttt{ModalDynamicsIntermediatePhase.lean} have passed a fresh local \texttt{lake build}. Accordingly, the reachability, robustness, wall geometry, affine crossing, crossing-order, and intermediate-phase claims in Sections~\ref{sec:reachability}--\ref{sec:intermediate} are reported as machine-checked.
+The central dynamic and probability-path modules through \texttt{ConvexModelPath.lean} have passed fresh local \texttt{lake build} checks. Accordingly, the reachability, robustness, wall geometry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, and strong model-path claims reported in this manuscript are machine-checked at the level of their exact Lean statements.
 
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:
