@@ -39,7 +39,15 @@ have passed a fresh local Lean 4.31 `lake build` with the module imported throug
 
 The LaTeX manuscript has also passed a fresh local `latexmk -pdf main.tex` build and produces `paper/main.pdf`.
 
-The strongest verified geometric statement concerns the **affine interpolation of signed support masses**. It does **not yet** prove that every intermediate support point is realized by a full admissible probabilistic model. Likewise, no theorem about arbitrary continuous paths or general measure spaces is claimed.
+The stronger compatibility layer in
+
+```text
+PEL4/FiniteProbabilityIntegrity.lean
+```
+
+has likewise passed a fresh local Lean 4.31 build. It adds nonnegativity, event extensionality, monotonicity, disjoint finite additivity, duplicate-free supports, empty mass zero, and total mass one as an explicit stronger contract. Existing witness models are not automatically promoted to this stronger layer.
+
+The strongest verified geometric statement in the manuscript itself concerns the **affine interpolation of signed support masses**. It does **not yet** prove that every intermediate support point is realized by a full admissible probabilistic model. Likewise, no theorem about arbitrary continuous paths or general measure spaces is claimed.
 
 The manuscript also makes no strong novelty claim before a systematic literature audit.
 
@@ -72,6 +80,8 @@ paper/main.pdf
 ```text
 main.tex
 references.bib
+figures/
+  fde_phase_geometry.tex
 sections/
   01_introduction.tex
   02_semantic_kernel.tex
@@ -88,18 +98,21 @@ sections/
   A_formal_correspondence.tex
 ```
 
+The FDE phase figure is generated directly from TikZ source. It visualizes the three verified affine `N -> B` crossing patterns: positive-first, negative-first, and simultaneous crossing at `(c,c)`. The detailed crossing times are kept in a compact legend to avoid annotation overlap inside the support square.
+
 ## Next paper gate
 
-Before proving full model-path realizability, the finite probability layer itself should be audited and strengthened. The present core records `mu_total` and `mu_empty`, but does not yet package the usual finite-probability laws such as nonnegativity and finite additivity.
+Finite probability integrity is now verified as a compatibility layer. The next mathematical step is to generate local probability measures constructively from nonnegative rational world weights and prove the integrity laws once for that constructor.
 
-The recommended next sequence is therefore:
+The recommended sequence is therefore:
 
 ```text
-current finite probability interface
--> strengthen / characterize finite probability structure
--> prove convex rational paths preserve that structure
+verified finite probability integrity contract
+-> weight-generated finite probability measures
+-> generic integrity theorem for the weight constructor
+-> convex rational interpolation of valid weight vectors
 -> lift affine support crossings to genuine intermediate model states
 -> only then consider general continuous or measure-theoretic paths.
 ```
 
-This avoids obtaining a formally correct but semantically underpowered realizability theorem merely because the current `Model.mu` contract is intentionally lightweight.
+This avoids obtaining a formally correct but semantically underpowered realizability theorem merely because the legacy `Model.mu` contract is intentionally lightweight.
