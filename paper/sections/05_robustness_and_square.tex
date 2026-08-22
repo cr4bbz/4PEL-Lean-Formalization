@@ -1,0 +1,101 @@
+\section{Threshold-Side Robustness and the Boolean Square}
+\label{sec:square}
+
+Complete reachability shows how permissive the dynamics can be across different models in the witness family. The complementary question is local: what must change in order for one probabilistic belief value to change at all?
+
+Let
+\[
+  p^+=\Ppos_{i,w}(\varphi),
+  \qquad
+  p^-=\Pneg_{i,w}(\varphi).
+\]
+Then the complete belief value is exactly the pair of threshold decisions
+\[
+  \Bel_i\varphi
+  =\bigl([p^+\ge c_i],[p^-\ge c_i]\bigr).
+\]
+This gives an immediate semantic boundary.
+
+\begin{theorem}[Threshold-side robustness]
+For any two models on the same language, at a fixed agent, world, and formula,
+\[
+  \Bel_i^{\mathrm{after}}\varphi
+  =\Bel_i^{\mathrm{before}}\varphi
+\]
+if and only if the positive threshold decision is unchanged and the negative threshold decision is unchanged.
+\statusverified
+\end{theorem}
+
+The raw probabilities may therefore move substantially while the categorical result remains fixed. The invariant is not the precise support mass but the pair of threshold sides occupied by the two masses.
+
+The Lean development packages this fact in a compositional predicate, \texttt{ModalConditionalizationRobust}. At a belief node, robustness requires only that the two threshold decisions be preserved at every world. The embedded formula itself need not be dynamically invariant. Negation, conjunction, evidence-stable knowledge, and raw possibility propagate robustness compositionally. The previously verified probability-free fragment is contained in this semantic class, but the inclusion is strict: a diagonal member of the reachability family gives a formula containing \(\Bel\) whose probability distribution changes nontrivially while the belief value stays fixed.
+
+\subsection{The threshold square}
+
+Since every FDE value is already a pair of threshold bits, the categorical state space is the Boolean square
+\[
+  \Nval=(0,0),\qquad
+  \Tval=(1,0),\qquad
+  \Fval=(0,1),\qquad
+  \Bval=(1,1).
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=2, every node/.style={font=\large}]
+  \node (N) at (0,0) {$\Nval$};
+  \node (T) at (1,0) {$\Tval$};
+  \node (F) at (0,1) {$\Fval$};
+  \node (B) at (1,1) {$\Bval$};
+  \draw[-{Latex[length=2mm]}] (N) -- (T);
+  \draw[-{Latex[length=2mm]}] (N) -- (F);
+  \draw[-{Latex[length=2mm]}] (T) -- (B);
+  \draw[-{Latex[length=2mm]}] (F) -- (B);
+  \draw[dashed] (N) -- (B);
+  \draw[dashed] (T) -- (F);
+  \node[below=4mm of N] {$(0,0)$};
+  \node[below=4mm of T] {$(1,0)$};
+  \node[above=4mm of F] {$(0,1)$};
+  \node[above=4mm of B] {$(1,1)$};
+\end{tikzpicture}
+\end{center}
+
+Define the threshold-wall count
+\[
+  \dthr(a,b)
+  =\mathbf{1}[a^+\neq b^+]
+   +\mathbf{1}[a^-\neq b^-].
+\]
+Lean verifies the basic geometry:
+\[
+  0\le \dthr(a,b)\le 2,
+\]
+\[
+  \dthr(a,b)=0\iff a=b,
+\]
+and
+\[
+  \dthr(a,b)=2
+  \iff
+  a^+\neq b^+\ \land\ a^-\neq b^-.
+\]
+Thus one-wall changes are exactly edge moves and two-wall changes are exactly diagonal moves. The two diagonal pairs are
+\[
+  \Nval\leftrightarrow\Bval,
+  \qquad
+  \Tval\leftrightarrow\Fval.
+\]
+
+\begin{proposition}[Robustness is zero displacement]
+Every compositionally robust modal formula has threshold-wall count zero under its designated admissible conditionalization.
+\statusverified
+\end{proposition}
+
+The reachability construction realizes every displacement class. Hence the dynamic picture combines two properties that might initially look opposed:
+\[
+  \text{global categorical reachability is complete,}
+\]
+while
+\[
+  \text{local categorical change is exactly coordinatewise threshold change.}
+\]
+This tension is the starting point for the geometric refinement in the next sections.
