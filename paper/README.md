@@ -6,7 +6,7 @@ Working manuscript:
 
 Author: Julian Voigt
 
-Current manuscript version: **0.1**
+Current manuscript version: **0.2**
 
 ## Scope
 
@@ -22,32 +22,41 @@ K = stability-filtered threshold belief
 -> affine unit-interval threshold crossing
 -> unique two-wall crossing times
 -> crossing-order trichotomy
--> forced intermediate FDE phase for sequential diagonal crossings.
+-> forced intermediate FDE phase for sequential diagonal crossings
+-> finite probability integrity
+-> weight-generated finite measures
+-> convex rational probability simplex
+-> complete strong model-valued convex paths.
 ```
 
 The manuscript is intentionally narrower than the complete 4-PEL repository. Preface conflict topology, Fitch/Church-Fitch, Knower, Sorites, Surprise Examination, and the broader structural-transport program are mentioned only where they clarify the dynamic interpretation.
 
 ## Verification boundary
 
-The central formal results through
+The central dynamic and probability-path results through
 
 ```text
-PEL4/ModalDynamicsIntermediatePhase.lean
+PEL4/ConvexModelPath.lean
 ```
 
-have passed a fresh local Lean 4.31 `lake build` with the module imported through `PEL4.lean`.
+have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-The LaTeX manuscript has also passed a fresh local `latexmk -pdf main.tex` build and produces `paper/main.pdf`.
+The LaTeX manuscript previously passed a fresh local `latexmk -pdf main.tex` build and produced `paper/main.pdf`. Because version 0.2 adds a new model-path section and revises several existing sections, the updated manuscript should be rendered again after pulling the latest branch.
 
-The stronger compatibility layer in
+The stronger probability development now verifies:
 
 ```text
-PEL4/FiniteProbabilityIntegrity.lean
+FiniteProbabilityIntegrity
+-> weight-generated valid finite measures
+-> convex interpolation preserves finite distributions
+-> every fixed event mass is affine
+-> every rational interpolation point yields a StrongProbabilityModel
+-> worlds, R, val, and c remain fixed along the model path.
 ```
 
-has likewise passed a fresh local Lean 4.31 build. It adds nonnegativity, event extensionality, monotonicity, disjoint finite additivity, duplicate-free supports, empty mass zero, and total mass one as an explicit stronger contract. Existing witness models are not automatically promoted to this stronger layer.
+This closes the model-existence gap for **weight-generated strong endpoint models on a common semantic skeleton**.
 
-The strongest verified geometric statement in the manuscript itself concerns the **affine interpolation of signed support masses**. It does **not yet** prove that every intermediate support point is realized by a full admissible probabilistic model. Likewise, no theorem about arbitrary continuous paths or general measure spaces is claimed.
+Two boundaries remain explicit. First, for an arbitrary probability-sensitive modal formula, its positive or negative support event may itself vary with the path parameter, so the fixed-event affine theorem does not automatically yield affine formula-support mass. Second, the convex intermediate models are not claimed to arise by admissible conditionalization of the source model. No theorem about arbitrary continuous paths or general measure spaces is claimed.
 
 The manuscript also makes no strong novelty claim before a systematic literature audit.
 
@@ -91,6 +100,7 @@ sections/
   06_affine_crossing.tex
   07_crossing_order.tex
   08_intermediate_phases.tex
+  09_model_path_realizability.tex
   09_structural_interpretation.tex
   10_mechanization.tex
   11_related_work_and_limits.tex
@@ -102,17 +112,24 @@ The FDE phase figure is generated directly from TikZ source. It visualizes the t
 
 ## Next paper gate
 
-Finite probability integrity is now verified as a compatibility layer. The next mathematical step is to generate local probability measures constructively from nonnegative rational world weights and prove the integrity laws once for that constructor.
+The next mathematical step is now a **formula-level model-path lift** rather than model existence itself.
 
-The recommended sequence is therefore:
+The recommended sequence is:
 
 ```text
-verified finite probability integrity contract
--> weight-generated finite probability measures
--> generic integrity theorem for the weight constructor
--> convex rational interpolation of valid weight vectors
--> lift affine support crossings to genuine intermediate model states
--> only then consider general continuous or measure-theoretic paths.
+verified convex strong model path
+-> prove atomic support events are fixed along the path
+-> extend to a path-invariant / probability-free modal fragment
+-> identify modalPositiveBeliefMass and modalNegativeBeliefMass with affine fixed-event masses
+-> lift crossing-order and intermediate-phase theorems to genuine model states
+-> separately study update-generated paths
+-> only then consider arbitrary continuous or measure-theoretic paths.
 ```
 
-This avoids obtaining a formally correct but semantically underpowered realizability theorem merely because the legacy `Model.mu` contract is intentionally lightweight.
+This keeps three notions distinct:
+
+```text
+valid model-valued path
+formula-support path
+conditionalization-generated path.
+```
