@@ -1,8 +1,6 @@
 # Affine Intermediate-Phase Geometry
 
-Status: **active build gate** on `research/preface-case-study`.
-
-Do not mark `PEL4/ModalDynamicsIntermediatePhase.lean` compiler-verified until a fresh local Lean 4.31 `lake build` succeeds with the module imported through `PEL4.lean`.
+Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsIntermediatePhase.lean` imported through `PEL4.lean`.
 
 ## Question
 
@@ -23,7 +21,7 @@ For sequential crossings the module chooses the explicit rational midpoint
 tm = (tp + tn) / 2.
 ```
 
-The first target theorem proves
+Lean verifies
 
 ```text
 tp < tn -> tp < tm < tn
@@ -40,7 +38,7 @@ For
 gamma(t) = x + t * (y - x)
 ```
 
-the module targets strict parameter monotonicity:
+the module verifies strict parameter monotonicity:
 
 ```text
 x < y and t < s -> gamma(t) < gamma(s)
@@ -63,13 +61,13 @@ source = (source positive bit, source negative bit)
 target = (target positive bit, target negative bit).
 ```
 
-If the positive wall is crossed first, the target intermediate state is
+If the positive wall is crossed first, Lean proves that the midpoint state is
 
 ```text
 (target positive bit, source negative bit).
 ```
 
-If the negative wall is crossed first, the target intermediate state is
+If the negative wall is crossed first, Lean proves the symmetric state
 
 ```text
 (source positive bit, target negative bit).
@@ -77,7 +75,7 @@ If the negative wall is crossed first, the target intermediate state is
 
 For opposite endpoints these states are adjacent to both source and target in the Threshold Square.
 
-The concrete diagonal table is:
+The verified concrete diagonal table is:
 
 ```text
 N -> B : positive first -> T ; negative first -> F
@@ -86,7 +84,7 @@ T -> F : positive first -> N ; negative first -> B
 F -> T : positive first -> B ; negative first -> N.
 ```
 
-Thus a nonsimultaneous diagonal transition should decompose into two one-wall phases along the affine support interpolation.
+Thus every nonsimultaneous diagonal transition decomposes into two one-wall phases along the affine support interpolation.
 
 ## Simultaneous exception
 
@@ -96,7 +94,7 @@ If
 tp = tn,
 ```
 
-Crossing-Order Geometry already proves that the two-dimensional support path hits
+Crossing-Order Geometry proves that the two-dimensional support path hits
 
 ```text
 (c,c)
@@ -104,11 +102,31 @@ Crossing-Order Geometry already proves that the two-dimensional support path hit
 
 at one common parameter. In this case there is no open interval between the two wall events, so no sequential intermediate vertex is forced by the ordering argument.
 
+## Belief-level theorem
+
+For every conditionalized two-wall belief transition, Lean verifies that there exists an intrinsic affine crossing pair satisfying exactly one of three cases:
+
+```text
+simultaneous crossing at a common threshold hit,
+positive-first crossing with the positive-first intermediate midpoint phase,
+negative-first crossing with the negative-first intermediate midpoint phase.
+```
+
+This closes the formal chain
+
+```text
+diagonal endpoint change
+  -> two unique threshold times
+  -> temporal order
+  -> rational midpoint
+  -> exact adjacent intermediate FDE phase.
+```
+
 ## Semantic boundary
 
 The interpolated object is a pair of support masses, not yet a full interpolated `Model` satisfying all probability and admissibility constraints.
 
-Therefore the intended theorem says:
+Therefore the verified theorem says:
 
 ```text
 the affine support interpolation occupies an intermediate FDE threshold phase.
@@ -120,7 +138,7 @@ It does **not** yet say:
 there exists an actual intermediate admissible probabilistic model update realizing that phase.
 ```
 
-That stronger realizability question is a natural later gate.
+That stronger realizability question is the natural next gate.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
