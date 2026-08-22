@@ -33,6 +33,7 @@ import PEL4.ModalDynamicsRobustness
 import PEL4.ModalDynamicsGeometry
 import PEL4.ModalDynamicsThresholdCrossing
 import PEL4.ModalDynamicsAffineCrossing
+import PEL4.ModalDynamicsCrossingOrder
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
