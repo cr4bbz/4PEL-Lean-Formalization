@@ -6,7 +6,7 @@ namespace PEL4
 # Complete dynamic reachability of four-valued knowledge
 
 The preceding dynamic modules establish that admissible conditionalization can
-fracture and restore the stability gate of evidence-stable knowledge.  This
+fracture and restore the stability gate of evidence-stable knowledge. This
 module asks a stronger reachability question:
 
   which complete FDE values of K(B p) can be transformed into which others
@@ -23,11 +23,11 @@ For arbitrary source and target values:
 * the prior is uniform and the threshold is 2/3.
 
 Before update the four source anchors force B(p) to have exactly the source
-status, independently of the target at `focus`.  After conditioning on `e`, all
+status, independently of the target at `focus`. After conditioning on `e`, all
 posterior probability is concentrated on `focus`, so B(p) has exactly the
-target status.  The local measure is source-world independent, hence the B(p)
+target status. The local measure is source-world independent, hence the B(p)
 profile is homogeneous across the common accessibility range both before and
-after update.  Outer evidence-stable K therefore transmits the same transition.
+after update. Outer evidence-stable K therefore transmits the same transition.
 
 Thus all 4 x 4 = 16 transitions are reachable by probability change alone.
 -/
@@ -117,16 +117,14 @@ theorem dynamic_reachability_evidence_admissible
     ConditionalizationAdmissible
       (DynamicReachabilityModel source target)
       dynamicReachabilityEvidence := by
-  constructor
-  · intro ag w
-    cases ag
-    cases w <;> native_decide
-  · intro ag w
-    cases ag
-    cases w <;> native_decide
-  · intro ag w
-    cases ag
-    cases w <;> native_decide
+  rcases source with ⟨sp, sn⟩
+  rcases target with ⟨tp, tn⟩
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;>
+    constructor <;>
+      intro ag w <;>
+      cases ag <;>
+      cases w <;>
+      native_decide
 
 /-- Posterior model: only the probability measure changes. -/
 def DynamicReachabilityUpdated (source target : FDEValue) :
@@ -165,13 +163,13 @@ theorem dynamic_reachability_accessibility_fixed
 theorem dynamic_reachability_valuation_fixed
     (source target : FDEValue)
     (w : DynamicReachabilityWorld)
-    (p : DynamicReachabilityAtom) :
-    (DynamicReachabilityUpdated source target).val w p =
-      (DynamicReachabilityModel source target).val w p := by
+    (atom : DynamicReachabilityAtom) :
+    (DynamicReachabilityUpdated source target).val w atom =
+      (DynamicReachabilityModel source target).val w atom := by
   rfl
 
 /-- Before update, probabilistic belief in `p` equals the chosen source value at
-every world.  Four source anchors dominate the 2/3 threshold, while the single
+every world. Four source anchors dominate the 2/3 threshold, while the single
 target world cannot change either threshold bit. -/
 theorem dynamic_reachability_belief_before
     (source target : FDEValue)
@@ -180,10 +178,11 @@ theorem dynamic_reachability_belief_before
         dynamicReachabilityBelP = source := by
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
-  cases sp <;> cases sn <;> cases tp <;> cases tn <;> native_decide
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;>
+    cases w <;> native_decide
 
 /-- After conditioning, all mass lies on `focus`, whose complete value is the
-chosen target.  Threshold belief therefore reproduces the target exactly. -/
+chosen target. Threshold belief therefore reproduces the target exactly. -/
 theorem dynamic_reachability_belief_after
     (source target : FDEValue)
     (w : DynamicReachabilityWorld) :
@@ -191,7 +190,8 @@ theorem dynamic_reachability_belief_after
         dynamicReachabilityBelP = target := by
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
-  cases sp <;> cases sn <;> cases tp <;> cases tn <;> native_decide
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;>
+    cases w <;> native_decide
 
 /-- The belief profile is homogeneous before update. -/
 theorem dynamic_reachability_stable_before
@@ -235,7 +235,7 @@ theorem dynamic_reachability_knowledge_after
 
 For every ordered pair of FDE values, there is a member of this fixed six-world
 model family in which admissible conditionalization changes only probability
-and sends `K(B p)` from the first value to the second.  Since an FDE value has
+and sends `K(B p)` from the first value to the second. Since an FDE value has
 two Boolean coordinates, this single theorem covers all 16 transitions. -/
 theorem conditionalization_realizes_every_knowledge_value_transition
     (source target : FDEValue) :
@@ -289,7 +289,7 @@ N     | x   x   x   x
 ```
 
 Every arrow is realized by safe conditionalization while `R`, atomic valuation,
-and threshold remain fixed across the update.  The probability distribution is
+and threshold remain fixed across the update. The probability distribution is
 the only model field that changes.
 
 This answers two open dynamic questions at once:
