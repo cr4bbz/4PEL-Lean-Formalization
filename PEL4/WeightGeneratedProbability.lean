@@ -46,7 +46,7 @@ theorem weightedEventMass_empty
   induction support with
   | nil => rfl
   | cons x xs ih =>
-      simp [weightedEventMass, ih, Rat.zero_add, Rat.add_zero]
+      simp [weightedEventMass, ih, Rat.add_zero]
 
 /-- Generated mass depends only on event membership, not list presentation. -/
 theorem weightedEventMass_extensional
@@ -144,20 +144,19 @@ theorem weightedEventMass_add_disjoint
         weightedEventMass support weight B := by
   induction support with
   | nil =>
-      simp [weightedEventMass, Rat.zero_add, Rat.add_zero]
+      simp [weightedEventMass, Rat.add_zero]
   | cons x xs ih =>
       by_cases hA : x ∈ A
       · have hB : x ∉ B := by
           intro hBin
           exact hDis x hA hBin
         simp [weightedEventMass, hA, hB, ih,
-          Rat.zero_add, Rat.add_zero, Rat.add_assoc]
+          Rat.zero_add, Rat.add_assoc]
       · by_cases hB : x ∈ B
         · simp [weightedEventMass, hA, hB, ih,
-            Rat.zero_add, Rat.add_zero,
-            Rat.add_assoc, Rat.add_comm, Rat.add_left_comm]
+            Rat.zero_add, Rat.add_left_comm]
         · simp [weightedEventMass, hA, hB, ih,
-            Rat.zero_add, Rat.add_zero]
+            Rat.zero_add]
 
 /-- A normalized nonnegative rational weight vector on a duplicate-free support. -/
 structure FiniteWeightDistribution
