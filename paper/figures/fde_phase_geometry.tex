@@ -1,82 +1,129 @@
 % Reproducible study figure for the verified affine crossing-order results.
-% Threshold c = 0.6. The three affine paths are chosen to illustrate
-% positive-first, negative-first, and simultaneous N -> B transitions.
+% Threshold c = 0.6. The three affine paths illustrate positive-first,
+% negative-first, and simultaneous N -> B transitions.
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[x=10cm,y=10cm,>=Latex]
+\begin{tikzpicture}[
+  x=8.5cm,
+  y=8.5cm,
+  >=Latex,
+  line cap=round,
+  line join=round,
+  font=\small
+]
+  \def\c{0.6}
+
   % Four threshold cells.
-  \fill[black!4] (0,0) rectangle (0.6,0.6);
-  \fill[green!8] (0.6,0) rectangle (1,0.6);
-  \fill[red!8] (0,0.6) rectangle (0.6,1);
-  \fill[blue!5!red!8] (0.6,0.6) rectangle (1,1);
+  \fill[black!5] (0,0) rectangle (\c,\c);
+  \fill[green!10] (\c,0) rectangle (1,\c);
+  \fill[red!10] (0,\c) rectangle (\c,1);
+  \fill[blue!6!red!8] (\c,\c) rectangle (1,1);
 
-  % Axes and threshold walls.
-  \draw[->,thick] (0,0) -- (1.03,0) node[below right] {$P^+$};
-  \draw[->,thick] (0,0) -- (0,1.03) node[above left] {$P^-$};
-  \draw[dashed,thick] (0.6,0) -- (0.6,1);
-  \draw[dashed,thick] (0,0.6) -- (1,0.6);
-  \node[below,rotate=90] at (0.615,0.10) {$P^+=c=0.6$};
-  \node[above] at (0.13,0.605) {$P^-=c=0.6$};
+  % Unit square, axes, and threshold walls.
+  \draw[thick] (0,0) rectangle (1,1);
+  \draw[->,thick] (0,0) -- (1.04,0);
+  \draw[->,thick] (0,0) -- (0,1.04);
+  \draw[dashed,very thick] (\c,0) -- (\c,1);
+  \draw[dashed,very thick] (0,\c) -- (1,\c);
 
-  % Cell labels.
-  \node[align=center,text=black!65] at (0.42,0.18)
-    {$\Nval$\\[-1mm]\scriptsize neither / gap};
-  \node[align=center,text=green!45!black] at (0.82,0.22)
-    {$\Tval$\\[-1mm]\scriptsize true only};
-  \node[align=center,text=red!65!black] at (0.22,0.82)
-    {$\Fval$\\[-1mm]\scriptsize false only};
-  \node[align=center,text=blue!45!red!65!black] at (0.82,0.84)
-    {$\Bval$\\[-1mm]\scriptsize both / glut};
+  % Axis and wall labels.
+  \node[below,font=\bfseries] at (0.50,-0.055)
+    {Positive support $(P^{+})$};
+  \node[rotate=90,font=\bfseries] at (-0.065,0.50)
+    {Negative support $(P^{-})$};
+  \node[rotate=90,fill=white,inner sep=1pt,text=black!70]
+    at (0.615,0.18) {$P^{+}=c=0.6$};
+  \node[fill=white,inner sep=1pt,text=black!70]
+    at (0.18,0.615) {$P^{-}=c=0.6$};
+
+  % Cell labels, kept away from the three trajectories.
+  \node[align=center,text=black!65] at (0.40,0.14)
+    {\textbf{$\Nval$}\\[-1mm]\scriptsize neither / gap};
+  \node[align=center,text=green!45!black] at (0.82,0.20)
+    {\textbf{$\Tval$}\\[-1mm]\scriptsize true only};
+  \node[align=center,text=red!65!black] at (0.18,0.84)
+    {\textbf{$\Fval$}\\[-1mm]\scriptsize false only};
+  \node[align=center,text=blue!45!red!65!black] at (0.84,0.90)
+    {\textbf{$\Bval$}\\[-1mm]\scriptsize both / glut};
 
   % Positive-first path: (0.2,0.1) -> (0.9,0.7).
-  \draw[blue,very thick,->] (0.2,0.1) -- (0.9,0.7);
-  \filldraw[blue] (0.2,0.1) circle (0.007);
-  \filldraw[blue] (0.9,0.7) circle (0.007);
-  \node[blue,below left] at (0.2,0.1) {$x_1$};
-  \node[blue,above right] at (0.9,0.7) {$y_1$};
-  % t_+ = 4/7, point (0.6, 31/70 ~= 0.443)
-  \draw[blue,very thick] (0.6,0.443) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
-  \node[blue,below right,align=left] at (0.61,0.44)
-    {\scriptsize $t_+=4/7\approx0.57$\\[-1mm]\scriptsize positive wall first};
-  % t_- = 5/6, point (47/60 ~= 0.783, 0.6)
-  \draw[blue,very thick] (0.783,0.6) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
-  \node[blue,below right,align=left] at (0.79,0.60)
-    {\scriptsize $t_-=5/6\approx0.83$\\[-1mm]\scriptsize negative wall};
+  % t_+ = 4/7, t_- = 5/6.
+  \coordinate (xone) at (0.20,0.10);
+  \coordinate (yone) at (0.90,0.70);
+  \coordinate (pplusone) at (0.60,0.443);
+  \coordinate (pminusone) at (0.783,0.60);
+  \draw[blue!80!black,very thick,-{Latex[length=2.6mm]}]
+    (xone) -- (yone);
+  \filldraw[blue!80!black] (xone) circle (2.2pt);
+  \filldraw[blue!80!black] (yone) circle (2.2pt);
+  \filldraw[draw=blue!80!black,fill=white,very thick]
+    (pplusone) circle (2.5pt);
+  \filldraw[draw=blue!80!black,fill=white,very thick]
+    (pminusone) circle (2.5pt);
+  \node[blue!80!black,below left] at (xone) {$x_1$};
+  \node[blue!80!black,above right] at (yone) {$y_1$};
+  \node[blue!80!black,right,fill=white,inner sep=1pt]
+    at (0.605,0.438) {\scriptsize $t_+$};
+  \node[blue!80!black,above,fill=white,inner sep=1pt]
+    at (0.783,0.605) {\scriptsize $t_-$};
 
   % Negative-first path: (0.1,0.3) -> (0.7,0.9).
-  \draw[red!70!yellow,very thick,->] (0.1,0.3) -- (0.7,0.9);
-  \filldraw[red!70!yellow] (0.1,0.3) circle (0.007);
-  \filldraw[red!70!yellow] (0.7,0.9) circle (0.007);
-  \node[red!70!yellow,below left] at (0.1,0.3) {$x_2$};
-  \node[red!70!yellow,above] at (0.7,0.9) {$y_2$};
-  % t_- = 1/2 at (0.4,0.6)
-  \draw[red!70!yellow,very thick] (0.4,0.6) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
-  \node[red!65!black,above left,align=right] at (0.395,0.61)
-    {\scriptsize $t_-=1/2$\\[-1mm]\scriptsize negative wall first};
-  % t_+ = 5/6 at (0.6,0.8)
-  \draw[red!70!yellow,very thick] (0.6,0.8) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
-  \node[red!65!black,above left,align=right] at (0.59,0.81)
-    {\scriptsize $t_+=5/6\approx0.83$\\[-1mm]\scriptsize positive wall};
+  % t_- = 1/2, t_+ = 5/6.
+  \coordinate (xtwo) at (0.10,0.30);
+  \coordinate (ytwo) at (0.70,0.90);
+  \coordinate (pminustwo) at (0.40,0.60);
+  \coordinate (pplustwo) at (0.60,0.80);
+  \draw[red!70!yellow!85!black,very thick,-{Latex[length=2.6mm]}]
+    (xtwo) -- (ytwo);
+  \filldraw[red!70!yellow!85!black] (xtwo) circle (2.2pt);
+  \filldraw[red!70!yellow!85!black] (ytwo) circle (2.2pt);
+  \filldraw[draw=red!70!yellow!85!black,fill=white,very thick]
+    (pminustwo) circle (2.5pt);
+  \filldraw[draw=red!70!yellow!85!black,fill=white,very thick]
+    (pplustwo) circle (2.5pt);
+  \node[red!65!black,below left] at (xtwo) {$x_2$};
+  \node[red!65!black,above] at (ytwo) {$y_2$};
+  \node[red!65!black,above left,fill=white,inner sep=1pt]
+    at (0.395,0.605) {\scriptsize $t_-$};
+  \node[red!65!black,left,fill=white,inner sep=1pt]
+    at (0.595,0.80) {\scriptsize $t_+$};
 
   % Simultaneous path: (0.2,0.2) -> (0.8,0.8), common hit at t=2/3.
-  \draw[blue!50!red,densely dotted,very thick,->] (0.2,0.2) -- (0.8,0.8);
-  \filldraw[blue!50!red] (0.2,0.2) circle (0.005);
-  \filldraw[blue!50!red] (0.8,0.8) circle (0.005);
-  \filldraw[blue!50!red] (0.6,0.6) circle (0.010);
-  \node[blue!50!red,above left,align=right] at (0.59,0.61)
-    {\scriptsize $t_+=t_-=2/3$\\[-1mm]\scriptsize common hit $(c,c)$};
+  \coordinate (xthree) at (0.20,0.20);
+  \coordinate (ythree) at (0.80,0.80);
+  \coordinate (commonhit) at (0.60,0.60);
+  \draw[blue!50!red,densely dotted,very thick,-{Latex[length=2.6mm]}]
+    (xthree) -- (ythree);
+  \filldraw[blue!50!red] (xthree) circle (2pt);
+  \filldraw[blue!50!red] (ythree) circle (2pt);
+  \filldraw[draw=blue!50!red,fill=white,very thick]
+    (commonhit) circle (3pt);
+  \node[
+    blue!50!red,
+    below right,
+    fill=white,
+    fill opacity=0.94,
+    text opacity=1,
+    rounded corners=1pt,
+    inner sep=1.5pt
+  ] at (0.61,0.59) {\scriptsize $t_+=t_-=2/3$};
 
-  % Path labels in free regions.
-  \node[blue,align=left] at (0.74,0.32)
-    {\scriptsize positive-first\\[-1mm]\scriptsize $\Nval\to\Tval\to\Bval$};
-  \node[red!65!black,align=left] at (0.28,0.72)
-    {\scriptsize negative-first\\[-1mm]\scriptsize $\Nval\to\Fval\to\Bval$};
-  \node[blue!50!red,align=left] at (0.38,0.37)
-    {\scriptsize simultaneous\\[-1mm]\scriptsize direct diagonal crossing};
+  % Compact legend below the support square.  Keeping the detailed times here
+  % avoids collisions between trajectory annotations inside the four cells.
+  \draw[blue!80!black,very thick] (0.02,-0.13) -- (0.10,-0.13);
+  \node[anchor=west,align=left] at (0.115,-0.13)
+    {\scriptsize positive-first: $t_+=4/7<t_-=5/6$,\quad
+     $\Nval\to\Tval\to\Bval$};
 
-  % Unit-square frame.
-  \draw[thick] (0,0) rectangle (1,1);
+  \draw[red!70!yellow!85!black,very thick] (0.02,-0.19) -- (0.10,-0.19);
+  \node[anchor=west,align=left] at (0.115,-0.19)
+    {\scriptsize negative-first: $t_-=1/2<t_+=5/6$,\quad
+     $\Nval\to\Fval\to\Bval$};
+
+  \draw[blue!50!red,densely dotted,very thick] (0.02,-0.25) -- (0.10,-0.25);
+  \node[anchor=west,align=left] at (0.115,-0.25)
+    {\scriptsize simultaneous: $t_+=t_-=2/3$, common hit at $(c,c)$};
 \end{tikzpicture}
-\caption{Affine phase geometry for three $\Nval\to\Bval$ support trajectories at threshold $c=0.6$.  Positive-first and negative-first paths necessarily occupy $\Tval$ and $\Fval$, respectively, between their unique wall-crossing times.  The simultaneous path is the exceptional case $t_+=t_-$ and passes through the wall intersection $(c,c)$.  The figure is a visualization of the Lean-verified crossing-order and intermediate-phase theorems; it does not by itself assert that every interpolated support point is already realized by a full admissible model.}
+\caption{Affine phase geometry for three $\Nval\to\Bval$ support trajectories at threshold $c=0.6$. Positive-first and negative-first paths necessarily occupy $\Tval$ and $\Fval$, respectively, between their unique wall-crossing times. The simultaneous path is the exceptional case $t_+=t_-$ and passes through the wall intersection $(c,c)$. The figure visualizes the Lean-verified crossing-order and intermediate-phase theorems; it does not by itself assert that every interpolated support point is already realized by a full admissible model.}
 \label{fig:fde-phase-geometry}
 \end{figure}
