@@ -226,7 +226,7 @@ restricted hypotheses recover P.
 
 ### C9. Continuous / measure-theoretic generalization
 
-**OPEN.** Determine which finite rational results survive on countable or general probability spaces. The newly verified threshold-straddling endpoint theorem provides a natural starting point for a continuous path layer.
+**OPEN.** Determine which finite rational results survive on countable or general probability spaces. The verified threshold-straddling endpoint theorem and the active affine crossing gate provide a natural bridge toward a continuous path layer.
 
 ### C10. Automated finite-model search
 
@@ -234,7 +234,7 @@ restricted hypotheses recover P.
 
 ### C11. Literature-grounded modal and dynamic comparison
 
-**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, threshold-square geometry, and threshold-straddling with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
+**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, threshold-square geometry, threshold-straddling, and affine threshold crossing with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
 
 ### C12. What is the geometry of categorical dynamic displacement?
 
@@ -286,17 +286,41 @@ support masses
 
 Working name: **Threshold-Straddle Geometry**.
 
+### C14. Does endpoint straddling force a literal threshold hit along an explicit path?
+
+**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsAffineCrossing.lean` defines the directed rational affine interpolation
+
+```text
+gamma(t) = x + t * (y - x)
+```
+
+and attempts to prove, using only Lean Core rational arithmetic, that threshold-straddling endpoints admit an explicit rational crossing parameter:
+
+```text
+ThresholdStraddles c x y
+->
+exists t : Rat,
+  0 <= t and t <= 1 and gamma(t) = c.
+```
+
+The gate then lifts the result to conditionalized belief support masses. A genuine belief-status change should force an affine threshold hit on at least one support coordinate; a two-wall transition should force hits on both coordinates, possibly at different parameters.
+
+This would be a unit-interval crossing theorem for the chosen affine interpolation, not yet an abstract continuity or intermediate-value theorem over arbitrary paths.
+
+Working name: **Affine Threshold Crossing**.
+
 ## D. Suggested research order
 
 ```text
-1. construct a minimal parameterized support path and isolate the exact assumptions needed for literal threshold hits
-2. decide whether to add a continuity library or keep a small bespoke path theorem
-3. seek algebraic/bilattice characterization of stability
-4. revisit frame-law and Church-Fitch minimality
-5. strengthen the general structural-transport abstraction
-6. perform literature/novelty audit
-7. deepen conflict topology to homology and persistence
-8. investigate automated finite-model search
+1. compile Affine Threshold Crossing
+2. if successful, characterize simultaneous vs sequential two-coordinate crossings in the support plane
+3. decide whether general path continuity now justifies a topology dependency
+4. seek algebraic/bilattice characterization of stability
+5. revisit frame-law and Church-Fitch minimality
+6. strengthen the general structural-transport abstraction
+7. perform literature/novelty audit
+8. deepen conflict topology to homology and persistence
+9. investigate automated finite-model search
 ```
 
 The methodological separation remains essential:
