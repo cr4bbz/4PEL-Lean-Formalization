@@ -73,9 +73,9 @@ theorem modal_belief_value_eq_iff_threshold_bits_eq
   · intro h
     exact ⟨congrArg FDEValue.pos h, congrArg FDEValue.neg h⟩
   · rintro ⟨hPos, hNeg⟩
-    cases hPos
-    cases hNeg
-    rfl
+    apply FDEValue.ext
+    · exact hPos
+    · exact hNeg
 
 /-- A formula is robust for one specific admissible conditionalization when its
 complete value is protected compositionally.
