@@ -1,6 +1,6 @@
 # Finite Probability Integrity
 
-Status: **ACTIVE BUILD GATE**
+Status: **VERIFIED**
 
 ## Motivation
 
@@ -14,7 +14,7 @@ mu_empty : mu([]) = 0
 
 This has been sufficient for the existing finite theorem laboratory. It is not yet strong enough, however, for a publication-level claim that an affine support trajectory is a trajectory of genuine probability models. In particular, the legacy type does not itself package nonnegativity, extensionality, monotonicity, or finite additivity.
 
-## New compatibility layer
+## Verified compatibility layer
 
 `PEL4/FiniteProbabilityIntegrity.lean` introduces a separate stronger contract rather than modifying `Model` globally.
 
@@ -34,6 +34,8 @@ mu(R) = 1
 
 `StrongProbabilityModel` wraps an ordinary legacy `Model` together with a proof of `ModelProbabilityIntegrity`.
 
+A fresh local Lean 4.31 `lake build` has compiled this module through the root `PEL4.lean` import.
+
 ## Why this is deliberately separate
 
 The repository already contains many finite concrete models. Changing the fields of `Model` directly would turn a foundational audit into a large mechanical refactor and, more importantly, would blur a scientifically meaningful question:
@@ -42,11 +44,11 @@ The repository already contains many finite concrete models. Changing the fields
 which existing witnesses actually satisfy the stronger probability laws?
 ```
 
-Promotion to the stronger layer is therefore an explicit theorem obligation.
+Promotion to the stronger layer is therefore an explicit theorem obligation. No pre-existing witness is automatically promoted merely because the compatibility layer itself compiles.
 
-## Intended next gates
+## Next gates
 
-If this module compiles, the next sequence is:
+The next sequence is:
 
 1. construct finite probability measures from nonnegative rational world weights;
 2. prove the integrity laws generically for the weight-generated constructor;
