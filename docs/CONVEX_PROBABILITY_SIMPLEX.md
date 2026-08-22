@@ -1,6 +1,6 @@
 # Convex Probability Simplex
 
-Status: **ACTIVE BUILD GATE**
+Status: **VERIFIED**
 
 ## Goal
 
@@ -19,7 +19,7 @@ define
 q_t(x) = (1 - t) q_0(x) + t q_1(x).
 ```
 
-The principal target is:
+The principal theorem is:
 
 ```text
 FiniteWeightDistribution R q_0
@@ -29,9 +29,12 @@ and 0 <= t <= 1
 FiniteWeightDistribution R q_t.
 ```
 
-## Stronger affine event-mass statement
+A fresh local Lean 4.31 `lake build` compiled the module through the root
+`PEL4.lean` import.
 
-The module also targets the reusable identity
+## Verified affine event-mass statement
+
+The module also proves the reusable identity
 
 ```text
 weightedEventMass R q_t S
@@ -40,16 +43,15 @@ weightedEventMass R q_t S
 + t * weightedEventMass R q_1 S.
 ```
 
-Thus every event mass should move affinely along the same parameter as the
-underlying weight vector.
+Thus every event mass moves affinely along the same parameter as the underlying
+weight vector.
 
-If compiler-verified, this provides the formal bridge from the finite
-probability simplex to the previously verified affine threshold-crossing
-geometry.
+This provides the formal bridge from the finite probability simplex to the
+previously verified affine threshold-crossing geometry.
 
-## Intended consequence
+## Verified consequence
 
-Together with C17A and C17B, a successful build would establish:
+Together with C17A and C17B, the build establishes:
 
 ```text
 valid rational endpoint distributions
@@ -62,3 +64,10 @@ This is not yet a theorem that every intermediate point is a complete 4-PEL
 model. The next gate must package interpolated local distributions into a model
 while preserving the relational, valuation, and threshold components required
 by the semantic architecture.
+
+## Next gate
+
+Construct a model-valued convex path with fixed `R`, `val`, and `c`, using the
+verified weight-generated measures locally. Then prove that positive and
+negative belief-support masses along that model path coincide with the affine
+support paths already used by the crossing-order and intermediate-phase modules.
