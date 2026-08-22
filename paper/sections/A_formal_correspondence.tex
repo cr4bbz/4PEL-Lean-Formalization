@@ -1,0 +1,84 @@
+\section{Formal Correspondence}
+\label{app:formal}
+
+This appendix maps the principal mathematical claims in the manuscript to the Lean modules and theorem names that support them. The list is selective rather than exhaustive.
+
+\begin{center}
+\small
+\begin{tabular}{p{0.28\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+\toprule
+Paper claim & Lean theorem / definition & Module\\
+\midrule
+Four FDE values as bilateral Boolean pairs & \texttt{FDEValue}, \texttt{FDEValue.T/F/B/N} & \texttt{PEL4/FDE.lean}\\
+\addlinespace
+Signed threshold belief & \texttt{belief} & \texttt{PEL4/Belief.lean}\\
+\addlinespace
+Primitive modal evaluator with \(\Bel,\Know,\Diamond\) & \texttt{ModalFormula}, \texttt{evalModal} & \texttt{PEL4/ModalLanguage.lean}\\
+\addlinespace
+Knowledge equals stability-filtered belief & \texttt{modal\_knowledge\_as\_stability\_filtered\_belief} & \texttt{PEL4/ModalKnowledgeBeliefFactorization.lean}\\
+\addlinespace
+Safe probability-only update & \texttt{ConditionalizationAdmissible}, \texttt{conditionalize} & \texttt{PEL4/Dynamics.lean}\\
+\addlinespace
+Probability-free invariance & \texttt{evalModal\_conditionalize\_of\_probabilityFree} & \texttt{PEL4/ModalDynamicsStability.lean}\\
+\addlinespace
+Four dynamic stability phases & \texttt{modal\_knowledge\_phase\_*} & \texttt{PEL4/ModalDynamicsPhaseClassification.lean}\\
+\addlinespace
+Both stability-change directions are realizable & \texttt{conditionalization\_realizes\_both\_stability\_phase\_directions} & \texttt{PEL4/ModalDynamicsPhaseClassification.lean}\\
+\addlinespace
+All sixteen \(\Know(\Bel p)\) endpoint transitions & \texttt{conditionalization\_realizes\_every\_knowledge\_value\_transition} & \texttt{PEL4/ModalDynamicsReachability.lean}\\
+\addlinespace
+Creation of a knowledge glut & \texttt{conditionalization\_can\_create\_knowledge\_glut} & \texttt{PEL4/ModalDynamicsReachability.lean}\\
+\addlinespace
+Glut-to-gap and gap-to-truth transitions & \texttt{conditionalization\_can\_turn\_knowledge\_glut\_into\_gap}, \texttt{...gap\_into\_truth} & \texttt{PEL4/ModalDynamicsReachability.lean}\\
+\addlinespace
+Exact belief robustness boundary & \texttt{modal\_belief\_value\_eq\_iff\_threshold\_bits\_eq} & \texttt{PEL4/ModalDynamicsRobustness.lean}\\
+\addlinespace
+Compositional robust formulas are invariant & \texttt{evalModal\_conditionalize\_of\_robust} & \texttt{PEL4/ModalDynamicsRobustness.lean}\\
+\addlinespace
+Robustness strictly extends the probability-free fragment & \texttt{diagonal\_reachability\_belief\_is\_robust}, \texttt{...not\_probabilityFree} & \texttt{PEL4/ModalDynamicsRobustness.lean}\\
+\addlinespace
+Threshold wall count & \texttt{thresholdWallCount} & \texttt{PEL4/ModalDynamicsGeometry.lean}\\
+\addlinespace
+Zero wall iff equal FDE state & \texttt{thresholdWallCount\_eq\_zero\_iff} & \texttt{PEL4/ModalDynamicsGeometry.lean}\\
+\addlinespace
+Two walls iff both coordinates flip & \texttt{thresholdWallCount\_eq\_two\_iff} & \texttt{PEL4/ModalDynamicsGeometry.lean}\\
+\addlinespace
+Wall flip iff endpoint straddling & \texttt{threshold\_decision\_ne\_iff\_straddles} & \texttt{PEL4/ModalDynamicsThresholdCrossing.lean}\\
+\addlinespace
+Two walls iff both supports straddle & \texttt{conditionalization\_belief\_two\_walls\_iff\_both\_supports\_straddle} & \texttt{PEL4/ModalDynamicsThresholdCrossing.lean}\\
+\addlinespace
+Affine path & \texttt{affineRatPath} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Straddling gives unit-interval threshold hit & \texttt{thresholdStraddles\_has\_affine\_unit\_crossing} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Every belief change has an affine wall hit & \texttt{conditionalization\_belief\_change\_has\_affine\_threshold\_crossing} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Two-wall transition has two affine hits & \texttt{conditionalization\_belief\_two\_walls\_has\_two\_affine\_crossings} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Unique affine threshold time & \texttt{affineRatPath\_threshold\_hit\_unique} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Crossing-order trichotomy & \texttt{affineCrossingPair\_order\_trichotomy} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Simultaneous iff common \((c,c)\) hit & \texttt{affineCrossingPair\_simultaneous\_iff\_common\_hit} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Conditionalized two-wall order classification & \texttt{conditionalization\_belief\_two\_walls\_crossing\_order} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Midpoint lies between sequential crossings & \texttt{affineCrossingMidpoint\_between\_*} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Source side before and target side after crossing & \texttt{affine\_threshold\_side\_before\_crossing\_eq\_source}, \texttt{...after...target} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Positive-first midpoint state & \texttt{affineCrossingPair\_positive\_first\_midpoint\_state} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Negative-first midpoint state & \texttt{affineCrossingPair\_negative\_first\_midpoint\_state} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Intermediate is adjacent to both diagonal endpoints & \texttt{positiveFirstIntermediate\_adjacent\_to\_diagonal\_endpoints}, \texttt{negativeFirstIntermediate\_adjacent\_to\_diagonal\_endpoints} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Concrete eight-case diagonal table & \texttt{affine\_diagonal\_intermediate\_vertex\_table} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Full simultaneous/sequential intermediate-phase theorem & \texttt{conditionalization\_belief\_two\_walls\_intermediate\_phase} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Verification note.}
+The active branch was built successfully with Lean 4.31 after the final fixes to \texttt{ModalDynamicsIntermediatePhase.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements.
