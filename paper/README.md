@@ -37,6 +37,8 @@ PEL4/ModalDynamicsIntermediatePhase.lean
 
 have passed a fresh local Lean 4.31 `lake build` with the module imported through `PEL4.lean`.
 
+The LaTeX manuscript has also passed a fresh local `latexmk -pdf main.tex` build and produces `paper/main.pdf`.
+
 The strongest verified geometric statement concerns the **affine interpolation of signed support masses**. It does **not yet** prove that every intermediate support point is realized by a full admissible probabilistic model. Likewise, no theorem about arbitrary continuous paths or general measure spaces is claimed.
 
 The manuscript also makes no strong novelty claim before a systematic literature audit.
@@ -88,12 +90,16 @@ sections/
 
 ## Next paper gate
 
-The most direct next mathematical extension is **model-path realizability**:
+Before proving full model-path realizability, the finite probability layer itself should be audited and strengthened. The present core records `mu_total` and `mu_empty`, but does not yet package the usual finite-probability laws such as nonnegativity and finite additivity.
+
+The recommended next sequence is therefore:
 
 ```text
-verified affine support trajectory
--> ?
-trajectory of full admissible 4-PEL models.
+current finite probability interface
+-> strengthen / characterize finite probability structure
+-> prove convex rational paths preserve that structure
+-> lift affine support crossings to genuine intermediate model states
+-> only then consider general continuous or measure-theoretic paths.
 ```
 
-A positive result would upgrade the current intermediate support phases into genuine intermediate model states and would provide a principled basis for a later continuous/topological generalization.
+This avoids obtaining a formally correct but semantically underpowered realizability theorem merely because the current `Model.mu` contract is intentionally lightweight.
