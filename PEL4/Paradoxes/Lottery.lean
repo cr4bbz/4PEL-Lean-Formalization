@@ -30,16 +30,28 @@ def lottery_val : L_World → LotteryAtom → FDEValue
 
 /-- Equal probability of 1/3 for each world. -/
 def lottery_mu : FiniteSet L_World → Rat
-| S => 
+| S =>
   let p1 := if S.contains L_World.w1 then (1:Rat)/3 else 0
   let p2 := if S.contains L_World.w2 then (1:Rat)/3 else 0
   let p3 := if S.contains L_World.w3 then (1:Rat)/3 else 0
   p1 + p2 + p3
 
-axiom lottery_mu_total : ∀ (_ : L_Agent) (_ : L_World), lottery_mu [L_World.w1, L_World.w2, L_World.w3] = 1
-axiom lottery_mu_empty : ∀ (_ : L_Agent) (_ : L_World), lottery_mu [] = 0
-axiom lottery_c_gt_half : ∀ (_ : L_Agent), (2:Rat)/3 > 1/2
-axiom lottery_c_le_one : ∀ (_ : L_Agent), (2:Rat)/3 ≤ 1
+theorem lottery_mu_total : ∀ (_ : L_Agent) (_ : L_World),
+    lottery_mu [L_World.w1, L_World.w2, L_World.w3] = 1 := by
+  intro _ _
+  native_decide
+
+theorem lottery_mu_empty : ∀ (_ : L_Agent) (_ : L_World), lottery_mu [] = 0 := by
+  intro _ _
+  native_decide
+
+theorem lottery_c_gt_half : ∀ (_ : L_Agent), (2 : Rat) / 3 > 1 / 2 := by
+  intro _
+  native_decide
+
+theorem lottery_c_le_one : ∀ (_ : L_Agent), (2 : Rat) / 3 ≤ 1 := by
+  intro _
+  native_decide
 
 /-- The Lottery Kripke Model with c = 2/3 -/
 def LotteryModel : Model L_World L_Agent LotteryAtom :=
@@ -96,7 +108,7 @@ def b_all_lose := Formula.bel L_Agent.a all_lose
 -- Therefore, the agent's beliefs are not closed under conjunction.
 -- To represent this in our 4-PEL logic, we can evaluate the meta-formula:
 -- (B(~t1) & B(~t2) & B(~t3)) -> B(~t1 & ~t2 & ~t3)
-def paradox_implication := 
+def paradox_implication :=
   Formula.implies (Formula.and b_lose_t1 (Formula.and b_lose_t2 b_lose_t3)) b_all_lose
 
 -- Let's evaluate this implication: T -> F
