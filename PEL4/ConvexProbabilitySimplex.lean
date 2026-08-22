@@ -90,8 +90,7 @@ theorem weightedEventMass_convex
       by_cases hx : x ∈ event
       · simp [weightedEventMass, convexWeight, hx, ih,
           Rat.mul_add, Rat.add_assoc, Rat.add_comm, Rat.add_left_comm]
-      · simp [weightedEventMass, convexWeight, hx, ih,
-          Rat.mul_zero, Rat.zero_add]
+      · simp [weightedEventMass, hx, ih, Rat.zero_add]
 
 /-- The full rational line segment between two normalized nonnegative weight
 distributions on the same finite support remains inside that simplex. -/
@@ -137,10 +136,10 @@ theorem convexWeightGeneratedMeasure_integrity
 /-!
 ## Research consequence
 
-If this gate compiles, the finite probability simplex is no longer merely a
-geometric interpretation. Lean will verify that every rational parameter on
-the segment between two valid finite distributions is itself a valid
-distribution, and that every event mass travels affinely along that segment.
+The finite probability simplex is no longer merely a geometric interpretation.
+Lean verifies that every rational parameter on the segment between two valid
+finite distributions is itself a valid distribution, and that every event mass
+travels affinely along that segment.
 
 The next gate can exploit `weightedEventMass_convex` to identify the positive
 and negative belief-support coordinates of intermediate full models with the
