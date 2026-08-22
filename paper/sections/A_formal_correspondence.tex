@@ -76,9 +76,23 @@ Intermediate is adjacent to both diagonal endpoints & \texttt{positiveFirstInter
 Concrete eight-case diagonal table & \texttt{affine\_diagonal\_intermediate\_vertex\_table} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
 \addlinespace
 Full simultaneous/sequential intermediate-phase theorem & \texttt{conditionalization\_belief\_two\_walls\_intermediate\_phase} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Strong finite-probability contract & \texttt{FiniteProbabilityIntegrity}, \texttt{StrongProbabilityModel} & \texttt{PEL4/FiniteProbabilityIntegrity.lean}\\
+\addlinespace
+Weight-generated measure satisfies integrity & \texttt{weightGeneratedMeasure\_integrity} & \texttt{PEL4/WeightGeneratedProbability.lean}\\
+\addlinespace
+Convex interpolation preserves distributions & \texttt{convexWeightDistribution} & \texttt{PEL4/ConvexProbabilitySimplex.lean}\\
+\addlinespace
+Every fixed event mass is affine & \texttt{weightedEventMass\_convex} & \texttt{PEL4/ConvexProbabilitySimplex.lean}\\
+\addlinespace
+Complete strong rational model path & \texttt{convexStrongModelAt} & \texttt{PEL4/ConvexModelPath.lean}\\
+\addlinespace
+Worlds, accessibility, valuation, and threshold fixed & \texttt{convexStrongModelAt\_worlds}, \texttt{...accessibility}, \texttt{...valuation}, \texttt{...threshold} & \texttt{PEL4/ConvexModelPath.lean}\\
+\addlinespace
+Fixed-event mass affine along full model path & \texttt{convexStrongModelAt\_eventMass} & \texttt{PEL4/ConvexModelPath.lean}\\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \paragraph{Verification note.}
-The active branch was built successfully with Lean 4.31 after the final fixes to \texttt{ModalDynamicsIntermediatePhase.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements.
+The active branch has passed fresh local Lean 4.31 builds through \texttt{PEL4/ConvexModelPath.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The formula-level lift from fixed events to arbitrary probability-sensitive support events remains separate and is not inferred from the model-path theorem.
