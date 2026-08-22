@@ -1,0 +1,82 @@
+% Reproducible study figure for the verified affine crossing-order results.
+% Threshold c = 0.6. The three affine paths are chosen to illustrate
+% positive-first, negative-first, and simultaneous N -> B transitions.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=10cm,y=10cm,>=Latex]
+  % Four threshold cells.
+  \fill[black!4] (0,0) rectangle (0.6,0.6);
+  \fill[green!8] (0.6,0) rectangle (1,0.6);
+  \fill[red!8] (0,0.6) rectangle (0.6,1);
+  \fill[blue!5!red!8] (0.6,0.6) rectangle (1,1);
+
+  % Axes and threshold walls.
+  \draw[->,thick] (0,0) -- (1.03,0) node[below right] {$P^+$};
+  \draw[->,thick] (0,0) -- (0,1.03) node[above left] {$P^-$};
+  \draw[dashed,thick] (0.6,0) -- (0.6,1);
+  \draw[dashed,thick] (0,0.6) -- (1,0.6);
+  \node[below,rotate=90] at (0.615,0.10) {$P^+=c=0.6$};
+  \node[above] at (0.13,0.605) {$P^-=c=0.6$};
+
+  % Cell labels.
+  \node[align=center,text=black!65] at (0.42,0.18)
+    {$\Nval$\\[-1mm]\scriptsize neither / gap};
+  \node[align=center,text=green!45!black] at (0.82,0.22)
+    {$\Tval$\\[-1mm]\scriptsize true only};
+  \node[align=center,text=red!65!black] at (0.22,0.82)
+    {$\Fval$\\[-1mm]\scriptsize false only};
+  \node[align=center,text=blue!45!red!65!black] at (0.82,0.84)
+    {$\Bval$\\[-1mm]\scriptsize both / glut};
+
+  % Positive-first path: (0.2,0.1) -> (0.9,0.7).
+  \draw[blue,very thick,->] (0.2,0.1) -- (0.9,0.7);
+  \filldraw[blue] (0.2,0.1) circle (0.007);
+  \filldraw[blue] (0.9,0.7) circle (0.007);
+  \node[blue,below left] at (0.2,0.1) {$x_1$};
+  \node[blue,above right] at (0.9,0.7) {$y_1$};
+  % t_+ = 4/7, point (0.6, 31/70 ~= 0.443)
+  \draw[blue,very thick] (0.6,0.443) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
+  \node[blue,below right,align=left] at (0.61,0.44)
+    {\scriptsize $t_+=4/7\approx0.57$\\[-1mm]\scriptsize positive wall first};
+  % t_- = 5/6, point (47/60 ~= 0.783, 0.6)
+  \draw[blue,very thick] (0.783,0.6) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
+  \node[blue,below right,align=left] at (0.79,0.60)
+    {\scriptsize $t_-=5/6\approx0.83$\\[-1mm]\scriptsize negative wall};
+
+  % Negative-first path: (0.1,0.3) -> (0.7,0.9).
+  \draw[red!70!yellow,very thick,->] (0.1,0.3) -- (0.7,0.9);
+  \filldraw[red!70!yellow] (0.1,0.3) circle (0.007);
+  \filldraw[red!70!yellow] (0.7,0.9) circle (0.007);
+  \node[red!70!yellow,below left] at (0.1,0.3) {$x_2$};
+  \node[red!70!yellow,above] at (0.7,0.9) {$y_2$};
+  % t_- = 1/2 at (0.4,0.6)
+  \draw[red!70!yellow,very thick] (0.4,0.6) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
+  \node[red!65!black,above left,align=right] at (0.395,0.61)
+    {\scriptsize $t_-=1/2$\\[-1mm]\scriptsize negative wall first};
+  % t_+ = 5/6 at (0.6,0.8)
+  \draw[red!70!yellow,very thick] (0.6,0.8) node[draw,cross out,minimum size=6pt,inner sep=0pt] {};
+  \node[red!65!black,above left,align=right] at (0.59,0.81)
+    {\scriptsize $t_+=5/6\approx0.83$\\[-1mm]\scriptsize positive wall};
+
+  % Simultaneous path: (0.2,0.2) -> (0.8,0.8), common hit at t=2/3.
+  \draw[blue!50!red,densely dotted,very thick,->] (0.2,0.2) -- (0.8,0.8);
+  \filldraw[blue!50!red] (0.2,0.2) circle (0.005);
+  \filldraw[blue!50!red] (0.8,0.8) circle (0.005);
+  \filldraw[blue!50!red] (0.6,0.6) circle (0.010);
+  \node[blue!50!red,above left,align=right] at (0.59,0.61)
+    {\scriptsize $t_+=t_-=2/3$\\[-1mm]\scriptsize common hit $(c,c)$};
+
+  % Path labels in free regions.
+  \node[blue,align=left] at (0.74,0.32)
+    {\scriptsize positive-first\\[-1mm]\scriptsize $\Nval\to\Tval\to\Bval$};
+  \node[red!65!black,align=left] at (0.28,0.72)
+    {\scriptsize negative-first\\[-1mm]\scriptsize $\Nval\to\Fval\to\Bval$};
+  \node[blue!50!red,align=left] at (0.38,0.37)
+    {\scriptsize simultaneous\\[-1mm]\scriptsize direct diagonal crossing};
+
+  % Unit-square frame.
+  \draw[thick] (0,0) rectangle (1,1);
+\end{tikzpicture}
+\caption{Affine phase geometry for three $\Nval\to\Bval$ support trajectories at threshold $c=0.6$.  Positive-first and negative-first paths necessarily occupy $\Tval$ and $\Fval$, respectively, between their unique wall-crossing times.  The simultaneous path is the exceptional case $t_+=t_-$ and passes through the wall intersection $(c,c)$.  The figure is a visualization of the Lean-verified crossing-order and intermediate-phase theorems; it does not by itself assert that every interpolated support point is already realized by a full admissible model.}
+\label{fig:fde-phase-geometry}
+\end{figure}
