@@ -1,5 +1,6 @@
 import PEL4.Model
 import PEL4.FiniteProbabilityIntegrity
+import PEL4.WeightGeneratedProbability
 import PEL4.Belief
 import PEL4.FDE
 import PEL4.Evidence
