@@ -1,0 +1,73 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Probabilistic epistemic models are usually asked two different questions. One concerns degrees: how much support does an agent assign to a proposition? The other concerns categories: does the agent believe, know, reject, or remain undecided? Threshold approaches connect the two by turning sufficiently high probability into all-or-nothing belief. Four-valued semantics adds a second axis. Positive and negative support can coexist or both fail, so the categorical result is no longer binary but belongs to
+\[
+  \{\Tval,\Fval,\Bval,\Nval\}
+  =\{(1,0),(0,1),(1,1),(0,0)\},
+\]
+following the Belnap--Dunn/FDE tradition \cite{Belnap1977,Dunn1976}.
+
+The 4-PEL project combines these ideas in a finite probabilistic epistemic semantics. Positive and negative extensions are assigned local probability masses independently. A Lockean threshold is applied to each mass, producing a four-valued belief state. A separate evidence-stable knowledge operator then checks whether the complete FDE profile is invariant across the accessible range. This yields an exact factorization:
+\[
+  \Know_i\varphi=
+  \begin{cases}
+    \Bel_i\varphi,&\Stable_i(\varphi),\\
+    \Fval,&\text{otherwise.}
+  \end{cases}
+\]
+The knowledge operator is therefore not a second probability threshold. It is a qualitative stability filter on top of threshold belief.
+
+The present paper asks what happens dynamically when local probability is updated while accessibility, atomic valuation, and threshold remain fixed. The central research question is:
+
+\begin{question}[Dynamic phase geometry]
+How does admissible probabilistic conditionalization move four-valued belief and knowledge between \(\Tval,\Fval,\Bval,\Nval\), and what geometric and temporal structure is hidden by the endpoint transition alone?
+\end{question}
+
+The machine-checked answer develops in several layers. First, admissible conditionalization can both destroy and restore the stability gate. More strongly, a fixed six-world construction scheme realizes every ordered pair of four-valued values at the level of \(\Know(\Bel p)\). Thus the categorical reachability graph is complete. That global permissiveness is paired with a sharp local invariant: a belief value changes exactly when at least one of its two threshold decisions changes.
+
+The four categorical states can consequently be treated as the vertices of a Boolean square. The number of changed threshold coordinates defines a wall count
+\[
+  \dthr\in\{0,1,2\}.
+\]
+Zero walls means the same FDE state, one wall means an edge move, and two walls mean a diagonal move. The two diagonals are \(\Tval\leftrightarrow\Fval\) and \(\Nval\leftrightarrow\Bval\).
+
+The geometric interpretation can then be reconnected to the underlying rational support masses. A changed threshold bit is exactly endpoint straddling of the Lockean boundary. For the explicit affine interpolation
+\[
+  \gamma(t)=x+t(y-x),\qquad t\in\mathbb{Q},
+\]
+straddling produces a rational crossing parameter \(t\in[0,1]\) at which \(\gamma(t)=\thr\). A two-wall transition therefore contains two threshold events, one for positive support and one for negative support. Each affine crossing time is unique. Their order is positive-first, simultaneous, or negative-first, and the simultaneous case is exactly passage through the point \((\thr,\thr)\) in the support plane.
+
+The final verified step is a phase decomposition theorem. If the two crossings are not simultaneous, the rational midpoint between them occupies a categorical state adjacent to both diagonal endpoints. The order of the wall events determines the intermediate state. For example,
+\[
+  \Nval\to\Bval
+\]
+becomes either
+\[
+  \Nval\to\Tval\to\Bval
+\]
+or
+\[
+  \Nval\to\Fval\to\Bval.
+\]
+The same classification holds for the other diagonal orientations.
+
+This yields a compact structural picture:
+\[
+\boxed{
+\text{support masses}
+\longrightarrow
+\text{threshold sides}
+\longrightarrow
+\text{wall crossings}
+\longrightarrow
+\text{crossing order}
+\longrightarrow
+\text{FDE phase sequence}.}
+\]
+
+\paragraph{Methodological discipline.}
+The paper distinguishes four levels throughout. Machine-checked theorems are reported as such. Finite witness constructions are not silently generalized beyond their quantified statement. Geometric and philosophical readings are identified as interpretations. Literature and novelty claims remain deliberately modest until a systematic comparison has been completed.
+
+\paragraph{Current boundary.}
+The affine path in the strongest theorem is a path of two support masses. It is not yet a constructed path of complete admissible 4-PEL models. Likewise, the rational affine crossing theorem is not an abstract intermediate-value theorem over arbitrary continuous paths. These are the next mathematical boundaries rather than assumptions hidden in the present results.
