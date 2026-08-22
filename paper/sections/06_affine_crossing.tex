@@ -1,0 +1,117 @@
+\section{From Threshold Straddling to Literal Affine Crossings}
+\label{sec:affine}
+
+The Boolean square records which threshold decisions differ, but it does not yet say what numerical event lies behind a changed bit. The next formal layer reconnects categorical displacement to rational support masses.
+
+\subsection{Endpoint straddling}
+
+For a rational threshold \(c\), define
+\[
+  \operatorname{Straddle}(c;x,y)
+\]
+to mean that exactly one endpoint lies on or above the threshold:
+\[
+  (c\le x\land\neg(c\le y))
+  \ \lor\ 
+  (c\le y\land\neg(c\le x)).
+\]
+For rational numbers this is the expected endpoint pattern
+\[
+  x<c\le y
+  \quad\text{or}\quad
+  y<c\le x.
+\]
+
+\begin{theorem}[Threshold decision versus endpoint straddling]
+For rational \(c,x,y\),
+\[
+  [c\le x]\neq[c\le y]
+  \iff
+  \operatorname{Straddle}(c;x,y).
+\]
+\statusverified
+\end{theorem}
+
+At belief level, the total wall count decomposes into the one-dimensional wall counts of the positive and negative support coordinates. Lean therefore verifies the exact three-way correspondence:
+\[
+\begin{array}{ccl}
+\dthr=0 &\iff& \text{neither support coordinate straddles},\\
+\dthr=1 &\iff& \text{exactly one support coordinate straddles},\\
+\dthr=2 &\iff& \text{both support coordinates straddle}.
+\end{array}
+\]
+In particular, every genuine categorical belief change has a numerical endpoint witness on at least one signed support axis.
+
+\subsection{Affine interpolation}
+
+Endpoint straddling still describes only two snapshots. To expose an actual crossing event, the formalization introduces the directed rational affine path
+\[
+  \gamma_{x,y}(t)=x+t(y-x),
+  \qquad t\in\mathbb{Q}.
+\]
+It satisfies
+\[
+  \gamma_{x,y}(0)=x,
+  \qquad
+  \gamma_{x,y}(1)=y.
+\]
+
+For the increasing orientation \(x<c\le y\), the explicit threshold parameter is
+\[
+  t_+=\frac{c-x}{y-x}.
+\]
+For the decreasing orientation \(y<c\le x\), the development uses the equivalent directed parameter
+\[
+  t_- =\frac{x-c}{x-y}.
+\]
+Lean Core rational arithmetic is sufficient to prove that the relevant parameter lies in the unit interval and hits the threshold exactly.
+
+\begin{theorem}[Affine unit-interval threshold crossing]
+If rational endpoints \(x,y\) straddle rational threshold \(c\), then
+\[
+  \exists t\in\mathbb{Q}:
+  0\le t\le 1
+  \quad\land\quad
+  \gamma_{x,y}(t)=c.
+\]
+\statusverified
+\end{theorem}
+
+No abstract topology is used. The proof is constructive for the chosen affine interpolation and introduces no Mathlib dependency.
+
+\begin{corollary}[Belief change has a literal affine wall hit]
+If admissible conditionalization changes the complete FDE value of \(\Bel_i\varphi\), then at least one of the two affine support paths
+\[
+  t\mapsto \Ppos_t(\varphi),
+  \qquad
+  t\mapsto \Pneg_t(\varphi)
+\]
+hits \(c_i\) at some rational \(t\in[0,1]\).
+\statusverified
+\end{corollary}
+
+For a two-wall transition, both signed support coordinates have crossing witnesses, though they need not cross at the same parameter. This opens a genuinely temporal question that the endpoint square cannot answer: which wall is hit first?
+
+\paragraph{Support-plane picture.}
+The two masses define a point
+\[
+  (\Ppos,\Pneg)\in\mathbb{Q}^2.
+\]
+The threshold lines \(\Ppos=c\) and \(\Pneg=c\) partition the plane into the four FDE regions.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25]
+  \draw[->] (0,0) -- (5,0) node[right] {$\Ppos$};
+  \draw[->] (0,0) -- (0,5) node[above] {$\Pneg$};
+  \draw[dashed] (2.4,0) -- (2.4,5) node[above] {$\Ppos=c$};
+  \draw[dashed] (0,2.4) -- (5,2.4) node[right] {$\Pneg=c$};
+  \node at (1.2,1.2) {$\Nval$};
+  \node at (3.7,1.2) {$\Tval$};
+  \node at (1.2,3.7) {$\Fval$};
+  \node at (3.7,3.7) {$\Bval$};
+  \fill (2.4,2.4) circle (1.5pt);
+  \node[above right] at (2.4,2.4) {$(c,c)$};
+\end{tikzpicture}
+\end{center}
+
+The Boolean threshold square can therefore be read as the coarse four-cell projection of this signed support plane.
