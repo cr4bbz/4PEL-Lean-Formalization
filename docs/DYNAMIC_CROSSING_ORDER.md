@@ -1,8 +1,6 @@
 # Affine Crossing-Order Geometry
 
-Status: **active build gate** on `research/preface-case-study`.
-
-Do not mark `PEL4/ModalDynamicsCrossingOrder.lean` compiler-verified until a fresh local Lean 4.31 `lake build` succeeds with the module imported through `PEL4.lean`.
+Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsCrossingOrder.lean` imported through `PEL4.lean`.
 
 ## Motivation
 
@@ -14,7 +12,7 @@ The remaining ambiguity is temporal:
 which threshold wall is crossed first?
 ```
 
-That question is meaningful only if the affine hit parameter is intrinsic rather than an arbitrary existential witness. The new module therefore first proves uniqueness.
+That question is meaningful only if the affine hit parameter is intrinsic rather than an arbitrary existential witness. The module therefore first proves uniqueness.
 
 ## Unique affine crossing time
 
@@ -24,7 +22,7 @@ For a nonconstant affine path
 gamma(t) = x + t * (y - x)
 ```
 
-if
+Lean verifies that if
 
 ```text
 gamma(t) = c
@@ -32,13 +30,13 @@ gamma(s) = c
 x != y
 ```
 
-then the target theorem proves
+then
 
 ```text
 t = s.
 ```
 
-Threshold-straddling endpoints are automatically distinct, so every straddling affine segment should have a unique threshold-crossing time.
+Threshold-straddling endpoints are automatically distinct, so every straddling affine segment has a unique threshold-crossing time.
 
 ## Two-coordinate crossing pair
 
@@ -57,9 +55,11 @@ tp = tn   simultaneous crossing
 tn < tp   negative wall first.
 ```
 
+Lean verifies propositionally that every two-wall conditionalized belief transition admits such a crossing pair together with exactly this trichotomy.
+
 ## Geometric meaning of simultaneity
 
-The simultaneous case should be equivalent to the existence of one parameter `t` such that both affine support coordinates equal the Lockean threshold:
+Lean also verifies that simultaneous crossing is equivalent to the existence of one parameter `t` such that both affine support coordinates equal the Lockean threshold:
 
 ```text
 P+(t) = c
@@ -83,13 +83,22 @@ N <-> B
 T <-> F.
 ```
 
-A two-wall update realizes one of these diagonal displacements at the categorical level. Crossing-order geometry refines such a diagonal into temporal information about the underlying support path.
+A two-wall update realizes one of these diagonal displacements at the categorical endpoint level. Crossing-order geometry refines such a diagonal into temporal information about the underlying affine support interpolation.
 
-The next natural theorem, if this gate compiles, is the **intermediate-vertex classification**: when `tp != tn`, the interval between the two crossing times should occupy one of the adjacent FDE vertices. Which vertex appears depends on the diagonal orientation and on which support wall crosses first.
+The next gate is the **intermediate-vertex classification**: when `tp != tn`, the rational interval between the two unique crossing times should occupy the adjacent FDE phase obtained by changing exactly the first-crossed threshold coordinate. For example, along the support interpolation:
+
+```text
+N -> B, positive first  : intermediate T
+N -> B, negative first  : intermediate F
+T -> F, positive first  : intermediate N
+T -> F, negative first  : intermediate B.
+```
+
+The reverse diagonal orientations have the corresponding reversed table.
 
 ## Current boundary
 
-This remains an affine rational path result. It does not yet assert anything about arbitrary continuous paths.
+This remains an affine rational support-path result. The affine interpolation is a constructed path through support-mass space; it is **not yet** a proof that every intermediate point is itself realized by an admissible probabilistic model update. Nor does the result quantify over arbitrary continuous paths.
 
 Working name: **Affine Crossing-Order Geometry**.
 
