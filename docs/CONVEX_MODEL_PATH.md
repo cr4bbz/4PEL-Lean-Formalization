@@ -1,6 +1,6 @@
 # Convex Strong Model Path
 
-Status: **ACTIVE BUILD GATE**
+Status: **VERIFIED**
 
 ## Goal
 
@@ -31,50 +31,45 @@ define
 q_t(i,w,x) = (1-t) q_0(i,w,x) + t q_1(i,w,x).
 ```
 
-C17C already proves that each local `q_t(i,w,.)` is again a valid finite weight
+C17C proves that each local `q_t(i,w,.)` is again a valid finite weight
 distribution. C17D packages those distributions into a full
 `StrongProbabilityModel`.
 
-## Principal targets
+## Verified results
 
-The module targets:
+A fresh local Lean 4.31 `lake build` succeeded with this module imported through
+`PEL4.lean`.
+
+Lean therefore verifies:
 
 ```text
 convexStrongModelAt ... t : StrongProbabilityModel W Ag Atom
 ```
 
-and proves that along this model-valued path:
+for every rational unit-interval parameter, together with exact preservation of
 
 ```text
-worlds = constant
-R      = constant
-val    = constant
-c      = constant
+worlds
+R
+val
+c
 ```
 
-while every fixed local event has affine probability mass:
+along the path.
+
+Every fixed local event has affine probability mass:
 
 ```text
 mu_t(S) = (1-t) * mu_0(S) + t * mu_1(S).
 ```
 
-## Scientific boundary
+The relevant theorem is `convexStrongModelAt_eventMass`.
 
-The event-mass theorem is deliberately stated for a **fixed event** `S`.
-For an arbitrary probability-sensitive modal formula `phi`, the set of worlds
-where `evalModal phi` has positive or negative support may itself change with
-the path parameter. Therefore this gate does not yet claim that
-`modalPositiveBeliefMass` or `modalNegativeBeliefMass` is affine for every
-modal formula.
+## What this closes
 
-The next formula-level lift should begin with atomic propositions or a proved
-path-invariant formula fragment, where the underlying support events remain
-fixed.
-
-## Intended consequence after verification
-
-A successful build would establish an actual rational path of complete,
-probabilistically certified 4-PEL models:
+The project now has an actual rational path of complete probabilistically
+certified 4-PEL models for any two weight-generated endpoint distributions on
+the same semantic skeleton:
 
 ```text
 finite probability integrity
@@ -83,6 +78,23 @@ finite probability integrity
 -> convex strong model path.
 ```
 
-That would close the previously explicit gap between affine support
-interpolation and the existence of genuine intermediate models, while leaving
-the separate formula-event invariance question visible for the next gate.
+Thus the probability-simplex geometry is not merely interpretive. Every
+rational point on the segment is represented by a full strong model.
+
+## Scientific boundary
+
+The event-mass theorem is deliberately stated for a **fixed event** `S`.
+For an arbitrary probability-sensitive modal formula `phi`, the set of worlds
+where `evalModal phi` has positive or negative support may itself change with
+the path parameter. Therefore C17D does not yet claim that
+`modalPositiveBeliefMass` or `modalNegativeBeliefMass` is affine for every
+modal formula.
+
+Nor does C17D prove that every intermediate model is itself obtained by an
+admissible conditionalization of the source model. A model-valued convex path
+and an update-generated path are distinct notions.
+
+The next formula-level lift should begin with atomic propositions or a proved
+path-invariant formula fragment, where the underlying support events remain
+fixed. That gate can then connect the verified model-valued path directly to
+the earlier FDE threshold-crossing and intermediate-phase geometry.
