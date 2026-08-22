@@ -1,0 +1,53 @@
+\section{Related Work, Limits, and Open Problems}
+\label{sec:limits}
+
+The semantic kernel belongs to the Belnap--Dunn/FDE tradition of tracking support for truth and falsity independently \cite{Belnap1977,Dunn1976}. Four-valued modal logics with bilateral relational semantics have been studied in several forms \cite{OdintsovWansing2010,RivieccioJungJansana2017}. The present project adds a finite probabilistic threshold layer and a primitive evidence-stable knowledge operator whose behavior is analyzed mechanically rather than assumed to coincide with a standard modal box.
+
+The threshold connection between all-or-nothing belief and degrees of belief belongs to the broader Lockean tradition. Leitgeb's stability theory is a particularly important point of comparison because it places stability conditions at the interface between probability and categorical belief \cite{Leitgeb2014}. The 4-PEL notion of stability is different in type: it concerns invariance of the complete FDE value across an accessible profile and acts as a filter from threshold belief to knowledge. A careful conceptual comparison is therefore needed before stronger claims about similarity or difference are made.
+
+The update perspective is adjacent to dynamic epistemic logic, where informational actions transform epistemic models and knowledge states \cite{vanDitmarschHoekKooi2007}. The conditionalization operator studied here is narrower: it preserves worlds, accessibility, valuation, and threshold and changes only local probabilities. Conversely, the four-valued signed-support geometry developed here is not part of the standard DEL vocabulary. The manuscript reports this construction without claiming that it is novel relative to all probabilistic or nonclassical dynamic epistemic systems.
+
+\paragraph{Novelty boundary.}
+No strong novelty claim is made in this version. The individual mathematical ingredients are elementary: Boolean pairs, threshold comparisons, affine interpolation, linear order, and midpoint arguments. The research contribution currently established internally to the project is the machine-checked composition of these ingredients into one dependency chain connecting admissible probabilistic update to four-valued categorical reachability, robustness, crossing order, and intermediate phase structure. A systematic literature audit is publication-critical.
+
+\subsection{Open problem 1: model-path realizability}
+
+The sharpest current boundary lies between the support trajectory and the model semantics.
+
+\begin{question}[Admissible model-path realization]
+Given an admissible conditionalization with pre-update and post-update support pairs, can the affine support interpolation
+\[
+  (\Ppos_t,\Pneg_t)
+\]
+be realized by a family of full 4-PEL models \(M_t\) satisfying the model constraints for all \(t\in[0,1]\cap\mathbb{Q}\), while preserving the intended structural fields?
+\end{question}
+
+A positive answer would upgrade the verified intermediate support phase to an actual intermediate model state. It would justify literal model-dynamic readings such as
+\[
+  \Nval\to\Tval\to\Bval
+\]
+rather than only the present thresholded support-path reading.
+
+A subtlety is that several distinct realization notions are possible. One may interpolate local probability functions directly, require every intermediate model to arise from an admissible conditionalization of the original model, or construct a parametrized sequence of evidence events. These are mathematically different claims and should not be conflated.
+
+\subsection{Open problem 2: arbitrary continuous paths}
+
+The affine crossing theorem is constructive and sufficient for the present phase result, but it is not a general topological theorem. A stronger layer would define a continuous support path
+\[
+  \gamma:[0,1]\to\mathbb{R}^2
+\]
+and prove that endpoint straddling forces intersection with the appropriate threshold wall. Standard intermediate-value reasoning would then recover a crossing theorem independent of linear interpolation.
+
+For two-wall transitions, arbitrary paths introduce genuinely new geometry. A path may meet the two walls multiple times, touch a wall without changing side, or revisit a categorical cell. The current uniqueness and three-case temporal order are specific to nonconstant affine coordinates. A general theory would therefore need a richer notion of crossing event than the present unique hit parameter.
+
+\subsection{Open problem 3: algebraic stability}
+
+The knowledge filter is presently defined semantically by full-value homogeneity over an accessible range. An open problem is to characterize this stability intrinsically in bilattice or algebraic terms and to determine which logical operators preserve, reflect, or destroy it. Such a characterization could connect the dynamic phase table to existing algebraic semantics for four-valued modal systems.
+
+\subsection{Open problem 4: higher-dimensional phase complexes}
+
+A single belief formula contributes two threshold bits. For \(n\) tracked formulas, the naive categorical state space has \(2n\) threshold coordinates and therefore resembles a Boolean hypercube. This suggests a higher-dimensional generalization of wall count, crossing order, and phase sequence. Dependencies between formulas, however, can identify or forbid regions of that cube. Determining the realizable cell complex is a natural extension of the present two-dimensional result.
+
+\subsection{Open problem 5: structural transport and paradox families}
+
+The project contains independent formal diagnoses of Lottery, Preface, Sorites, Knower, Surprise Examination, Moore/Fitch, and dynamic threshold phenomena. The working phrase ``paradoxes as failures of structural transport'' is currently interpretive. A genuine general theorem would require an abstract account of transformations, observations, preserved predicates, and counterexamples that subsumes several of these families without erasing their differences.
