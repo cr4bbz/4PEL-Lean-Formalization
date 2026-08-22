@@ -31,11 +31,22 @@ def prior_mu : FiniteSet World → Rat
   let n := if S.contains World.wN then (0:Rat)   else 0
   t + f + b + n
 
-axiom liar_mu_total : ∀ (_ : Agent) (_ : World),
-  prior_mu [World.wT, World.wF, World.wB, World.wN] = 1
-axiom liar_mu_empty : ∀ (_ : Agent) (_ : World), prior_mu [] = 0
-axiom liar_c_gt_half : ∀ (_ : Agent), (3:Rat)/4 > 1/2
-axiom liar_c_le_one : ∀ (_ : Agent), (3:Rat)/4 ≤ 1
+theorem liar_mu_total : ∀ (_ : Agent) (_ : World),
+  prior_mu [World.wT, World.wF, World.wB, World.wN] = 1 := by
+  intro _ _
+  native_decide
+
+theorem liar_mu_empty : ∀ (_ : Agent) (_ : World), prior_mu [] = 0 := by
+  intro _ _
+  native_decide
+
+theorem liar_c_gt_half : ∀ (_ : Agent), (3 : Rat) / 4 > 1 / 2 := by
+  intro _
+  native_decide
+
+theorem liar_c_le_one : ∀ (_ : Agent), (3 : Rat) / 4 ≤ 1 := by
+  intro _
+  native_decide
 
 -- The prior Kripke Model
 def LiarModel : Model World Agent LiarAtom :=
