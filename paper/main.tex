@@ -42,7 +42,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian Voigt}
-\date{Working manuscript, version 0.1}
+\date{Working manuscript, version 0.2}
 
 \begin{document}
 \maketitle
@@ -52,7 +52,7 @@ I study the dynamics of threshold belief and evidence-stable knowledge in a fini
 
 The dynamic results develop this architecture from endpoint reachability to an explicit phase geometry. Admissible conditionalization changes only local probability. A six-world family realizes every ordered transition between the four FDE values at the level of \(\Know(\Bel p)\), so the categorical reachability graph is complete. At the same time, belief is pointwise invariant exactly when neither of its two Lockean threshold bits changes. This yields a Boolean threshold square with a Hamming-style wall count \(\dthr\in\{0,1,2\}\). A categorical wall flip is equivalent to endpoint straddling of the corresponding rational support mass. For the directed affine interpolation \(\gamma(t)=x+t(y-x)\), straddling yields an explicit rational threshold-hit parameter in \([0,1]\). Two-wall transitions therefore carry two unique crossing times. Their order is positive-first, simultaneous, or negative-first; simultaneity is exactly passage through \((\thr,\thr)\) in the two-dimensional support plane. If the crossings are sequential, the rational midpoint between them occupies a necessary adjacent FDE phase. Thus a diagonal endpoint transition such as \(\Nval\to\Bval\) decomposes along the affine support path as either \(\Nval\to\Tval\to\Bval\) or \(\Nval\to\Fval\to\Bval\), according to crossing order.
 
-All central results reported here are machine-checked in Lean 4.31 on the active 4-PEL research branch. The manuscript deliberately separates these theorems from two stronger claims that remain open: the affine support interpolation is not yet shown to be a path of full admissible probabilistic models, and no general continuity or measure-theoretic theorem is claimed. A systematic literature audit is also still required before any strong novelty claim.
+The mechanization now also supplies a stronger finite-probability layer. Nonnegative normalized rational world weights generate finitely additive, extensional local measures; rational convex interpolation preserves valid distributions; and every fixed event mass varies affinely along the same parameter. These local paths lift to complete \texttt{StrongProbabilityModel} paths with worlds, accessibility, valuation, and threshold fixed. Thus model-valued realizability is verified for weight-generated endpoints on a common semantic skeleton. The remaining boundary is formula-level and update-level: probability-sensitive formulas can change the event whose mass is measured, and the intermediate models are not claimed to arise from repeated conditionalization of the source. No general continuity or measure-theoretic theorem is claimed. A systematic literature audit is also still required before any strong novelty claim.
 \end{abstract}
 
 \input{sections/01_introduction}
@@ -63,6 +63,7 @@ All central results reported here are machine-checked in Lean 4.31 on the active
 \input{sections/06_affine_crossing}
 \input{sections/07_crossing_order}
 \input{sections/08_intermediate_phases}
+\input{sections/09_model_path_realizability}
 \input{sections/09_structural_interpretation}
 \input{sections/10_mechanization}
 \input{sections/11_related_work_and_limits}
