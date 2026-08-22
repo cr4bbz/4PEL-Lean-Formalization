@@ -1,0 +1,63 @@
+\section{Structural Interpretation: From Reachability to Phase Kinematics}
+\label{sec:interpretation}
+
+\statusinterpretive
+
+The formal results support a layered interpretation of four-valued epistemic change. At the finest level considered here, a belief formula is represented by two rational support masses. Thresholding projects this point into one of four regions. The resulting FDE value forgets the precise probabilities and remembers only which side of the two Lockean walls each coordinate occupies.
+
+This can be written as a coarse-graining map
+\[
+  q_c:\mathbb{Q}^2\longrightarrow\{\Tval,\Fval,\Bval,\Nval\},
+\]
+\[
+  q_c(p^+,p^-)
+  =([p^+\ge c],[p^-\ge c]).
+\]
+The two threshold lines partition the support plane into four cells. The Boolean threshold square is the adjacency graph of these cells. In this sense the four-valued state space is not an arbitrary collection of labels. It is the quotient of a signed evidence space by two threshold predicates.
+
+\subsection{Global freedom, local constraint}
+
+Two verified results together give the central dynamic contrast:
+\[
+  \text{every ordered categorical transition is realizable},
+\]
+while
+\[
+  \text{every categorical change is mediated by a threshold-side change}.
+\]
+Global reachability is therefore maximal, but local motion is not structureless. A transition leaves a trace in the signed support coordinates. Zero-wall movement is robust, one-wall movement crosses one categorical boundary, and two-wall movement crosses both.
+
+The affine results sharpen this further. A diagonal transition does not merely differ in both bits. Along the chosen support interpolation it contains two unique wall events. Those events may coincide, or they may be temporally ordered. If they are ordered, a forced adjacent phase lies between them. The endpoint displacement therefore hides a short event history.
+
+It is useful to call this structure \emph{epistemic phase kinematics}. The term is not an additional theorem. It names the combination of four verified layers:
+\[
+  \text{cell membership},
+  \quad
+  \text{wall count},
+  \quad
+  \text{crossing time},
+  \quad
+  \text{intermediate phase sequence}.
+\]
+
+\subsection{The exceptional role of simultaneity}
+
+For a diagonal move, sequential crossings force an intermediate adjacent phase. Simultaneity is the unique way in which this ordered two-step decomposition disappears. Geometrically, simultaneity requires the affine support path to pass through the codimension-two intersection \((c,c)\). It is therefore a special alignment condition in the support plane rather than the generic consequence of changing both bits.
+
+This distinction may become important in later model-level dynamics. If admissible model paths can realize the affine support interpolation, sequential diagonal changes would carry genuine intermediate epistemic states, while simultaneous changes would behave as boundary-coincident transitions.
+
+\subsection{Connection to structural transport}
+
+A broader working hypothesis in the 4-PEL project treats epistemic paradoxes as failures of structural transport. The present dynamic results fit that program in a precise but limited way. Thresholding is a projection from rich signed probabilistic information to a coarse four-valued state. Endpoint states alone do not preserve crossing order. Recovering the order requires returning to the richer support trajectory.
+
+The paper does not claim that all epistemic paradoxes reduce to threshold crossing. Rather, this case study supplies one clean instance of a recurring pattern:
+\[
+  \text{rich structure}
+  \longrightarrow
+  \text{coarse projection}
+  \longrightarrow
+  \text{apparent categorical jump},
+\]
+where restoring the discarded structure reveals the mechanism hidden by the projection.
+
+The formal contribution of the present paper ends before this philosophical generalization. A general structural-transport theorem connecting threshold dynamics to the project’s other paradox families remains open.
