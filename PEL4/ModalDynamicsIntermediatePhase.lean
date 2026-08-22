@@ -63,7 +63,7 @@ theorem rat_mul_two (a : Rat) :
       congr 1
       native_decide
     _ = a * 1 + a * 1 := Rat.mul_add _ _ _
-    _ = a + a := by rfl
+    _ = a + a := by simp only [Rat.mul_one]
 
 /-- The rational midpoint of two strictly ordered parameters lies strictly
 between them. -/
