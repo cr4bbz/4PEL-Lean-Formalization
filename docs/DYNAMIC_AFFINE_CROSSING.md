@@ -1,22 +1,12 @@
 # Affine Threshold Crossing
 
-Status: **active build gate** on `research/preface-case-study`.
+Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsAffineCrossing.lean` imported through `PEL4.lean`.
 
-Do not mark `PEL4/ModalDynamicsAffineCrossing.lean` compiler-verified until a fresh local Lean 4.31 `lake build` succeeds with the module imported through `PEL4.lean`.
-
-## Why this gate exists
+## Why this result matters
 
 `Threshold-Straddle Geometry` proves an endpoint theorem: when a Lockean threshold bit changes, the before and after support masses lie on different threshold sides.
 
-The next question is stronger:
-
-```text
-can we exhibit an actual parameter value between the two endpoints where the support mass equals the threshold?
-```
-
-For arbitrary continuous paths that is an intermediate-value question. But for the simplest path, affine interpolation, Lean Core already contains enough rational arithmetic to construct the crossing explicitly without adding Mathlib.
-
-## Affine path
+`Affine Threshold Crossing` strengthens that endpoint fact to a literal unit-interval crossing for the explicitly chosen rational affine path.
 
 For rational endpoints `x,y` define
 
@@ -24,45 +14,44 @@ For rational endpoints `x,y` define
 gamma(t) = x + t * (y - x).
 ```
 
-The module verifies the endpoint equations as proof targets:
+Lean verifies
 
 ```text
 gamma(0) = x
 gamma(1) = y.
 ```
 
-If `x < c <= y`, the candidate hit parameter is
+If the endpoints straddle threshold `c`, there exists an explicit rational parameter
+
+```text
+t in [0,1]
+```
+
+such that
+
+```text
+gamma(t) = c.
+```
+
+For the increasing orientation `x < c <= y`, the witness is
 
 ```text
 t = (c - x) / (y - x).
 ```
 
-If `y < c <= x`, the directed path from `x` to `y` instead uses
+For the decreasing orientation `y < c <= x`, the directed path uses the algebraically equivalent backward form
 
 ```text
 t = (x - c) / (x - y).
 ```
 
-The target theorems prove in both orientations:
-
-```text
-0 <= t <= 1
-and
-gamma(t) = c.
-```
-
-Hence endpoint threshold straddling should imply
-
-```text
-exists t : Rat,
-  0 <= t and t <= 1 and gamma(t) = c.
-```
+No Mathlib dependency is required; the proof uses Lean Core rational arithmetic.
 
 ## Belief-level consequence
 
-Positive and negative support masses of a probabilistic belief give two affine coordinates between the pre-update and post-update endpoints.
+Positive and negative support masses of a probabilistic belief provide two affine coordinates between the pre-update and post-update endpoints.
 
-Combining the new affine theorem with the verified straddling theorem yields the target consequence:
+Lean verifies:
 
 ```text
 belief value changes
@@ -70,43 +59,34 @@ belief value changes
 at least one support coordinate has an affine threshold hit at some t in [0,1].
 ```
 
-For a two-wall transition the target statement is stronger:
+For a two-wall transition:
 
 ```text
 both support coordinates have affine threshold hits,
 possibly at different parameters.
 ```
 
-Thus diagonal moves of the Threshold Square acquire two explicit numerical crossing witnesses.
+Thus diagonal moves of the Threshold Square have two literal numerical crossing witnesses.
 
-## What this does and does not prove
-
-This gate would be a genuine unit-interval crossing theorem for the explicitly chosen rational affine interpolation.
-
-It does **not** yet formalize:
+## Formal chain now closed
 
 ```text
-Continuous gamma
+support endpoints
+  -> threshold straddling
+  -> rational affine path
+  -> explicit t in [0,1]
+  -> exact threshold hit
+  -> categorical FDE change.
 ```
 
-as an abstract topological predicate, nor does it prove an intermediate-value theorem for every continuous support path. No claim about arbitrary paths should be inferred from the affine construction.
+## Current boundary
 
-The distinction is:
+This is a genuine crossing theorem for the chosen affine interpolation, but it is not an abstract continuity theorem.
 
-```text
-endpoint straddling          VERIFIED
-explicit affine crossing     ACTIVE BUILD GATE
-general continuous crossing  OPEN
-```
-
-## Dependency decision
-
-The gate uses only Lean Core rational lemmas, including rational division cancellation and order transport across positive denominators. No Mathlib dependency is introduced.
-
-If this builds, it substantially reduces the immediate need for a topology dependency: the central geometric phenomenon can already be studied constructively in the affine case.
+The project still does **not** quantify over arbitrary continuous paths or invoke a general intermediate-value theorem. The next gate studies a different question that is already available in the affine setting: when both support coordinates cross, are their crossing times simultaneous or sequential?
 
 Working name: **Affine Threshold Crossing**.
 
 ## Novelty boundary
 
-No novelty claim is made. The theorem is elementary mathematically; its value in the project is structural. It closes a formally checked bridge from probabilistic support endpoints through categorical four-valued change to an explicit threshold-crossing parameter.
+No novelty claim is made. The theorem is elementary mathematically; its role is structural. It closes a machine-checked bridge from probabilistic support endpoints through four-valued categorical change to an explicit threshold-crossing parameter.
