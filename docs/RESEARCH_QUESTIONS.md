@@ -5,6 +5,7 @@ Status legend:
 - **VERIFIED**: theorem or finite-model claim compiled on the active Lean 4.31 branch.
 - **PARTIAL**: a substantial formal answer exists, but the general theorem or literature comparison is incomplete.
 - **OPEN**: no satisfactory formal answer yet.
+- **ACTIVE BUILD GATE**: code is on the research branch but must not be treated as compiler-verified until a fresh local build succeeds.
 - **INTERPRETIVE**: a working philosophical diagnosis supported by formal results, not itself a machine-checked theorem.
 
 For the consolidated modal picture, see `docs/MODAL_KNOWLEDGE_CLASSIFICATION.md`.
@@ -168,11 +169,11 @@ Together A16 and A17 show that conditionalization is neither monotone knowledge 
 
 **PARTIAL / INTERPRETIVE.** The formal distinctions are exact; the philosophical interpretation of glutty knowledge, gappy knowledge, internal ignorance, and meta-level lack of knowledge remains open.
 
-## C. High-priority open research questions
+## C. Dynamic and foundational research questions
 
 ### C1. What is the general dynamic K-change classification?
 
-**OPEN, active build gate.** `PEL4/ModalDynamicsPhaseClassification.lean` lifts the pointwise K/B factorization into a two-state stability table:
+**VERIFIED.** `PEL4/ModalDynamicsPhaseClassification.lean` lifts the pointwise K/B factorization into the complete two-state stability table:
 
 ```text
 stable -> stable     : K tracks B on both sides
@@ -181,19 +182,43 @@ unstable -> stable   : prior K = F; posterior K tracks posterior B
 unstable -> unstable : K = F on both sides
 ```
 
-The gate also packages the verified fracture and restoration models as witnesses that admissible conditionalization realizes both off-diagonal phases.
+The verified fracture and restoration models realize both off-diagonal phases.
 
-### C2. When do formulas containing `bel` nevertheless remain dynamically stable?
+### C2. When do formulas containing `bel` nevertheless remain dynamically robust?
 
-**OPEN.** `ModalProbabilityFree` is a strong syntactic sufficient condition, not an exact semantic characterization. Seek weaker conditions such as posterior-uniformity of relevant belief subformulas across accessible worlds.
+**VERIFIED at the threshold-semantic level.** `PEL4/ModalDynamicsRobustness.lean` proves that a belief value is invariant exactly when its positive and negative Lockean threshold bits are both invariant. `ModalConditionalizationRobust` propagates this protection compositionally through negation, conjunction, `K`, and raw possibility. A diagonal reachability witness proves the condition strictly extends `ModalProbabilityFree`: a formula containing `bel` can be robust under a nontrivial probability update.
+
+Working diagnosis: **Threshold-Side Robustness**.
 
 ### C3. Which K/B values are dynamically reachable under fixed `R` and valuation?
 
-**OPEN.** Current witnesses establish at least `K(Bp): T -> F` and `F -> T`. A complete reachability graph over `T,F,B,N` would expose the geometry of dynamic epistemic phases.
+**VERIFIED, complete.** `PEL4/ModalDynamicsReachability.lean` gives a fixed six-world model family such that for every ordered pair
+
+```text
+source,target in {T,F,B,N}
+```
+
+safe conditionalization changes only the probability measure and realizes
+
+```text
+K(B p): source -> target.
+```
+
+Thus the categorical reachability graph has all 16 directed transitions.
+
+Working name: **Complete Dynamic Epistemic Reachability**.
 
 ### C4. Can dynamic updates create or remove K-gluts and K-gaps?
 
-**OPEN.** The current witnesses focus on strict `T/F`. Construct and classify updates involving `B` and `N` at the knowledge level.
+**VERIFIED: yes, in both directions.** The complete reachability theorem includes creation and removal of both `B` and `N`, including explicit witnesses such as
+
+```text
+T -> B
+B -> N
+N -> T.
+```
+
+No FDE status is dynamically terminal under the semantics of admissible probabilistic conditionalization alone.
 
 ### C5. Algebraic characterization of stability
 
@@ -227,19 +252,37 @@ restricted hypotheses recover P.
 
 ### C11. Literature-grounded modal and dynamic comparison
 
-**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, and bidirectional stability transitions with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
+**OPEN, publication-critical.** Compare primitive evidence-stable `K`, K/B factorization, exact positive necessitation boundary, probability-free invariance, threshold-side robustness, complete dynamic reachability, and bidirectional stability transitions with nonstandard Belnap-Dunn knowledge systems and four-valued dynamic epistemic logics.
+
+### C12. What is the geometry of categorical dynamic displacement?
+
+**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsGeometry.lean` treats
+
+```text
+N=(0,0), T=(1,0), F=(0,1), B=(1,1)
+```
+
+as the Boolean threshold square and defines `thresholdWallCount` as the number of positive/negative threshold coordinates that differ. The target classification is:
+
+```text
+0 walls -> same categorical state / robustness
+1 wall  -> edge move in the threshold square
+2 walls -> diagonal move (T<->F or N<->B)
+```
+
+The module also connects zero displacement to Threshold-Side Robustness and the complete reachability family to arbitrary 0/1/2 displacement. Do not mark this gate verified until a fresh local `lake build` succeeds.
 
 ## D. Suggested research order
 
 ```text
-1. verify the general dynamic K phase classification
-2. sharpen semantic preservation conditions beyond ModalProbabilityFree
-3. classify dynamic reachability of T/F/B/N
-4. construct K-glut/K-gap dynamic witnesses
-5. revisit frame-law minimality
+1. compile Threshold Square Geometry
+2. ask whether continuous probability paths force literal threshold-wall crossings
+3. seek algebraic/bilattice characterization of stability
+4. revisit frame-law and Church-Fitch minimality
+5. strengthen the general structural-transport abstraction
 6. perform literature/novelty audit
-7. strengthen the general structural-transport abstraction
-8. deepen conflict topology and persistence
+7. deepen conflict topology to homology and persistence
+8. investigate automated finite-model search
 ```
 
 The methodological separation remains essential:
