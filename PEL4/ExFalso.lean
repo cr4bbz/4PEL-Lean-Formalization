@@ -20,10 +20,15 @@ inductive ExFalsoAtom
 
 open ExFalsoWorld ExFalsoAgent ExFalsoAtom
 
-axiom exfalso_c_gt_half : ∀ (_ : ExFalsoAgent), (1:Rat) > 1/2
-axiom exfalso_c_le_one : ∀ (_ : ExFalsoAgent), (1:Rat) ≤ 1
+theorem exfalso_c_gt_half : ∀ (_ : ExFalsoAgent), (1 : Rat) > 1 / 2 := by
+  intro _
+  native_decide
 
-/-- 
+theorem exfalso_c_le_one : ∀ (_ : ExFalsoAgent), (1 : Rat) ≤ 1 := by
+  intro _
+  native_decide
+
+/--
   A concrete 4-PEL model demonstrating that Ex Falso Quodlibet is invalid.
   We set p to be an ontological glut (B), and q to be strictly false (F).
 -/
@@ -46,16 +51,16 @@ def exFalsoModel : Model ExFalsoWorld ExFalsoAgent ExFalsoAtom where
   c_gt_half := exfalso_c_gt_half
   c_le_one := exfalso_c_le_one
 
-/-- 
+/--
   The theorem showing Ex Falso Quodlibet fails under LP-Entailment.
   B_i(p ∧ ¬p) ⊭_LP B_i(q)
 -/
-theorem ex_falso_invalid : ¬ LP_SemanticEntails 
+theorem ex_falso_invalid : ¬ LP_SemanticEntails
   (Formula.bel i (Formula.and (Formula.prop p) (Formula.not (Formula.prop p))))
   (Formula.bel i (Formula.prop q)) := by
   intro h
   have h_spec := h exFalsoModel w1
-  
+
   have h_premise : (eval exFalsoModel w1 (Formula.bel i (Formula.and (Formula.prop p) (Formula.not (Formula.prop p))))).pos = true := by
     exact rfl
 
