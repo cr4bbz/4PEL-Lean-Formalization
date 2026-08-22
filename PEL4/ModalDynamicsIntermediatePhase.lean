@@ -63,7 +63,7 @@ theorem rat_mul_two (a : Rat) :
       congr 1
       native_decide
     _ = a * 1 + a * 1 := Rat.mul_add _ _ _
-    _ = a + a := by rw [Rat.mul_one, Rat.mul_one]
+    _ = a + a := by rfl
 
 /-- The rational midpoint of two strictly ordered parameters lies strictly
 between them. -/
@@ -218,7 +218,8 @@ theorem affineCrossingMidpoint_between_negative_first
     pair.tn < affineCrossingMidpoint pair ∧
       affineCrossingMidpoint pair < pair.tp := by
   unfold affineCrossingMidpoint
-  exact ratMidpoint_strictly_between pair.tn pair.tp hOrder
+  simpa [ratMidpoint, Rat.add_comm] using
+    (ratMidpoint_strictly_between pair.tn pair.tp hOrder)
 
 /-- Positive-first temporal order determines the complete FDE status at the
 crossing midpoint: positive has reached the target side while negative remains
