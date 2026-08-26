@@ -77,31 +77,83 @@ def InGapRegion (s : FourCellMass) (k : Nat) : Prop :=
 
 theorem thresholdGlut_iff_complexRegion (s : FourCellMass) (k : Nat) :
     s.IsThresholdGlut k ↔ s.InGlutRegion k := by
-  rw [InGlutRegion, doubledPositiveCoordinate_eq,
-    doubledNegativeCoordinate_eq]
-  unfold IsThresholdGlut
-  omega
+  constructor
+  · rintro ⟨hpos, hneg⟩
+    rw [InGlutRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq]
+    have hpos' : Int.ofNat k ≤ Int.ofNat s.positive :=
+      Int.ofNat_le.mpr hpos
+    have hneg' : Int.ofNat k ≤ Int.ofNat s.negative :=
+      Int.ofNat_le.mpr hneg
+    omega
+  · intro h
+    rw [InGlutRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq] at h
+    constructor
+    · apply Int.ofNat_le.mp
+      omega
+    · apply Int.ofNat_le.mp
+      omega
 
 theorem thresholdTruth_iff_complexRegion (s : FourCellMass) (k : Nat) :
     s.IsThresholdTruth k ↔ s.InTruthRegion k := by
-  rw [InTruthRegion, doubledPositiveCoordinate_eq,
-    doubledNegativeCoordinate_eq]
-  unfold IsThresholdTruth
-  omega
+  constructor
+  · rintro ⟨hpos, hneg⟩
+    rw [InTruthRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq]
+    have hpos' : Int.ofNat k ≤ Int.ofNat s.positive :=
+      Int.ofNat_le.mpr hpos
+    have hneg' : Int.ofNat s.negative < Int.ofNat k :=
+      Int.ofNat_lt.mpr hneg
+    omega
+  · intro h
+    rw [InTruthRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq] at h
+    constructor
+    · apply Int.ofNat_le.mp
+      omega
+    · apply Int.ofNat_lt.mp
+      omega
 
 theorem thresholdFalsity_iff_complexRegion (s : FourCellMass) (k : Nat) :
     s.IsThresholdFalsity k ↔ s.InFalsityRegion k := by
-  rw [InFalsityRegion, doubledPositiveCoordinate_eq,
-    doubledNegativeCoordinate_eq]
-  unfold IsThresholdFalsity
-  omega
+  constructor
+  · rintro ⟨hpos, hneg⟩
+    rw [InFalsityRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq]
+    have hpos' : Int.ofNat s.positive < Int.ofNat k :=
+      Int.ofNat_lt.mpr hpos
+    have hneg' : Int.ofNat k ≤ Int.ofNat s.negative :=
+      Int.ofNat_le.mpr hneg
+    omega
+  · intro h
+    rw [InFalsityRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq] at h
+    constructor
+    · apply Int.ofNat_lt.mp
+      omega
+    · apply Int.ofNat_le.mp
+      omega
 
 theorem thresholdGap_iff_complexRegion (s : FourCellMass) (k : Nat) :
     s.IsThresholdGap k ↔ s.InGapRegion k := by
-  rw [InGapRegion, doubledPositiveCoordinate_eq,
-    doubledNegativeCoordinate_eq]
-  unfold IsThresholdGap
-  omega
+  constructor
+  · rintro ⟨hpos, hneg⟩
+    rw [InGapRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq]
+    have hpos' : Int.ofNat s.positive < Int.ofNat k :=
+      Int.ofNat_lt.mpr hpos
+    have hneg' : Int.ofNat s.negative < Int.ofNat k :=
+      Int.ofNat_lt.mpr hneg
+    omega
+  · intro h
+    rw [InGapRegion, doubledPositiveCoordinate_eq,
+      doubledNegativeCoordinate_eq] at h
+    constructor
+    · apply Int.ofNat_lt.mp
+      omega
+    · apply Int.ofNat_lt.mp
+      omega
 
 /-- The four coordinate regions classify the actual FDE threshold value. -/
 theorem thresholdValue_region_classification
