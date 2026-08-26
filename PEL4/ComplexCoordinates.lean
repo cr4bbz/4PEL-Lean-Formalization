@@ -230,6 +230,25 @@ theorem thresholdGlut_balance_bound
   unfold absDiff
   omega
 
+/-- The balance-sensitive inequality is not merely a necessary bound: under
+normalization it exactly characterizes simultaneous positive and negative
+threshold support. -/
+theorem thresholdGlut_iff_balance_bound
+    (s : FourCellMass) (k : Nat) :
+    s.IsThresholdGlut k ↔
+      2 * k + s.n + absDiff s.t s.f ≤ s.total + s.b := by
+  constructor
+  · exact thresholdGlut_balance_bound s k
+  · intro h
+    have htotal := s.normalized
+    constructor
+    · change k ≤ s.t + s.b
+      unfold absDiff at h
+      omega
+    · change k ≤ s.f + s.b
+      unfold absDiff at h
+      omega
+
 /-- The established coarse overlap bound follows by forgetting the additional
 gap and strict-polarity terms. -/
 theorem thresholdGlut_overlap_bound
