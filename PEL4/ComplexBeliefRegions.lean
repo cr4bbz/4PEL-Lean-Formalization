@@ -18,22 +18,28 @@ threshold therefore partitions the coordinate plane into the four FDE phases.
 
 namespace FourCellMass
 
-/-- The categorical threshold value determined by the two support masses. -/
-def thresholdValue (s : FourCellMass) (k : Nat) : FDEValue :=
-  { pos := decide (k ≤ s.positive)
-  , neg := decide (k ≤ s.negative) }
+/-- The categorical threshold value determined by the two support masses.
+The threshold is integer-scaled so the phase geometry remains in one ordered
+additive domain. -/
+def thresholdValue (s : FourCellMass) (k : Int) : FDEValue :=
+  { pos := decide (k ≤ Int.ofNat s.positive)
+  , neg := decide (k ≤ Int.ofNat s.negative) }
+
+/-- Both signed support masses meet the integer-scaled threshold. -/
+def IsThresholdGlutAt (s : FourCellMass) (k : Int) : Prop :=
+  k ≤ Int.ofNat s.positive ∧ k ≤ Int.ofNat s.negative
 
 /-- Truth-only threshold phase. -/
-def IsThresholdTruth (s : FourCellMass) (k : Nat) : Prop :=
-  k ≤ s.positive ∧ s.negative < k
+def IsThresholdTruth (s : FourCellMass) (k : Int) : Prop :=
+  k ≤ Int.ofNat s.positive ∧ Int.ofNat s.negative < k
 
 /-- Falsity-only threshold phase. -/
-def IsThresholdFalsity (s : FourCellMass) (k : Nat) : Prop :=
-  s.positive < k ∧ k ≤ s.negative
+def IsThresholdFalsity (s : FourCellMass) (k : Int) : Prop :=
+  Int.ofNat s.positive < k ∧ k ≤ Int.ofNat s.negative
 
 /-- Neither-support threshold phase. -/
-def IsThresholdGap (s : FourCellMass) (k : Nat) : Prop :=
-  s.positive < k ∧ s.negative < k
+def IsThresholdGap (s : FourCellMass) (k : Int) : Prop :=
+  Int.ofNat s.positive < k ∧ Int.ofNat s.negative < k
 
 /-- Coordinate expression equal to twice the positive support mass. -/
 def doubledPositiveCoordinate (s : FourCellMass) : Int :=
@@ -56,108 +62,56 @@ theorem doubledNegativeCoordinate_eq (s : FourCellMass) :
   omega
 
 /-- Region above both threshold walls: the glut phase. -/
-def InGlutRegion (s : FourCellMass) (k : Nat) : Prop :=
-  2 * Int.ofNat k ≤ s.doubledPositiveCoordinate ∧
-    2 * Int.ofNat k ≤ s.doubledNegativeCoordinate
+def InGlutRegion (s : FourCellMass) (k : Int) : Prop :=
+  2 * k ≤ s.doubledPositiveCoordinate ∧
+    2 * k ≤ s.doubledNegativeCoordinate
 
 /-- Region above only the positive threshold wall. -/
-def InTruthRegion (s : FourCellMass) (k : Nat) : Prop :=
-  2 * Int.ofNat k ≤ s.doubledPositiveCoordinate ∧
-    s.doubledNegativeCoordinate < 2 * Int.ofNat k
+def InTruthRegion (s : FourCellMass) (k : Int) : Prop :=
+  2 * k ≤ s.doubledPositiveCoordinate ∧
+    s.doubledNegativeCoordinate < 2 * k
 
 /-- Region above only the negative threshold wall. -/
-def InFalsityRegion (s : FourCellMass) (k : Nat) : Prop :=
-  s.doubledPositiveCoordinate < 2 * Int.ofNat k ∧
-    2 * Int.ofNat k ≤ s.doubledNegativeCoordinate
+def InFalsityRegion (s : FourCellMass) (k : Int) : Prop :=
+  s.doubledPositiveCoordinate < 2 * k ∧
+    2 * k ≤ s.doubledNegativeCoordinate
 
 /-- Region below both threshold walls: the gap phase. -/
-def InGapRegion (s : FourCellMass) (k : Nat) : Prop :=
-  s.doubledPositiveCoordinate < 2 * Int.ofNat k ∧
-    s.doubledNegativeCoordinate < 2 * Int.ofNat k
+def InGapRegion (s : FourCellMass) (k : Int) : Prop :=
+  s.doubledPositiveCoordinate < 2 * k ∧
+    s.doubledNegativeCoordinate < 2 * k
 
-theorem thresholdGlut_iff_complexRegion (s : FourCellMass) (k : Nat) :
-    s.IsThresholdGlut k ↔ s.InGlutRegion k := by
-  constructor
-  · rintro ⟨hpos, hneg⟩
-    rw [InGlutRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq]
-    have hpos' : Int.ofNat k ≤ Int.ofNat s.positive :=
-      Int.ofNat_le.mpr hpos
-    have hneg' : Int.ofNat k ≤ Int.ofNat s.negative :=
-      Int.ofNat_le.mpr hneg
-    omega
-  · intro h
-    rw [InGlutRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq] at h
-    constructor
-    · apply Int.ofNat_le.mp
-      omega
-    · apply Int.ofNat_le.mp
-      omega
+theorem thresholdGlut_iff_complexRegion (s : FourCellMass) (k : Int) :
+    s.IsThresholdGlutAt k ↔ s.InGlutRegion k := by
+  rw [InGlutRegion, doubledPositiveCoordinate_eq,
+    doubledNegativeCoordinate_eq]
+  unfold IsThresholdGlutAt
+  omega
 
-theorem thresholdTruth_iff_complexRegion (s : FourCellMass) (k : Nat) :
+theorem thresholdTruth_iff_complexRegion (s : FourCellMass) (k : Int) :
     s.IsThresholdTruth k ↔ s.InTruthRegion k := by
-  constructor
-  · rintro ⟨hpos, hneg⟩
-    rw [InTruthRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq]
-    have hpos' : Int.ofNat k ≤ Int.ofNat s.positive :=
-      Int.ofNat_le.mpr hpos
-    have hneg' : Int.ofNat s.negative < Int.ofNat k :=
-      Int.ofNat_lt.mpr hneg
-    omega
-  · intro h
-    rw [InTruthRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq] at h
-    constructor
-    · apply Int.ofNat_le.mp
-      omega
-    · apply Int.ofNat_lt.mp
-      omega
+  rw [InTruthRegion, doubledPositiveCoordinate_eq,
+    doubledNegativeCoordinate_eq]
+  unfold IsThresholdTruth
+  omega
 
-theorem thresholdFalsity_iff_complexRegion (s : FourCellMass) (k : Nat) :
+theorem thresholdFalsity_iff_complexRegion (s : FourCellMass) (k : Int) :
     s.IsThresholdFalsity k ↔ s.InFalsityRegion k := by
-  constructor
-  · rintro ⟨hpos, hneg⟩
-    rw [InFalsityRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq]
-    have hpos' : Int.ofNat s.positive < Int.ofNat k :=
-      Int.ofNat_lt.mpr hpos
-    have hneg' : Int.ofNat k ≤ Int.ofNat s.negative :=
-      Int.ofNat_le.mpr hneg
-    omega
-  · intro h
-    rw [InFalsityRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq] at h
-    constructor
-    · apply Int.ofNat_lt.mp
-      omega
-    · apply Int.ofNat_le.mp
-      omega
+  rw [InFalsityRegion, doubledPositiveCoordinate_eq,
+    doubledNegativeCoordinate_eq]
+  unfold IsThresholdFalsity
+  omega
 
-theorem thresholdGap_iff_complexRegion (s : FourCellMass) (k : Nat) :
+theorem thresholdGap_iff_complexRegion (s : FourCellMass) (k : Int) :
     s.IsThresholdGap k ↔ s.InGapRegion k := by
-  constructor
-  · rintro ⟨hpos, hneg⟩
-    rw [InGapRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq]
-    have hpos' : Int.ofNat s.positive < Int.ofNat k :=
-      Int.ofNat_lt.mpr hpos
-    have hneg' : Int.ofNat s.negative < Int.ofNat k :=
-      Int.ofNat_lt.mpr hneg
-    omega
-  · intro h
-    rw [InGapRegion, doubledPositiveCoordinate_eq,
-      doubledNegativeCoordinate_eq] at h
-    constructor
-    · apply Int.ofNat_lt.mp
-      omega
-    · apply Int.ofNat_lt.mp
-      omega
+  rw [InGapRegion, doubledPositiveCoordinate_eq,
+    doubledNegativeCoordinate_eq]
+  unfold IsThresholdGap
+  omega
 
 /-- The four coordinate regions classify the actual FDE threshold value. -/
 theorem thresholdValue_region_classification
-    (s : FourCellMass) (k : Nat) :
+    (s : FourCellMass) (k : Int) :
     (s.thresholdValue k = FDEValue.T ↔ s.InTruthRegion k) ∧
     (s.thresholdValue k = FDEValue.F ↔ s.InFalsityRegion k) ∧
     (s.thresholdValue k = FDEValue.B ↔ s.InGlutRegion k) ∧
@@ -166,8 +120,8 @@ theorem thresholdValue_region_classification
     simp [thresholdValue, IsThresholdTruth, FDEValue.T, positive, negative]
   have hF : s.thresholdValue k = FDEValue.F ↔ s.IsThresholdFalsity k := by
     simp [thresholdValue, IsThresholdFalsity, FDEValue.F, positive, negative]
-  have hB : s.thresholdValue k = FDEValue.B ↔ s.IsThresholdGlut k := by
-    simp [thresholdValue, IsThresholdGlut, FDEValue.B, positive, negative]
+  have hB : s.thresholdValue k = FDEValue.B ↔ s.IsThresholdGlutAt k := by
+    simp [thresholdValue, IsThresholdGlutAt, FDEValue.B, positive, negative]
   have hN : s.thresholdValue k = FDEValue.N ↔ s.IsThresholdGap k := by
     simp [thresholdValue, IsThresholdGap, FDEValue.N, positive, negative]
   exact ⟨hT.trans (thresholdTruth_iff_complexRegion s k),
