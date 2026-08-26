@@ -139,8 +139,10 @@ Fixed-event mass affine along full model path & \leanref{convexStrongModelAt\_ev
 Probability-free support events fixed on a common skeleton & \leanref{positiveSupportEvent\_probabilityFree\_of\_same\_skeleton}, \leanref{negativeSupportEvent\_probabilityFree\_of\_same\_skeleton} & \leanref{PEL4/ConvexModelSupport.lean}\\
 \addlinespace
 Probability-free positive and negative support masses are affine & \leanref{convexStrongModelAt\_positiveBeliefMass\_probabilityFree}, \leanref{convexStrongModelAt\_negativeBeliefMass\_probabilityFree} & \leanref{PEL4/ConvexModelSupport.lean}\\
+\addlinespace
+Probability-free complex support coordinate is affine on complete strong model paths & \leanref{convexStrongModelAt\_modalSupportComplexCoord\_probabilityFree} & \leanref{PEL4/ComplexModelPath.lean}\\
 \end{longtable}
 \endgroup
 
 \paragraph{Verification note.}
-The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, \leanref{PEL4/ComplexRotation.lean}, and \leanref{PEL4/ConvexModelSupport.lean}. The focused complex-coordinate dependency report is reproduced by \leanref{PEL4/ComplexAxiomAudit.lean}. Older finite witnesses using native evaluation retain an explicit compiler-trust qualification. The model-path lift is established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.
+The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, \leanref{PEL4/ComplexRotation.lean}, \leanref{PEL4/ConvexModelSupport.lean}, and \leanref{PEL4/ComplexModelPath.lean}. The focused complex-coordinate dependency report is reproduced by \leanref{PEL4/ComplexAxiomAudit.lean}. Older finite witnesses using native evaluation retain an explicit compiler-trust qualification. The affine complex model-path lift is established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.
