@@ -98,6 +98,7 @@ Recommended labels are:
 - `INDEPENDENCE-WITNESS`: finite witness separating assumptions;
 - `RESEARCH-TARGET`: explicitly open formal target;
 - `INTERPRETATION`: conceptual reading of formal results;
+- `COMPILER-TRUST`: native evaluation is part of the trusted base;
 - `NOVELTY-UNCHECKED`: originality has not undergone systematic literature audit.
 
 These labels do not replace a primary status.
@@ -132,9 +133,28 @@ particular model is part of that model's certified data.
 Finite examples should not use `axiom` merely to avoid proving decidable
 arithmetic or normalization facts.
 
-If Lean can discharge a claim with `rfl`, `decide`, `native_decide`, elementary
-case analysis, or a short explicit proof, the repository should provide that
-proof.
+If Lean can discharge a claim with `rfl`, `decide`, elementary case analysis,
+or a short explicit proof, the repository should provide that proof.
+
+### `native_decide` changes the trust boundary
+
+`native_decide` evaluates a decision procedure through Lean's compiled native
+code. In Lean 4.31 this is represented by a native-computation axiom rather than
+by kernel reduction alone. The kernel still checks the surrounding proof term,
+but the result additionally trusts the Lean compiler and native evaluator.
+
+Accordingly, `native_decide` is permitted for finite executable witnesses when
+ordinary reduction is impractical, but it must be recorded with the secondary
+label `COMPILER-TRUST`. Under this repository's strict policy, such a result is
+not promoted to unqualified `PROVED` until the native dependency is removed or
+the publication explicitly adopts the enlarged trusted base.
+
+The complex-coordinate audit exposed this distinction concretely. Three
+sixteen-case results originally used `native_decide`; they now use `decide`:
+
+- `supportComplexCoord_injective`;
+- `truthInformationComplexCoord_injective`;
+- `supportComplexCoord_squaredDistance_eq_thresholdWallCount`.
 
 During cleanup, older convenience axioms in finite models should be replaced by
 proof terms. Until replacement, documentation should avoid presenting those
@@ -170,10 +190,16 @@ As of the complex-coordinate development, a source scan finds no `sorry` or
 - `Paradoxes/SyntheseExtensions.lean`.
 
 This inventory is deliberately weaker than a transitive theorem-dependency
-audit. In particular, the new `ComplexCoordinates.lean` and
-`ComplexBeliefRegions.lean` modules introduce no axioms of their own, but the
-publication theorem list should still be checked with `#print axioms` before a
-release. Automating that check is an open verification task.
+audit. It also does not detect native-computation axioms merely by scanning for
+the source keyword `axiom`.
+
+The focused complex-coordinate audit is reproduced by
+`PEL4/ComplexAxiomAudit.lean`. After the three small computations were changed
+to `decide`, the audited results in `ComplexCoordinates.lean`,
+`ComplexBeliefRegions.lean`, and `ComplexRotation.lean` have no
+project-specific axiom dependency and no `native_decide` dependency. A
+repository-wide transitive audit remains open because many older finite-model
+modules intentionally still use `native_decide`.
 
 ---
 
@@ -188,7 +214,7 @@ result map, prefer adding a named theorem, for example:
 ```lean
 theorem witness_has_expected_value :
     eval model world phi = FDEValue.T := by
-  native_decide
+  decide
 ```
 
 Demonstration-only evaluations should gradually move toward dedicated examples
