@@ -1,6 +1,6 @@
 # Affine Threshold Crossing
 
-Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsAffineCrossing.lean` imported through `PEL4.lean`.
+Status: **VERIFIED** on `research/complex-coordinates` by the repository's Lean 4.31 CI build with `PEL4/ModalDynamicsAffineCrossing.lean` imported through `PEL4.lean`.
 
 ## Why this result matters
 
