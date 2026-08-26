@@ -1,7 +1,7 @@
 \section{Lean Mechanization and Verification Status}
 \label{sec:mechanization}
 
-The results in this manuscript are implemented in Lean 4.31 on the branch \texttt{research/preface-case-study}. The root module \texttt{PEL4.lean} imports the dynamic development, so a successful
+The results in this manuscript are implemented in Lean 4.31 on the complex-coordinate feature branch used by this manuscript. The root module \texttt{PEL4.lean} imports the dynamic development, so a successful
 \begin{verbatim}
 lake build
 \end{verbatim}
@@ -10,30 +10,33 @@ checks the theorem chain together with the rest of the project.
 The implementation deliberately uses small semantic layers. The principal files for the present manuscript are:
 
 \begin{center}
-\begin{tabular}{p{0.43\textwidth}p{0.45\textwidth}}
+\small
+\begin{tabular}{L{0.48\textwidth}L{0.40\textwidth}}
 \toprule
 Lean module & role in the paper\\
 \midrule
-\texttt{PEL4/FDE.lean} & four bilateral values and basic operations\\
-\texttt{PEL4/Model.lean} & finite probabilistic Kripke model interface\\
-\texttt{PEL4/FiniteProbabilityIntegrity.lean} & stronger finite-probability compatibility layer\\
-\texttt{PEL4/WeightGeneratedProbability.lean} & weight-generated measures and generic integrity theorem\\
-\texttt{PEL4/ConvexProbabilitySimplex.lean} & convex rational distributions and affine event masses\\
-\texttt{PEL4/ConvexModelPath.lean} & complete strong model-valued convex paths\\
-\texttt{PEL4/Belief.lean} & signed Lockean threshold belief\\
-\texttt{PEL4/ModalLanguage.lean} & primitive \(\Bel\), \(\Know\), and raw possibility\\
-\texttt{PEL4/ModalKnowledgeBeliefFactorization.lean} & exact \(\Know=\Stable\)-filtered \(\Bel\) theorem\\
-\texttt{PEL4/Dynamics.lean} & admissible probability-only conditionalization\\
-\texttt{PEL4/ModalDynamicsStability.lean} & probability-free invariance\\
-\texttt{PEL4/ModalDynamicsPhaseClassification.lean} & four stability phases for knowledge\\
-\texttt{PEL4/ModalDynamicsReachability.lean} & complete sixteen-transition witness family\\
-\texttt{PEL4/ModalDynamicsRobustness.lean} & exact threshold-side robustness boundary\\
-\texttt{PEL4/ModalDynamicsGeometry.lean} & Boolean threshold square and wall count\\
-\texttt{PEL4/ComplexCoordinates.lean} & complex support and truth/information coordinates, metric identity, four-cell decomposition, and sharpened glut bound\\
-\texttt{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
-\texttt{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
-\texttt{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
-\texttt{PEL4/ModalDynamicsIntermediatePhase.lean} & forced midpoint phase between sequential crossings\\
+\leanref{PEL4/FDE.lean} & four bilateral values and basic operations\\
+\leanref{PEL4/Model.lean} & finite probabilistic Kripke model interface\\
+\leanref{PEL4/FiniteProbabilityIntegrity.lean} & stronger finite-probability compatibility layer\\
+\leanref{PEL4/WeightGeneratedProbability.lean} & weight-generated measures and generic integrity theorem\\
+\leanref{PEL4/ConvexProbabilitySimplex.lean} & convex rational distributions and affine event masses\\
+\leanref{PEL4/ConvexModelPath.lean} & complete strong model-valued convex paths\\
+\leanref{PEL4/ConvexModelSupport.lean} & affine formula-support masses for the probability-free fragment\\
+\leanref{PEL4/Belief.lean} & signed Lockean threshold belief\\
+\leanref{PEL4/ModalLanguage.lean} & primitive \(\Bel\), \(\Know\), and raw possibility\\
+\leanref{PEL4/ModalKnowledgeBeliefFactorization.lean} & exact \(\Know=\Stable\)-filtered \(\Bel\) theorem\\
+\leanref{PEL4/Dynamics.lean} & admissible probability-only conditionalization\\
+\leanref{PEL4/ModalDynamicsStability.lean} & probability-free invariance\\
+\leanref{PEL4/ModalDynamicsPhaseClassification.lean} & four stability phases for knowledge\\
+\leanref{PEL4/ModalDynamicsReachability.lean} & complete sixteen-transition witness family\\
+\leanref{PEL4/ModalDynamicsRobustness.lean} & exact threshold-side robustness boundary\\
+\leanref{PEL4/ModalDynamicsGeometry.lean} & Boolean threshold square and wall count\\
+\leanref{PEL4/ComplexCoordinates.lean} & complex support and truth/information coordinates, metric identity, four-cell decomposition, and exact glut criterion\\
+\leanref{PEL4/ComplexBeliefRegions.lean} & exact complex-region classification of all four threshold phases\\
+\leanref{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
+\leanref{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
+\leanref{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
+\leanref{PEL4/ModalDynamicsIntermediatePhase.lean} & forced midpoint phase between sequential crossings\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -56,13 +59,13 @@ The manuscript uses the following hierarchy:
   \item \textbf{Literature or novelty claim}: a comparative scholarly assertion requiring an external audit.
 \end{enumerate}
 
-The central dynamic and probability-path modules through \texttt{ConvexModelPath.lean}, together with \texttt{ComplexCoordinates.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, and strong model-path claims reported in this manuscript are machine-checked at the level of their exact Lean statements.
+The central dynamic and probability-path modules through \texttt{ConvexModelSupport.lean}, together with \texttt{ComplexCoordinates.lean} and \texttt{ComplexBeliefRegions.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, and probability-free affine-support claims reported in this manuscript are machine-checked at the level of their exact Lean statements.
 
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:
 \begin{verbatim}
-git fetch origin research/preface-case-study
-git checkout research/preface-case-study
+git fetch origin research/complex-coordinates
+git checkout research/complex-coordinates
 git pull --ff-only
 lake build
 \end{verbatim}
