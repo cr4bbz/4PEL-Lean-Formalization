@@ -220,6 +220,39 @@ belief(not exam Friday):  T -> N -> F.
 
 The backward-elimination extension verifies that each day is predictable in its special elimination context while none is positively predicted initially. Working diagnosis: **context-indexed prediction transport failure**.
 
+### 13. Complex truth/information coordinates
+
+The Boolean support pair `(pos, neg)` has a dependency-free complex-coordinate
+presentation. The raw embedding sends it to `pos + i neg`; the rotated
+truth/information embedding sends the four values to:
+
+```text
+T ->  1     F -> -1
+B ->  i     N -> -i.
+```
+
+Lean verifies that both categorical embeddings are injective, FDE negation is
+`i * conjugate(z)` in raw support coordinates and `-conjugate(z)` in rotated
+coordinates, and the existing threshold-wall count is exactly squared
+Euclidean distance in the raw support square.
+
+For a normalized finite four-cell profile, the rotated coordinate decomposes
+as:
+
+```text
+(P_pos - P_neg) + i(P_pos + P_neg - 1)
+  = (P_T - P_F) + i(P_B - P_N).
+```
+
+At integer scale, a threshold glut satisfies the sharper verified bound:
+
+```text
+2k + P_N + |P_T - P_F| <= total + P_B.
+```
+
+Complex multiplication is not introduced as a logical connective; the
+construction is a coordinate and projection layer only.
+
 ---
 
 ## Paradox map
@@ -278,6 +311,7 @@ PEL4/FDE.lean
 PEL4/Model.lean
 PEL4/Belief.lean
 PEL4/EpistemicStatus.lean
+PEL4/ComplexCoordinates.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
