@@ -3,96 +3,118 @@
 
 This appendix maps the principal mathematical claims in the manuscript to the Lean modules and theorem names that support them. The list is selective rather than exhaustive.
 
-\begin{center}
-\small
-\begin{tabular}{p{0.28\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{L{0.25\textwidth}L{0.41\textwidth}L{0.25\textwidth}}
 \toprule
 Paper claim & Lean theorem / definition & Module\\
 \midrule
-Four FDE values as bilateral Boolean pairs & \texttt{FDEValue}, \texttt{FDEValue.T/F/B/N} & \texttt{PEL4/FDE.lean}\\
-\addlinespace
-Signed threshold belief & \texttt{belief} & \texttt{PEL4/Belief.lean}\\
-\addlinespace
-Primitive modal evaluator with \(\Bel,\Know,\Diamond\) & \texttt{ModalFormula}, \texttt{evalModal} & \texttt{PEL4/ModalLanguage.lean}\\
-\addlinespace
-Knowledge equals stability-filtered belief & \texttt{modal\_knowledge\_as\_stability\_filtered\_belief} & \texttt{PEL4/ModalKnowledgeBeliefFactorization.lean}\\
-\addlinespace
-Safe probability-only update & \texttt{ConditionalizationAdmissible}, \texttt{conditionalize} & \texttt{PEL4/Dynamics.lean}\\
-\addlinespace
-Probability-free invariance & \texttt{evalModal\_conditionalize\_of\_probabilityFree} & \texttt{PEL4/ModalDynamicsStability.lean}\\
-\addlinespace
-Four dynamic stability phases & \texttt{modal\_knowledge\_phase\_*} & \texttt{PEL4/ModalDynamicsPhaseClassification.lean}\\
-\addlinespace
-Both stability-change directions are realizable & \texttt{conditionalization\_realizes\_both\_stability\_phase\_directions} & \texttt{PEL4/ModalDynamicsPhaseClassification.lean}\\
-\addlinespace
-All sixteen \(\Know(\Bel p)\) endpoint transitions & \texttt{conditionalization\_realizes\_every\_knowledge\_value\_transition} & \texttt{PEL4/ModalDynamicsReachability.lean}\\
-\addlinespace
-Creation of a knowledge glut & \texttt{conditionalization\_can\_create\_knowledge\_glut} & \texttt{PEL4/ModalDynamicsReachability.lean}\\
-\addlinespace
-Glut-to-gap and gap-to-truth transitions & \texttt{conditionalization\_can\_turn\_knowledge\_glut\_into\_gap}, \texttt{...gap\_into\_truth} & \texttt{PEL4/ModalDynamicsReachability.lean}\\
-\addlinespace
-Exact belief robustness boundary & \texttt{modal\_belief\_value\_eq\_iff\_threshold\_bits\_eq} & \texttt{PEL4/ModalDynamicsRobustness.lean}\\
-\addlinespace
-Compositional robust formulas are invariant & \texttt{evalModal\_conditionalize\_of\_robust} & \texttt{PEL4/ModalDynamicsRobustness.lean}\\
-\addlinespace
-Robustness strictly extends the probability-free fragment & \texttt{diagonal\_reachability\_belief\_is\_robust}, \texttt{...not\_probabilityFree} & \texttt{PEL4/ModalDynamicsRobustness.lean}\\
-\addlinespace
-Threshold wall count & \texttt{thresholdWallCount} & \texttt{PEL4/ModalDynamicsGeometry.lean}\\
-\addlinespace
-Zero wall iff equal FDE state & \texttt{thresholdWallCount\_eq\_zero\_iff} & \texttt{PEL4/ModalDynamicsGeometry.lean}\\
-\addlinespace
-Two walls iff both coordinates flip & \texttt{thresholdWallCount\_eq\_two\_iff} & \texttt{PEL4/ModalDynamicsGeometry.lean}\\
-\addlinespace
-Wall flip iff endpoint straddling & \texttt{threshold\_decision\_ne\_iff\_straddles} & \texttt{PEL4/ModalDynamicsThresholdCrossing.lean}\\
-\addlinespace
-Two walls iff both supports straddle & \texttt{conditionalization\_belief\_two\_walls\_iff\_both\_supports\_straddle} & \texttt{PEL4/ModalDynamicsThresholdCrossing.lean}\\
-\addlinespace
-Affine path & \texttt{affineRatPath} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
-\addlinespace
-Straddling gives unit-interval threshold hit & \texttt{thresholdStraddles\_has\_affine\_unit\_crossing} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
-\addlinespace
-Every belief change has an affine wall hit & \texttt{conditionalization\_belief\_change\_has\_affine\_threshold\_crossing} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
-\addlinespace
-Two-wall transition has two affine hits & \texttt{conditionalization\_belief\_two\_walls\_has\_two\_affine\_crossings} & \texttt{PEL4/ModalDynamicsAffineCrossing.lean}\\
-\addlinespace
-Unique affine threshold time & \texttt{affineRatPath\_threshold\_hit\_unique} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
-\addlinespace
-Crossing-order trichotomy & \texttt{affineCrossingPair\_order\_trichotomy} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
-\addlinespace
-Simultaneous iff common \((c,c)\) hit & \texttt{affineCrossingPair\_simultaneous\_iff\_common\_hit} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
-\addlinespace
-Conditionalized two-wall order classification & \texttt{conditionalization\_belief\_two\_walls\_crossing\_order} & \texttt{PEL4/ModalDynamicsCrossingOrder.lean}\\
-\addlinespace
-Midpoint lies between sequential crossings & \texttt{affineCrossingMidpoint\_between\_*} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Source side before and target side after crossing & \texttt{affine\_threshold\_side\_before\_crossing\_eq\_source}, \texttt{...after...target} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Positive-first midpoint state & \texttt{affineCrossingPair\_positive\_first\_midpoint\_state} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Negative-first midpoint state & \texttt{affineCrossingPair\_negative\_first\_midpoint\_state} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Intermediate is adjacent to both diagonal endpoints & \texttt{positiveFirstIntermediate\_adjacent\_to\_diagonal\_endpoints}, \texttt{negativeFirstIntermediate\_adjacent\_to\_diagonal\_endpoints} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Concrete eight-case diagonal table & \texttt{affine\_diagonal\_intermediate\_vertex\_table} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Full simultaneous/sequential intermediate-phase theorem & \texttt{conditionalization\_belief\_two\_walls\_intermediate\_phase} & \texttt{PEL4/ModalDynamicsIntermediatePhase.lean}\\
-\addlinespace
-Strong finite-probability contract & \texttt{FiniteProbabilityIntegrity}, \texttt{StrongProbabilityModel} & \texttt{PEL4/FiniteProbabilityIntegrity.lean}\\
-\addlinespace
-Weight-generated measure satisfies integrity & \texttt{weightGeneratedMeasure\_integrity} & \texttt{PEL4/WeightGeneratedProbability.lean}\\
-\addlinespace
-Convex interpolation preserves distributions & \texttt{convexWeightDistribution} & \texttt{PEL4/ConvexProbabilitySimplex.lean}\\
-\addlinespace
-Every fixed event mass is affine & \texttt{weightedEventMass\_convex} & \texttt{PEL4/ConvexProbabilitySimplex.lean}\\
-\addlinespace
-Complete strong rational model path & \texttt{convexStrongModelAt} & \texttt{PEL4/ConvexModelPath.lean}\\
-\addlinespace
-Worlds, accessibility, valuation, and threshold fixed & \texttt{convexStrongModelAt\_worlds}, \texttt{...accessibility}, \texttt{...valuation}, \texttt{...threshold} & \texttt{PEL4/ConvexModelPath.lean}\\
-\addlinespace
-Fixed-event mass affine along full model path & \texttt{convexStrongModelAt\_eventMass} & \texttt{PEL4/ConvexModelPath.lean}\\
+\endfirsthead
+\toprule
+Paper claim & Lean theorem / definition & Module\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\scriptsize Continued on next page}\\
+\endfoot
 \bottomrule
-\end{tabular}
-\end{center}
+\endlastfoot
+Four FDE values as bilateral Boolean pairs & \leanref{FDEValue}, \leanref{FDEValue.T/F/B/N} & \leanref{PEL4/FDE.lean}\\
+\addlinespace
+Signed threshold belief & \leanref{belief} & \leanref{PEL4/Belief.lean}\\
+\addlinespace
+Primitive modal evaluator with \(\Bel,\Know,\Diamond\) & \leanref{ModalFormula}, \leanref{evalModal} & \leanref{PEL4/ModalLanguage.lean}\\
+\addlinespace
+Knowledge equals stability-filtered belief & \leanref{modal\_knowledge\_as\_stability\_filtered\_belief} & \leanref{PEL4/ModalKnowledgeBeliefFactorization.lean}\\
+\addlinespace
+Safe probability-only update & \leanref{ConditionalizationAdmissible}, \leanref{conditionalize} & \leanref{PEL4/Dynamics.lean}\\
+\addlinespace
+Probability-free invariance & \leanref{evalModal\_conditionalize\_of\_probabilityFree} & \leanref{PEL4/ModalDynamicsStability.lean}\\
+\addlinespace
+Four dynamic stability phases & \leanref{modal\_knowledge\_phase\_*} & \leanref{PEL4/ModalDynamicsPhaseClassification.lean}\\
+\addlinespace
+Both stability-change directions are realizable & \leanref{conditionalization\_realizes\_both\_stability\_phase\_directions} & \leanref{PEL4/ModalDynamicsPhaseClassification.lean}\\
+\addlinespace
+All sixteen \(\Know(\Bel p)\) endpoint transitions & \leanref{conditionalization\_realizes\_every\_knowledge\_value\_transition} & \leanref{PEL4/ModalDynamicsReachability.lean}\\
+\addlinespace
+Creation of a knowledge glut & \leanref{conditionalization\_can\_create\_knowledge\_glut} & \leanref{PEL4/ModalDynamicsReachability.lean}\\
+\addlinespace
+Glut-to-gap and gap-to-truth transitions & \leanref{conditionalization\_can\_turn\_knowledge\_glut\_into\_gap}, \leanref{...gap\_into\_truth} & \leanref{PEL4/ModalDynamicsReachability.lean}\\
+\addlinespace
+Exact belief robustness boundary & \leanref{modal\_belief\_value\_eq\_iff\_threshold\_bits\_eq} & \leanref{PEL4/ModalDynamicsRobustness.lean}\\
+\addlinespace
+Compositional robust formulas are invariant & \leanref{evalModal\_conditionalize\_of\_robust} & \leanref{PEL4/ModalDynamicsRobustness.lean}\\
+\addlinespace
+Robustness strictly extends the probability-free fragment & \leanref{diagonal\_reachability\_belief\_is\_robust}, \leanref{...not\_probabilityFree} & \leanref{PEL4/ModalDynamicsRobustness.lean}\\
+\addlinespace
+Threshold wall count & \leanref{thresholdWallCount} & \leanref{PEL4/ModalDynamicsGeometry.lean}\\
+\addlinespace
+Zero wall iff equal FDE state & \leanref{thresholdWallCount\_eq\_zero\_iff} & \leanref{PEL4/ModalDynamicsGeometry.lean}\\
+\addlinespace
+Two walls iff both coordinates flip & \leanref{thresholdWallCount\_eq\_two\_iff} & \leanref{PEL4/ModalDynamicsGeometry.lean}\\
+\addlinespace
+Raw complex-coordinate embedding is injective & \leanref{supportComplexCoord\_injective} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+Truth/information embedding is injective & \leanref{truthInformationComplexCoord\_injective} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+FDE negation in both coordinate systems & \leanref{supportComplexCoord\_not}, \leanref{truthInformationComplexCoord\_not} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+Wall count equals squared coordinate distance & \leanref{supportComplexCoord\_squaredDistance\_eq\_thresholdWallCount} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+Four-cell truth/conflict balance decomposition & \leanref{supportBalanceCoord\_eq\_cellBalanceCoord} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+Balance-sensitive threshold-glut bound & \leanref{thresholdGlut\_balance\_bound} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+Wall flip iff endpoint straddling & \leanref{threshold\_decision\_ne\_iff\_straddles} & \leanref{PEL4/ModalDynamicsThresholdCrossing.lean}\\
+\addlinespace
+Two walls iff both supports straddle & \leanref{conditionalization\_belief\_two\_walls\_iff\_both\_supports\_straddle} & \leanref{PEL4/ModalDynamicsThresholdCrossing.lean}\\
+\addlinespace
+Affine path & \leanref{affineRatPath} & \leanref{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Straddling gives unit-interval threshold hit & \leanref{thresholdStraddles\_has\_affine\_unit\_crossing} & \leanref{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Every belief change has an affine wall hit & \leanref{conditionalization\_belief\_change\_has\_affine\_threshold\_crossing} & \leanref{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Two-wall transition has two affine hits & \leanref{conditionalization\_belief\_two\_walls\_has\_two\_affine\_crossings} & \leanref{PEL4/ModalDynamicsAffineCrossing.lean}\\
+\addlinespace
+Unique affine threshold time & \leanref{affineRatPath\_threshold\_hit\_unique} & \leanref{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Crossing-order trichotomy & \leanref{affineCrossingPair\_order\_trichotomy} & \leanref{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Simultaneous iff common \((c,c)\) hit & \leanref{affineCrossingPair\_simultaneous\_iff\_common\_hit} & \leanref{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Conditionalized two-wall order classification & \leanref{conditionalization\_belief\_two\_walls\_crossing\_order} & \leanref{PEL4/ModalDynamicsCrossingOrder.lean}\\
+\addlinespace
+Midpoint lies between sequential crossings & \leanref{affineCrossingMidpoint\_between\_*} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Source side before and target side after crossing & \leanref{affine\_threshold\_side\_before\_crossing\_eq\_source}, \leanref{...after...target} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Positive-first midpoint state & \leanref{affineCrossingPair\_positive\_first\_midpoint\_state} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Negative-first midpoint state & \leanref{affineCrossingPair\_negative\_first\_midpoint\_state} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Intermediate is adjacent to both diagonal endpoints & \leanref{positiveFirstIntermediate\_adjacent\_to\_diagonal\_endpoints}, \leanref{negativeFirstIntermediate\_adjacent\_to\_diagonal\_endpoints} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Concrete eight-case diagonal table & \leanref{affine\_diagonal\_intermediate\_vertex\_table} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Full simultaneous/sequential intermediate-phase theorem & \leanref{conditionalization\_belief\_two\_walls\_intermediate\_phase} & \leanref{PEL4/ModalDynamicsIntermediatePhase.lean}\\
+\addlinespace
+Strong finite-probability contract & \leanref{FiniteProbabilityIntegrity}, \leanref{StrongProbabilityModel} & \leanref{PEL4/FiniteProbabilityIntegrity.lean}\\
+\addlinespace
+Weight-generated measure satisfies integrity & \leanref{weightGeneratedMeasure\_integrity} & \leanref{PEL4/WeightGeneratedProbability.lean}\\
+\addlinespace
+Convex interpolation preserves distributions & \leanref{convexWeightDistribution} & \leanref{PEL4/ConvexProbabilitySimplex.lean}\\
+\addlinespace
+Every fixed event mass is affine & \leanref{weightedEventMass\_convex} & \leanref{PEL4/ConvexProbabilitySimplex.lean}\\
+\addlinespace
+Complete strong rational model path & \leanref{convexStrongModelAt} & \leanref{PEL4/ConvexModelPath.lean}\\
+\addlinespace
+Worlds, accessibility, valuation, and threshold fixed & \leanref{convexStrongModelAt\_worlds}, \leanref{...accessibility}, \leanref{...valuation}, \leanref{...threshold} & \leanref{PEL4/ConvexModelPath.lean}\\
+\addlinespace
+Fixed-event mass affine along full model path & \leanref{convexStrongModelAt\_eventMass} & \leanref{PEL4/ConvexModelPath.lean}\\
+\end{longtable}
+\endgroup
 
 \paragraph{Verification note.}
-The active branch has passed fresh local Lean 4.31 builds through \texttt{PEL4/ConvexModelPath.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The formula-level lift from fixed events to arbitrary probability-sensitive support events remains separate and is not inferred from the model-path theorem.
+The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The formula-level lift from fixed events to arbitrary probability-sensitive support events remains separate and is not inferred from the model-path theorem.
