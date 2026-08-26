@@ -25,7 +25,7 @@ theorem affineRatPath_eq_convexCombination (x y t : Rat) :
     affineRatPath x y t = (1 - t) * x + t * y := by
   simp [affineRatPath, Rat.sub_eq_add_neg, Rat.mul_add, Rat.add_mul,
     Rat.mul_neg, Rat.neg_mul,
-    Rat.add_assoc, Rat.add_comm, Rat.add_left_comm]
+    Rat.add_comm, Rat.add_left_comm]
 
 /-- Thresholding the two components of the modal support coordinate is exactly
 the object-language belief value. -/
@@ -96,8 +96,15 @@ theorem convexStrongModelPath_probabilityFree_crossing_order
       thresholdWallCount
         (supportThresholdState (c i) z0.re z0.im)
         (supportThresholdState (c i) z1.re z1.im) = 2 := by
-    simpa [m0, m1, z0, z1,
-      evalModal_bel_eq_modalSupportComplexThresholdState] using hTwo
+    change thresholdWallCount
+      (evalModal m0 w (ModalFormula.bel i phi))
+      (evalModal m1 w (ModalFormula.bel i phi)) = 2 at hTwo
+    rw [evalModal_bel_eq_modalSupportComplexThresholdState,
+      evalModal_bel_eq_modalSupportComplexThresholdState] at hTwo
+    change thresholdWallCount
+      (supportThresholdState (c i) z0.re z0.im)
+      (supportThresholdState (c i) z1.re z1.im) = 2 at hTwo
+    exact hTwo
   have hDiff :=
     (thresholdWallCount_eq_two_iff
       (supportThresholdState (c i) z0.re z0.im)
