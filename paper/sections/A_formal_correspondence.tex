@@ -70,6 +70,24 @@ Coordinate reconstruction of both support masses & \leanref{doubledPositiveCoord
 \addlinespace
 Exact complex classification of all four threshold phases & \leanref{thresholdValue\_region\_classification} & \leanref{PEL4/ComplexBeliefRegions.lean}\\
 \addlinespace
+Coordinate actions are Gaussian-integer operations & \leanref{iConjugate\_eq\_I\_mul\_conj}, \leanref{negConjugate\_eq\_neg\_conj} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Conflation is conjugation & \leanref{truthInformationComplexCoord\_conflate} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Quarter turn is multiplication by \(i\) and has order four & \leanref{truthInformationComplexCoord\_rotate}, \leanref{FDEValue.rotate\_four} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Quarter turn is outside the negation/conflation subgroup & \leanref{rotate\_not\_in\_klein\_group} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Quarter turn crosses exactly one wall & \leanref{thresholdWallCount\_rotate} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Mass rotation acts as multiplication by \(i\) & \leanref{cellBalanceCoord\_rotate} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Every profile lies in the \(\ell^1\) diamond & \leanref{cellBalanceCoord\_diamond} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Lossless \((m,z,h)\) reconstruction & \leanref{four\_cell\_reconstruction}, \leanref{informationDepth\_rotate} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
+Classifier equivariance away from the tie diagonal & \leanref{thresholdValue\_rotate} & \leanref{PEL4/ComplexRotation.lean}\\
+\addlinespace
 Wall flip iff endpoint straddling & \leanref{threshold\_decision\_ne\_iff\_straddles} & \leanref{PEL4/ModalDynamicsThresholdCrossing.lean}\\
 \addlinespace
 Two walls iff both supports straddle & \leanref{conditionalization\_belief\_two\_walls\_iff\_both\_supports\_straddle} & \leanref{PEL4/ModalDynamicsThresholdCrossing.lean}\\
@@ -125,4 +143,4 @@ Probability-free positive and negative support masses are affine & \leanref{conv
 \endgroup
 
 \paragraph{Verification note.}
-The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, and \leanref{PEL4/ConvexModelSupport.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The lift is established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.
+The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, \leanref{PEL4/ComplexRotation.lean}, and \leanref{PEL4/ConvexModelSupport.lean}. The focused complex-coordinate dependency report is reproduced by \leanref{PEL4/ComplexAxiomAudit.lean}. Older finite witnesses using native evaluation retain an explicit compiler-trust qualification. The model-path lift is established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.
