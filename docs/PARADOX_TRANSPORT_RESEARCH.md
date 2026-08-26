@@ -1,6 +1,6 @@
 # Paradoxes as failures of structural transport
 
-Status: active research program on `research/preface-case-study`.
+Status: active research program carried forward on `research/complex-coordinates`.
 
 ## Working thesis
 
