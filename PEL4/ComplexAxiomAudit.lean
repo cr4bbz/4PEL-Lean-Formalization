@@ -1,4 +1,5 @@
 import PEL4.ComplexRotation
+import PEL4.ComplexModelPath
 
 /-!
 # Focused axiom audit for the complex-coordinate publication chain
@@ -26,3 +27,4 @@ focused audit; it does not certify older finite-model modules that still use
 #print axioms PEL4.FourCellMass.cellBalanceCoord_diamond
 #print axioms PEL4.FourCellMass.four_cell_reconstruction
 #print axioms PEL4.FourCellMass.thresholdValue_rotate
+#print axioms PEL4.convexStrongModelAt_modalSupportComplexCoord_probabilityFree
