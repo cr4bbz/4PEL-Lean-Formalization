@@ -36,7 +36,7 @@ prototype.
 ## B. Convenience axioms scheduled for elimination
 
 These declarations occur in concrete finite examples and should be replaced by
-explicit `rfl`, `decide`, `native_decide`, or short case-analysis proofs.
+explicit `rfl`, `decide`, or short case-analysis proofs.
 
 Known examples include model normalization and threshold facts in:
 
@@ -52,7 +52,26 @@ This list is a cleanup ledger, not a claim that the listed mathematical facts
 are doubtful. The point is that finite decidable obligations should be proved
 inside Lean rather than introduced as global constants.
 
-## C. Completion criterion
+## C. Native-computation dependencies
+
+`native_decide` is not a project-specific mathematical axiom, but it does
+enlarge the trusted base from kernel reduction to the Lean compiler and native
+evaluator. Source scanning for `axiom` does not reveal this dependency.
+
+The repository currently contains `native_decide` in older finite-model and
+case-classification modules. Those results remain useful compiler-checked
+artifacts, but must carry `COMPILER-TRUST` rather than being described as
+kernel-only results.
+
+The complex-coordinate publication chain has received a focused cleanup:
+
+- three sixteen-case proofs in `ComplexCoordinates.lean` now use `decide`;
+- `ComplexBeliefRegions.lean` uses symbolic arithmetic proofs;
+- `ComplexRotation.lean` uses `decide`, case analysis, and `omega`;
+- `PEL4/ComplexAxiomAudit.lean` reproduces the corresponding `#print axioms`
+  output.
+
+## D. Completion criterion
 
 R0.2 is complete when all convenience axioms in concrete finite examples have
 been replaced by proof terms and a repository-wide source scan leaves only
@@ -60,3 +79,7 @@ explicitly documented substantive prototype axioms.
 
 The remaining axioms after R0.2 should therefore coincide with modules whose
 primary status is `AXIOMATIC-PROTOTYPE`.
+
+A later verification gate should also classify every remaining
+`native_decide` dependency and replace it where ordinary kernel reduction is
+small enough.
