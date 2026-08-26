@@ -244,11 +244,15 @@ as:
   = (P_T - P_F) + i(P_B - P_N).
 ```
 
-At integer scale, a threshold glut satisfies the sharper verified bound:
+At integer scale, the sharper balance condition exactly characterizes a
+threshold glut:
 
 ```text
 2k + P_N + |P_T - P_F| <= total + P_B.
 ```
+
+The same truth/information coordinates give exact half-plane classifications
+of all four threshold phases `T`, `F`, `B`, and `N`.
 
 Complex multiplication is not introduced as a logical connective; the
 construction is a coordinate and projection layer only.
@@ -312,6 +316,7 @@ PEL4/Model.lean
 PEL4/Belief.lean
 PEL4/EpistemicStatus.lean
 PEL4/ComplexCoordinates.lean
+PEL4/ComplexBeliefRegions.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
@@ -375,8 +380,10 @@ Several distinctions remain explicit:
 - Primitive raw `Diamond` is not definitionally the same as `not K not`.
 - The Liar and Gödel-inspired modules are not complete formalizations of semantic diagonalization or incompleteness.
 - Conflict-Nerve Euler/signature results are formalized; general homology and persistence are not.
-- Dynamic evidence-stable knowledge remains largely open.
-- The zero-evidence conditionalization boundary in the dynamics layer still needs repair before strong general dynamic claims.
+- Dynamic evidence-stable knowledge is classified for the current safe
+  conditionalization and affine-path fragments; broader update languages remain open.
+- Zero-evidence updates are excluded by the verified
+  `ConditionalizationAdmissible` interface rather than repaired by an axiom.
 - Exact necessity/minimality of every modal frame correspondence is not yet proved.
 - Novelty claims for the combined structural and modal terminology require a systematic literature audit.
 
@@ -390,8 +397,8 @@ The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axi
 
 1. classify interaction between evidence-stable `K` and probabilistic `B`;
 2. prove sharper necessity/minimality results for modal frame correspondences;
-3. repair the zero-evidence conditionalization boundary;
-4. study dynamic preservation and destruction of `K` under update;
+3. lift the complex phase classifier to probability-free strong model paths;
+4. characterize dynamic preservation beyond the probability-free fragment;
 5. prove global independence/minimality results for Church-Fitch packages;
 6. expand the structural-transport abstraction across paradox families;
 7. deepen Conflict-Nerve topology to homology and persistence;
