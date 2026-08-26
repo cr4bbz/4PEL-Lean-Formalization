@@ -1,0 +1,222 @@
+import Lean.Elab.Tactic.Omega
+import PEL4.ComplexBeliefRegions
+
+namespace PEL4
+
+/-!
+# Complex multiplication and rotation symmetry
+
+This module equips `ComplexCoord Int` with Gaussian-integer multiplication and
+conjugation. It then proves that multiplication by `i` realizes a quarter turn
+of the four FDE values and of normalized four-cell evidence profiles.
+
+The rotation is a symmetry of the coordinate geometry, not a new logical
+connective. The formal results below establish the relevant operations and
+identities. The broader dihedral-group reading is documented separately until
+a group action and its eight distinct elements are themselves formalized.
+-/
+
+namespace ComplexCoord
+
+instance : Neg (ComplexCoord Int) := ⟨fun z => ⟨-z.re, -z.im⟩⟩
+
+instance : Mul (ComplexCoord Int) :=
+  ⟨fun z w => ⟨z.re * w.re - z.im * w.im, z.re * w.im + z.im * w.re⟩⟩
+
+/-- Complex conjugation: reflection in the real axis. -/
+def conj (z : ComplexCoord Int) : ComplexCoord Int := ⟨z.re, -z.im⟩
+
+@[simp] theorem mul_re (z w : ComplexCoord Int) :
+    (z * w).re = z.re * w.re - z.im * w.im := rfl
+
+@[simp] theorem mul_im (z w : ComplexCoord Int) :
+    (z * w).im = z.re * w.im + z.im * w.re := rfl
+
+@[simp] theorem neg_re (z : ComplexCoord Int) : (-z).re = -z.re := rfl
+
+@[simp] theorem neg_im (z : ComplexCoord Int) : (-z).im = -z.im := rfl
+
+@[simp] theorem conj_re (z : ComplexCoord Int) : (conj z).re = z.re := rfl
+
+@[simp] theorem conj_im (z : ComplexCoord Int) : (conj z).im = -z.im := rfl
+
+/-- The defining relation of the imaginary unit. -/
+theorem I_mul_I : I * I = negOne := by
+  apply eq_of_re_im_eq <;> simp [I, negOne]
+
+/-- Multiplication by `i` is the quarter turn `(x, y) ↦ (-y, x)`. -/
+theorem I_mul (z : ComplexCoord Int) : I * z = ⟨-z.im, z.re⟩ := by
+  apply eq_of_re_im_eq <;> simp [I]
+
+theorem one_mul' (z : ComplexCoord Int) : one * z = z := by
+  apply eq_of_re_im_eq <;> simp [one]
+
+/-- The existing coordinate action `iConjugate` is `i * conj z`. -/
+theorem iConjugate_eq_I_mul_conj (z : ComplexCoord Int) :
+    iConjugate z = I * conj z := by
+  apply eq_of_re_im_eq <;> simp [iConjugate, conj, I]
+
+/-- The existing coordinate action `negConjugate` is `-conj z`. -/
+theorem negConjugate_eq_neg_conj (z : ComplexCoord Int) :
+    negConjugate z = -(conj z) := by
+  apply eq_of_re_im_eq <;> simp [negConjugate, conj]
+
+/-- Four quarter turns are the identity. -/
+theorem I_mul_four (z : ComplexCoord Int) :
+    I * (I * (I * (I * z))) = z := by
+  apply eq_of_re_im_eq <;> simp [I_mul]
+
+end ComplexCoord
+
+/-! ## Categorical FDE symmetries -/
+
+/-- Conflation swaps the glut and gap corners and fixes `T` and `F`. -/
+def FDEValue.conflate (v : FDEValue) : FDEValue :=
+  { pos := !v.neg, neg := !v.pos }
+
+/-- The quarter turn `T → B → F → N → T`. -/
+def FDEValue.rotate (v : FDEValue) : FDEValue :=
+  { pos := !v.neg, neg := v.pos }
+
+@[simp] theorem FDEValue.conflate_B : FDEValue.conflate FDEValue.B = FDEValue.N := by rfl
+@[simp] theorem FDEValue.conflate_N : FDEValue.conflate FDEValue.N = FDEValue.B := by rfl
+@[simp] theorem FDEValue.conflate_T : FDEValue.conflate FDEValue.T = FDEValue.T := by rfl
+@[simp] theorem FDEValue.conflate_F : FDEValue.conflate FDEValue.F = FDEValue.F := by rfl
+
+@[simp] theorem FDEValue.rotate_T : FDEValue.rotate FDEValue.T = FDEValue.B := by rfl
+@[simp] theorem FDEValue.rotate_B : FDEValue.rotate FDEValue.B = FDEValue.F := by rfl
+@[simp] theorem FDEValue.rotate_F : FDEValue.rotate FDEValue.F = FDEValue.N := by rfl
+@[simp] theorem FDEValue.rotate_N : FDEValue.rotate FDEValue.N = FDEValue.T := by rfl
+
+/-- In truth/information coordinates, conflation is conjugation. -/
+theorem truthInformationComplexCoord_conflate (v : FDEValue) :
+    truthInformationComplexCoord (FDEValue.conflate v) =
+      ComplexCoord.conj (truthInformationComplexCoord v) := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> rfl
+
+/-- In truth/information coordinates, the quarter turn is multiplication by `i`. -/
+theorem truthInformationComplexCoord_rotate (v : FDEValue) :
+    truthInformationComplexCoord (FDEValue.rotate v) =
+      ComplexCoord.I * truthInformationComplexCoord v := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> rfl
+
+/-- The categorical quarter turn has order four. -/
+theorem FDEValue.rotate_four (v : FDEValue) :
+    FDEValue.rotate (FDEValue.rotate (FDEValue.rotate (FDEValue.rotate v))) = v := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> rfl
+
+/-- Negation and conflation commute, and their composite is the half turn. -/
+theorem FDEValue.not_conflate_comm (v : FDEValue) :
+    FDEValue.not (FDEValue.conflate v) = FDEValue.conflate (FDEValue.not v) := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> rfl
+
+theorem FDEValue.not_conflate_eq_rotate_rotate (v : FDEValue) :
+    FDEValue.not (FDEValue.conflate v) = FDEValue.rotate (FDEValue.rotate v) := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> rfl
+
+/-- The quarter turn is not one of the four transformations generated by
+negation and conflation; the distinction is already visible at `T`. -/
+theorem rotate_not_in_klein_group :
+    FDEValue.rotate FDEValue.T ≠ FDEValue.T ∧
+    FDEValue.rotate FDEValue.T ≠ FDEValue.not FDEValue.T ∧
+    FDEValue.rotate FDEValue.T ≠ FDEValue.conflate FDEValue.T ∧
+    FDEValue.rotate FDEValue.T ≠ FDEValue.not (FDEValue.conflate FDEValue.T) := by
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> decide
+
+/-- Every categorical quarter turn crosses exactly one threshold wall. -/
+theorem thresholdWallCount_rotate (v : FDEValue) :
+    thresholdWallCount v (FDEValue.rotate v) = 1 := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> rfl
+
+theorem thresholdWallCount_not (v : FDEValue) :
+    thresholdWallCount v (FDEValue.not v) = 2 ∨ FDEValue.not v = v := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> simp [thresholdWallCount, FDEValue.not]
+
+theorem thresholdWallCount_conflate (v : FDEValue) :
+    thresholdWallCount v (FDEValue.conflate v) = 2 ∨
+      FDEValue.conflate v = v := by
+  rcases v with ⟨p, n⟩
+  cases p <;> cases n <;> simp [thresholdWallCount, FDEValue.conflate]
+
+/-! ## Rotation of evidence masses -/
+
+namespace FourCellMass
+
+/-- Cyclic relabelling of the evidence cells along `T → B → F → N → T`. -/
+def rotate (s : FourCellMass) : FourCellMass :=
+  { t := s.n
+  , b := s.t
+  , n := s.f
+  , f := s.b
+  , total := s.total
+  , normalized := by have h := s.normalized; omega }
+
+/-- Mass rotation implements multiplication by `i` on the balance coordinate. -/
+theorem cellBalanceCoord_rotate (s : FourCellMass) :
+    (s.rotate).cellBalanceCoord = ComplexCoord.I * s.cellBalanceCoord := by
+  apply ComplexCoord.eq_of_re_im_eq <;>
+    simp [rotate, cellBalanceCoord, ComplexCoord.I_mul] <;> omega
+
+/-- Every normalized profile lies in the integer `l¹` diamond of radius
+`total`. This is a containment theorem; it does not assert that every lattice
+point in the diamond is realized. -/
+theorem cellBalanceCoord_diamond (s : FourCellMass) :
+    s.cellBalanceCoord.re + s.cellBalanceCoord.im ≤ Int.ofNat s.total ∧
+    s.cellBalanceCoord.re - s.cellBalanceCoord.im ≤ Int.ofNat s.total ∧
+    -s.cellBalanceCoord.re + s.cellBalanceCoord.im ≤ Int.ofNat s.total ∧
+    -s.cellBalanceCoord.re - s.cellBalanceCoord.im ≤ Int.ofNat s.total := by
+  have h := s.normalized
+  simp [cellBalanceCoord]
+  omega
+
+/-- The remaining real mode: classically determined mass minus glut/gap mass. -/
+def informationDepth (s : FourCellMass) : Int :=
+  (Int.ofNat s.t + Int.ofNat s.f) - (Int.ofNat s.b + Int.ofNat s.n)
+
+/-- `(total, cellBalanceCoord, informationDepth)` reconstructs all four cells. -/
+theorem four_cell_reconstruction (s : FourCellMass) :
+    4 * Int.ofNat s.t
+        = Int.ofNat s.total + s.informationDepth + 2 * s.cellBalanceCoord.re ∧
+    4 * Int.ofNat s.f
+        = Int.ofNat s.total + s.informationDepth - 2 * s.cellBalanceCoord.re ∧
+    4 * Int.ofNat s.b
+        = Int.ofNat s.total - s.informationDepth + 2 * s.cellBalanceCoord.im ∧
+    4 * Int.ofNat s.n
+        = Int.ofNat s.total - s.informationDepth - 2 * s.cellBalanceCoord.im := by
+  have h := s.normalized
+  simp [cellBalanceCoord, informationDepth]
+  omega
+
+/-- The rotation negates the remaining real mode. -/
+theorem informationDepth_rotate (s : FourCellMass) :
+    (s.rotate).informationDepth = -s.informationDepth := by
+  simp [rotate, informationDepth]
+  omega
+
+/-- At the balanced threshold, the classifier commutes with one quarter turn
+away from the tie diagonal on which threshold support is asymmetric. -/
+theorem thresholdValue_rotate
+    (s : FourCellMass) (k : Int)
+    (hk : 2 * k = Int.ofNat s.total)
+    (hgen : s.cellBalanceCoord.im ≠ s.cellBalanceCoord.re) :
+    (s.rotate).thresholdValue k = FDEValue.rotate (s.thresholdValue k) := by
+  have h := s.normalized
+  simp only [cellBalanceCoord, ne_eq, Int.ofNat_eq_natCast] at hgen hk
+  simp only [thresholdValue, FDEValue.rotate, rotate, positive, negative,
+    FDEValue.mk.injEq, Int.ofNat_eq_natCast]
+  constructor
+  · simp only [← decide_not, decide_eq_decide]
+    omega
+  · simp only [decide_eq_decide]
+    omega
+
+end FourCellMass
+
+end PEL4
