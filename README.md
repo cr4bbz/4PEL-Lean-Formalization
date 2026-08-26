@@ -317,6 +317,7 @@ PEL4/Belief.lean
 PEL4/EpistemicStatus.lean
 PEL4/ComplexCoordinates.lean
 PEL4/ComplexBeliefRegions.lean
+PEL4/ComplexRotation.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
@@ -352,6 +353,9 @@ docs/MODAL_KNOWLEDGE_CLASSIFICATION.md
 docs/PARADOX_TRANSPORT_RESEARCH.md
 docs/RESEARCH_QUESTIONS.md
 docs/CONFLICT_NERVE_RESEARCH.md
+docs/COMPLEX_ROTATION.md
+docs/AXIOM_AUDIT.md
+docs/VERIFICATION_POLICY.md
 ```
 
 ---
