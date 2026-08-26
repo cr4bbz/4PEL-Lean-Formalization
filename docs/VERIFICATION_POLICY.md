@@ -1,6 +1,6 @@
 # Verification Policy
 
-Status: normative repository policy for `research/preface-case-study`.
+Status: normative repository policy for `research/complex-coordinates`.
 
 This document defines how formal results, finite models, prototypes, and research
 interpretations are described in 4-PEL. Its purpose is to prevent a successful
@@ -158,6 +158,22 @@ this policy.
 A future audit tool should expose these distinctions automatically, ideally by
 combining source-level scans with Lean dependency information such as
 `#print axioms` or an equivalent programmatic query.
+
+### Current source-level audit snapshot
+
+As of the complex-coordinate development, a source scan finds no `sorry` or
+`admit`, but it does find explicit project axioms in these older areas:
+
+- `ProductUpdate.lean` and `ProductTheorems.lean`;
+- `Paradoxes/Preface.lean` and `Paradoxes/PrefaceSigned.lean`;
+- `Paradoxes/SurpriseExamination.lean`;
+- `Paradoxes/SyntheseExtensions.lean`.
+
+This inventory is deliberately weaker than a transitive theorem-dependency
+audit. In particular, the new `ComplexCoordinates.lean` and
+`ComplexBeliefRegions.lean` modules introduce no axioms of their own, but the
+publication theorem list should still be checked with `#print axioms` before a
+release. Automating that check is an open verification task.
 
 ---
 
