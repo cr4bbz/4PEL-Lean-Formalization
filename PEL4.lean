@@ -40,6 +40,7 @@ import PEL4.ComplexCoordinates
 import PEL4.ComplexBeliefRegions
 import PEL4.ComplexRotation
 import PEL4.ComplexModelPath
+import PEL4.ComplexModelCrossing
 import PEL4.ModalDynamicsThresholdCrossing
 import PEL4.ModalDynamicsAffineCrossing
 import PEL4.ModalDynamicsCrossingOrder
