@@ -1,0 +1,150 @@
+\section{Complex Coordinates for Truth and Information}
+\label{sec:complex-coordinates}
+
+The Boolean support square admits a useful complex-coordinate presentation.
+This presentation is conservative: it changes neither the four FDE values nor
+their logical operations. It packages the two independent support coordinates
+into one planar object and makes two geometric decompositions explicit.
+
+\subsection{The raw support embedding}
+
+For an FDE value \(v=(v^+,v^-)\in\{0,1\}^2\), define
+\[
+  z_{\mathrm{s}}(v)=v^+ + i v^-.
+\]
+The four values become
+\[
+  z_{\mathrm{s}}(\Nval)=0,\qquad
+  z_{\mathrm{s}}(\Tval)=1,\qquad
+  z_{\mathrm{s}}(\Fval)=i,\qquad
+  z_{\mathrm{s}}(\Bval)=1+i.
+\]
+Thus the imaginary direction records negative support as an independent
+coordinate; it is not identified with the numerical negative of positive
+support.
+
+Since FDE negation exchanges the two support bits, the raw coordinate obeys
+\[
+  z_{\mathrm{s}}(\neg v)=i\,\overline{z_{\mathrm{s}}(v)}.
+\]
+In the Lean implementation, the right-hand side is represented directly as
+the coordinate swap \((x,y)\mapsto(y,x)\). No multiplication operation on
+complex values is added to the object logic.
+
+\begin{theorem}[Raw coordinate representation]
+The map \(z_{\mathrm{s}}\) is injective. Moreover, for all FDE values \(u,v\),
+\[
+  \dthr(u,v)=\left|z_{\mathrm{s}}(u)-z_{\mathrm{s}}(v)\right|^2.
+\]
+Hence the existing combinatorial wall count is exactly squared Euclidean
+distance on the four vertices of the support square.
+\statusverified
+\end{theorem}
+
+\subsection{Truth/information coordinates}
+
+The affine change of coordinates
+\[
+  z_{\mathrm{ti}}(v)
+  =(v^+-v^-)+i(v^++v^--1)
+\]
+rotates and rescales the support square into a diamond. At its vertices,
+\[
+  z_{\mathrm{ti}}(\Tval)=1,\qquad
+  z_{\mathrm{ti}}(\Fval)=-1,\qquad
+  z_{\mathrm{ti}}(\Bval)=i,\qquad
+  z_{\mathrm{ti}}(\Nval)=-i.
+\]
+The real axis therefore distinguishes truth-only from falsity-only status. The
+imaginary axis distinguishes overdetermination from underdetermination: positive
+imaginary direction points toward glut, negative imaginary direction toward
+gap. Figure~\ref{fig:complex-coordinate-geometry} displays the two equivalent
+categorical pictures.
+
+\input{figures/complex_coordinate_geometry}
+
+Negation now has the form
+\[
+  z_{\mathrm{ti}}(\neg v)=-\overline{z_{\mathrm{ti}}(v)}.
+\]
+It reverses the truth/falsity coordinate while preserving the glut/gap
+coordinate. Consequently, the classical values \(1\) and \(-1\) form a
+two-cycle, whereas \(i\) and \(-i\) are fixed. This is the same geometric
+pattern that appears in the project's Knower fixed-point bifurcation, although
+the present section proves only the general FDE coordinate identity.
+
+\begin{theorem}[Truth/information representation]
+The map \(z_{\mathrm{ti}}\) is injective, maps the four FDE values to
+\(1,-1,i,-i\), and represents FDE negation by
+\(z\mapsto-\overline z\).
+\statusverified
+\end{theorem}
+
+\subsection{Four-cell evidence decomposition}
+
+Consider a finite evidence profile partitioned into masses
+\[
+  m_T,\quad m_B,\quad m_N,\quad m_F,
+\]
+with total mass
+\[
+  m_T+m_B+m_N+m_F=m.
+\]
+Positive and negative support masses are
+\[
+  m^+=m_T+m_B,
+  \qquad
+  m^-=m_F+m_B.
+\]
+The truth/information transformation then gives the exact identity
+\[
+  (m^+-m^-)+i(m^++m^--m)
+  =
+  (m_T-m_F)+i(m_B-m_N).
+\]
+
+\begin{theorem}[Four-cell balance decomposition]
+For every normalized finite four-cell profile, the real coordinate of the
+transformed support masses is the strict truth/falsity balance \(m_T-m_F\),
+and the imaginary coordinate is the conflict/ignorance balance \(m_B-m_N\).
+\statusverified
+\end{theorem}
+
+This identity makes the role of the imaginary coordinate precise. It does not
+measure contradiction alone; it measures net glut relative to gap. In
+particular, two distinct four-cell distributions can agree on both balances.
+The complex coordinate is therefore a projection of the richer evidence state,
+not a reconstruction of it.
+
+\subsection{A balance-sensitive glut bound}
+
+Let \(k\) be an integer threshold and suppose both signed support masses cross
+it:
+\[
+  k\le m_T+m_B,
+  \qquad
+  k\le m_F+m_B.
+\]
+The standard overlap argument yields \(2k\le m+m_B\). The coordinate
+decomposition exposes a sharper statement.
+
+\begin{theorem}[Balance-sensitive threshold-glut bound]
+Every normalized finite four-cell threshold glut satisfies
+\[
+  2k+m_N+|m_T-m_F|\le m+m_B.
+\]
+The ordinary overlap bound follows by dropping the two additional nonnegative
+terms.
+\statusverified
+\end{theorem}
+
+Gap mass and strict truth/falsity imbalance therefore consume part of the
+available threshold budget. The theorem is stronger than the coarse overlap
+bound while remaining elementary and dependency-free.
+
+\paragraph{Formal boundary.}
+The Lean module uses an explicit pair of integer coordinates. The symbols
+\(i\), conjugation, and squared modulus are faithful mathematical readings of
+the verified pair operations, but complex multiplication is not installed as a
+logical connective. In particular, no semantic conclusion is drawn from
+\(i^2=-1\), and no quantum-probabilistic interpretation is asserted.
