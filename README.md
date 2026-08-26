@@ -363,7 +363,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/preface-case-study
+git checkout research/complex-coordinates
 lake build
 ```
 
