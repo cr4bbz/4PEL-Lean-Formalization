@@ -400,20 +400,40 @@ equivariance under one quarter turn whenever `Im z ≠ Re z`. On the excluded
 tie diagonal the threshold convention favors support, so equivariance can
 fail. Lifting this theorem to complete strong model paths remains open.
 
+### C21. Do probability-free formulas trace affine complex model paths?
+
+**VERIFIED.** `PEL4/ComplexModelPath.lean` packages the positive and negative
+support masses of a modal formula into the rational coordinate
+
+```text
+z_phi(M,i,w) = P_pos(phi) + i P_neg(phi).
+```
+
+For every probability-free formula and every rational unit-interval point of
+`convexStrongModelAt`, Lean proves the exact componentwise identity
+
+```text
+z_phi(t) = (1 - t) z_phi(0) + t z_phi(1).
+```
+
+This is a theorem about complete `StrongProbabilityModel` states, not merely a
+pair of externally chosen support numbers. Formulas containing `bel` remain
+outside the result because their support events can move with probability.
+
 ## D. Suggested research order
 
 ```text
-1. package probability-free affine support masses as an affine complex coordinate
-2. lift crossing order and intermediate phases to complete strong model states
-3. characterize the maximal path-invariant fragment containing selected `bel` formulas
-4. formalize the exact simplex-to-diamond image, its lattice/parity conditions,
+1. lift crossing order and intermediate phases through the affine complex
+   coordinate to complete strong model states
+2. characterize the maximal path-invariant fragment containing selected `bel` formulas
+3. formalize the exact simplex-to-diamond image, its lattice/parity conditions,
    and its one-dimensional fibers
-5. distinguish valid model paths from conditionalization-generated paths
-6. decide whether general path continuity now justifies a topology dependency
-7. seek algebraic/bilattice characterization of stability
-8. strengthen structural transport and perform the literature/novelty audit
-9. deepen conflict topology and automated finite-model search
-10. classify or eliminate remaining `native_decide` dependencies
+4. distinguish valid model paths from conditionalization-generated paths
+5. decide whether general path continuity now justifies a topology dependency
+6. seek algebraic/bilattice characterization of stability
+7. strengthen structural transport and perform the literature/novelty audit
+8. deepen conflict topology and automated finite-model search
+9. classify or eliminate remaining `native_decide` dependencies
 ```
 
 The methodological separation remains essential:
