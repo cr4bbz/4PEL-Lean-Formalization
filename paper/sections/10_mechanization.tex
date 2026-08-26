@@ -33,6 +33,7 @@ Lean module & role in the paper\\
 \leanref{PEL4/ModalDynamicsGeometry.lean} & Boolean threshold square and wall count\\
 \leanref{PEL4/ComplexCoordinates.lean} & complex support and truth/information coordinates, metric identity, four-cell decomposition, and exact glut criterion\\
 \leanref{PEL4/ComplexBeliefRegions.lean} & exact complex-region classification of all four threshold phases\\
+\leanref{PEL4/ComplexRotation.lean} & Gaussian-integer operations, categorical and mass rotation, diamond containment, and lossless third coordinate\\
 \leanref{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
 \leanref{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
 \leanref{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
@@ -45,7 +46,13 @@ Lean module & role in the paper\\
 
 The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, and construction of complete strong model paths. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
 
-Several of the finite cases are discharged by \texttt{native\_decide}. This does not weaken their status: the corresponding propositions are closed finite statements, and Lean's kernel checks the resulting proof term. The paper nevertheless distinguishes these executable witnesses from general symbolic theorems because their quantifier structure is different.
+Several older finite cases are discharged by \texttt{native\_decide}. This
+adds Lean's compiler and native evaluator to the trusted base rather than using
+kernel reduction alone. Such results remain reproducible compiler-checked
+finite witnesses, but this manuscript now marks the distinction explicitly.
+The three sixteen-case proofs in \texttt{ComplexCoordinates.lean} instead use
+\texttt{decide}; the rotation layer uses ordinary case analysis, \texttt{decide},
+and symbolic \texttt{omega} proofs.
 
 The affine path development intentionally avoids adding Mathlib. It imports Lean Core rational lemmas and proves the required unit-interval, linearity, and monotonicity facts directly. This keeps the current result lightweight and makes the boundary to a future topology-heavy development explicit.
 
@@ -54,12 +61,12 @@ The affine path development intentionally avoids adding Mathlib. It imports Lean
 The manuscript uses the following hierarchy:
 \begin{enumerate}[label=(\arabic*)]
   \item \textbf{Lean-verified theorem}: a universally quantified or closed proposition compiled successfully through the active root import.
-  \item \textbf{Finite executable witness}: a concrete model theorem checked by computation inside Lean.
+  \item \textbf{Finite executable witness}: a concrete model theorem checked by computation inside Lean, with compiler trust recorded when native evaluation is used.
   \item \textbf{Structural interpretation}: a conceptual reading of the formal results, not a separately mechanized theorem.
   \item \textbf{Literature or novelty claim}: a comparative scholarly assertion requiring an external audit.
 \end{enumerate}
 
-The central dynamic and probability-path modules through \texttt{ConvexModelSupport.lean}, together with \texttt{ComplexCoordinates.lean} and \texttt{ComplexBeliefRegions.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, and probability-free affine-support claims reported in this manuscript are machine-checked at the level of their exact Lean statements.
+The central dynamic and probability-path modules through \texttt{ConvexModelSupport.lean}, together with \texttt{ComplexCoordinates.lean}, \texttt{ComplexBeliefRegions.lean}, and \texttt{ComplexRotation.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, rotation-symmetry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, and probability-free affine-support claims reported in this manuscript are Lean-checked at the level of their exact statements, subject to the trust classification above.
 
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:
@@ -69,4 +76,10 @@ git checkout research/complex-coordinates
 git pull --ff-only
 lake build
 \end{verbatim}
+The focused complex-coordinate dependency report is reproduced separately by
+\begin{verbatim}
+lake env lean PEL4/ComplexAxiomAudit.lean
+\end{verbatim}
+This audit does not cover the older finite-model modules that still use native
+evaluation.
 The paper source itself is intentionally separate from the Lean build so that manuscript compilation does not become a prerequisite for checking the formal logic.
