@@ -7,6 +7,8 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{longtable}
+\usepackage{seqsplit}
 \usepackage{enumitem}
 \usepackage{tikz}
 \usepackage{hyperref}
@@ -39,10 +41,12 @@
 \newcommand{\statusverified}{\textsc{Status: Lean-verified.}}
 \newcommand{\statusinterpretive}{\textsc{Status: structural interpretation.}}
 \newcommand{\statusopen}{\textsc{Status: open.}}
+\newcommand{\leanref}[1]{\texttt{\seqsplit{#1}}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian Voigt}
-\date{Working manuscript, version 0.2}
+\date{Working manuscript, version 0.3}
 
 \begin{document}
 \maketitle
@@ -50,7 +54,9 @@
 \begin{abstract}
 I study the dynamics of threshold belief and evidence-stable knowledge in a finite four-valued probabilistic epistemic logic based on Belnap--Dunn/FDE values. Positive and negative support are tracked independently, so each formula occupies one of four complete statuses: truth only, falsity only, both, or neither. Probabilistic belief thresholds the positive and negative support masses separately, while evidence-stable knowledge filters that belief through a qualitative invariance test on the complete accessible FDE profile. The resulting factorization is exact: knowledge equals threshold belief on stable profiles and collapses to strict falsity on unstable profiles.
 
-The dynamic results develop this architecture from endpoint reachability to an explicit phase geometry. Admissible conditionalization changes only local probability. A six-world family realizes every ordered transition between the four FDE values at the level of \(\Know(\Bel p)\), so the categorical reachability graph is complete. At the same time, belief is pointwise invariant exactly when neither of its two Lockean threshold bits changes. This yields a Boolean threshold square with a Hamming-style wall count \(\dthr\in\{0,1,2\}\). A categorical wall flip is equivalent to endpoint straddling of the corresponding rational support mass. For the directed affine interpolation \(\gamma(t)=x+t(y-x)\), straddling yields an explicit rational threshold-hit parameter in \([0,1]\). Two-wall transitions therefore carry two unique crossing times. Their order is positive-first, simultaneous, or negative-first; simultaneity is exactly passage through \((\thr,\thr)\) in the two-dimensional support plane. If the crossings are sequential, the rational midpoint between them occupies a necessary adjacent FDE phase. Thus a diagonal endpoint transition such as \(\Nval\to\Bval\) decomposes along the affine support path as either \(\Nval\to\Tval\to\Bval\) or \(\Nval\to\Fval\to\Bval\), according to crossing order.
+The dynamic results develop this architecture from endpoint reachability to an explicit phase geometry. Admissible conditionalization changes only local probability. A six-world family realizes every ordered transition between the four FDE values at the level of \(\Know(\Bel p)\), so the categorical reachability graph is complete. At the same time, belief is pointwise invariant exactly when neither of its two Lockean threshold bits changes. This yields a Boolean threshold square with a Hamming-style wall count \(\dthr\in\{0,1,2\}\). A dependency-free complex-coordinate layer gives this square two complementary readings. The raw embedding is \(x^+ + i x^-\); after a truth/information change of coordinates, \(\Tval,\Fval,\Bval,\Nval\) become \(1,-1,i,-i\). Lean verifies injectivity, the coordinate action of FDE negation, and equality between wall count and squared Euclidean distance. For normalized four-cell evidence, the rotated coordinate separates truth balance from conflict/ignorance balance, and a new balance-sensitive theorem strictly refines the usual threshold-glut overlap bound.
+
+A categorical wall flip is equivalent to endpoint straddling of the corresponding rational support mass. For the directed affine interpolation \(\gamma(t)=x+t(y-x)\), straddling yields an explicit rational threshold-hit parameter in \([0,1]\). Two-wall transitions therefore carry two unique crossing times. Their order is positive-first, simultaneous, or negative-first; simultaneity is exactly passage through \((\thr,\thr)\) in the two-dimensional support plane. If the crossings are sequential, the rational midpoint between them occupies a necessary adjacent FDE phase. Thus a diagonal endpoint transition such as \(\Nval\to\Bval\) decomposes along the affine support path as either \(\Nval\to\Tval\to\Bval\) or \(\Nval\to\Fval\to\Bval\), according to crossing order.
 
 The mechanization now also supplies a stronger finite-probability layer. Nonnegative normalized rational world weights generate finitely additive, extensional local measures; rational convex interpolation preserves valid distributions; and every fixed event mass varies affinely along the same parameter. These local paths lift to complete \texttt{StrongProbabilityModel} paths with worlds, accessibility, valuation, and threshold fixed. Thus model-valued realizability is verified for weight-generated endpoints on a common semantic skeleton. The remaining boundary is formula-level and update-level: probability-sensitive formulas can change the event whose mass is measured, and the intermediate models are not claimed to arise from repeated conditionalization of the source. No general continuity or measure-theoretic theorem is claimed. A systematic literature audit is also still required before any strong novelty claim.
 \end{abstract}
@@ -60,6 +66,7 @@ The mechanization now also supplies a stronger finite-probability layer. Nonnega
 \input{sections/03_dynamic_architecture}
 \input{sections/04_complete_reachability}
 \input{sections/05_robustness_and_square}
+\input{sections/05_complex_coordinates}
 \input{sections/06_affine_crossing}
 \input{sections/07_crossing_order}
 \input{sections/08_intermediate_phases}
