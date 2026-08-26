@@ -6,7 +6,7 @@ Working manuscript:
 
 Author: Julian Voigt
 
-Current manuscript version: **0.2**
+Current manuscript version: **0.3**
 
 ## Scope
 
@@ -18,6 +18,8 @@ K = stability-filtered threshold belief
 -> complete T/F/B/N reachability
 -> threshold-side robustness
 -> Boolean threshold-square geometry
+-> complex support and truth/information coordinates
+-> four-cell balance decomposition and sharpened glut bound
 -> numerical threshold straddling
 -> affine unit-interval threshold crossing
 -> unique two-wall crossing times
@@ -41,7 +43,9 @@ PEL4/ConvexModelPath.lean
 
 have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-The LaTeX manuscript previously passed a fresh local `latexmk -pdf main.tex` build and produced `paper/main.pdf`. Because version 0.2 adds a new model-path section and revises several existing sections, the updated manuscript should be rendered again after pulling the latest branch.
+Version 0.3 adds the complex-coordinate layer and its reproducible TikZ figure.
+The manuscript source and rendered PDF have passed a fresh build and visual
+inspection on the feature branch.
 
 The stronger probability development now verifies:
 
@@ -91,12 +95,14 @@ main.tex
 references.bib
 figures/
   fde_phase_geometry.tex
+  complex_coordinate_geometry.tex
 sections/
   01_introduction.tex
   02_semantic_kernel.tex
   03_dynamic_architecture.tex
   04_complete_reachability.tex
   05_robustness_and_square.tex
+  05_complex_coordinates.tex
   06_affine_crossing.tex
   07_crossing_order.tex
   08_intermediate_phases.tex
