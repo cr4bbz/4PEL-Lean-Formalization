@@ -40,6 +40,59 @@ theorem evalModal_bel_eq_modalSupportComplexThresholdState
   rw [evalModal_bel_eq_threshold_pair]
   rfl
 
+/-- Along a convex strong-model path, the belief value of every
+probability-free formula is exactly the threshold state of its affine complex
+support coordinate. -/
+theorem convexStrongModelAt_evalBel_probabilityFree_eq_affineThresholdState
+    {W Ag Atom : Type} [DecidableEq W]
+    (worlds : FiniteSet W)
+    (R : Ag → W → FiniteSet W)
+    (q0 q1 : Ag → W → W → Rat)
+    (val : W → Atom → FDEValue)
+    (c : Ag → Rat)
+    (h0 : ∀ i w, FiniteWeightDistribution (R i w) (q0 i w))
+    (h1 : ∀ i w, FiniteWeightDistribution (R i w) (q1 i w))
+    (hcHalf : ∀ i, c i > 1/2)
+    (hcOne : ∀ i, c i ≤ 1)
+    (t : Rat) (ht0 : 0 ≤ t) (ht1 : t ≤ 1)
+    (i : Ag) (w : W)
+    {phi : ModalFormula Atom Ag}
+    (hFree : ModalProbabilityFree phi) :
+    evalModal
+        (convexStrongModelAt worlds R q0 q1 val c h0 h1 hcHalf hcOne
+          t ht0 ht1).toModel
+        w (ModalFormula.bel i phi) =
+      affineThresholdState
+        (c i)
+        (modalSupportComplexCoord
+          (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne)
+          i w phi).re
+        (modalSupportComplexCoord
+          (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne)
+          i w phi).re
+        (modalSupportComplexCoord
+          (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne)
+          i w phi).im
+        (modalSupportComplexCoord
+          (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne)
+          i w phi).im
+        t := by
+  rw [evalModal_bel_eq_modalSupportComplexThresholdState]
+  change supportThresholdState (c i)
+      (modalSupportComplexCoord
+        (convexStrongModelAt worlds R q0 q1 val c h0 h1 hcHalf hcOne
+          t ht0 ht1).toModel i w phi).re
+      (modalSupportComplexCoord
+        (convexStrongModelAt worlds R q0 q1 val c h0 h1 hcHalf hcOne
+          t ht0 ht1).toModel i w phi).im = _
+  rw [convexStrongModelAt_modalSupportComplexCoord_probabilityFree
+    worlds R q0 q1 val c h0 h1 hcHalf hcOne
+    t ht0 ht1 i w hFree]
+  unfold affineThresholdState
+  rw [ComplexCoord.affine_re, ComplexCoord.affine_im,
+    ← affineRatPath_eq_convexCombination,
+    ← affineRatPath_eq_convexCombination]
+
 /-- A two-wall endpoint transition of a probability-free formula on a convex
 strong-model path has two unique model-realized crossing times and an exact
 temporal order. -/
@@ -149,6 +202,145 @@ theorem convexStrongModelPath_probabilityFree_crossing_order
       ← affineRatPath_eq_convexCombination z0.im z1.im pair.tn]
     exact pair.negative_hit
 
+/-- If the positive support wall is crossed first, the rational crossing
+midpoint defines an actual complete strong model whose belief value is the
+forced positive-first intermediate FDE phase. -/
+theorem convexStrongModelPath_probabilityFree_positive_first_midpoint
+    {W Ag Atom : Type} [DecidableEq W]
+    (worlds : FiniteSet W)
+    (R : Ag → W → FiniteSet W)
+    (q0 q1 : Ag → W → W → Rat)
+    (val : W → Atom → FDEValue)
+    (c : Ag → Rat)
+    (h0 : ∀ i w, FiniteWeightDistribution (R i w) (q0 i w))
+    (h1 : ∀ i w, FiniteWeightDistribution (R i w) (q1 i w))
+    (hcHalf : ∀ i, c i > 1/2)
+    (hcOne : ∀ i, c i ≤ 1)
+    (i : Ag) (w : W)
+    {phi : ModalFormula Atom Ag}
+    (hFree : ModalProbabilityFree phi)
+    (pair : AffineThresholdCrossingPair
+      (c i)
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).re
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).re
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).im
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).im)
+    (hPos : ThresholdStraddles (c i)
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).re
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).re)
+    (hNeg : ThresholdStraddles (c i)
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).im
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).im)
+    (hOrder : pair.tp < pair.tn) :
+    ∃ htm0 : 0 ≤ affineCrossingMidpoint pair,
+      ∃ htm1 : affineCrossingMidpoint pair ≤ 1,
+        evalModal
+            (convexStrongModelAt worlds R q0 q1 val c h0 h1 hcHalf hcOne
+              (affineCrossingMidpoint pair) htm0 htm1).toModel
+            w (ModalFormula.bel i phi) =
+          positiveFirstIntermediate
+            (evalModal
+              (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne)
+              w (ModalFormula.bel i phi))
+            (evalModal
+              (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne)
+              w (ModalFormula.bel i phi)) := by
+  have hBetween :=
+    affineCrossingMidpoint_between_positive_first pair hOrder
+  have htm0 : 0 ≤ affineCrossingMidpoint pair :=
+    Rat.le_trans pair.tp_nonneg (Rat.le_of_lt hBetween.1)
+  have htm1 : affineCrossingMidpoint pair ≤ 1 :=
+    Rat.le_trans (Rat.le_of_lt hBetween.2) pair.tn_le_one
+  refine ⟨htm0, htm1, ?_⟩
+  rw [convexStrongModelAt_evalBel_probabilityFree_eq_affineThresholdState
+    worlds R q0 q1 val c h0 h1 hcHalf hcOne
+    (affineCrossingMidpoint pair) htm0 htm1 i w hFree]
+  rw [evalModal_bel_eq_modalSupportComplexThresholdState,
+    evalModal_bel_eq_modalSupportComplexThresholdState]
+  change affineThresholdState _ _ _ _ _ (affineCrossingMidpoint pair) =
+    positiveFirstIntermediate
+      (supportThresholdState (c i) _ _)
+      (supportThresholdState (c i) _ _)
+  exact affineCrossingPair_positive_first_midpoint_state
+    pair hPos hNeg hOrder
+
+/-- If the negative support wall is crossed first, the same model construction
+realizes the symmetric forced intermediate FDE phase. -/
+theorem convexStrongModelPath_probabilityFree_negative_first_midpoint
+    {W Ag Atom : Type} [DecidableEq W]
+    (worlds : FiniteSet W)
+    (R : Ag → W → FiniteSet W)
+    (q0 q1 : Ag → W → W → Rat)
+    (val : W → Atom → FDEValue)
+    (c : Ag → Rat)
+    (h0 : ∀ i w, FiniteWeightDistribution (R i w) (q0 i w))
+    (h1 : ∀ i w, FiniteWeightDistribution (R i w) (q1 i w))
+    (hcHalf : ∀ i, c i > 1/2)
+    (hcOne : ∀ i, c i ≤ 1)
+    (i : Ag) (w : W)
+    {phi : ModalFormula Atom Ag}
+    (hFree : ModalProbabilityFree phi)
+    (pair : AffineThresholdCrossingPair
+      (c i)
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).re
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).re
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).im
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).im)
+    (hPos : ThresholdStraddles (c i)
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).re
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).re)
+    (hNeg : ThresholdStraddles (c i)
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne) i w phi).im
+      (modalSupportComplexCoord
+        (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne) i w phi).im)
+    (hOrder : pair.tn < pair.tp) :
+    ∃ htm0 : 0 ≤ affineCrossingMidpoint pair,
+      ∃ htm1 : affineCrossingMidpoint pair ≤ 1,
+        evalModal
+            (convexStrongModelAt worlds R q0 q1 val c h0 h1 hcHalf hcOne
+              (affineCrossingMidpoint pair) htm0 htm1).toModel
+            w (ModalFormula.bel i phi) =
+          negativeFirstIntermediate
+            (evalModal
+              (weightGeneratedModel worlds R q0 val c h0 hcHalf hcOne)
+              w (ModalFormula.bel i phi))
+            (evalModal
+              (weightGeneratedModel worlds R q1 val c h1 hcHalf hcOne)
+              w (ModalFormula.bel i phi)) := by
+  have hBetween :=
+    affineCrossingMidpoint_between_negative_first pair hOrder
+  have htm0 : 0 ≤ affineCrossingMidpoint pair :=
+    Rat.le_trans pair.tn_nonneg (Rat.le_of_lt hBetween.1)
+  have htm1 : affineCrossingMidpoint pair ≤ 1 :=
+    Rat.le_trans (Rat.le_of_lt hBetween.2) pair.tp_le_one
+  refine ⟨htm0, htm1, ?_⟩
+  rw [convexStrongModelAt_evalBel_probabilityFree_eq_affineThresholdState
+    worlds R q0 q1 val c h0 h1 hcHalf hcOne
+    (affineCrossingMidpoint pair) htm0 htm1 i w hFree]
+  rw [evalModal_bel_eq_modalSupportComplexThresholdState,
+    evalModal_bel_eq_modalSupportComplexThresholdState]
+  change affineThresholdState _ _ _ _ _ (affineCrossingMidpoint pair) =
+    negativeFirstIntermediate
+      (supportThresholdState (c i) _ _)
+      (supportThresholdState (c i) _ _)
+  exact affineCrossingPair_negative_first_midpoint_state
+    pair hPos hNeg hOrder
+
 /-!
 ## Research consequence
 
@@ -157,9 +349,11 @@ models.  The two intrinsic times are not merely hits on an externally chosen
 support segment: at `tp` and `tn`, the corresponding component of the modal
 support coordinate of `convexStrongModelAt` equals the fixed Lockean threshold.
 
-The next theorem can evaluate the midpoint strong model and identify its
-belief value with the already verified positive-first or negative-first
-intermediate FDE phase.
+For non-simultaneous crossings, the rational midpoint is itself in the unit
+interval and therefore defines a complete strong model. Its object-language
+belief value is the forced positive-first or negative-first intermediate FDE
+phase. Thus the earlier affine intermediate-phase geometry is now realized by
+admissible models rather than by external support points alone.
 -/
 
 end PEL4
