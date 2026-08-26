@@ -128,8 +128,8 @@ it:
 The standard overlap argument yields \(2k\le m+m_B\). The coordinate
 decomposition exposes a sharper statement.
 
-\begin{theorem}[Balance-sensitive threshold-glut bound]
-Every normalized finite four-cell threshold glut satisfies
+\begin{theorem}[Exact balance-sensitive threshold-glut criterion]
+A normalized finite four-cell profile is a threshold glut if and only if
 \[
   2k+m_N+|m_T-m_F|\le m+m_B.
 \]
@@ -141,6 +141,34 @@ terms.
 Gap mass and strict truth/falsity imbalance therefore consume part of the
 available threshold budget. The theorem is stronger than the coarse overlap
 bound while remaining elementary and dependency-free.
+
+\subsection{Exact complex phase regions}
+
+Write the truth/information coordinate as (z=x+iy). At integer scale, the
+two expressions
+\[
+  m+y+x=2m^+,
+  \qquad
+  m+y-x=2m^-
+\]
+reconstruct twice the positive and negative support masses. Comparison with
+the doubled threshold therefore yields the complete phase partition:
+\[
+\begin{array}{rcl}
+\Bval &\Longleftrightarrow& 2k\le m+y+x\ \text{and}\ 2k\le m+y-x,\\
+\Tval &\Longleftrightarrow& 2k\le m+y+x\ \text{and}\ m+y-x<2k,\\
+\Fval &\Longleftrightarrow& m+y+x<2k\ \text{and}\ 2k\le m+y-x,\\
+\Nval &\Longleftrightarrow& m+y+x<2k\ \text{and}\ m+y-x<2k.
+\end{array}
+\]
+
+\begin{theorem}[Truth/information phase classification]
+Every normalized finite scaled evidence profile lies in exactly the coordinate
+region corresponding to its threshold value \(\Tval,\Fval,\Bval\), or
+\(\Nval\). The two region coordinates are exactly twice its signed support
+masses.
+\statusverified
+\end{theorem}
 
 \paragraph{Formal boundary.}
 The Lean module uses an explicit pair of integer coordinates. The symbols
