@@ -121,7 +121,7 @@ theorem supportComplexCoord_injective :
   intro a b
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide
 
 /-- The truth/information embedding also loses no categorical FDE
 information. -/
@@ -130,7 +130,7 @@ theorem truthInformationComplexCoord_injective :
   intro a b
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide
 
 /-- In raw support coordinates, FDE negation is the coordinate action
 `i * conjugate(z)`: it swaps positive and negative support. -/
@@ -157,7 +157,7 @@ theorem supportComplexCoord_squaredDistance_eq_thresholdWallCount
       Int.ofNat (thresholdWallCount a b) := by
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide
 
 /-!
 ## Four-cell evidence masses
