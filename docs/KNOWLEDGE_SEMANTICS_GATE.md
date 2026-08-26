@@ -1,6 +1,6 @@
 # Knowledge semantics gate before Fitch
 
-Status: positive knowledge comparison **Lean-verified**; full four-valued evidence-stable knowledge semantics is the next build gate on `research/preface-case-study`. No primitive object-language `K` has been added yet.
+Status: historical gate, now passed. Full four-valued evidence-stable knowledge semantics and the modal object-language knowledge layer are root-imported and compiler-verified on `research/complex-coordinates`.
 
 ## Why a gate is necessary
 
