@@ -1,5 +1,5 @@
 import PEL4.ComplexRotation
-import PEL4.ComplexModelPath
+import PEL4.ComplexModelCrossing
 
 /-!
 # Focused axiom audit for the complex-coordinate publication chain
