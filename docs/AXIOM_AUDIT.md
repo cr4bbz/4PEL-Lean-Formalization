@@ -71,6 +71,14 @@ The complex-coordinate publication chain has received a focused cleanup:
 - `PEL4/ComplexAxiomAudit.lean` reproduces the corresponding `#print axioms`
   output.
 
+The current CI report for its fourteen selected publication theorems has two
+outcomes: six declarations report no axioms, while the remaining declarations
+report only Lean's allow-listed logical infrastructure (`propext`,
+`Classical.choice`, and/or `Quot.sound`). It reports no project-specific axiom
+and no native-code evaluation axiom for this focused chain. This is a precise
+dependency statement, not a claim that every selected proof is kernel-only or
+that the older repository has completed the same audit.
+
 ## D. Completion criterion
 
 R0.2 is complete when all convenience axioms in concrete finite examples have
