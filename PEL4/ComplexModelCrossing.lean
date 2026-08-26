@@ -1,5 +1,5 @@
 import PEL4.ComplexModelPath
-import PEL4.ModalDynamicsCrossingOrder
+import PEL4.ModalDynamicsIntermediatePhase
 
 namespace PEL4
 
@@ -23,7 +23,8 @@ or negative first.
 are extensionally equal. -/
 theorem affineRatPath_eq_convexCombination (x y t : Rat) :
     affineRatPath x y t = (1 - t) * x + t * y := by
-  simp [affineRatPath, Rat.sub_eq_add_neg, Rat.mul_add,
+  simp [affineRatPath, Rat.sub_eq_add_neg, Rat.mul_add, Rat.add_mul,
+    Rat.mul_neg, Rat.neg_mul,
     Rat.add_assoc, Rat.add_comm, Rat.add_left_comm]
 
 /-- Thresholding the two components of the modal support coordinate is exactly
