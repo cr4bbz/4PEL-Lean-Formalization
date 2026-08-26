@@ -60,9 +60,9 @@ theorem thresholdWallCount_eq_zero_iff (a b : FDEValue) :
 theorem thresholdWallCount_eq_two_iff (a b : FDEValue) :
     thresholdWallCount a b = 2 ↔
       a.pos ≠ b.pos ∧ a.neg ≠ b.neg := by
-  rcases a with ⟨ap, an⟩
-  rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  by_cases hp : a.pos = b.pos <;>
+    by_cases hn : a.neg = b.neg <;>
+      simp [thresholdWallCount, hp, hn]
 
 /-- Every pair lies at combinatorial distance zero, one, or two. -/
 theorem thresholdWallCount_trichotomy (a b : FDEValue) :

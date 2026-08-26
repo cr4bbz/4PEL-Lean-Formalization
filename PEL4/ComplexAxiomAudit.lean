@@ -28,6 +28,9 @@ focused audit; it does not certify older finite-model modules that still use
 #print axioms PEL4.FourCellMass.four_cell_reconstruction
 #print axioms PEL4.FourCellMass.thresholdValue_rotate
 #print axioms PEL4.convexStrongModelAt_modalSupportComplexCoord_probabilityFree
+#print axioms PEL4.thresholdWallCount_eq_two_iff
+#print axioms PEL4.rat_mul_two
+#print axioms PEL4.ratMidpoint_strictly_between
 #print axioms PEL4.convexStrongModelAt_evalBel_probabilityFree_eq_affineThresholdState
 #print axioms PEL4.convexStrongModelPath_probabilityFree_crossing_order
 #print axioms PEL4.convexStrongModelPath_probabilityFree_positive_first_midpoint

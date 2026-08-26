@@ -61,7 +61,7 @@ theorem rat_mul_two (a : Rat) :
   calc
     a * 2 = a * (1 + 1) := by
       congr 1
-      native_decide
+      decide
     _ = a * 1 + a * 1 := Rat.mul_add _ _ _
     _ = a + a := by simp only [Rat.mul_one]
 
@@ -71,7 +71,7 @@ theorem ratMidpoint_strictly_between
     (a b : Rat)
     (hab : a < b) :
     a < ratMidpoint a b ∧ ratMidpoint a b < b := by
-  have htwo : (0 : Rat) < 2 := by native_decide
+  have htwo : (0 : Rat) < 2 := by decide
   constructor
   · unfold ratMidpoint
     apply (Rat.lt_div_iff htwo).2
