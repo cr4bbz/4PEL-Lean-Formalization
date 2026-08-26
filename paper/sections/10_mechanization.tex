@@ -10,7 +10,7 @@ checks the theorem chain together with the rest of the project.
 The implementation deliberately uses small semantic layers. The principal files for the present manuscript are:
 
 \begin{center}
-\small
+\scriptsize
 \begin{tabular}{L{0.48\textwidth}L{0.40\textwidth}}
 \toprule
 Lean module & role in the paper\\
@@ -34,6 +34,7 @@ Lean module & role in the paper\\
 \leanref{PEL4/ComplexCoordinates.lean} & complex support and truth/information coordinates, metric identity, four-cell decomposition, and exact glut criterion\\
 \leanref{PEL4/ComplexBeliefRegions.lean} & exact complex-region classification of all four threshold phases\\
 \leanref{PEL4/ComplexRotation.lean} & Gaussian-integer operations, categorical and mass rotation, diamond containment, and lossless third coordinate\\
+\leanref{PEL4/ComplexModelPath.lean} & affine rational complex support coordinates on complete strong model paths\\
 \leanref{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
 \leanref{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
 \leanref{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
@@ -66,7 +67,7 @@ The manuscript uses the following hierarchy:
   \item \textbf{Literature or novelty claim}: a comparative scholarly assertion requiring an external audit.
 \end{enumerate}
 
-The central dynamic and probability-path modules through \texttt{ConvexModelSupport.lean}, together with \texttt{ComplexCoordinates.lean}, \texttt{ComplexBeliefRegions.lean}, and \texttt{ComplexRotation.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, rotation-symmetry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, and probability-free affine-support claims reported in this manuscript are Lean-checked at the level of their exact statements, subject to the trust classification above.
+The central dynamic and probability-path modules through \texttt{ComplexModelPath.lean}, together with \texttt{ComplexCoordinates.lean}, \texttt{ComplexBeliefRegions.lean}, and \texttt{ComplexRotation.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, rotation-symmetry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, probability-free affine-support, and affine complex model-coordinate claims reported in this manuscript are Lean-checked at the level of their exact statements, subject to the trust classification above.
 
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:
