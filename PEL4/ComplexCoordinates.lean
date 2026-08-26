@@ -189,8 +189,10 @@ def cellBalanceCoord (s : FourCellMass) : ComplexCoord Int :=
 theorem supportBalanceCoord_eq_cellBalanceCoord (s : FourCellMass) :
     s.supportBalanceCoord = s.cellBalanceCoord := by
   rcases s with ⟨t, b, n, f, total, htotal⟩
-  apply ComplexCoord.ext <;>
-    simp [supportBalanceCoord, cellBalanceCoord, positive, negative] <;>
+  apply congrArg₂ (fun re im : Int => ComplexCoord.mk re im)
+  · simp [supportBalanceCoord, cellBalanceCoord, positive, negative]
+    omega
+  · simp [supportBalanceCoord, cellBalanceCoord, positive, negative]
     omega
 
 /-- Threshold-glut condition for a finite four-cell profile. -/
@@ -213,7 +215,8 @@ theorem thresholdGlut_balance_bound
     2 * k + s.n + absDiff s.t s.f ≤ s.total + s.b := by
   rcases h with ⟨hpos, hneg⟩
   have htotal := s.normalized
-  unfold positive negative at hpos hneg
+  change k ≤ s.t + s.b at hpos
+  change k ≤ s.f + s.b at hneg
   unfold absDiff
   omega
 
