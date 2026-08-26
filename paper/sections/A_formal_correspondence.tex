@@ -64,7 +64,11 @@ Wall count equals squared coordinate distance & \leanref{supportComplexCoord\_sq
 \addlinespace
 Four-cell truth/conflict balance decomposition & \leanref{supportBalanceCoord\_eq\_cellBalanceCoord} & \leanref{PEL4/ComplexCoordinates.lean}\\
 \addlinespace
-Balance-sensitive threshold-glut bound & \leanref{thresholdGlut\_balance\_bound} & \leanref{PEL4/ComplexCoordinates.lean}\\
+Exact balance-sensitive threshold-glut criterion & \leanref{thresholdGlut\_iff\_balance\_bound} & \leanref{PEL4/ComplexCoordinates.lean}\\
+\addlinespace
+Coordinate reconstruction of both support masses & \leanref{doubledPositiveCoordinate\_eq}, \leanref{doubledNegativeCoordinate\_eq} & \leanref{PEL4/ComplexBeliefRegions.lean}\\
+\addlinespace
+Exact complex classification of all four threshold phases & \leanref{thresholdValue\_region\_classification} & \leanref{PEL4/ComplexBeliefRegions.lean}\\
 \addlinespace
 Wall flip iff endpoint straddling & \leanref{threshold\_decision\_ne\_iff\_straddles} & \leanref{PEL4/ModalDynamicsThresholdCrossing.lean}\\
 \addlinespace
@@ -113,8 +117,12 @@ Complete strong rational model path & \leanref{convexStrongModelAt} & \leanref{P
 Worlds, accessibility, valuation, and threshold fixed & \leanref{convexStrongModelAt\_worlds}, \leanref{...accessibility}, \leanref{...valuation}, \leanref{...threshold} & \leanref{PEL4/ConvexModelPath.lean}\\
 \addlinespace
 Fixed-event mass affine along full model path & \leanref{convexStrongModelAt\_eventMass} & \leanref{PEL4/ConvexModelPath.lean}\\
+\addlinespace
+Probability-free support events fixed on a common skeleton & \leanref{positiveSupportEvent\_probabilityFree\_of\_same\_skeleton}, \leanref{negativeSupportEvent\_probabilityFree\_of\_same\_skeleton} & \leanref{PEL4/ConvexModelSupport.lean}\\
+\addlinespace
+Probability-free positive and negative support masses are affine & \leanref{convexStrongModelAt\_positiveBeliefMass\_probabilityFree}, \leanref{convexStrongModelAt\_negativeBeliefMass\_probabilityFree} & \leanref{PEL4/ConvexModelSupport.lean}\\
 \end{longtable}
 \endgroup
 
 \paragraph{Verification note.}
-The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The formula-level lift from fixed events to arbitrary probability-sensitive support events remains separate and is not inferred from the model-path theorem.
+The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, and \leanref{PEL4/ConvexModelSupport.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The lift is established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.
