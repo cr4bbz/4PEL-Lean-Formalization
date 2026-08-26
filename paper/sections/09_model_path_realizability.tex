@@ -79,8 +79,30 @@ events are fixed, and Lean proves
   \Pneg_t(\varphi)=(1-t)\Pneg_0(\varphi)+t\Pneg_1(\varphi).
 \]
 
+These two scalar identities are now packaged into the rational support
+coordinate
+\[
+  z_\varphi(M,i,w)=\Ppos_M(\varphi)+i\Pneg_M(\varphi).
+\]
+
+\begin{theorem}[Affine complex support on strong model paths]
+For every probability-free modal formula and every rational \(t\in[0,1]\),
+the complete strong model path satisfies
+\[
+  z_\varphi(M_t,i,w)
+  =(1-t)z_\varphi(M_0,i,w)+t z_\varphi(M_1,i,w).
+\]
+The equality is componentwise in \texttt{ComplexCoord Rat}.
+\statusverified
+\end{theorem}
+
+Thus the complex support trajectory is itself a model-level affine object, not
+merely an informal pairing of two separately affine quantities. The notation
+\(i\) here remains coordinate notation; no probabilistic or object-language
+complex multiplication is introduced.
+
 The remaining formula-level boundary concerns formulas containing
 probabilistic belief. Their own values, and therefore their support events, can
-vary with \(t\). The next formal step is to package the verified affine
-probability-free support pair into the complex coordinate and lift the crossing
-and intermediate-phase theorems directly to the strong model path.
+vary with \(t\). The next formal step is to lift the crossing-order and
+intermediate-phase theorems through this coordinate directly to the strong
+model path.
