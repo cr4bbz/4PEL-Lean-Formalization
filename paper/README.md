@@ -6,7 +6,7 @@ Working manuscript:
 
 Author: Julian Voigt
 
-Current manuscript version: **0.4**
+Current manuscript version: **0.5**
 
 ## Scope
 
@@ -22,6 +22,8 @@ K = stability-filtered threshold belief
 -> complex support and truth/information coordinates
 -> four-cell balance decomposition and exact glut criterion
 -> exact complex-region classification of T/F/B/N
+-> conflation as conjugation and quarter turns as multiplication by i
+-> rotation of evidence masses and lossless (total,z,h) reconstruction
 -> numerical threshold straddling
 -> affine unit-interval threshold crossing
 -> unique two-wall crossing times
@@ -46,8 +48,10 @@ PEL4/ConvexModelSupport.lean
 
 have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-Version 0.4 adds the exact complex phase-region layer and records the already
-verified probability-free formula-support lift.
+Version 0.5 adds the verified rotation-symmetry layer, corrects the trust
+classification of `native_decide`, and records the focused complex-coordinate
+axiom audit. The paper treats the full dihedral-group action and the exact
+integer image of the evidence simplex as open formalization targets.
 The manuscript source and rendered PDF have passed a fresh build and visual
 inspection on the feature branch.
 
