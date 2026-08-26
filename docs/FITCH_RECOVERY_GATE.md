@@ -1,6 +1,6 @@
 # Fitch recovery boundary
 
-Status: `PEL4/Paradoxes/Fitch.lean` is compiler-verified on `research/preface-case-study`. `PEL4/Paradoxes/FitchRecovery.lean` is the current build gate.
+Status: historical gate, now passed. `PEL4/Paradoxes/Fitch.lean` and `PEL4/Paradoxes/FitchRecovery.lean` are both root-imported and compiler-verified on `research/complex-coordinates`.
 
 ## Verified object-language Fitch fracture
 
