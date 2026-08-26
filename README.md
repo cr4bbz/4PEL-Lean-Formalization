@@ -8,7 +8,9 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > **Research status:** This repository contains machine-checked theorems, executable finite models, and explicitly marked research directions. Claims described as **Lean-verified** have compiled successfully on the active research branch with Lean 4.31. Interpretive names and broader philosophical theses remain working research terminology unless stated otherwise.
 
 > [!NOTE]
-> The paper PDF in the repository is a snapshot of an earlier stage. The active branch contains substantial results not yet incorporated into that manuscript.
+> Paper version 0.5 tracks the complex-coordinate and dynamic model-path line.
+> The repository contains additional paradox and modal results outside that
+> manuscript's deliberately narrower scope.
 
 ---
 
@@ -318,6 +320,7 @@ PEL4/EpistemicStatus.lean
 PEL4/ComplexCoordinates.lean
 PEL4/ComplexBeliefRegions.lean
 PEL4/ComplexRotation.lean
+PEL4/ComplexModelPath.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
@@ -401,7 +404,8 @@ The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axi
 
 1. classify interaction between evidence-stable `K` and probabilistic `B`;
 2. prove sharper necessity/minimality results for modal frame correspondences;
-3. lift the complex phase classifier to probability-free strong model paths;
+3. lift crossing order and intermediate phases through the verified affine
+   complex coordinate to probability-free strong model paths;
 4. characterize dynamic preservation beyond the probability-free fragment;
 5. prove global independence/minimality results for Church-Fitch packages;
 6. expand the structural-transport abstraction across paradox families;
