@@ -1,6 +1,6 @@
 # Affine Intermediate-Phase Geometry
 
-Status: **VERIFIED** on `research/preface-case-study` by a successful local Lean 4.31 `lake build` with `PEL4/ModalDynamicsIntermediatePhase.lean` imported through `PEL4.lean`.
+Status: **VERIFIED** on `research/complex-coordinates` by the repository's Lean 4.31 CI build with `PEL4/ModalDynamicsIntermediatePhase.lean` imported through `PEL4.lean`.
 
 ## Question
 

@@ -1,7 +1,7 @@
 \section{Lean Mechanization and Verification Status}
 \label{sec:mechanization}
 
-The results in this manuscript are implemented in Lean 4.31 on the branch \texttt{research/preface-case-study}. The root module \texttt{PEL4.lean} imports the dynamic development, so a successful
+The results in this manuscript are implemented in Lean 4.31 on the complex-coordinate feature branch used by this manuscript. The root module \texttt{PEL4.lean} imports the dynamic development, so a successful
 \begin{verbatim}
 lake build
 \end{verbatim}
@@ -10,38 +10,51 @@ checks the theorem chain together with the rest of the project.
 The implementation deliberately uses small semantic layers. The principal files for the present manuscript are:
 
 \begin{center}
-\begin{tabular}{p{0.43\textwidth}p{0.45\textwidth}}
+\scriptsize
+\begin{tabular}{L{0.48\textwidth}L{0.40\textwidth}}
 \toprule
 Lean module & role in the paper\\
 \midrule
-\texttt{PEL4/FDE.lean} & four bilateral values and basic operations\\
-\texttt{PEL4/Model.lean} & finite probabilistic Kripke model interface\\
-\texttt{PEL4/FiniteProbabilityIntegrity.lean} & stronger finite-probability compatibility layer\\
-\texttt{PEL4/WeightGeneratedProbability.lean} & weight-generated measures and generic integrity theorem\\
-\texttt{PEL4/ConvexProbabilitySimplex.lean} & convex rational distributions and affine event masses\\
-\texttt{PEL4/ConvexModelPath.lean} & complete strong model-valued convex paths\\
-\texttt{PEL4/Belief.lean} & signed Lockean threshold belief\\
-\texttt{PEL4/ModalLanguage.lean} & primitive \(\Bel\), \(\Know\), and raw possibility\\
-\texttt{PEL4/ModalKnowledgeBeliefFactorization.lean} & exact \(\Know=\Stable\)-filtered \(\Bel\) theorem\\
-\texttt{PEL4/Dynamics.lean} & admissible probability-only conditionalization\\
-\texttt{PEL4/ModalDynamicsStability.lean} & probability-free invariance\\
-\texttt{PEL4/ModalDynamicsPhaseClassification.lean} & four stability phases for knowledge\\
-\texttt{PEL4/ModalDynamicsReachability.lean} & complete sixteen-transition witness family\\
-\texttt{PEL4/ModalDynamicsRobustness.lean} & exact threshold-side robustness boundary\\
-\texttt{PEL4/ModalDynamicsGeometry.lean} & Boolean threshold square and wall count\\
-\texttt{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
-\texttt{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
-\texttt{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
-\texttt{PEL4/ModalDynamicsIntermediatePhase.lean} & forced midpoint phase between sequential crossings\\
+\leanref{PEL4/FDE.lean} & four bilateral values and basic operations\\
+\leanref{PEL4/Model.lean} & finite probabilistic Kripke model interface\\
+\leanref{PEL4/FiniteProbabilityIntegrity.lean} & stronger finite-probability compatibility layer\\
+\leanref{PEL4/WeightGeneratedProbability.lean} & weight-generated measures and generic integrity theorem\\
+\leanref{PEL4/ConvexProbabilitySimplex.lean} & convex rational distributions and affine event masses\\
+\leanref{PEL4/ConvexModelPath.lean} & complete strong model-valued convex paths\\
+\leanref{PEL4/ConvexModelSupport.lean} & affine formula-support masses for the probability-free fragment\\
+\leanref{PEL4/Belief.lean} & signed Lockean threshold belief\\
+\leanref{PEL4/ModalLanguage.lean} & primitive \(\Bel\), \(\Know\), and raw possibility\\
+\leanref{PEL4/ModalKnowledgeBeliefFactorization.lean} & exact \(\Know=\Stable\)-filtered \(\Bel\) theorem\\
+\leanref{PEL4/Dynamics.lean} & admissible probability-only conditionalization\\
+\leanref{PEL4/ModalDynamicsStability.lean} & probability-free invariance\\
+\leanref{PEL4/ModalDynamicsPhaseClassification.lean} & four stability phases for knowledge\\
+\leanref{PEL4/ModalDynamicsReachability.lean} & complete sixteen-transition witness family\\
+\leanref{PEL4/ModalDynamicsRobustness.lean} & exact threshold-side robustness boundary\\
+\leanref{PEL4/ModalDynamicsGeometry.lean} & Boolean threshold square and wall count\\
+\leanref{PEL4/ComplexCoordinates.lean} & complex support and truth/information coordinates, metric identity, four-cell decomposition, and exact glut criterion\\
+\leanref{PEL4/ComplexBeliefRegions.lean} & exact complex-region classification of all four threshold phases\\
+\leanref{PEL4/ComplexRotation.lean} & Gaussian-integer operations, categorical and mass rotation, diamond containment, and lossless third coordinate\\
+\leanref{PEL4/ComplexModelPath.lean} & affine rational complex support coordinates on complete strong model paths\\
+\leanref{PEL4/ComplexModelCrossing.lean} & model-realized crossing times, midpoint phases, simultaneous glut, and complete trichotomy\\
+\leanref{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
+\leanref{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
+\leanref{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
+\leanref{PEL4/ModalDynamicsIntermediatePhase.lean} & forced midpoint phase between sequential crossings\\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \subsection{Proof style}
 
-The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, and construction of complete strong model paths. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
+The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, construction of complete strong model paths, and the complete model-level crossing classification for probability-free formulas. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
 
-Several of the finite cases are discharged by \texttt{native\_decide}. This does not weaken their status: the corresponding propositions are closed finite statements, and Lean's kernel checks the resulting proof term. The paper nevertheless distinguishes these executable witnesses from general symbolic theorems because their quantifier structure is different.
+Several older finite cases are discharged by \texttt{native\_decide}. This
+adds Lean's compiler and native evaluator to the trusted base rather than using
+kernel reduction alone. Such results remain reproducible compiler-checked
+finite witnesses, but this manuscript now marks the distinction explicitly.
+The three sixteen-case proofs in \texttt{ComplexCoordinates.lean} instead use
+\texttt{decide}; the rotation layer uses ordinary case analysis, \texttt{decide},
+and symbolic \texttt{omega} proofs.
 
 The affine path development intentionally avoids adding Mathlib. It imports Lean Core rational lemmas and proves the required unit-interval, linearity, and monotonicity facts directly. This keeps the current result lightweight and makes the boundary to a future topology-heavy development explicit.
 
@@ -50,19 +63,25 @@ The affine path development intentionally avoids adding Mathlib. It imports Lean
 The manuscript uses the following hierarchy:
 \begin{enumerate}[label=(\arabic*)]
   \item \textbf{Lean-verified theorem}: a universally quantified or closed proposition compiled successfully through the active root import.
-  \item \textbf{Finite executable witness}: a concrete model theorem checked by computation inside Lean.
+  \item \textbf{Finite executable witness}: a concrete model theorem checked by computation inside Lean, with compiler trust recorded when native evaluation is used.
   \item \textbf{Structural interpretation}: a conceptual reading of the formal results, not a separately mechanized theorem.
   \item \textbf{Literature or novelty claim}: a comparative scholarly assertion requiring an external audit.
 \end{enumerate}
 
-The central dynamic and probability-path modules through \texttt{ConvexModelPath.lean} have passed fresh local \texttt{lake build} checks. Accordingly, the reachability, robustness, wall geometry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, and strong model-path claims reported in this manuscript are machine-checked at the level of their exact Lean statements.
+The central dynamic and probability-path modules through \leanref{ComplexModelCrossing.lean}, together with \leanref{ComplexCoordinates.lean}, \leanref{ComplexBeliefRegions.lean}, and \leanref{ComplexRotation.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, rotation-symmetry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, probability-free affine-support, affine complex model-coordinate, and complete model-crossing claims reported in this manuscript are Lean-checked at the level of their exact statements, subject to the trust classification above. The focused audit reports only \leanref{propext}, \leanref{Classical.choice}, and \leanref{Quot.sound} for the complete crossing classification; no project-specific or \texttt{native\_decide} axiom occurs in that dependency chain.
 
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:
 \begin{verbatim}
-git fetch origin research/preface-case-study
-git checkout research/preface-case-study
+git fetch origin research/complex-coordinates
+git checkout research/complex-coordinates
 git pull --ff-only
 lake build
 \end{verbatim}
+The focused complex-coordinate dependency report is reproduced separately by
+\begin{verbatim}
+lake env lean PEL4/ComplexAxiomAudit.lean
+\end{verbatim}
+This audit does not cover the older finite-model modules that still use native
+evaluation.
 The paper source itself is intentionally separate from the Lean build so that manuscript compilation does not become a prerequisite for checking the formal logic.

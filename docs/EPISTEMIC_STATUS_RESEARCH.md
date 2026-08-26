@@ -1,6 +1,6 @@
 # Epistemic status and structural transport
 
-Status: verified core architecture with verified Moore, Knower, and Surprise reuse on `research/preface-case-study`.
+Status: verified core architecture with verified Moore, Knower, and Surprise reuse, carried forward on `research/complex-coordinates`.
 
 ## Why this layer exists
 

@@ -1,6 +1,6 @@
 # Convex Model Support Lift
 
-Status: **ACTIVE BUILD GATE**
+Status: **VERIFIED**
 
 ## Goal
 
@@ -47,7 +47,7 @@ and symmetrically for negative support, whenever
 ModalProbabilityFree phi.
 ```
 
-If compiler-verified, this establishes that the actual signed support
+The active root import and Lean 4.31 CI verify that the actual signed support
 coordinates of every probability-free formula are affine along a path of
 complete probabilistically certified 4-PEL models.
 
@@ -60,22 +60,24 @@ complete strong model path
 + affine mass of every fixed event.
 ```
 
-C17E targets the missing formula-level bridge:
+C17E supplies the formula-level bridge:
 
 ```text
 probability-free formula
 -> support events fixed along the path
 -> positive and negative support masses affine
--> existing threshold crossing geometry applies at model level.
+-> existing threshold crossing geometry applies at model level
+-> complete model-realized crossing trichotomy.
 ```
 
 Formulas containing probabilistic belief remain outside this theorem because
 their own evaluation, and therefore their support events, may vary with the
 probability path.
 
-## Next gate after verification
+## Completed successor gate
 
-Reuse the existing threshold-straddling, unique crossing-order, and midpoint
-phase theorems with these model-level affine support identities. The intended
-result is a genuine strong-model phase theorem for probability-free embedded
-formulas, with a separate later investigation of formulas containing `bel`.
+`PEL4/ComplexModelPath.lean` packages the two affine formula-support identities,
+and `PEL4/ComplexModelCrossing.lean` reuses threshold straddling, unique
+crossing order, and midpoint-phase geometry on complete strong models. The
+probability-free fragment now has a genuine strong-model complex phase theorem.
+The remaining investigation concerns formulas containing `bel`.

@@ -7,32 +7,56 @@ Admissible conditionalization changes only probability, yet its categorical effe
 
 Those bits supply a natural Boolean geometry. The four FDE values form a threshold square, and the number of changed coordinates gives a wall count of zero, one, or two. Numerical endpoint analysis then identifies a changed bit with straddling of the corresponding support threshold. The affine interpolation of rational support masses turns straddling into a literal threshold-hit theorem with an explicit parameter in the unit interval.
 
+The same square now has a conservative complex-coordinate presentation. In raw
+support coordinates, the four vertices are (0,1,i,1+i), and squared
+Euclidean distance is exactly the threshold-wall count. In transformed
+truth/information coordinates, the vertices become (1,-1,i,-i): the real
+axis records strict truth/falsity polarity and the imaginary axis records
+glut/gap polarity. For a normalized four-cell profile the coordinate is
+\[
+  (m_T-m_F)+i(m_B-m_N),
+\]
+and the resulting balance analysis yields the exact threshold-glut criterion
+\[
+  2k+m_N+|m_T-m_F|\le m+m_B.
+\]
+Moreover, \(m+\operatorname{Im}z\pm\operatorname{Re}z\) reconstruct twice the
+two support masses, so comparison with \(2k\) classifies all four threshold
+phases by exact coordinate regions.
+Gaussian-integer multiplication now makes this geometry operational:
+multiplication by \(i\) is the categorical quarter turn
+\(\Tval\to\Bval\to\Fval\to\Nval\to\Tval\) and the corresponding cyclic
+rotation of the four evidence cells. The additional real mode
+\(h=(m_T+m_F)-(m_B+m_N)\) makes \((m,z,h)\) a lossless representation of the
+four-cell profile. This use of \(i\) is a coordinate symmetry; it does not add
+complex multiplication to the object logic. A full formal \(D_4\) group action
+and an exact lattice-image theorem remain separate targets.
+
 For diagonal two-wall transitions, the two support coordinates have unique crossing times. Their order adds temporal structure absent from the endpoints. Simultaneous crossing is exactly passage through \((c,c)\). Sequential crossing forces an adjacent intermediate phase at the rational midpoint. Consequently, a diagonal endpoint transition has a short hidden phase history. For \(\Nval\to\Bval\), positive-first motion yields \(\Nval\to\Tval\to\Bval\), while negative-first motion yields \(\Nval\to\Fval\to\Bval\). The remaining diagonals obey the corresponding symmetric table.
 
-The probability layer can now also be given a stronger constructive foundation. Nonnegative normalized rational world weights generate finite measures satisfying explicit integrity laws. The rational segment between two such distributions remains inside the finite probability simplex, and the mass of every fixed event moves affinely. These interpolated local distributions can be packaged into complete \texttt{StrongProbabilityModel} paths while worlds, accessibility, valuation, and threshold remain fixed.
+The probability layer can now also be given a stronger constructive foundation. Nonnegative normalized rational world weights generate finite measures satisfying explicit integrity laws. The rational segment between two such distributions remains inside the finite probability simplex, and the mass of every fixed event moves affinely. These interpolated local distributions can be packaged into complete \texttt{StrongProbabilityModel} paths while worlds, accessibility, valuation, and threshold remain fixed. For every probability-free modal formula, its positive and negative support events remain fixed and both formula-support masses therefore move affinely along the same complete model path. Their packaged coordinate \(z_\varphi=P^+_\varphi+iP^-_\varphi\) consequently satisfies the exact model-level identity \(z_\varphi(t)=(1-t)z_\varphi(0)+t z_\varphi(1)\). The complete crossing classification is now lifted through this identity: sequential order yields an actual complete midpoint model in the forced adjacent phase, while simultaneous order yields one complete model at \((c,c)\) with value \(\Bval\).
 
 The main verified dependency chain is therefore
 \[
 \boxed{
+\begin{gathered}
 \text{finite probability integrity}
-\to
-\text{probability simplex}
-\to
-\text{strong model path}
-\to
-\text{affine fixed-event mass}
-\to
-\text{threshold side}
-\to
-\text{categorical wall}
-\to
-\text{crossing order}
-\to
-\text{intermediate FDE phase}.}
+\to \text{probability simplex}
+\\[-1pt]
+\to \text{strong model path}
+\to \text{affine complex formula support}
+\to \text{threshold side}
+\\[-1pt]
+\to \text{categorical wall}
+\to \text{complex phase coordinate}
+\\[-1pt]
+\to \text{crossing order}
+\to \text{intermediate FDE phase}
+\end{gathered}}
 \]
 
-This chain turns the four-valued endpoint space into more than a classification table. It gives the beginning of a kinematics of epistemic phases in which a genuine model-valued probability path can project to a piecewise categorical FDE history.
+This chain turns the four-valued endpoint space into more than a classification table. It gives a verified kinematics of epistemic phases in which a genuine model-valued probability path projects to its model-realized categorical FDE history.
 
-The remaining lifting problem is now sharper than before. Model existence along the rational convex path is verified for weight-generated strong endpoints, but the positive and negative support events of an arbitrary probability-sensitive modal formula need not remain fixed as the model varies. The next step is therefore to characterize a path-invariant formula fragment, beginning with atomic and probability-free formulas, and to show that its signed belief-support masses inherit the verified affine event-mass theorem. A separate question asks when the intermediate models can themselves be generated by admissible conditionalization rather than merely connected by a valid convex probability path.
+The remaining lifting problem now begins beyond the probability-free fragment. The support events of a formula containing probabilistic belief need not remain fixed as the model varies, so the next formula-level step is to characterize a maximal path-invariant fragment containing selected belief formulas. A separate question asks when the intermediate models can themselves be generated by admissible conditionalization rather than merely connected by a valid convex probability path.
 
-Only after those formula-level and update-level distinctions are settled should the development move to arbitrary continuous paths or general measure spaces. The finite rational theory already establishes complete reachability, exact robustness, wall geometry, event order, forced intermediate phases, finite probability integrity, and strong model-valued convex paths, while keeping stronger topological and literature claims explicit rather than hidden inside the formal results.
+Only after those formula-level and update-level distinctions are settled should the development move to arbitrary continuous paths or general measure spaces. The finite rational theory already establishes complete reachability, exact robustness, wall geometry, event order, model-realized intermediate phases, simultaneous boundary models, finite probability integrity, and strong model-valued convex paths, while keeping stronger topological and literature claims explicit rather than hidden inside the formal results.

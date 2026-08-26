@@ -6,11 +6,12 @@ Working manuscript:
 
 Author: Julian Voigt
 
-Current manuscript version: **0.2**
+Current manuscript version: **0.5**
 
 ## Scope
 
-This paper records the verified dynamic research line developed on `research/preface-case-study`:
+This paper records the verified dynamic research line currently developed on
+`research/complex-coordinates`:
 
 ```text
 K = stability-filtered threshold belief
@@ -18,6 +19,11 @@ K = stability-filtered threshold belief
 -> complete T/F/B/N reachability
 -> threshold-side robustness
 -> Boolean threshold-square geometry
+-> complex support and truth/information coordinates
+-> four-cell balance decomposition and exact glut criterion
+-> exact complex-region classification of T/F/B/N
+-> conflation as conjugation and quarter turns as multiplication by i
+-> rotation of evidence masses and lossless (total,z,h) reconstruction
 -> numerical threshold straddling
 -> affine unit-interval threshold crossing
 -> unique two-wall crossing times
@@ -26,7 +32,12 @@ K = stability-filtered threshold belief
 -> finite probability integrity
 -> weight-generated finite measures
 -> convex rational probability simplex
--> complete strong model-valued convex paths.
+-> complete strong model-valued convex paths
+-> affine positive/negative support masses for probability-free formulas
+-> affine complex support coordinates on complete strong model paths
+-> model-realized crossing times and sequential midpoint phases
+-> simultaneous `(c,c)` model with inclusive glut value
+-> complete strong-model crossing trichotomy.
 ```
 
 The manuscript is intentionally narrower than the complete 4-PEL repository. Preface conflict topology, Fitch/Church-Fitch, Knower, Sorites, Surprise Examination, and the broader structural-transport program are mentioned only where they clarify the dynamic interpretation.
@@ -36,12 +47,19 @@ The manuscript is intentionally narrower than the complete 4-PEL repository. Pre
 The central dynamic and probability-path results through
 
 ```text
-PEL4/ConvexModelPath.lean
+PEL4/ComplexModelCrossing.lean
 ```
 
 have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-The LaTeX manuscript previously passed a fresh local `latexmk -pdf main.tex` build and produced `paper/main.pdf`. Because version 0.2 adds a new model-path section and revises several existing sections, the updated manuscript should be rendered again after pulling the latest branch.
+Version 0.5 adds the verified rotation-symmetry layer, affine complex model
+paths, and their complete model-realized crossing classification. It corrects
+the trust classification of `native_decide` and records the focused axiom
+audit; the complete crossing chain uses no native axiom. The paper treats the full
+dihedral-group action and the exact integer image of the evidence simplex as
+open formalization targets.
+The manuscript source and rendered PDF have passed a fresh build and visual
+inspection on the feature branch.
 
 The stronger probability development now verifies:
 
@@ -51,12 +69,20 @@ FiniteProbabilityIntegrity
 -> convex interpolation preserves finite distributions
 -> every fixed event mass is affine
 -> every rational interpolation point yields a StrongProbabilityModel
--> worlds, R, val, and c remain fixed along the model path.
+-> worlds, R, val, and c remain fixed along the model path
+-> every probability-free formula has an affine complex support coordinate
+-> every two-wall endpoint change has a complete model-level trichotomy.
 ```
 
 This closes the model-existence gap for **weight-generated strong endpoint models on a common semantic skeleton**.
 
-Two boundaries remain explicit. First, for an arbitrary probability-sensitive modal formula, its positive or negative support event may itself vary with the path parameter, so the fixed-event affine theorem does not automatically yield affine formula-support mass. Second, the convex intermediate models are not claimed to arise by admissible conditionalization of the source model. No theorem about arbitrary continuous paths or general measure spaces is claimed.
+Two boundaries remain explicit. First, for a modal formula containing
+probabilistic belief, its positive or negative support event may itself vary
+with the path parameter. The probability-free fragment is verified, but a
+maximal fragment containing `bel` is not. Second, the convex intermediate
+models are not claimed to arise by admissible conditionalization of the source
+model. No theorem about arbitrary continuous paths or general measure spaces
+is claimed.
 
 The manuscript also makes no strong novelty claim before a systematic literature audit.
 
@@ -91,12 +117,14 @@ main.tex
 references.bib
 figures/
   fde_phase_geometry.tex
+  complex_coordinate_geometry.tex
 sections/
   01_introduction.tex
   02_semantic_kernel.tex
   03_dynamic_architecture.tex
   04_complete_reachability.tex
   05_robustness_and_square.tex
+  05_complex_coordinates.tex
   06_affine_crossing.tex
   07_crossing_order.tex
   08_intermediate_phases.tex
@@ -112,16 +140,20 @@ The FDE phase figure is generated directly from TikZ source. It visualizes the t
 
 ## Next paper gate
 
-The next mathematical step is now a **formula-level model-path lift** rather than model existence itself.
+The packaged complex model-path lift and its crossing classification are now
+complete. The next mathematical step is the **boundary beyond the
+probability-free fragment**.
 
 The recommended sequence is:
 
 ```text
 verified convex strong model path
--> prove atomic support events are fixed along the path
--> extend to a path-invariant / probability-free modal fragment
--> identify modalPositiveBeliefMass and modalNegativeBeliefMass with affine fixed-event masses
+-> verified probability-free support-event invariance
+-> verified affine positive and negative formula-support masses
+-> package both masses into an affine truth/information coordinate
 -> lift crossing-order and intermediate-phase theorems to genuine model states
+-> characterize a maximal path-invariant fragment containing selected bel formulas
+-> formalize the simplex-to-diamond projection and its fibers
 -> separately study update-generated paths
 -> only then consider arbitrary continuous or measure-theoretic paths.
 ```

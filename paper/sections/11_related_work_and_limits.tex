@@ -7,6 +7,12 @@ The threshold connection between all-or-nothing belief and degrees of belief bel
 
 The update perspective is adjacent to dynamic epistemic logic, where informational actions transform epistemic models and knowledge states \cite{vanDitmarschHoekKooi2007}. The conditionalization operator studied here is narrower: it preserves worlds, accessibility, valuation, and threshold and changes only local probabilities. Conversely, the four-valued signed-support geometry developed here is not part of the standard DEL vocabulary. The manuscript reports this construction without claiming that it is novel relative to all probabilistic or nonclassical dynamic epistemic systems.
 
+The complex notation introduced in Section~\ref{sec:complex-coordinates} is a
+coordinate presentation of the existing bilateral square. It does not invoke
+complex probability amplitudes and should not be read as a quantum-logical
+claim. A literature comparison with algebraic and geometric presentations of
+bilattices remains part of the publication-critical audit.
+
 \paragraph{Novelty boundary.}
 No strong novelty claim is made in this version. The individual mathematical ingredients are elementary: Boolean pairs, threshold comparisons, affine interpolation, finite convex probability, linear order, and midpoint arguments. The research contribution currently established internally to the project is the machine-checked composition of these ingredients into one dependency chain connecting admissible probabilistic update to four-valued categorical reachability, robustness, crossing order, intermediate phase structure, and a model-valued rational probability path. A systematic literature audit is publication-critical.
 
@@ -14,13 +20,21 @@ No strong novelty claim is made in this version. The individual mathematical ing
 
 The earlier support-to-model existence problem now has a positive answer for a precise class. Given two weight-generated strong endpoint models on the same semantic skeleton, rational convex interpolation of their local weights produces a \texttt{StrongProbabilityModel} for every \(t\in[0,1]\cap\mathbb{Q}\). Worlds, accessibility, valuation, and threshold remain fixed, and the probability of every fixed event varies affinely.
 
-Two stronger realization questions remain open.
+One substantial formula fragment and its complete affine crossing
+classification are now settled, while two stronger realization questions
+remain open.
 
 \begin{question}[Formula-level support realization]
 For which modal formulas \(\varphi\) are the positive and negative support events invariant along a convex strong model path, so that the verified affine fixed-event theorem applies directly to \(\Ppos_t(\varphi)\) and \(\Pneg_t(\varphi)\)?
 \end{question}
 
-Atomic propositions are the natural first case because their valuation is fixed by construction. A broader probability-free fragment is plausible but requires an explicit theorem connecting path-invariance of \texttt{evalModal} to fixed support-event membership.
+Lean verifies the complete probability-free fragment, including arbitrary
+nesting of negation, conjunction, primitive knowledge, and raw possibility.
+For this fragment the crossing times and sequential midpoint phases are now
+realized by complete strong models, and the simultaneous point is exactly the
+glut value at \((c,c)\). The open part is to characterize the maximal
+path-invariant fragment that may also contain selected occurrences of
+probabilistic belief.
 
 \begin{question}[Update-generated path]
 When can the intermediate models of a convex strong model path themselves be obtained by admissible conditionalization of the source model, possibly using a parameterized family of evidence events?

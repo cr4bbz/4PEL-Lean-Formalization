@@ -1,6 +1,6 @@
 # Knowledge sanity gate before Fitch
 
-Status: all semantic knowledge/conjunction/possibility gates and the conservative modal object language are compiler-verified on `research/preface-case-study`. `PEL4/Paradoxes/Fitch.lean` is the current build gate.
+Status: historical gate, now passed. The semantic knowledge/conjunction/possibility layers, conservative modal object language, and Fitch modules are root-imported and compiler-verified on `research/complex-coordinates`.
 
 ## Verified knowledge semantics
 

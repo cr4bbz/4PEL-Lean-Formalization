@@ -1,0 +1,62 @@
+% Two equivalent coordinate views of the four categorical FDE values.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  x=1.65cm,
+  y=1.65cm,
+  >=Latex,
+  line cap=round,
+  line join=round,
+  every node/.style={font=\small}
+]
+  % Raw support square.
+  \begin{scope}[shift={(0,0)}]
+    \draw[->,thick] (-0.08,0) -- (1.28,0);
+    \draw[->,thick] (0,-0.08) -- (0,1.28);
+    \draw[black!45] (0,0) rectangle (1,1);
+
+    \filldraw[fill=white,thick] (0,0) circle (2.2pt)
+      node[below left] {$\Nval=0$};
+    \filldraw[fill=white,thick] (1,0) circle (2.2pt)
+      node[below right] {$\Tval=1$};
+    \filldraw[fill=white,thick] (0,1) circle (2.2pt)
+      node[above left] {$\Fval=i$};
+    \filldraw[fill=white,thick] (1,1) circle (2.2pt)
+      node[above right] {$\Bval=1+i$};
+
+    \node[font=\bfseries] at (0.52,1.48) {support coordinates};
+    \node at (0.52,-0.32) {$z_{\mathrm{s}}=v^+ + i v^-$};
+  \end{scope}
+
+  % Coordinate-change arrow.
+  \draw[-{Latex[length=2.8mm]},very thick,blue!60!black]
+    (1.45,0.55) -- (2.55,0.55);
+  \node[align=center,text=blue!55!black,font=\scriptsize] at (2.00,0.28)
+    {affine change};
+
+  % Rotated truth/information diamond.
+  \begin{scope}[shift={(3.85,0.55)}]
+    \draw[->,thick] (-1.30,0) -- (1.34,0);
+    \draw[->,thick] (0,-1.28) -- (0,1.34);
+    \draw[black!45] (0,-1) -- (1,0) -- (0,1) -- (-1,0) -- cycle;
+
+    \filldraw[fill=white,thick] (1,0) circle (2.2pt)
+      node[above right] {$\Tval=1$};
+    \filldraw[fill=white,thick] (-1,0) circle (2.2pt)
+      node[above left] {$\Fval=-1$};
+    \filldraw[fill=white,thick] (0,1) circle (2.2pt)
+      node[above right] {$\Bval=i$};
+    \filldraw[fill=white,thick] (0,-1) circle (2.2pt)
+      node[below right] {$\Nval=-i$};
+
+    \node[font=\bfseries] at (0,1.48) {truth/information coordinates};
+    \node at (0,-1.38) {$z_{\mathrm{ti}}=(v^+-v^-)+i(v^++v^--1)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Two equivalent embeddings of the four categorical FDE values. The
+raw coordinate preserves the positive/negative support square. The transformed
+coordinate separates classical truth polarity on the real axis from
+glut/gap polarity on the imaginary axis. The figure represents a verified
+coordinate transformation, not a new complex-valued logical connective.}
+\label{fig:complex-coordinate-geometry}
+\end{figure}

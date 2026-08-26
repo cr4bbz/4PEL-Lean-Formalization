@@ -8,7 +8,9 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > **Research status:** This repository contains machine-checked theorems, executable finite models, and explicitly marked research directions. Claims described as **Lean-verified** have compiled successfully on the active research branch with Lean 4.31. Interpretive names and broader philosophical theses remain working research terminology unless stated otherwise.
 
 > [!NOTE]
-> The paper PDF in the repository is a snapshot of an earlier stage. The active branch contains substantial results not yet incorporated into that manuscript.
+> Paper version 0.5 tracks the complex-coordinate and dynamic model-path line.
+> The repository contains additional paradox and modal results outside that
+> manuscript's deliberately narrower scope.
 
 ---
 
@@ -220,6 +222,43 @@ belief(not exam Friday):  T -> N -> F.
 
 The backward-elimination extension verifies that each day is predictable in its special elimination context while none is positively predicted initially. Working diagnosis: **context-indexed prediction transport failure**.
 
+### 13. Complex truth/information coordinates
+
+The Boolean support pair `(pos, neg)` has a dependency-free complex-coordinate
+presentation. The raw embedding sends it to `pos + i neg`; the rotated
+truth/information embedding sends the four values to:
+
+```text
+T ->  1     F -> -1
+B ->  i     N -> -i.
+```
+
+Lean verifies that both categorical embeddings are injective, FDE negation is
+`i * conjugate(z)` in raw support coordinates and `-conjugate(z)` in rotated
+coordinates, and the existing threshold-wall count is exactly squared
+Euclidean distance in the raw support square.
+
+For a normalized finite four-cell profile, the rotated coordinate decomposes
+as:
+
+```text
+(P_pos - P_neg) + i(P_pos + P_neg - 1)
+  = (P_T - P_F) + i(P_B - P_N).
+```
+
+At integer scale, the sharper balance condition exactly characterizes a
+threshold glut:
+
+```text
+2k + P_N + |P_T - P_F| <= total + P_B.
+```
+
+The same truth/information coordinates give exact half-plane classifications
+of all four threshold phases `T`, `F`, `B`, and `N`.
+
+Complex multiplication is not introduced as a logical connective; the
+construction is a coordinate and projection layer only.
+
 ---
 
 ## Paradox map
@@ -278,6 +317,11 @@ PEL4/FDE.lean
 PEL4/Model.lean
 PEL4/Belief.lean
 PEL4/EpistemicStatus.lean
+PEL4/ComplexCoordinates.lean
+PEL4/ComplexBeliefRegions.lean
+PEL4/ComplexRotation.lean
+PEL4/ComplexModelPath.lean
+PEL4/ComplexModelCrossing.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
@@ -313,6 +357,10 @@ docs/MODAL_KNOWLEDGE_CLASSIFICATION.md
 docs/PARADOX_TRANSPORT_RESEARCH.md
 docs/RESEARCH_QUESTIONS.md
 docs/CONFLICT_NERVE_RESEARCH.md
+docs/COMPLEX_ROTATION.md
+docs/COMPLEX_MODEL_CROSSING.md
+docs/AXIOM_AUDIT.md
+docs/VERIFICATION_POLICY.md
 ```
 
 ---
@@ -324,7 +372,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/preface-case-study
+git checkout research/complex-coordinates
 lake build
 ```
 
@@ -341,8 +389,10 @@ Several distinctions remain explicit:
 - Primitive raw `Diamond` is not definitionally the same as `not K not`.
 - The Liar and Gödel-inspired modules are not complete formalizations of semantic diagonalization or incompleteness.
 - Conflict-Nerve Euler/signature results are formalized; general homology and persistence are not.
-- Dynamic evidence-stable knowledge remains largely open.
-- The zero-evidence conditionalization boundary in the dynamics layer still needs repair before strong general dynamic claims.
+- Dynamic evidence-stable knowledge is classified for the current safe
+  conditionalization and affine-path fragments; broader update languages remain open.
+- Zero-evidence updates are excluded by the verified
+  `ConditionalizationAdmissible` interface rather than repaired by an axiom.
 - Exact necessity/minimality of every modal frame correspondence is not yet proved.
 - Novelty claims for the combined structural and modal terminology require a systematic literature audit.
 
@@ -356,11 +406,12 @@ The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axi
 
 1. classify interaction between evidence-stable `K` and probabilistic `B`;
 2. prove sharper necessity/minimality results for modal frame correspondences;
-3. repair the zero-evidence conditionalization boundary;
-4. study dynamic preservation and destruction of `K` under update;
-5. prove global independence/minimality results for Church-Fitch packages;
-6. expand the structural-transport abstraction across paradox families;
-7. deepen Conflict-Nerve topology to homology and persistence;
-8. perform a systematic literature/novelty audit before publication claims.
+3. characterize dynamic preservation beyond the probability-free fragment;
+4. formalize the exact simplex-to-diamond image and its fibers;
+5. distinguish convex model paths from conditionalization-generated paths;
+6. prove global independence/minimality results for Church-Fitch packages;
+7. expand the structural-transport abstraction across paradox families;
+8. deepen Conflict-Nerve topology to homology and persistence;
+9. perform a systematic literature/novelty audit before publication claims.
 
 4-PEL is best read as a machine-checkable laboratory for the geometry, dynamics, modal structure, and information loss behind epistemic paradoxes.

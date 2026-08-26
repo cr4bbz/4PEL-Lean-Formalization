@@ -1,0 +1,302 @@
+\section{Complex Coordinates for Truth and Information}
+\label{sec:complex-coordinates}
+
+The Boolean support square admits a useful complex-coordinate presentation.
+This presentation is conservative: it changes neither the four FDE values nor
+their logical operations. It packages the two independent support coordinates
+into one planar object and makes two geometric decompositions explicit.
+
+\subsection{The raw support embedding}
+
+For an FDE value \(v=(v^+,v^-)\in\{0,1\}^2\), define
+\[
+  z_{\mathrm{s}}(v)=v^+ + i v^-.
+\]
+The four values become
+\[
+  z_{\mathrm{s}}(\Nval)=0,\qquad
+  z_{\mathrm{s}}(\Tval)=1,\qquad
+  z_{\mathrm{s}}(\Fval)=i,\qquad
+  z_{\mathrm{s}}(\Bval)=1+i.
+\]
+Thus the imaginary direction records negative support as an independent
+coordinate; it is not identified with the numerical negative of positive
+support.
+
+Since FDE negation exchanges the two support bits, the raw coordinate obeys
+\[
+  z_{\mathrm{s}}(\neg v)=i\,\overline{z_{\mathrm{s}}(v)}.
+\]
+In the Lean implementation, the right-hand side is represented directly as
+the coordinate swap \((x,y)\mapsto(y,x)\). No multiplication operation on
+complex values is added to the object logic.
+
+\begin{theorem}[Raw coordinate representation]
+The map \(z_{\mathrm{s}}\) is injective. Moreover, for all FDE values \(u,v\),
+\[
+  \dthr(u,v)=\left|z_{\mathrm{s}}(u)-z_{\mathrm{s}}(v)\right|^2.
+\]
+Hence the existing combinatorial wall count is exactly squared Euclidean
+distance on the four vertices of the support square.
+\statusverified
+\end{theorem}
+
+\subsection{Truth/information coordinates}
+
+The affine change of coordinates
+\[
+  z_{\mathrm{ti}}(v)
+  =(v^+-v^-)+i(v^++v^--1)
+\]
+rotates and rescales the support square into a diamond. At its vertices,
+\[
+  z_{\mathrm{ti}}(\Tval)=1,\qquad
+  z_{\mathrm{ti}}(\Fval)=-1,\qquad
+  z_{\mathrm{ti}}(\Bval)=i,\qquad
+  z_{\mathrm{ti}}(\Nval)=-i.
+\]
+The real axis therefore distinguishes truth-only from falsity-only status. The
+imaginary axis distinguishes overdetermination from underdetermination: positive
+imaginary direction points toward glut, negative imaginary direction toward
+gap. Figure~\ref{fig:complex-coordinate-geometry} displays the two equivalent
+categorical pictures.
+
+\input{figures/complex_coordinate_geometry}
+
+Negation now has the form
+\[
+  z_{\mathrm{ti}}(\neg v)=-\overline{z_{\mathrm{ti}}(v)}.
+\]
+It reverses the truth/falsity coordinate while preserving the glut/gap
+coordinate. Consequently, the classical values \(1\) and \(-1\) form a
+two-cycle, whereas \(i\) and \(-i\) are fixed. This is the same geometric
+pattern that appears in the project's Knower fixed-point bifurcation, although
+the present section proves only the general FDE coordinate identity.
+
+\begin{theorem}[Truth/information representation]
+The map \(z_{\mathrm{ti}}\) is injective, maps the four FDE values to
+\(1,-1,i,-i\), and represents FDE negation by
+\(z\mapsto-\overline z\).
+\statusverified
+\end{theorem}
+
+\subsection{Four-cell evidence decomposition}
+
+Consider a finite evidence profile partitioned into masses
+\[
+  m_T,\quad m_B,\quad m_N,\quad m_F,
+\]
+with total mass
+\[
+  m_T+m_B+m_N+m_F=m.
+\]
+Positive and negative support masses are
+\[
+  m^+=m_T+m_B,
+  \qquad
+  m^-=m_F+m_B.
+\]
+The truth/information transformation then gives the exact identity
+\[
+  (m^+-m^-)+i(m^++m^--m)
+  =
+  (m_T-m_F)+i(m_B-m_N).
+\]
+
+\begin{theorem}[Four-cell balance decomposition]
+For every normalized finite four-cell profile, the real coordinate of the
+transformed support masses is the strict truth/falsity balance \(m_T-m_F\),
+and the imaginary coordinate is the conflict/ignorance balance \(m_B-m_N\).
+\statusverified
+\end{theorem}
+
+This identity makes the role of the imaginary coordinate precise. It does not
+measure contradiction alone; it measures net glut relative to gap. In
+particular, two distinct four-cell distributions can agree on both balances.
+The complex coordinate is therefore a projection of the richer evidence state,
+not a reconstruction of it.
+
+\subsection{A balance-sensitive glut bound}
+
+Let \(k\) be an integer threshold and suppose both signed support masses cross
+it:
+\[
+  k\le m_T+m_B,
+  \qquad
+  k\le m_F+m_B.
+\]
+The standard overlap argument yields \(2k\le m+m_B\). The coordinate
+decomposition exposes a sharper statement.
+
+\begin{theorem}[Exact balance-sensitive threshold-glut criterion]
+A normalized finite four-cell profile is a threshold glut if and only if
+\[
+  2k+m_N+|m_T-m_F|\le m+m_B.
+\]
+The ordinary overlap bound follows by dropping the two additional nonnegative
+terms.
+\statusverified
+\end{theorem}
+
+Gap mass and strict truth/falsity imbalance therefore consume part of the
+available threshold budget. The theorem is stronger than the coarse overlap
+bound while remaining elementary and dependency-free.
+
+\subsection{Exact complex phase regions}
+
+Write the truth/information coordinate as (z=x+iy). At integer scale, the
+two expressions
+\[
+  m+y+x=2m^+,
+  \qquad
+  m+y-x=2m^-
+\]
+reconstruct twice the positive and negative support masses. Comparison with
+the doubled threshold therefore yields the complete phase partition:
+\[
+\begin{array}{rcl}
+\Bval &\Longleftrightarrow& 2k\le m+y+x\ \text{and}\ 2k\le m+y-x,\\
+\Tval &\Longleftrightarrow& 2k\le m+y+x\ \text{and}\ m+y-x<2k,\\
+\Fval &\Longleftrightarrow& m+y+x<2k\ \text{and}\ 2k\le m+y-x,\\
+\Nval &\Longleftrightarrow& m+y+x<2k\ \text{and}\ m+y-x<2k.
+\end{array}
+\]
+
+\begin{theorem}[Truth/information phase classification]
+Every normalized finite scaled evidence profile lies in exactly the coordinate
+region corresponding to its threshold value \(\Tval,\Fval,\Bval\), or
+\(\Nval\). The two region coordinates are exactly twice its signed support
+masses.
+\statusverified
+\end{theorem}
+
+\subsection{Multiplication, conjugation, and quarter-turn symmetry}
+
+The presentation above deliberately withheld multiplication. The new rotation
+layer equips the integer coordinate pair with Gaussian-integer multiplication
+and complex conjugation. Write \(\rho(z)=iz\), so
+\(\rho(x+iy)=-y+ix\).
+
+\begin{theorem}[Coordinate operations]
+For every integer coordinate \(z\),
+\[
+  i^2=-1,\qquad
+  \mathtt{iConjugate}(z)=i\overline z,
+  \qquad
+  \mathtt{negConjugate}(z)=-\overline z.
+\]
+Four successive applications of \(\rho\) return \(z\).
+\statusverified
+\end{theorem}
+
+At the categorical level, let \(\mathsf C\) denote conflation, which exchanges
+\(\Bval\) and \(\Nval\) while fixing \(\Tval\) and \(\Fval\), and let
+\(\rho_{\mathrm{FDE}}\) be the cycle
+\[
+  \Tval\longmapsto\Bval\longmapsto\Fval
+  \longmapsto\Nval\longmapsto\Tval.
+\]
+
+\begin{theorem}[Conjugation and rotation]
+In truth/information coordinates,
+\[
+  z_{\mathrm{ti}}(\mathsf C v)=\overline{z_{\mathrm{ti}}(v)},
+  \qquad
+  z_{\mathrm{ti}}(\rho_{\mathrm{FDE}}v)
+    =i\,z_{\mathrm{ti}}(v).
+\]
+The categorical rotation has order four. It is not any of
+\(\mathrm{id}\), \(\neg\), \(\mathsf C\), or \(\neg\circ\mathsf C\),
+and for every value \(v\),
+\[
+  \dthr(v,\rho_{\mathrm{FDE}}v)=1.
+\]
+\statusverified
+\end{theorem}
+
+Negation and conflation commute and generate the identity, two reflections,
+and their half turn. Adding the verified quarter turn gives the familiar
+dihedral interpretation of the square. The present Lean module proves the
+generating transformations and their relevant identities; it does not yet
+package all eight transformations as a formal \(D_4\) group action.
+\statusinterpretive
+
+Complex notation is particularly economical here because scalar multiplication
+by \(i\) composes the oriented quarter turns. The same linear action could also
+be represented over \(\mathbb R^2\) by the matrix
+\(\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)\); the result
+therefore establishes a canonical complex presentation rather than the
+necessity of complex numbers.
+
+\subsection{Rotation and lossless extension of four-cell evidence}
+
+The categorical cycle lifts to profiles through
+\[
+  (m_T,m_B,m_N,m_F)\longmapsto(m_N,m_T,m_F,m_B).
+\]
+
+\begin{theorem}[Mass rotation and diamond containment]
+For every normalized four-cell profile \(s\),
+\[
+  z(\rho s)=i\,z(s),
+  \qquad
+  |\operatorname{Re}z(s)|+|\operatorname{Im}z(s)|\le m.
+\]
+The formal diamond statement is given by the four equivalent linear
+inequalities \(\pm\operatorname{Re}z\pm\operatorname{Im}z\le m\).
+\statusverified
+\end{theorem}
+
+This is a containment result. For natural cell masses at a fixed total, parity
+and integrality constrain the realized lattice points; exact surjectivity onto
+the integer diamond is not asserted.
+
+The complex projection retains two of the three independent coordinates of a
+normalized four-cell profile. Define the remaining real mode by
+\[
+  h=(m_T+m_F)-(m_B+m_N).
+\]
+
+\begin{theorem}[Lossless extension]
+For every normalized finite profile,
+\[
+\begin{aligned}
+  4m_T&=m+h+2\operatorname{Re}z,
+  &4m_F&=m+h-2\operatorname{Re}z,\\
+  4m_B&=m-h+2\operatorname{Im}z,
+  &4m_N&=m-h-2\operatorname{Im}z.
+\end{aligned}
+\]
+Hence \((m,z,h)\) reconstructs the entire profile, and rotation negates the
+third coordinate: \(h(\rho s)=-h(s)\).
+\statusverified
+\end{theorem}
+
+The structural reading is that \(\operatorname{Re}z\) measures truth against
+falsity, \(\operatorname{Im}z\) measures conflict against ignorance, and
+\(h\) measures classically determined mass against glutty or gappy mass.
+\statusinterpretive
+
+\subsection{Classifier equivariance and its boundary}
+
+\begin{theorem}[Quarter-turn equivariance away from the tie diagonal]
+Let \(2k=m\). If
+\(\operatorname{Im}z(s)\neq\operatorname{Re}z(s)\), then
+\[
+  \operatorname{val}_k(\rho s)
+    =\rho_{\mathrm{FDE}}\bigl(\operatorname{val}_k(s)\bigr).
+\]
+\statusverified
+\end{theorem}
+
+The side condition is substantive. Threshold equality counts as support, so the
+classifier's tie rule is not invariant under every quarter turn. For example,
+the profile \(m_T=m_F=1\), \(m_B=m_N=0\) at \(k=1\) has \(z=0\) and value
+\(\Bval\); its rotated profile again has value \(\Bval\), whereas categorical
+rotation would predict \(\Fval\).
+
+\paragraph{Formal boundary.}
+Complex multiplication acts on coordinates and evidence profiles, not as a
+truth function of the object language. No quantum-probabilistic interpretation
+is asserted. The full dihedral group action, exact integer image of the
+four-cell simplex, and model-path lift of the equivariance theorem remain open.

@@ -1,6 +1,6 @@
 # Threshold-Side Robustness under Conditionalization
 
-Status: **VERIFIED** on `research/preface-case-study` by local Lean 4.31 `lake build` reported 2026-08-22.
+Status: **VERIFIED** on `research/complex-coordinates` by the repository's Lean 4.31 CI build.
 
 ## Motivation
 
