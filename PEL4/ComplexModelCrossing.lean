@@ -472,7 +472,16 @@ theorem convexStrongModelPath_probabilityFree_simultaneous_crossing
     rw [hSim]
     exact pair.negative_hit
   refine ⟨?_, hre, him⟩
-  rw [evalModal_bel_eq_modalSupportComplexThresholdState, hre, him]
+  rw [convexStrongModelAt_evalBel_probabilityFree_eq_affineThresholdState
+    worlds R q0 q1 val c h0 h1 hcHalf hcOne
+    pair.tp pair.tp_nonneg pair.tp_le_one i w hFree]
+  change affineThresholdState (c i)
+    z0.re z1.re z0.im z1.im pair.tp = FDEValue.B
+  have hneg : affineRatPath z0.im z1.im pair.tp = c i := by
+    rw [hSim]
+    exact pair.negative_hit
+  unfold affineThresholdState
+  rw [pair.positive_hit, hneg]
   simp [supportThresholdState, FDEValue.B]
 
 /-- Complete model-theoretic classification of a diagonal belief transition
