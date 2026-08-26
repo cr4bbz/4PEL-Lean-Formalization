@@ -64,6 +64,16 @@ def squaredDistance (z w : ComplexCoord Int) : Int :=
   let di := z.im - w.im
   dr * dr + di * di
 
+/-- Two coordinates are equal when both components are equal. -/
+theorem eq_of_re_im_eq {α : Type} {z w : ComplexCoord α}
+    (hre : z.re = w.re) (him : z.im = w.im) : z = w := by
+  rcases z with ⟨zr, zi⟩
+  rcases w with ⟨wr, wi⟩
+  simp only at hre him
+  cases hre
+  cases him
+  rfl
+
 end ComplexCoord
 
 /-- Boolean support as an integer coordinate. -/
@@ -188,11 +198,11 @@ def cellBalanceCoord (s : FourCellMass) : ComplexCoord Int :=
 `T - F` and conflict/ignorance balance `B - N`. -/
 theorem supportBalanceCoord_eq_cellBalanceCoord (s : FourCellMass) :
     s.supportBalanceCoord = s.cellBalanceCoord := by
-  rcases s with ⟨t, b, n, f, total, htotal⟩
-  apply congrArg₂ (fun re im : Int => ComplexCoord.mk re im)
+  apply ComplexCoord.eq_of_re_im_eq
   · simp [supportBalanceCoord, cellBalanceCoord, positive, negative]
     omega
   · simp [supportBalanceCoord, cellBalanceCoord, positive, negative]
+    have htotal := s.normalized
     omega
 
 /-- Threshold-glut condition for a finite four-cell profile. -/
