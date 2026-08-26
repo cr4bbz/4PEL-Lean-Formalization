@@ -156,6 +156,13 @@ sixteen-case results originally used `native_decide`; they now use `decide`:
 - `truthInformationComplexCoord_injective`;
 - `supportComplexCoord_squaredDistance_eq_thresholdWallCount`.
 
+The later complete model-crossing gate exposed the same issue transitively in
+`thresholdWallCount_eq_two_iff`, `rat_mul_two`, and
+`ratMidpoint_strictly_between`. Those dependencies were replaced by structural
+Boolean reasoning and kernel-checked rational cast lemmas. Consequently the
+complete probability-free crossing classification has no `native_decide`
+dependency.
+
 During cleanup, older convenience axioms in finite models should be replaced by
 proof terms. Until replacement, documentation should avoid presenting those
 modules as axiom-free verified witnesses.
@@ -196,7 +203,8 @@ the source keyword `axiom`.
 The focused complex-coordinate audit is reproduced by
 `PEL4/ComplexAxiomAudit.lean`. After the three small computations were changed
 to `decide`, the audited results in `ComplexCoordinates.lean`,
-`ComplexBeliefRegions.lean`, and `ComplexRotation.lean` have no
+`ComplexBeliefRegions.lean`, `ComplexRotation.lean`,
+`ComplexModelPath.lean`, and `ComplexModelCrossing.lean` have no
 project-specific axiom dependency and no `native_decide` dependency. A
 repository-wide transitive audit remains open because many older finite-model
 modules intentionally still use `native_decide`.

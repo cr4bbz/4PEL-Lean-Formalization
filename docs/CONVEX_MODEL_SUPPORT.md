@@ -66,17 +66,18 @@ C17E supplies the formula-level bridge:
 probability-free formula
 -> support events fixed along the path
 -> positive and negative support masses affine
--> existing threshold crossing geometry applies at model level.
+-> existing threshold crossing geometry applies at model level
+-> complete model-realized crossing trichotomy.
 ```
 
 Formulas containing probabilistic belief remain outside this theorem because
 their own evaluation, and therefore their support events, may vary with the
 probability path.
 
-## Next gate
+## Completed successor gate
 
-Package the two affine formula-support identities into the verified
-truth/information coordinate system, then reuse the threshold-straddling,
-unique crossing-order, and midpoint-phase theorems. The intended result is a
-genuine strong-model complex phase theorem for probability-free embedded
-formulas, with a separate later investigation of formulas containing `bel`.
+`PEL4/ComplexModelPath.lean` packages the two affine formula-support identities,
+and `PEL4/ComplexModelCrossing.lean` reuses threshold straddling, unique
+crossing order, and midpoint-phase geometry on complete strong models. The
+probability-free fragment now has a genuine strong-model complex phase theorem.
+The remaining investigation concerns formulas containing `bel`.

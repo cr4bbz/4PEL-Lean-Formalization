@@ -420,20 +420,38 @@ This is a theorem about complete `StrongProbabilityModel` states, not merely a
 pair of externally chosen support numbers. Formulas containing `bel` remain
 outside the result because their support events can move with probability.
 
+### C22. Are affine crossing order and intermediate phases realized by complete models?
+
+**VERIFIED, including the simultaneous case.**
+`PEL4/ComplexModelCrossing.lean` composes C21 with the threshold-crossing
+theory. If the endpoint values of `bel i phi` differ across both walls and
+`phi` is probability-free, Lean constructs unique positive and negative
+crossing times on `convexStrongModelAt` and proves an exhaustive trichotomy:
+
+```text
+tp < tn  -> complete midpoint model has the positive-first adjacent phase
+tp = tn  -> complete common-time model has coordinate (c,c) and value B
+tn < tp  -> complete midpoint model has the negative-first adjacent phase.
+```
+
+The simultaneous `B` value follows from inclusive threshold membership at
+both walls. The focused axiom audit shows only `propext`, `Classical.choice`,
+and `Quot.sound` in the complete classification dependency chain; no
+project-specific or `native_decide` axiom remains.
+
 ## D. Suggested research order
 
 ```text
-1. lift crossing order and intermediate phases through the affine complex
-   coordinate to complete strong model states
-2. characterize the maximal path-invariant fragment containing selected `bel` formulas
-3. formalize the exact simplex-to-diamond image, its lattice/parity conditions,
+1. characterize the maximal path-invariant fragment containing selected `bel` formulas
+2. formalize the exact simplex-to-diamond image, its lattice/parity conditions,
    and its one-dimensional fibers
-4. distinguish valid model paths from conditionalization-generated paths
-5. decide whether general path continuity now justifies a topology dependency
-6. seek algebraic/bilattice characterization of stability
-7. strengthen structural transport and perform the literature/novelty audit
-8. deepen conflict topology and automated finite-model search
-9. classify or eliminate remaining `native_decide` dependencies
+3. distinguish valid model paths from conditionalization-generated paths
+4. decide whether general path continuity now justifies a topology dependency
+5. seek algebraic/bilattice characterization of stability
+6. strengthen structural transport and perform the literature/novelty audit
+7. deepen conflict topology and automated finite-model search
+8. classify or eliminate remaining `native_decide` dependencies outside the
+   focused complex crossing chain
 ```
 
 The methodological separation remains essential:

@@ -34,7 +34,10 @@ K = stability-filtered threshold belief
 -> convex rational probability simplex
 -> complete strong model-valued convex paths
 -> affine positive/negative support masses for probability-free formulas
--> affine complex support coordinates on complete strong model paths.
+-> affine complex support coordinates on complete strong model paths
+-> model-realized crossing times and sequential midpoint phases
+-> simultaneous `(c,c)` model with inclusive glut value
+-> complete strong-model crossing trichotomy.
 ```
 
 The manuscript is intentionally narrower than the complete 4-PEL repository. Preface conflict topology, Fitch/Church-Fitch, Knower, Sorites, Surprise Examination, and the broader structural-transport program are mentioned only where they clarify the dynamic interpretation.
@@ -44,14 +47,15 @@ The manuscript is intentionally narrower than the complete 4-PEL repository. Pre
 The central dynamic and probability-path results through
 
 ```text
-PEL4/ComplexModelPath.lean
+PEL4/ComplexModelCrossing.lean
 ```
 
 have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-Version 0.5 adds the verified rotation-symmetry layer and affine complex model
-paths, corrects the trust classification of `native_decide`, and records the
-focused complex-coordinate axiom audit. The paper treats the full
+Version 0.5 adds the verified rotation-symmetry layer, affine complex model
+paths, and their complete model-realized crossing classification. It corrects
+the trust classification of `native_decide` and records the focused axiom
+audit; the complete crossing chain uses no native axiom. The paper treats the full
 dihedral-group action and the exact integer image of the evidence simplex as
 open formalization targets.
 The manuscript source and rendered PDF have passed a fresh build and visual
@@ -66,7 +70,8 @@ FiniteProbabilityIntegrity
 -> every fixed event mass is affine
 -> every rational interpolation point yields a StrongProbabilityModel
 -> worlds, R, val, and c remain fixed along the model path
--> every probability-free formula has an affine complex support coordinate.
+-> every probability-free formula has an affine complex support coordinate
+-> every two-wall endpoint change has a complete model-level trichotomy.
 ```
 
 This closes the model-existence gap for **weight-generated strong endpoint models on a common semantic skeleton**.
@@ -135,7 +140,9 @@ The FDE phase figure is generated directly from TikZ source. It visualizes the t
 
 ## Next paper gate
 
-The next mathematical step is now a **packaged complex model-path lift**.
+The packaged complex model-path lift and its crossing classification are now
+complete. The next mathematical step is the **boundary beyond the
+probability-free fragment**.
 
 The recommended sequence is:
 
@@ -145,6 +152,7 @@ verified convex strong model path
 -> verified affine positive and negative formula-support masses
 -> package both masses into an affine truth/information coordinate
 -> lift crossing-order and intermediate-phase theorems to genuine model states
+-> characterize a maximal path-invariant fragment containing selected bel formulas
 -> formalize the simplex-to-diamond projection and its fibers
 -> separately study update-generated paths
 -> only then consider arbitrary continuous or measure-theoretic paths.

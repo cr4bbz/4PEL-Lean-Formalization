@@ -141,8 +141,18 @@ Probability-free support events fixed on a common skeleton & \leanref{positiveSu
 Probability-free positive and negative support masses are affine & \leanref{convexStrongModelAt\_positiveBeliefMass\_probabilityFree}, \leanref{convexStrongModelAt\_negativeBeliefMass\_probabilityFree} & \leanref{PEL4/ConvexModelSupport.lean}\\
 \addlinespace
 Probability-free complex support coordinate is affine on complete strong model paths & \leanref{convexStrongModelAt\_modalSupportComplexCoord\_probabilityFree} & \leanref{PEL4/ComplexModelPath.lean}\\
+\addlinespace
+Belief equals threshold state of the affine complex support coordinate & \leanref{convexStrongModelAt\_evalBel\_probabilityFree\_eq\_affineThresholdState} & \leanref{PEL4/ComplexModelCrossing.lean}\\
+\addlinespace
+Two-wall endpoints have model-realized ordered crossing times & \leanref{convexStrongModelPath\_probabilityFree\_crossing\_order} & \leanref{PEL4/ComplexModelCrossing.lean}\\
+\addlinespace
+Sequential order realizes the forced adjacent phase in a complete midpoint model & \leanref{convexStrongModelPath\_probabilityFree\_*\_first\_midpoint} & \leanref{PEL4/ComplexModelCrossing.lean}\\
+\addlinespace
+Simultaneous crossing realizes \((c,c)\) and \(\Bval\) in a complete model & \leanref{convexStrongModelPath\_probabilityFree\_simultaneous\_crossing} & \leanref{PEL4/ComplexModelCrossing.lean}\\
+\addlinespace
+Complete model-level crossing trichotomy & \leanref{convexStrongModelPath\_probabilityFree\_complete\_crossing\_classification} & \leanref{PEL4/ComplexModelCrossing.lean}\\
 \end{longtable}
 \endgroup
 
 \paragraph{Verification note.}
-The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, \leanref{PEL4/ComplexRotation.lean}, \leanref{PEL4/ConvexModelSupport.lean}, and \leanref{PEL4/ComplexModelPath.lean}. The focused complex-coordinate dependency report is reproduced by \leanref{PEL4/ComplexAxiomAudit.lean}. Older finite witnesses using native evaluation retain an explicit compiler-trust qualification. The affine complex model-path lift is established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.
+The feature branch has passed a complete Lean 4.31 repository build including \leanref{PEL4/ComplexCoordinates.lean}, \leanref{PEL4/ComplexBeliefRegions.lean}, \leanref{PEL4/ComplexRotation.lean}, \leanref{PEL4/ConvexModelSupport.lean}, \leanref{PEL4/ComplexModelPath.lean}, and \leanref{PEL4/ComplexModelCrossing.lean}. The focused dependency report is reproduced by \leanref{PEL4/ComplexAxiomAudit.lean}; the complete crossing classification contains no project-specific or \texttt{native\_decide} axiom dependency. Older finite witnesses using native evaluation retain an explicit compiler-trust qualification. The affine complex model-path lift and its complete crossing classification are established for probability-free formulas; arbitrary formulas containing probabilistic belief remain separate.

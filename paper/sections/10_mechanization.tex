@@ -35,6 +35,7 @@ Lean module & role in the paper\\
 \leanref{PEL4/ComplexBeliefRegions.lean} & exact complex-region classification of all four threshold phases\\
 \leanref{PEL4/ComplexRotation.lean} & Gaussian-integer operations, categorical and mass rotation, diamond containment, and lossless third coordinate\\
 \leanref{PEL4/ComplexModelPath.lean} & affine rational complex support coordinates on complete strong model paths\\
+\leanref{PEL4/ComplexModelCrossing.lean} & model-realized crossing times, midpoint phases, simultaneous glut, and complete trichotomy\\
 \leanref{PEL4/ModalDynamicsThresholdCrossing.lean} & numerical endpoint straddling\\
 \leanref{PEL4/ModalDynamicsAffineCrossing.lean} & explicit rational affine threshold hits\\
 \leanref{PEL4/ModalDynamicsCrossingOrder.lean} & unique crossing times and order trichotomy\\
@@ -45,7 +46,7 @@ Lean module & role in the paper\\
 
 \subsection{Proof style}
 
-The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, and construction of complete strong model paths. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
+The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, construction of complete strong model paths, and the complete model-level crossing classification for probability-free formulas. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
 
 Several older finite cases are discharged by \texttt{native\_decide}. This
 adds Lean's compiler and native evaluator to the trusted base rather than using
@@ -67,7 +68,7 @@ The manuscript uses the following hierarchy:
   \item \textbf{Literature or novelty claim}: a comparative scholarly assertion requiring an external audit.
 \end{enumerate}
 
-The central dynamic and probability-path modules through \texttt{ComplexModelPath.lean}, together with \texttt{ComplexCoordinates.lean}, \texttt{ComplexBeliefRegions.lean}, and \texttt{ComplexRotation.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, rotation-symmetry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, probability-free affine-support, and affine complex model-coordinate claims reported in this manuscript are Lean-checked at the level of their exact statements, subject to the trust classification above.
+The central dynamic and probability-path modules through \leanref{ComplexModelCrossing.lean}, together with \leanref{ComplexCoordinates.lean}, \leanref{ComplexBeliefRegions.lean}, and \leanref{ComplexRotation.lean}, have passed the repository's full Lean 4.31 build. Accordingly, the reachability, robustness, wall geometry, complex-coordinate, exact phase-region, rotation-symmetry, affine crossing, crossing-order, intermediate-phase, finite-probability integrity, probability-simplex, strong model-path, probability-free affine-support, affine complex model-coordinate, and complete model-crossing claims reported in this manuscript are Lean-checked at the level of their exact statements, subject to the trust classification above. The focused audit reports only \leanref{propext}, \leanref{Classical.choice}, and \leanref{Quot.sound} for the complete crossing classification; no project-specific or \texttt{native\_decide} axiom occurs in that dependency chain.
 
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:

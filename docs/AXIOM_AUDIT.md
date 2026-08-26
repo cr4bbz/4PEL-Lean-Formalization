@@ -68,11 +68,14 @@ The complex-coordinate publication chain has received a focused cleanup:
 - three sixteen-case proofs in `ComplexCoordinates.lean` now use `decide`;
 - `ComplexBeliefRegions.lean` uses symbolic arithmetic proofs;
 - `ComplexRotation.lean` uses `decide`, case analysis, and `omega`;
+- the wall-count and rational-midpoint helpers used by
+  `ComplexModelCrossing.lean` use structural proofs and kernel-checked casts
+  rather than native evaluation;
 - `PEL4/ComplexAxiomAudit.lean` reproduces the corresponding `#print axioms`
   output.
 
-The current CI report for its fourteen selected publication theorems has two
-outcomes: six declarations report no axioms, while the remaining declarations
+The current CI report for its twenty-four selected publication declarations has
+two outcomes: six declarations report no axioms, while the remaining declarations
 report only Lean's allow-listed logical infrastructure (`propext`,
 `Classical.choice`, and/or `Quot.sound`). It reports no project-specific axiom
 and no native-code evaluation axiom for this focused chain. This is a precise
@@ -88,6 +91,6 @@ explicitly documented substantive prototype axioms.
 The remaining axioms after R0.2 should therefore coincide with modules whose
 primary status is `AXIOMATIC-PROTOTYPE`.
 
-A later verification gate should also classify every remaining
+A later verification gate should also classify every remaining repository-wide
 `native_decide` dependency and replace it where ordinary kernel reduction is
 small enough.

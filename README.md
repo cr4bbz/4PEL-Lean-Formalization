@@ -321,6 +321,7 @@ PEL4/ComplexCoordinates.lean
 PEL4/ComplexBeliefRegions.lean
 PEL4/ComplexRotation.lean
 PEL4/ComplexModelPath.lean
+PEL4/ComplexModelCrossing.lean
 PEL4/KnowledgeSemantics.lean
 PEL4/KnowledgeSanity.lean
 PEL4/KnowledgeConjunctionBoundary.lean
@@ -357,6 +358,7 @@ docs/PARADOX_TRANSPORT_RESEARCH.md
 docs/RESEARCH_QUESTIONS.md
 docs/CONFLICT_NERVE_RESEARCH.md
 docs/COMPLEX_ROTATION.md
+docs/COMPLEX_MODEL_CROSSING.md
 docs/AXIOM_AUDIT.md
 docs/VERIFICATION_POLICY.md
 ```
@@ -404,12 +406,12 @@ The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axi
 
 1. classify interaction between evidence-stable `K` and probabilistic `B`;
 2. prove sharper necessity/minimality results for modal frame correspondences;
-3. lift crossing order and intermediate phases through the verified affine
-   complex coordinate to probability-free strong model paths;
-4. characterize dynamic preservation beyond the probability-free fragment;
-5. prove global independence/minimality results for Church-Fitch packages;
-6. expand the structural-transport abstraction across paradox families;
-7. deepen Conflict-Nerve topology to homology and persistence;
-8. perform a systematic literature/novelty audit before publication claims.
+3. characterize dynamic preservation beyond the probability-free fragment;
+4. formalize the exact simplex-to-diamond image and its fibers;
+5. distinguish convex model paths from conditionalization-generated paths;
+6. prove global independence/minimality results for Church-Fitch packages;
+7. expand the structural-transport abstraction across paradox families;
+8. deepen Conflict-Nerve topology to homology and persistence;
+9. perform a systematic literature/novelty audit before publication claims.
 
 4-PEL is best read as a machine-checkable laboratory for the geometry, dynamics, modal structure, and information loss behind epistemic paradoxes.
