@@ -32,3 +32,5 @@ focused audit; it does not certify older finite-model modules that still use
 #print axioms PEL4.convexStrongModelPath_probabilityFree_crossing_order
 #print axioms PEL4.convexStrongModelPath_probabilityFree_positive_first_midpoint
 #print axioms PEL4.convexStrongModelPath_probabilityFree_negative_first_midpoint
+#print axioms PEL4.convexStrongModelPath_probabilityFree_simultaneous_crossing
+#print axioms PEL4.convexStrongModelPath_probabilityFree_complete_crossing_classification
