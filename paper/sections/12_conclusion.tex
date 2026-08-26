@@ -7,6 +7,22 @@ Admissible conditionalization changes only probability, yet its categorical effe
 
 Those bits supply a natural Boolean geometry. The four FDE values form a threshold square, and the number of changed coordinates gives a wall count of zero, one, or two. Numerical endpoint analysis then identifies a changed bit with straddling of the corresponding support threshold. The affine interpolation of rational support masses turns straddling into a literal threshold-hit theorem with an explicit parameter in the unit interval.
 
+The same square now has a conservative complex-coordinate presentation. In raw
+support coordinates, the four vertices are (0,1,i,1+i), and squared
+Euclidean distance is exactly the threshold-wall count. In transformed
+truth/information coordinates, the vertices become (1,-1,i,-i): the real
+axis records strict truth/falsity polarity and the imaginary axis records
+glut/gap polarity. For a normalized four-cell profile the coordinate is
+\[
+  (m_T-m_F)+i(m_B-m_N),
+\]
+and the resulting balance analysis yields the sharpened threshold-glut bound
+\[
+  2k+m_N+|m_T-m_F|\le m+m_B.
+\]
+This use of \(i\) is geometric and representational; it does not add complex
+multiplication to the object logic.
+
 For diagonal two-wall transitions, the two support coordinates have unique crossing times. Their order adds temporal structure absent from the endpoints. Simultaneous crossing is exactly passage through \((c,c)\). Sequential crossing forces an adjacent intermediate phase at the rational midpoint. Consequently, a diagonal endpoint transition has a short hidden phase history. For \(\Nval\to\Bval\), positive-first motion yields \(\Nval\to\Tval\to\Bval\), while negative-first motion yields \(\Nval\to\Fval\to\Bval\). The remaining diagonals obey the corresponding symmetric table.
 
 The probability layer can now also be given a stronger constructive foundation. Nonnegative normalized rational world weights generate finite measures satisfying explicit integrity laws. The rational segment between two such distributions remains inside the finite probability simplex, and the mass of every fixed event moves affinely. These interpolated local distributions can be packaged into complete \texttt{StrongProbabilityModel} paths while worlds, accessibility, valuation, and threshold remain fixed.
@@ -14,21 +30,20 @@ The probability layer can now also be given a stronger constructive foundation. 
 The main verified dependency chain is therefore
 \[
 \boxed{
+\begin{gathered}
 \text{finite probability integrity}
-\to
-\text{probability simplex}
-\to
-\text{strong model path}
-\to
-\text{affine fixed-event mass}
-\to
-\text{threshold side}
-\to
-\text{categorical wall}
-\to
-\text{crossing order}
-\to
-\text{intermediate FDE phase}.}
+\to \text{probability simplex}
+\\[-1pt]
+\to \text{strong model path}
+\to \text{affine fixed-event mass}
+\to \text{threshold side}
+\\[-1pt]
+\to \text{categorical wall}
+\to \text{complex phase coordinate}
+\\[-1pt]
+\to \text{crossing order}
+\to \text{intermediate FDE phase}
+\end{gathered}}
 \]
 
 This chain turns the four-valued endpoint space into more than a classification table. It gives the beginning of a kinematics of epistemic phases in which a genuine model-valued probability path can project to a piecewise categorical FDE history.
