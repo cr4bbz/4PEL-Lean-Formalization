@@ -33,7 +33,8 @@ K = stability-filtered threshold belief
 -> weight-generated finite measures
 -> convex rational probability simplex
 -> complete strong model-valued convex paths
--> affine positive/negative support masses for probability-free formulas.
+-> affine positive/negative support masses for probability-free formulas
+-> affine complex support coordinates on complete strong model paths.
 ```
 
 The manuscript is intentionally narrower than the complete 4-PEL repository. Preface conflict topology, Fitch/Church-Fitch, Knower, Sorites, Surprise Examination, and the broader structural-transport program are mentioned only where they clarify the dynamic interpretation.
@@ -43,15 +44,16 @@ The manuscript is intentionally narrower than the complete 4-PEL repository. Pre
 The central dynamic and probability-path results through
 
 ```text
-PEL4/ConvexModelSupport.lean
+PEL4/ComplexModelPath.lean
 ```
 
 have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-Version 0.5 adds the verified rotation-symmetry layer, corrects the trust
-classification of `native_decide`, and records the focused complex-coordinate
-axiom audit. The paper treats the full dihedral-group action and the exact
-integer image of the evidence simplex as open formalization targets.
+Version 0.5 adds the verified rotation-symmetry layer and affine complex model
+paths, corrects the trust classification of `native_decide`, and records the
+focused complex-coordinate axiom audit. The paper treats the full
+dihedral-group action and the exact integer image of the evidence simplex as
+open formalization targets.
 The manuscript source and rendered PDF have passed a fresh build and visual
 inspection on the feature branch.
 
@@ -63,7 +65,8 @@ FiniteProbabilityIntegrity
 -> convex interpolation preserves finite distributions
 -> every fixed event mass is affine
 -> every rational interpolation point yields a StrongProbabilityModel
--> worlds, R, val, and c remain fixed along the model path.
+-> worlds, R, val, and c remain fixed along the model path
+-> every probability-free formula has an affine complex support coordinate.
 ```
 
 This closes the model-existence gap for **weight-generated strong endpoint models on a common semantic skeleton**.
