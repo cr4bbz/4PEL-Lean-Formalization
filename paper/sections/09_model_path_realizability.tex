@@ -69,6 +69,18 @@ Thus the geometric probability path is realized by complete probabilistically ce
 \paragraph{Exact scope of the realization.}
 Two distinctions remain essential. First, this theorem concerns weight-generated strong endpoint models on a common semantic skeleton. It does not retroactively prove that every legacy witness in the repository satisfies the stronger probability contract. Second, a convex model path is not the same thing as an update-generated path: the theorem does not claim that every intermediate \(M_t\) arises by conditionalizing the source model on some evidence event.
 
-There is also a formula-level boundary. The affine theorem applies directly to a \emph{fixed event} \(S\). For an arbitrary modal formula containing probabilistic belief, the set of worlds that positively or negatively support the formula can itself vary with \(t\). In that case the event whose mass is measured is no longer fixed, so affine event mass alone does not imply affine \texttt{modalPositiveBeliefMass} or \texttt{modalNegativeBeliefMass}.
+The first formula-level lift is also verified. If \(\varphi\) is
+probability-free, its value depends only on accessibility and atomic valuation,
+which remain fixed along the path. Hence its positive and negative support
+events are fixed, and Lean proves
+\[
+  \Ppos_t(\varphi)=(1-t)\Ppos_0(\varphi)+t\Ppos_1(\varphi),
+  \qquad
+  \Pneg_t(\varphi)=(1-t)\Pneg_0(\varphi)+t\Pneg_1(\varphi).
+\]
 
-The next formal step is therefore narrower and sharper: identify a path-invariant formula fragment, beginning with atomic propositions and probability-free formulas, and lift the verified threshold-crossing and intermediate-phase geometry to those genuine model paths.
+The remaining formula-level boundary concerns formulas containing
+probabilistic belief. Their own values, and therefore their support events, can
+vary with \(t\). The next formal step is to package the verified affine
+probability-free support pair into the complex coordinate and lift the crossing
+and intermediate-phase theorems directly to the strong model path.
