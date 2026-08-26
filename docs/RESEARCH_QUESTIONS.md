@@ -325,7 +325,7 @@ Working name: **Affine Crossing-Order Geometry**.
 
 ### C16. Which FDE phase appears between two nonsimultaneous affine wall crossings?
 
-**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsIntermediatePhase.lean` chooses the rational midpoint between the two unique crossing times and targets the exact intermediate-state classification.
+**VERIFIED.** `PEL4/ModalDynamicsIntermediatePhase.lean` chooses the rational midpoint between the two unique crossing times and proves the exact intermediate-state classification.
 
 For positive-first order, the midpoint should have
 
@@ -343,22 +343,45 @@ T -> F : positive first -> N ; negative first -> B
 F -> T : positive first -> B ; negative first -> N.
 ```
 
-The module deliberately classifies the constructed affine **support-mass path**. It does not yet claim that the midpoint corresponds to a full admissible intermediate probabilistic model.
+The theorem classifies the constructed affine **support-mass path**. Complete
+strong model paths and affine formula-support masses are now separately
+verified for the probability-free modal fragment; their direct composition
+into one model-level intermediate-phase theorem is the next gate.
 
 Working name: **Affine Intermediate-Phase Geometry**.
+
+### C17. Which formula-defined supports are affine on strong model paths?
+
+**VERIFIED for the probability-free modal fragment.**
+`PEL4/ConvexModelSupport.lean` proves that formulas without `bel` depend only
+on accessibility and atomic valuation. Their positive and negative support
+events are fixed along `convexStrongModelAt`, and both support masses are
+affine in the rational path parameter.
+
+Formulas containing probabilistic belief remain open because their support
+events can themselves move with the probability field.
+
+### C18. Do truth/information coordinates classify every threshold phase?
+
+**VERIFIED for normalized finite scaled profiles.**
+`PEL4/ComplexBeliefRegions.lean` reconstructs twice the positive and negative
+support masses from total mass plus the real and imaginary balance coordinates.
+It proves exact coordinate-region characterizations of `T`, `F`, `B`, and `N`.
+The balance-sensitive glut inequality is also an exact `iff`, not merely a
+necessary lower bound.
 
 ## D. Suggested research order
 
 ```text
-1. compile Affine Intermediate-Phase Geometry
-2. if successful, ask whether the intermediate support phase is realizable by a genuine admissible model path
-3. decide whether general path continuity now justifies a topology dependency
-4. seek algebraic/bilattice characterization of stability
-5. revisit frame-law and Church-Fitch minimality
-6. strengthen the general structural-transport abstraction
-7. perform literature/novelty audit
-8. deepen conflict topology to homology and persistence
-9. investigate automated finite-model search
+1. package probability-free affine support masses as an affine complex coordinate
+2. lift crossing order and intermediate phases to complete strong model states
+3. characterize the maximal path-invariant fragment containing selected `bel` formulas
+4. formalize the simplex-to-diamond image and its one-dimensional fibers
+5. distinguish valid model paths from conditionalization-generated paths
+6. decide whether general path continuity now justifies a topology dependency
+7. seek algebraic/bilattice characterization of stability
+8. strengthen structural transport and perform the literature/novelty audit
+9. deepen conflict topology and automated finite-model search
 ```
 
 The methodological separation remains essential:
