@@ -1,6 +1,6 @@
 # Complete Dynamic Epistemic Reachability
 
-Status: **VERIFIED** on `research/preface-case-study` with Lean 4.31.
+Status: **VERIFIED** on `research/complex-coordinates` with Lean 4.31.
 
 The imported `PEL4/ModalDynamicsReachability.lean` gate has passed a fresh local
 `lake build` after the free-variable proof repair. The generic reachability
