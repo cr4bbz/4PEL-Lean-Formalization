@@ -36,6 +36,7 @@ import PEL4.ModalDynamicsPhaseClassification
 import PEL4.ModalDynamicsReachability
 import PEL4.ModalDynamicsRobustness
 import PEL4.ModalDynamicsGeometry
+import PEL4.ComplexCoordinates
 import PEL4.ModalDynamicsThresholdCrossing
 import PEL4.ModalDynamicsAffineCrossing
 import PEL4.ModalDynamicsCrossingOrder
