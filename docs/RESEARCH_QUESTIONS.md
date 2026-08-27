@@ -343,10 +343,9 @@ T -> F : positive first -> N ; negative first -> B
 F -> T : positive first -> B ; negative first -> N.
 ```
 
-The theorem classifies the constructed affine **support-mass path**. Complete
-strong model paths and affine formula-support masses are now separately
-verified for the probability-free modal fragment; their direct composition
-into one model-level intermediate-phase theorem is the next gate.
+The theorem itself classifies the constructed affine **support-mass path**.
+C22 now supplies the completed composition with strong model paths and affine
+formula-support masses for the probability-free modal fragment.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 

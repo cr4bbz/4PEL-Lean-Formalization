@@ -54,9 +54,10 @@ measures come from. C17B now supplies that constructive source. Concrete models
 can be promoted by exhibiting normalized nonnegative world weights rather than
 reproving the probability laws ad hoc at every world.
 
-## Next gate
+## Completed successor gate
 
-The next step is convex rational interpolation on a fixed support:
+`PEL4/ConvexProbabilitySimplex.lean` now supplies convex rational
+interpolation on a fixed support:
 
 ```text
 q_t(x) = (1-t) q_0(x) + t q_1(x),   0 <= t <= 1.
@@ -71,6 +72,7 @@ and FiniteWeightDistribution R q_1
 FiniteWeightDistribution R q_t.
 ```
 
-That theorem would make the finite probability simplex an explicit formal path
-space and prepare the lift from affine support trajectories to genuine
-intermediate 4-PEL models.
+The theorem makes the finite probability simplex an explicit formal path
+space.  `PEL4/ConvexModelPath.lean` and the later complex model-path modules
+complete the lift to genuine intermediate strong models for the verified
+probability-free crossing fragment.

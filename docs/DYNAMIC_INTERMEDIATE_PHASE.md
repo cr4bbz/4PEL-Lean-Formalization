@@ -138,7 +138,12 @@ It does **not** yet say:
 there exists an actual intermediate admissible probabilistic model update realizing that phase.
 ```
 
-That stronger realizability question is the natural next gate.
+That stronger realizability question is now answered, for weight-generated
+strong endpoint models on a common semantic skeleton and probability-free
+formulas, by `PEL4/ComplexModelCrossing.lean`.  The distinction remains
+important: the theorem documented here is the support-space layer, while the
+later theorem supplies complete intermediate models.  It does not claim that
+those models arise by admissible conditionalization.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 

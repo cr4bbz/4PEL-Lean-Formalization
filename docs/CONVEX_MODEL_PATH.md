@@ -94,7 +94,8 @@ Nor does C17D prove that every intermediate model is itself obtained by an
 admissible conditionalization of the source model. A model-valued convex path
 and an update-generated path are distinct notions.
 
-The next formula-level lift should begin with atomic propositions or a proved
-path-invariant formula fragment, where the underlying support events remain
-fixed. That gate can then connect the verified model-valued path directly to
-the earlier FDE threshold-crossing and intermediate-phase geometry.
+That formula-level lift is now verified in `PEL4/ConvexModelSupport.lean` for
+the full probability-free modal fragment.  `PEL4/ComplexModelPath.lean` and
+`PEL4/ComplexModelCrossing.lean` connect it to the earlier threshold-crossing
+and intermediate-phase geometry.  The maximal path-invariant fragment
+containing selected `bel` formulas remains open.

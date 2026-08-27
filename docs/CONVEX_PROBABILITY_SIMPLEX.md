@@ -60,14 +60,15 @@ valid rational endpoint distributions
 -> every event mass follows an affine path.
 ```
 
-This is not yet a theorem that every intermediate point is a complete 4-PEL
-model. The next gate must package interpolated local distributions into a model
-while preserving the relational, valuation, and threshold components required
-by the semantic architecture.
+This module alone is a distribution-level theorem.  Its successor,
+`PEL4/ConvexModelPath.lean`, packages every intermediate distribution into a
+complete strong 4-PEL model while preserving the relational, valuation, and
+threshold components required by the semantic architecture.
 
-## Next gate
+## Completed successor gate
 
-Construct a model-valued convex path with fixed `R`, `val`, and `c`, using the
-verified weight-generated measures locally. Then prove that positive and
-negative belief-support masses along that model path coincide with the affine
-support paths already used by the crossing-order and intermediate-phase modules.
+`PEL4/ConvexModelPath.lean` constructs the model-valued convex path with fixed
+`R`, `val`, and `c`.  `PEL4/ConvexModelSupport.lean` then proves affine positive
+and negative formula-support masses for probability-free formulas, and
+`PEL4/ComplexModelCrossing.lean` realizes the crossing classification on those
+complete models.

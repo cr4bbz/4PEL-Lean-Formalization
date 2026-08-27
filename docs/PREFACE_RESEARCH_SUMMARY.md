@@ -238,9 +238,8 @@ The intended philosophical conclusion is:
 
 ## Verification status
 
-The Preface development through the arbitrary-arity co-conflict hierarchy has
-been successfully built locally with Lean 4.31.0 after compatibility fixes.
-
-`PrefaceConflictMobiusInverseN.lean`, added after that successful build, is the
-next module requiring local `lake build` verification.  Its claims should not be
-reported as machine-verified until that build succeeds.
+The Preface development through the arbitrary-arity co-conflict hierarchy,
+including `PrefaceConflictMobiusInverseN.lean`, has been successfully built
+with Lean 4.31.0 through the repository root import.  In particular,
+`full_coconflict_hierarchy_reconstructs_exact_mass` is machine-verified on the
+active research history.
