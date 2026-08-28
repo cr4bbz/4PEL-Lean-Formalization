@@ -6,6 +6,16 @@ import PEL4.ConvexModelPath
 import PEL4.ConvexModelSupport
 import PEL4.Belief
 import PEL4.FDE
+import PEL4.TopologicalEvidence
+import PEL4.TopologicalEvidenceSierpinski
+import PEL4.TopologicalEvidenceKripke
+import PEL4.TopologicalEvidenceStability
+import PEL4.TopologicalEvidenceLocalConstancy
+import PEL4.TopologicalEvidenceStabilityBoundary
+import PEL4.TopologicalEvidenceFixedPoints
+import PEL4.TopologicalKnowledgeIdempotence
+import PEL4.TopologicalEvidenceValueFibres
+import PEL4.TopologicalEvidencePhaseNerve
 import PEL4.Evidence
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
