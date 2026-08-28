@@ -82,10 +82,10 @@ theorem closure_monotone
     RegionSubset (s.closure A) (s.closure B) := by
   intro w hClosureA hInteriorComplB
   apply hClosureA
-  apply s.interior_monotone
-  · intro u hNotB hA
+  have hCompl : RegionSubset (regionCompl B) (regionCompl A) := by
+    intro u hNotB hA
     exact hNotB (hAB u hA)
-  · exact hInteriorComplB
+  exact s.interior_monotone hCompl w hInteriorComplB
 
 /-- A proposition carries independent positive and negative evidence regions. -/
 structure TopologicalEvidence (W : Type) where
