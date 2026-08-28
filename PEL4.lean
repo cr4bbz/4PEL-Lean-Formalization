@@ -6,6 +6,7 @@ import PEL4.ConvexModelPath
 import PEL4.ConvexModelSupport
 import PEL4.Belief
 import PEL4.FDE
+import PEL4.TopologicalEvidence
 import PEL4.Evidence
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
