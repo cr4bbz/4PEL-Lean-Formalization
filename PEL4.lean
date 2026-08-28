@@ -13,6 +13,7 @@ import PEL4.TopologicalEvidenceStability
 import PEL4.TopologicalEvidenceLocalConstancy
 import PEL4.TopologicalEvidenceStabilityBoundary
 import PEL4.TopologicalEvidenceFixedPoints
+import PEL4.TopologicalKnowledgeIdempotence
 import PEL4.Evidence
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
