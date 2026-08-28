@@ -54,8 +54,8 @@ theorem accessible_stability_iff_successor_local_constancy
       constructor
       · intro hStable u hu v hv
         have hStableRest : ∀ x, x ∈ rest → eval m x phi = eval m first phi := by
-          rw [hR] at hStable
           unfold accessibleFDEValueStable at hStable
+          rw [hR] at hStable
           simp only [List.all_eq_true] at hStable
           intro x hx
           have hEq := hStable x hx
@@ -74,8 +74,8 @@ theorem accessible_stability_iff_successor_local_constancy
           | inr h => exact hStableRest v h
         exact huEq.trans hvEq.symm
       · intro hConst
-        rw [hR]
         unfold accessibleFDEValueStable
+        rw [hR]
         simp only [List.all_eq_true]
         intro x hx
         have hEq : eval m x phi = eval m first phi :=
