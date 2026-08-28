@@ -39,7 +39,6 @@ theorem modal_value_stability_iff_successor_local_constancy
       constructor
       · intro hStable u hu v hv
         have hStableRest : ∀ x, x ∈ rest → value x = value first := by
-          rw [hR] at hStable
           unfold modalAccessibleValueStable at hStable
           simp only [List.all_eq_true] at hStable
           intro x hx
@@ -59,7 +58,6 @@ theorem modal_value_stability_iff_successor_local_constancy
           | inr h => exact hStableRest v h
         exact huEq.trans hvEq.symm
       · intro hConst
-        rw [hR]
         unfold modalAccessibleValueStable
         simp only [List.all_eq_true]
         intro x hx
@@ -188,6 +186,8 @@ theorem modalKnowledgeValue_idempotent_of_reflexive_transitive
                 modalKnowledgeTransform m i value u =
                   modalKnowledgeTransform m i value w :=
               hPairwiseK u hu w (hRefl w)
+            change modalKnowledgeValue m i u value =
+              modalKnowledgeValue m i w value at hEq
             exact hEq.trans hSourceF
           have hOuterF :
               modalKnowledgeValue m i w (modalKnowledgeTransform m i value) =
