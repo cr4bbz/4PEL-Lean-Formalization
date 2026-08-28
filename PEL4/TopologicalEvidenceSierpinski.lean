@@ -233,11 +233,11 @@ theorem sierpinski_topBox_T_source_reaches_any
     TopologicalEvidenceRepresentsAt
       (topBox SierpinskiInteriorSemantics (sierpinskiEvidence FDEValue.T target))
       SierpinskiPoint.focus target := by
-  rcases target with ⟨p, n⟩
-  cases p <;> cases n <;>
-    simpa [FDEValue.T, FDEValue.and] using
-      (sierpinski_topBox_focus_represents_fde_and
-        FDEValue.T ({ pos := p, neg := n } : FDEValue))
+  constructor
+  · simpa [FDEValue.T, FDEValue.and] using
+      (sierpinski_topBox_focus_pos_iff_fde_and FDEValue.T target)
+  · simpa [FDEValue.T, FDEValue.and] using
+      (sierpinski_topBox_focus_neg_iff_fde_and FDEValue.T target)
 
 /-- `F` is the identity for the Sierpinski Diamond witness, so every FDE target is reachable. -/
 theorem sierpinski_topDiamond_F_source_reaches_any
@@ -245,11 +245,11 @@ theorem sierpinski_topDiamond_F_source_reaches_any
     TopologicalEvidenceRepresentsAt
       (topDiamond SierpinskiInteriorSemantics (sierpinskiEvidence FDEValue.F target))
       SierpinskiPoint.focus target := by
-  rcases target with ⟨p, n⟩
-  cases p <;> cases n <;>
-    simpa [FDEValue.F, FDEValue.or] using
-      (sierpinski_topDiamond_focus_represents_fde_or
-        FDEValue.F ({ pos := p, neg := n } : FDEValue))
+  constructor
+  · simpa [FDEValue.F, FDEValue.or] using
+      (sierpinski_topDiamond_focus_pos_iff_fde_or FDEValue.F target)
+  · simpa [FDEValue.F, FDEValue.or] using
+      (sierpinski_topDiamond_focus_neg_iff_fde_or FDEValue.F target)
 
 /-!
 ## Consequence for the transition landscape
