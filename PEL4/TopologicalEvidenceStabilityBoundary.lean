@@ -215,13 +215,18 @@ def sierpinskiBoundaryValue : SierpinskiPoint → FDEValue
 theorem sierpinski_boundary_neighbour_locally_constant :
     TopologicallyLocallyConstantAt SierpinskiInteriorSemantics
       sierpinskiBoundaryValue SierpinskiPoint.neighbour := by
-  native_decide
+  rfl
 
 /-- The non-isolated focus is not locally constant for the split profile. -/
 theorem sierpinski_boundary_focus_not_locally_constant :
     ¬ TopologicallyLocallyConstantAt SierpinskiInteriorSemantics
       sierpinskiBoundaryValue SierpinskiPoint.focus := by
-  native_decide
+  intro h
+  have hBad : sierpinskiBoundaryValue SierpinskiPoint.neighbour =
+      sierpinskiBoundaryValue SierpinskiPoint.focus := h.2
+  have hPos := congrArg FDEValue.pos hBad
+  change false = true at hPos
+  cases hPos
 
 /-- The focus is nevertheless in the closure of the local-constancy locus. -/
 theorem sierpinski_boundary_focus_in_constancy_closure :
