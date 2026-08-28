@@ -180,13 +180,13 @@ collapse back to Gate 4.  Reflexivity is the key: pairwise constancy over
 `R(w)` is equivalent to every successor having the same value as `w` itself.
 -/
 
-/-- General topological local constancy equals successor-neighbourhood constancy on Alexandrov S4 frames. -/
+/-- General topological local constancy equals FDE successor-neighbourhood constancy on Alexandrov S4 frames. -/
 theorem alexandrov_local_constancy_iff_successor_local_constancy
-    {W V : Type} [DecidableEq W]
+    {W : Type} [DecidableEq W]
     (R : W → FiniteSet W)
     (hRefl : SuccessorReflexive R)
     (hTrans : SuccessorTransitive R)
-    (value : W → V) (w : W) :
+    (value : W → FDEValue) (w : W) :
     TopologicallyLocallyConstantAt
         (successorInteriorSemantics R hRefl hTrans) value w ↔
       SuccessorLocallyConstantAt R value w := by
