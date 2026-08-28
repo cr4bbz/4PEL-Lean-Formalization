@@ -9,7 +9,7 @@ This module gives the first concrete finite topology for the abstract semantics
 in `PEL4.TopologicalEvidence`.
 
 The two-point Sierpinski space is enough to make every local boundary effect
-visible.  At the distinguished `focus` point, interior requires a proposition
+visible. At the distinguished `focus` point, interior requires a proposition
 to hold both at `focus` and at its neighbouring point, while closure requires
 it to hold at at least one of them.
 
@@ -20,9 +20,10 @@ Box at focus     = FDE conjunction of the two point-values
 Diamond at focus = FDE disjunction of the two point-values
 ```
 
-Thus the first topological modality is not merely analogous to the FDE algebra;
-on this minimal non-discrete space it reconstructs the existing FDE meet/join
-operations exactly.
+The equality here is semantic: the positive and negative evidence propositions
+at the focus point are equivalent to the two Boolean coordinates of the
+corresponding FDE value. This avoids adding a computability assumption to the
+abstract topological semantics merely to package propositions back into Bools.
 -/
 
 /-- The two points of the Sierpinski witness. -/
@@ -146,50 +147,109 @@ def sierpinskiEvidence
   }
 
 /--
-At the focus point, topological Box is exactly FDE conjunction of the source
-value with the neighbouring value.
+A topological evidence profile semantically represents an FDE value at one
+point when its two evidence propositions agree with the value's two Boolean
+coordinates.
 -/
-theorem sierpinski_topBox_focus_eq_fde_and
+def TopologicalEvidenceRepresentsAt {W : Type}
+    (e : TopologicalEvidence W) (w : W) (v : FDEValue) : Prop :=
+  (e.pos w ↔ v.pos = true) ∧ (e.neg w ↔ v.neg = true)
+
+/-- The positive Box coordinate at `focus` is the positive coordinate of FDE conjunction. -/
+theorem sierpinski_topBox_focus_pos_iff_fde_and
     (source neighbour : FDEValue) :
     (topBox SierpinskiInteriorSemantics
-      (sierpinskiEvidence source neighbour)).valueAt SierpinskiPoint.focus =
-      FDEValue.and source neighbour := by
-  rcases source with ⟨sp, sn⟩
-  rcases neighbour with ⟨np, nn⟩
-  cases sp <;> cases sn <;> cases np <;> cases nn <;> native_decide
+        (sierpinskiEvidence source neighbour)).pos SierpinskiPoint.focus ↔
+      (FDEValue.and source neighbour).pos = true := by
+  change (source.pos = true ∧ neighbour.pos = true) ↔
+    (source.pos && neighbour.pos) = true
+  cases source.pos <;> cases neighbour.pos <;> simp
+
+/-- The negative Box coordinate at `focus` is the negative coordinate of FDE conjunction. -/
+theorem sierpinski_topBox_focus_neg_iff_fde_and
+    (source neighbour : FDEValue) :
+    (topBox SierpinskiInteriorSemantics
+        (sierpinskiEvidence source neighbour)).neg SierpinskiPoint.focus ↔
+      (FDEValue.and source neighbour).neg = true := by
+  change SierpinskiInteriorSemantics.closure
+      (sierpinskiEvidence source neighbour).neg SierpinskiPoint.focus ↔
+    (source.neg || neighbour.neg) = true
+  rw [sierpinski_closure_focus_iff]
+  change (source.neg = true ∨ neighbour.neg = true) ↔
+    (source.neg || neighbour.neg) = true
+  cases source.neg <;> cases neighbour.neg <;> simp
 
 /--
-At the focus point, topological Diamond is exactly FDE disjunction of the source
-value with the neighbouring value.
+At the focus point, topological Box semantically reconstructs FDE conjunction
+of the source value with the neighbouring value.
 -/
-theorem sierpinski_topDiamond_focus_eq_fde_or
+theorem sierpinski_topBox_focus_represents_fde_and
+    (source neighbour : FDEValue) :
+    TopologicalEvidenceRepresentsAt
+      (topBox SierpinskiInteriorSemantics (sierpinskiEvidence source neighbour))
+      SierpinskiPoint.focus (FDEValue.and source neighbour) := by
+  exact ⟨sierpinski_topBox_focus_pos_iff_fde_and source neighbour,
+    sierpinski_topBox_focus_neg_iff_fde_and source neighbour⟩
+
+/-- The positive Diamond coordinate at `focus` is the positive coordinate of FDE disjunction. -/
+theorem sierpinski_topDiamond_focus_pos_iff_fde_or
     (source neighbour : FDEValue) :
     (topDiamond SierpinskiInteriorSemantics
-      (sierpinskiEvidence source neighbour)).valueAt SierpinskiPoint.focus =
-      FDEValue.or source neighbour := by
-  rcases source with ⟨sp, sn⟩
-  rcases neighbour with ⟨np, nn⟩
-  cases sp <;> cases sn <;> cases np <;> cases nn <;> native_decide
+        (sierpinskiEvidence source neighbour)).pos SierpinskiPoint.focus ↔
+      (FDEValue.or source neighbour).pos = true := by
+  change SierpinskiInteriorSemantics.closure
+      (sierpinskiEvidence source neighbour).pos SierpinskiPoint.focus ↔
+    (source.pos || neighbour.pos) = true
+  rw [sierpinski_closure_focus_iff]
+  change (source.pos = true ∨ neighbour.pos = true) ↔
+    (source.pos || neighbour.pos) = true
+  cases source.pos <;> cases neighbour.pos <;> simp
+
+/-- The negative Diamond coordinate at `focus` is the negative coordinate of FDE disjunction. -/
+theorem sierpinski_topDiamond_focus_neg_iff_fde_or
+    (source neighbour : FDEValue) :
+    (topDiamond SierpinskiInteriorSemantics
+        (sierpinskiEvidence source neighbour)).neg SierpinskiPoint.focus ↔
+      (FDEValue.or source neighbour).neg = true := by
+  change (source.neg = true ∧ neighbour.neg = true) ↔
+    (source.neg && neighbour.neg) = true
+  cases source.neg <;> cases neighbour.neg <;> simp
+
+/--
+At the focus point, topological Diamond semantically reconstructs FDE
+disjunction of the source value with the neighbouring value.
+-/
+theorem sierpinski_topDiamond_focus_represents_fde_or
+    (source neighbour : FDEValue) :
+    TopologicalEvidenceRepresentsAt
+      (topDiamond SierpinskiInteriorSemantics (sierpinskiEvidence source neighbour))
+      SierpinskiPoint.focus (FDEValue.or source neighbour) := by
+  exact ⟨sierpinski_topDiamond_focus_pos_iff_fde_or source neighbour,
+    sierpinski_topDiamond_focus_neg_iff_fde_or source neighbour⟩
 
 /-- `T` is the identity for the Sierpinski Box witness, so every FDE target is reachable. -/
 theorem sierpinski_topBox_T_source_reaches_any
     (target : FDEValue) :
-    (topBox SierpinskiInteriorSemantics
-      (sierpinskiEvidence FDEValue.T target)).valueAt SierpinskiPoint.focus =
-      target := by
-  rw [sierpinski_topBox_focus_eq_fde_and]
+    TopologicalEvidenceRepresentsAt
+      (topBox SierpinskiInteriorSemantics (sierpinskiEvidence FDEValue.T target))
+      SierpinskiPoint.focus target := by
   rcases target with ⟨p, n⟩
-  cases p <;> cases n <;> rfl
+  cases p <;> cases n <;>
+    simpa [FDEValue.T, FDEValue.and] using
+      (sierpinski_topBox_focus_represents_fde_and
+        FDEValue.T ({ pos := p, neg := n } : FDEValue))
 
 /-- `F` is the identity for the Sierpinski Diamond witness, so every FDE target is reachable. -/
 theorem sierpinski_topDiamond_F_source_reaches_any
     (target : FDEValue) :
-    (topDiamond SierpinskiInteriorSemantics
-      (sierpinskiEvidence FDEValue.F target)).valueAt SierpinskiPoint.focus =
-      target := by
-  rw [sierpinski_topDiamond_focus_eq_fde_or]
+    TopologicalEvidenceRepresentsAt
+      (topDiamond SierpinskiInteriorSemantics (sierpinskiEvidence FDEValue.F target))
+      SierpinskiPoint.focus target := by
   rcases target with ⟨p, n⟩
-  cases p <;> cases n <;> rfl
+  cases p <;> cases n <;>
+    simpa [FDEValue.F, FDEValue.or] using
+      (sierpinski_topDiamond_focus_represents_fde_or
+        FDEValue.F ({ pos := p, neg := n } : FDEValue))
 
 /-!
 ## Consequence for the transition landscape
@@ -210,7 +270,7 @@ Diamond: F -> {T, F, B, N}
 ```
 
 Moreover, the same two-point space supplies witnesses for both alternatives in
-each restricted row simply by choosing the neighbouring FDE value.  Hence the
+each restricted row simply by choosing the neighbouring FDE value. Hence the
 coordinate restrictions from Gate 1 are not artifacts of an impoverished model;
 they are the exact local transition bounds for the candidate semantics.
 
