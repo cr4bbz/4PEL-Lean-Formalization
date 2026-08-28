@@ -11,6 +11,7 @@ import PEL4.TopologicalEvidenceSierpinski
 import PEL4.TopologicalEvidenceKripke
 import PEL4.TopologicalEvidenceStability
 import PEL4.TopologicalEvidenceLocalConstancy
+import PEL4.TopologicalEvidenceStabilityBoundary
 import PEL4.Evidence
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
