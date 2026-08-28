@@ -106,11 +106,13 @@ theorem successor_closure_iff_exists
   change (¬ ∀ u, u ∈ R w → ¬ A u) ↔ ∃ u, u ∈ R w ∧ A u
   constructor
   · intro h
-    by_contra hNone
+    apply Classical.byContradiction
+    intro hNone
     apply h
     intro u hu hA
     exact hNone ⟨u, hu, hA⟩
-  · rintro ⟨u, hu, hA⟩ hAll
+  · intro hExists hAll
+    rcases hExists with ⟨u, hu, hA⟩
     exact hAll u hu hA
 
 /-- Turn an arbitrary FDE-valued interpretation into positive/negative regions. -/
