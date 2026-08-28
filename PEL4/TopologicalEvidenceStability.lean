@@ -39,23 +39,23 @@ def SuccessorLocallyConstantAt {W : Type}
   ∀ u, u ∈ R w → ∀ v, v ∈ R w → value u = value v
 
 /--
-The repository's Boolean accessible-value stability test is exactly constancy
-on the successor neighbourhood.
+The repository's formula-specific accessible-value stability test is exactly
+constancy of the complete FDE interpretation on the successor neighbourhood.
 -/
-theorem modal_stability_iff_successor_local_constancy
-    {W : Type} [DecidableEq W]
-    (R : W → FiniteSet W) (value : W → FDEValue) (w : W) :
-    modalAccessibleValueStable (R w) value = true ↔
-      SuccessorLocallyConstantAt R value w := by
-  cases hR : R w with
+theorem accessible_stability_iff_successor_local_constancy
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (i : Ag) (w : W) (phi : Formula Atom Ag) :
+    accessibleFDEValueStable m i w phi = true ↔
+      SuccessorLocallyConstantAt (m.R i) (fun u => eval m u phi) w := by
+  cases hR : m.R i w with
   | nil =>
-      simp [SuccessorLocallyConstantAt, modalAccessibleValueStable, hR]
+      simp [SuccessorLocallyConstantAt, accessibleFDEValueStable, hR]
   | cons first rest =>
       constructor
       · intro hStable u hu v hv
-        have hStableRest : ∀ x, x ∈ rest → value x = value first := by
+        have hStableRest : ∀ x, x ∈ rest → eval m x phi = eval m first phi := by
           rw [hR] at hStable
-          unfold modalAccessibleValueStable at hStable
+          unfold accessibleFDEValueStable at hStable
           simp only [List.all_eq_true] at hStable
           intro x hx
           have hEq := hStable x hx
@@ -64,21 +64,21 @@ theorem modal_stability_iff_successor_local_constancy
           simpa [hR] using hu
         have hvCases : v = first ∨ v ∈ rest := by
           simpa [hR] using hv
-        have huEq : value u = value first := by
+        have huEq : eval m u phi = eval m first phi := by
           cases huCases with
           | inl h => simpa [h]
           | inr h => exact hStableRest u h
-        have hvEq : value v = value first := by
+        have hvEq : eval m v phi = eval m first phi := by
           cases hvCases with
           | inl h => simpa [h]
           | inr h => exact hStableRest v h
         exact huEq.trans hvEq.symm
       · intro hConst
         rw [hR]
-        unfold modalAccessibleValueStable
+        unfold accessibleFDEValueStable
         simp only [List.all_eq_true]
         intro x hx
-        have hEq : value x = value first :=
+        have hEq : eval m x phi = eval m first phi :=
           hConst x (by simp [hR, hx]) first (by simp [hR])
         simpa using hEq
 
@@ -111,9 +111,12 @@ theorem evidence_stable_knowledge_factorization
         (standardFDEBoxValue m i w phi)
         (stabilityGuard (accessibleFDEValueStable m i w phi)) := by
   cases hStable : accessibleFDEValueStable m i w phi <;>
+    cases hPos : standardBoxPositive m i w phi <;>
+    cases hNeg : standardBoxNegative m i w phi <;>
     simp [evidenceStableKnowledgeValue, evidenceStableKnowledgePositive,
       evidenceStableKnowledgeNegative, standardFDEBoxValue,
-      stabilityGuard, FDEValue.and, hStable]
+      stabilityGuard, FDEValue.and, FDEValue.T, FDEValue.F,
+      hStable, hPos, hNeg]
 
 /-- Local constancy recovers the ordinary FDE Box exactly. -/
 theorem evidence_stable_knowledge_eq_standard_box_of_local_constancy
@@ -124,8 +127,7 @@ theorem evidence_stable_knowledge_eq_standard_box_of_local_constancy
     evidenceStableKnowledgeValue m i w phi =
       standardFDEBoxValue m i w phi := by
   have hStable : accessibleFDEValueStable m i w phi = true :=
-    (modal_stability_iff_successor_local_constancy
-      (m.R i) (fun u => eval m u phi) w).2 hConst
+    (accessible_stability_iff_successor_local_constancy m i w phi).2 hConst
   exact evidence_stable_knowledge_eq_standard_box_of_stable
     m i w phi hStable
 
@@ -142,8 +144,7 @@ theorem evidence_stable_knowledge_eq_false_of_not_local_constancy
     | true =>
         have hConst : SuccessorLocallyConstantAt (m.R i)
             (fun u => eval m u phi) w :=
-          (modal_stability_iff_successor_local_constancy
-            (m.R i) (fun u => eval m u phi) w).1 hs
+          (accessible_stability_iff_successor_local_constancy m i w phi).1 hs
         exact False.elim (hNotConst hConst)
   exact knowledge_instability_forces_false m i w phi hStable
 
@@ -181,11 +182,11 @@ theorem topological_knowledge_gate_not_locally_constant :
   intro hConst
   have hEq := hConst KnowledgeGateWorld.left (by native_decide)
     KnowledgeGateWorld.right (by native_decide)
-  have hTB :
-      eval TopologicalKnowledgeGateModel KnowledgeGateWorld.left knowledgeGateP =
-        eval TopologicalKnowledgeGateModel KnowledgeGateWorld.right knowledgeGateP :=
-    hEq
-  native_decide at hTB
+  have hNe :
+      eval TopologicalKnowledgeGateModel KnowledgeGateWorld.left knowledgeGateP ≠
+        eval TopologicalKnowledgeGateModel KnowledgeGateWorld.right knowledgeGateP := by
+    native_decide
+  exact hNe hEq
 
 /--
 The earlier `B` versus `F` divergence is therefore explained exactly by local
