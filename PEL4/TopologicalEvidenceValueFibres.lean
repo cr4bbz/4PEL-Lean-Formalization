@@ -261,7 +261,10 @@ theorem sierpinski_focus_T_F_phase_contact :
   · exact closure_superset SierpinskiInteriorSemantics
       (fdeValueRegion sierpinskiBoundaryValue FDEValue.T)
       SierpinskiPoint.focus (by rfl)
-  · rw [sierpinski_closure_focus_iff]
+  · change SierpinskiInteriorSemantics.closure
+      (fdeValueRegion sierpinskiBoundaryValue FDEValue.F)
+      SierpinskiPoint.focus
+    rw [sierpinski_closure_focus_iff]
     exact Or.inr (by rfl)
 
 /-- Consequently the Sierpinski focus is not locally constant by phase-contact geometry alone. -/
