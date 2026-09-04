@@ -170,13 +170,13 @@ theorem toySupports_trans : forall {x y z},
     toySupports x y -> toySupports y z -> toySupports x z := by
   intro x y z
   cases x <;> cases y <;> cases z <;>
-    simp only [toySupports] at *
+    simp [toySupports] at *
 
 theorem toyRiskStep_supports : forall {p x y},
     toyRiskStep p x y -> toySupports x y := by
   intro p x y
   cases x <;> cases y <;>
-    simp only [toyRiskStep, toySupports] at *
+    simp [toyRiskStep, toySupports] at *
 
 def toyReciprocalRiskChain :
     ReciprocalRiskChain toyRiskStep RiskStage.start RiskStage.finish :=
