@@ -1,4 +1,5 @@
 import PEL4.PopulationAxiology.RiskyCompensation
+import PEL4.PopulationAxiology.RiskyCompensationInstance
 import PEL4.PopulationAxiology.ProspectGeometry
 
 /-!
@@ -21,3 +22,10 @@ computations currently use `native_decide`.
 #print axioms PEL4.PopulationAxiology.reciprocalRisk_axiological_glut
 #print axioms PEL4.PopulationAxiology.toy_risky_comparison_is_glut
 #print axioms PEL4.PopulationAxiology.toy_unrelated_comparison_is_gap
+#print axioms PEL4.PopulationAxiology.riskShiftProspect_pair_valid
+#print axioms PEL4.PopulationAxiology.gate3_generated_rgnep
+#print axioms PEL4.PopulationAxiology.gate3_prospects_valid
+#print axioms PEL4.PopulationAxiology.gate3_exact_two_step_chain
+#print axioms PEL4.PopulationAxiology.gate3ReciprocalRiskChain
+#print axioms PEL4.PopulationAxiology.gate3_kernel_endpoint_shape
+#print axioms PEL4.PopulationAxiology.gate3_kernel_coupled_endpoint

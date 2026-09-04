@@ -120,3 +120,4 @@ import PEL4.PopulationAxiology.ProspectGeometry
 import PEL4.PopulationAxiology.PopulationProspect
 import PEL4.PopulationAxiology.FourCellKernel
 import PEL4.PopulationAxiology.RiskyCompensation
+import PEL4.PopulationAxiology.RiskyCompensationInstance

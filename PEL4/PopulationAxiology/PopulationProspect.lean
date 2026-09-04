@@ -51,6 +51,23 @@ def higherProbability {Outcome : Type}
 
 end BinaryProspect
 
+/-- Equality of binary population prospects up to permutation of lives in
+each outcome, while preserving the probability coordinate. This is the
+minimal anonymity relation needed before populations are represented by a
+quotient or multiset. -/
+def BinaryPopulationProspectEquivalent
+    {Welfare : Type}
+    (left right : BinaryProspect (Population Welfare)) : Prop :=
+  List.Perm left.higherOutcome right.higherOutcome ∧
+    List.Perm left.lowerOutcome right.lowerOutcome ∧
+    left.lowerProbability = right.lowerProbability
+
+theorem binaryPopulationProspectEquivalent_refl
+    {Welfare : Type}
+    (prospect : BinaryProspect (Population Welfare)) :
+    BinaryPopulationProspectEquivalent prospect prospect :=
+  ⟨List.Perm.refl _, List.Perm.refl _, rfl⟩
+
 /-- Add `count` lives at one welfare level to a background population. -/
 def addWelfareBlock {Welfare : Type}
     (background : Population Welfare) (count : Nat) (level : Welfare) :
@@ -86,5 +103,52 @@ specified risk of the lower outcome. -/
     (riskShiftProspect background upper lower compensationCount
       compensationLevel k).lowerProbability = k :=
   rfl
+
+/-- A risk-shift prospect is valid whenever its lower-outcome probability is
+in the rational unit interval. -/
+theorem riskShiftProspect_valid
+    {Welfare : Type}
+    (background : Population Welfare)
+    (upper lower : Welfare)
+    (compensationCount : Nat)
+    (compensationLevel : Welfare)
+    (k : Rat)
+    (hk0 : 0 ≤ k)
+    (hk1 : k ≤ 1) :
+    BinaryProspect.Valid
+      (riskShiftProspect background upper lower compensationCount
+        compensationLevel k) :=
+  ⟨hk0, hk1⟩
+
+/-- If `k` lies in `[0, 1-p]` and `p` is nonnegative, both the original
+prospect and the prospect after one risk increment are probability-valid. -/
+theorem riskShiftProspect_pair_valid
+    {Welfare : Type}
+    (background : Population Welfare)
+    (upper lower : Welfare)
+    (compensationCount : Nat)
+    (leftCompensation rightCompensation : Welfare)
+    (k p : Rat)
+    (hk0 : 0 ≤ k)
+    (hkp : k ≤ 1 - p)
+    (hp0 : 0 ≤ p) :
+    BinaryProspect.Valid
+        (riskShiftProspect background upper lower compensationCount
+          leftCompensation k) ∧
+      BinaryProspect.Valid
+        (riskShiftProspect background upper lower compensationCount
+          rightCompensation (k + p)) := by
+  have hk_le_kp : k ≤ k + p := by
+    have h := (Rat.add_le_add_left (a := 0) (b := p) (c := k)).2 hp0
+    simpa only [Rat.add_zero] using h
+  have hkp1 : k + p ≤ 1 := by
+    have h := (Rat.add_le_add_right
+      (a := k) (b := 1 - p) (c := p)).2 hkp
+    simpa only [Rat.sub_add_cancel] using h
+  constructor
+  · exact riskShiftProspect_valid background upper lower compensationCount
+      leftCompensation k hk0 (Rat.le_trans hk_le_kp hkp1)
+  · exact riskShiftProspect_valid background upper lower compensationCount
+      rightCompensation (k + p) (Rat.add_nonneg hk0 hp0) hkp1
 
 end PEL4.PopulationAxiology
