@@ -220,6 +220,20 @@ belief(not exam Friday):  T -> N -> F.
 
 The backward-elimination extension verifies that each day is predictable in its special elimination context while none is positively predicted initially. Working diagnosis: **context-indexed prediction transport failure**.
 
+### 13. Finite Fine-Grainedness and population-prospect geometry
+
+The population-axiology research branch isolates Finite Fine-Grainedness as
+finite-path connectivity of a slight-difference graph. Lean verifies that
+reflexivity, transitivity, and local transport propagate comparisons along such
+paths, while a two-tier lexical carrier supplies a disconnected countermodel.
+
+The first 4-PEL bridge is also explicit: finite-chain support plus independent
+rejection yields the glut value `B` rather than arbitrary derivability. Two
+affine support paths with the same classical endpoints `T -> F` have different
+midpoint phases (`N` versus `B`), showing that convex interpolation restores a
+path without forcing bivalence. See
+`docs/FINITE_FINE_GRAINEDNESS_4PEL.md` for hypotheses and formalization limits.
+
 ---
 
 ## Paradox map
@@ -234,6 +248,7 @@ The backward-elimination extension verifies that each day is predictable in its 
 | Sorites | gradual evidence vs categorical status | threshold gap/glut geometry | Lean-verified |
 | Surprise Examination | update and backward elimination | dynamic reversal + context transport failure | Lean-verified |
 | Fitch / Church-Fitch | knowability, Moorean conjunction, possibility duality | stability reflection + transport + NoGap/NoGlut phase boundaries | Lean-verified conditional classification |
+| Population axiology | finite small-step chains + risky interpolation | connectivity transport; gap/glut path-lift split | Lean-verified structural bridge |
 
 ---
 

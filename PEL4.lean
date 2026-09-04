@@ -113,3 +113,7 @@ import PEL4.Geometry
 import PEL4.Liminality
 import PEL4.LiarGamma
 import PEL4.Paradoxes.SyntheseExtensions
+
+import PEL4.PopulationAxiology.FiniteFineGrainedness
+import PEL4.PopulationAxiology.ParaconsistentComparison
+import PEL4.PopulationAxiology.ProspectGeometry
