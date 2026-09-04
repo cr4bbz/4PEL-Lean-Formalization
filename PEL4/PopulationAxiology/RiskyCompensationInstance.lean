@@ -209,6 +209,7 @@ theorem gate3_second_step_generated
     have hSame : p + (1 - p) = p + p := hSub.trans hTotal.symm
     have hEq : 1 - p = p := Rat.add_left_cancel p hSame
     rw [hEq]
+    exact Rat.le_refl
   refine ⟨.upper, p, .barelyPositive, .veryPositive,
     [.veryPositive], hp0, hp_le_one_minus,
     rfl, rfl, ?_, ?_, hValid.2.1, hValid.2.2⟩
