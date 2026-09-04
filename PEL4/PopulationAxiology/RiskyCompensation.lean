@@ -154,19 +154,29 @@ def toyRejects : RiskStage -> RiskStage -> Prop
   | .start, .finish => True
   | _, _ => False
 
+instance toySupports_decidable : DecidableRel toySupports := by
+  intro x y
+  cases x <;> cases y <;> simp only [toySupports] <;> infer_instance
+
+instance toyRejects_decidable : DecidableRel toyRejects := by
+  intro x y
+  cases x <;> cases y <;> simp only [toyRejects] <;> infer_instance
+
 theorem toySupports_refl : forall x, toySupports x x := by
   intro x
-  cases x <;> decide
+  cases x <;> rfl
 
 theorem toySupports_trans : forall {x y z},
     toySupports x y -> toySupports y z -> toySupports x z := by
   intro x y z
-  cases x <;> cases y <;> cases z <;> decide
+  cases x <;> cases y <;> cases z <;>
+    simp only [toySupports] at *
 
 theorem toyRiskStep_supports : forall {p x y},
     toyRiskStep p x y -> toySupports x y := by
   intro p x y
-  cases x <;> cases y <;> decide
+  cases x <;> cases y <;>
+    simp only [toyRiskStep, toySupports] at *
 
 def toyReciprocalRiskChain :
     ReciprocalRiskChain toyRiskStep RiskStage.start RiskStage.finish :=
@@ -174,23 +184,24 @@ def toyReciprocalRiskChain :
     increment := 1
     rounds_positive := by decide
     increment_positive := by decide
-    closes_total_risk := by decide
+    closes_total_risk := by
+      change (1 : Rat) * 1 = 1
+      exact Rat.one_mul 1
     steps := ExactStepChain.succ (by trivial) (ExactStepChain.zero _) }
 
 /-- The finite risky chain and the independent rejection yield a glut. -/
 theorem toy_risky_comparison_is_glut :
     comparisonValue toySupports toyRejects
       RiskStage.start RiskStage.finish = FDEValue.B := by
-  apply reciprocalRisk_axiological_glut
+  exact reciprocalRisk_axiological_glut
     toySupports_refl toySupports_trans toyRiskStep_supports
-    toyReciprocalRiskChain
-  trivial
+    toyReciprocalRiskChain (by trivial)
 
 /-- The same finite interpretation is non-trivial: an unrelated comparison
 remains a gap rather than becoming supported. -/
 theorem toy_unrelated_comparison_is_gap :
     comparisonValue toySupports toyRejects
       RiskStage.unrelated RiskStage.start = FDEValue.N := by
-  decide
+  rfl
 
 end PEL4.PopulationAxiology
