@@ -78,7 +78,9 @@ theorem pureB_classicalConflict :
     simp only [negative, pureB, Rat.zero_add]
   constructor
   · rw [hPositive]
+    exact Rat.le_refl
   · rw [hNegative]
+    exact Rat.le_refl
 
 /-- The four-valued lift retains the contradiction as `B`. -/
 theorem pureB_thresholdValue :
