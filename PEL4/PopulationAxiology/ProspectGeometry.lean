@@ -35,23 +35,23 @@ def overlappingComparisonPath (t : Rat) : FDEValue :=
 theorem exclusive_path_endpoints :
     exclusiveComparisonPath 0 = FDEValue.T ∧
       exclusiveComparisonPath 1 = FDEValue.F := by
-  decide
+  native_decide
 
 /-- The overlapping path has exactly the same classical endpoints. -/
 theorem overlapping_path_endpoints :
     overlappingComparisonPath 0 = FDEValue.T ∧
       overlappingComparisonPath 1 = FDEValue.F := by
-  decide
+  native_decide
 
 /-- The midpoint of the exclusive path is underdetermined. -/
 theorem exclusive_path_midpoint_is_gap :
     exclusiveComparisonPath (1 / 2) = FDEValue.N := by
-  decide
+  native_decide
 
 /-- The midpoint of the overlapping path is contradictory. -/
 theorem overlapping_path_midpoint_is_glut :
     overlappingComparisonPath (1 / 2) = FDEValue.B := by
-  decide
+  native_decide
 
 /-- Coarse classical endpoint data does not determine the intermediate 4-PEL
 phase of an affine support path. -/
@@ -60,6 +60,6 @@ theorem same_endpoints_different_midpoint :
     exclusiveComparisonPath 1 = overlappingComparisonPath 1 ∧
     exclusiveComparisonPath (1 / 2) ≠
       overlappingComparisonPath (1 / 2) := by
-  decide
+  native_decide
 
 end PEL4.PopulationAxiology

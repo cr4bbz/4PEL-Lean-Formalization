@@ -129,7 +129,7 @@ Population Welfare -> FourCellProbability.
 ```
 
 A finite kernel witness maps one population to pure `B` and the empty
-background to pure `N`. At cutoff `1/2`, Lean verifies both the classical
+background to pure `N`. At cutoff `1`, Lean verifies both the classical
 conflict projection of the target and the non-trivial four-valued lift
 `target = B`, `unrelated = N`.
 
@@ -165,10 +165,12 @@ It does not yet establish:
 
 ## Verification discipline
 
-The population-axiology modules use kernel-reduced `rfl` and `decide` proofs.
-The focused `AxiomAudit.lean` module prints the transitive assumptions of the
-publication-facing theorem chain, and CI compiles that audit separately from
-the library umbrella.
+The Gate 2 kernel and risky-transport modules use kernel-reduced `rfl` and
+`decide` proofs. The focused `AxiomAudit.lean` module prints the transitive
+assumptions of that publication-facing theorem chain, and CI compiles the
+audit separately from the library umbrella. The older rational affine-path
+witnesses still use `native_decide` and are classified as finite computation
+with compiler trust rather than included in this focused audit.
 
 ## Next gate
 

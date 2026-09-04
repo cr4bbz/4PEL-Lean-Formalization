@@ -18,12 +18,10 @@ does not assert the condition, identify a concrete welfare scale, or formalize
 the remaining axioms of the Risky Sixth Impossibility Theorem.
 -/
 
-universe u
-
 /-- Rational Risky General Non-Extreme Priority. `lower a` plays the role of
 `a - 1`; the two predicates encode `0 < b <= 3` and `c >= beta`. -/
 def RationalRiskyGeneralNonExtremePriority
-    {Welfare : Type u}
+    {Welfare : Type}
     (lower : Welfare -> Welfare)
     (barelyPositive veryPositive : Welfare -> Prop)
     (noBetterThan :
@@ -50,7 +48,7 @@ while `ReciprocalRiskChain` records the arithmetic closure condition.
 -/
 
 /-- A finite chain indexed by its exact number of local steps. -/
-inductive ExactStepChain {A : Type u} (step : A -> A -> Prop) :
+inductive ExactStepChain {A : Type} (step : A -> A -> Prop) :
     Nat -> A -> A -> Prop
   | zero (x : A) : ExactStepChain step 0 x x
   | succ {n : Nat} {x y z : A} :
@@ -62,7 +60,7 @@ namespace ExactStepChain
 
 /-- Forgetting the exact length yields the earlier finite-path notion. -/
 theorem toFiniteStepChain
-    {A : Type u} {step : A -> A -> Prop} {n : Nat} {x y : A}
+    {A : Type} {step : A -> A -> Prop} {n : Nat} {x y : A}
     (chain : ExactStepChain step n x y) :
     FiniteStepChain step x y := by
   induction chain with
@@ -72,7 +70,7 @@ theorem toFiniteStepChain
 /-- Reflexivity, transitivity, and local acceptance transport along an exact
 finite step count. -/
 theorem transport
-    {A : Type u}
+    {A : Type}
     {step comparison : A -> A -> Prop}
     (comparison_refl : forall x, comparison x x)
     (comparison_trans : forall {x y z},
@@ -90,7 +88,7 @@ end ExactStepChain
 
 /-- A path of exactly `r` identical risk increments `p`, with `r * p = 1`. -/
 structure ReciprocalRiskChain
-    {A : Type u}
+    {A : Type}
     (riskStep : Rat -> A -> A -> Prop)
     (source target : A) where
   rounds : Nat
@@ -103,7 +101,7 @@ structure ReciprocalRiskChain
 /-- The exact structural content of the risky iteration: local comparison at
 each reciprocal-risk step plus transitivity yields the endpoint comparison. -/
 theorem reciprocalRiskTransport
-    {A : Type u}
+    {A : Type}
     {riskStep : Rat -> A -> A -> Prop}
     {comparison : A -> A -> Prop}
     (comparison_refl : forall x, comparison x x)
@@ -119,7 +117,7 @@ theorem reciprocalRiskTransport
 /-- If an independent adequacy route rejects the endpoint comparison, the
 risky transitivity engine produces `B`, not logical explosion. -/
 theorem reciprocalRisk_axiological_glut
-    {A : Type u}
+    {A : Type}
     {riskStep : Rat -> A -> A -> Prop}
     {supports rejects : A -> A -> Prop}
     [DecidableRel supports] [DecidableRel rejects]

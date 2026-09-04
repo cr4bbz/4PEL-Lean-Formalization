@@ -18,24 +18,22 @@ The list representation is intentionally minimal. It does not yet quotient
 populations by permutation, so anonymity remains a future semantic condition.
 -/
 
-universe u
-
 /-- A finite population represented by the welfare level of each life. -/
-abbrev Population (Welfare : Type u) := List Welfare
+abbrev Population (Welfare : Type) := List Welfare
 
 /-- A normalized finite rational prospect. -/
-structure FiniteProspect (Outcome : Type u) [DecidableEq Outcome] where
+structure FiniteProspect (Outcome : Type) [DecidableEq Outcome] where
   support : FiniteSet Outcome
   weight : Outcome -> Rat
   distribution : FiniteWeightDistribution support weight
 
 /-- A prospect whose possible outcomes are finite populations. -/
-abbrev PopulationProspect (Welfare : Type u) [DecidableEq Welfare] :=
+abbrev PopulationProspect (Welfare : Type) [DecidableEq Welfare] :=
   FiniteProspect (Population Welfare)
 
 /-- A two-outcome prospect, convenient for stating the risky adequacy
 conditions before quotienting or canonicalizing its support. -/
-structure BinaryProspect (Outcome : Type u) where
+structure BinaryProspect (Outcome : Type) where
   higherOutcome : Outcome
   lowerOutcome : Outcome
   lowerProbability : Rat
@@ -43,18 +41,18 @@ structure BinaryProspect (Outcome : Type u) where
 namespace BinaryProspect
 
 /-- The elementary probability-integrity condition for a binary prospect. -/
-def Valid {Outcome : Type u} (prospect : BinaryProspect Outcome) : Prop :=
+def Valid {Outcome : Type} (prospect : BinaryProspect Outcome) : Prop :=
   0 ≤ prospect.lowerProbability ∧ prospect.lowerProbability ≤ 1
 
 /-- The probability of the higher outcome. -/
-def higherProbability {Outcome : Type u}
+def higherProbability {Outcome : Type}
     (prospect : BinaryProspect Outcome) : Rat :=
   1 - prospect.lowerProbability
 
 end BinaryProspect
 
 /-- Add `count` lives at one welfare level to a background population. -/
-def addWelfareBlock {Welfare : Type u}
+def addWelfareBlock {Welfare : Type}
     (background : Population Welfare) (count : Nat) (level : Welfare) :
     Population Welfare :=
   background ++ List.replicate count level
@@ -62,7 +60,7 @@ def addWelfareBlock {Welfare : Type u}
 /-- A binary population prospect in which one distinguished life is at
 `upper` with probability `1-k` and at `lower` with probability `k`, while a
 deterministic compensation block is added to the background population. -/
-def riskShiftProspect {Welfare : Type u}
+def riskShiftProspect {Welfare : Type}
     (background : Population Welfare)
     (upper lower : Welfare)
     (compensationCount : Nat)
@@ -79,7 +77,7 @@ def riskShiftProspect {Welfare : Type u}
 /-- The probability coordinate of a risk-shift prospect is exactly the
 specified risk of the lower outcome. -/
 @[simp] theorem riskShiftProspect_lowerProbability
-    {Welfare : Type u}
+    {Welfare : Type}
     (background : Population Welfare)
     (upper lower : Welfare)
     (compensationCount : Nat)

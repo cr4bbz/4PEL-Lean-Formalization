@@ -5,8 +5,9 @@ import PEL4.PopulationAxiology.ProspectGeometry
 # Focused axiom audit for the finite fine-grainedness / 4-PEL bridge
 
 Compile this module with `lake env lean` to display the transitive assumptions
-of the publication-facing theorem chain. Closed finite witnesses use kernel
-reduction through `decide`; they do not use `native_decide`.
+of the publication-facing Gate 2 theorem chain. The older affine prospect-
+geometry witnesses remain outside this audit because their closed rational
+computations currently use `native_decide`.
 -/
 
 #print axioms PEL4.PopulationAxiology.FiniteStepChain.transport
@@ -20,4 +21,3 @@ reduction through `decide`; they do not use `native_decide`.
 #print axioms PEL4.PopulationAxiology.reciprocalRisk_axiological_glut
 #print axioms PEL4.PopulationAxiology.toy_risky_comparison_is_glut
 #print axioms PEL4.PopulationAxiology.toy_unrelated_comparison_is_gap
-#print axioms PEL4.PopulationAxiology.same_endpoints_different_midpoint
