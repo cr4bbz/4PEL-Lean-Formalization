@@ -6,7 +6,7 @@ import PEL4.PopulationAxiology.ProspectGeometry
 # Focused axiom audit for the finite fine-grainedness / 4-PEL bridge
 
 Compile this module with `lake env lean` to display the transitive assumptions
-of the publication-facing Gate 2 theorem chain. The older affine prospect-
+of the publication-facing Gate 3 theorem chain. The older affine prospect-
 geometry witnesses remain outside this audit because their closed rational
 computations currently use `native_decide`.
 -/

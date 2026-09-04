@@ -6,7 +6,7 @@ Can the classical impossibility of a satisfactory population axiology be
 reinterpreted as the existence of non-trivial four-valued comparison states,
 rather than as the non-existence of every adequate comparison system?
 
-This branch begins with structural results only. It does **not** yet claim a
+This branch develops structural results only. It does **not** yet claim a
 formalization of Arrhenius's six theorems or Thornley's risky variants.
 
 ## Two simplexes, two roles
@@ -108,11 +108,24 @@ Gate 2 now provides:
 The fifth point is the central bridge: probabilistic interpolation repairs the
 reachability problem, while 4-PEL keeps the consistency question separate.
 
+Gate 3 now discharges the first of the former construction obligations on a
+four-level ordered carrier. For every permitted rational `k`, Lean proves that
+both the `k` and `k+p` prospects are probability-valid. With `r = 2`, two
+explicit generated moves form the exact chain
+
+```text
+0 -> p -> p+p = 1.
+```
+
+The start and finish populations are mapped by a concrete kernel to pure `N`
+and pure `B` outcome evidence. Their induced pure-`N`/pure-`B` mixtures begin
+at a gap and end in classical conflict with four-valued status `B`.
+
 The full theorem still requires:
 
-1. a concrete ordered welfare carrier and proofs that the constructed binary
-   prospects satisfy all probability side conditions;
-2. the remaining adequacy conditions and their interaction;
+1. the remaining adequacy conditions and their interaction;
+2. a substantive comparison semantics deriving, rather than generating, each
+   risky comparison;
 3. an instantiation deriving the exact sure-population endpoint comparison;
 4. a decision/extraction policy showing what practical recommendations, if
    any, are licensed by `B` and `N`.
@@ -141,6 +154,19 @@ evidential lifts. A future theorem should characterize the fibres of the map
 from support paths to thresholded endpoint pairs and determine when those
 fibres contain both gap-midpoint and glut-midpoint realizations.
 
+### H9 - Anonymity is a structural gluing condition - Gate 3 evidence
+
+Successive risky moves produce list presentations of the same anonymous
+population in different orders. The two-step construction therefore requires
+prospect equivalence under `List.Perm`; literal list equality is too fine-
+grained to compose the intended path.
+
+This yields a sharper hypothesis: anonymity is not merely a later ethical
+adequacy axiom. For list-represented populations it is already the structural
+gluing condition that makes local risk transformations composable. Gate 3
+uses an explicit permutation equivalence; quotienting populations by
+permutation, or moving to multisets, remains open.
+
 ## Formalization boundary
 
 The verified core currently establishes:
@@ -153,6 +179,13 @@ The verified core currently establishes:
   kernel signature;
 - the exact `r`-step transitivity engine for reciprocal risk increments;
 - a finite witness separating classical conflict from non-trivial 4-PEL `B`.
+- a four-level ordered carrier satisfying the generated rational RGNEP
+  contract for every permitted `k`;
+- a concrete two-step reciprocal-risk chain with probability-valid prospects;
+- a kernel-coupled endpoint classification from `N` to classical conflict and
+  4-PEL `B`;
+- permutation equivalence as the minimal anonymity layer needed to compose
+  the explicit steps.
 
 It does not yet establish:
 
@@ -165,7 +198,7 @@ It does not yet establish:
 
 ## Verification discipline
 
-The Gate 2 kernel and risky-transport modules use kernel-reduced `rfl` and
+The Gate 2 and Gate 3 kernel and risky-transport modules use kernel-reduced `rfl` and
 `decide` proofs. The focused `AxiomAudit.lean` module prints the transitive
 assumptions of that publication-facing theorem chain, and CI compiles the
 audit separately from the library umbrella. The older rational affine-path
@@ -174,9 +207,9 @@ with compiler trust rather than included in this focused audit.
 
 ## Next gate
 
-Instantiate the rational Risky General Non-Extreme Priority contract on a
-small ordered welfare carrier. Prove the probability-validity side conditions
-for every permitted `k`, construct the `r` successive prospects explicitly,
-and connect the resulting endpoint comparison to a four-cell evidence kernel.
-This remains a deliberately smaller target than the full Risky Sixth
-Impossibility Theorem.
+Replace the syntactically generated risky-move relation with a substantive
+comparison semantics that is invariant under population permutation. The
+target is to derive both local edges from that semantics, transport them to
+the sure endpoint, and keep the rejection route independent so that any `B`
+classification is earned rather than encoded. This remains deliberately
+smaller than the full Risky Sixth Impossibility Theorem.

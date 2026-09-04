@@ -321,7 +321,9 @@ theorem gate3_kernel_coupled_endpoint
     (p : Rat)
     (hp0 : 0 ≤ p)
     (hTotal : p + p = 1) :
-    FourCellProbability.thresholdValue 1
+    gate3_kernel_endpoint_shape .barelyPositive .barelyPositive 0 ∧
+      gate3_kernel_endpoint_shape .veryPositive .veryPositive (p + p) ∧
+      FourCellProbability.thresholdValue 1
         (pureNBMixture 0 ⟨by decide, by decide⟩) = FDEValue.N ∧
       FourCellProbability.ClassicalConflict 1
         (pureNBMixture (p + p)
@@ -340,7 +342,9 @@ theorem gate3_kernel_coupled_endpoint
       (pureNBMixture (p + p) hEndValid).negative = 1 := by
     simp only [FourCellProbability.negative, pureNBMixture,
       Rat.zero_add, hTotal]
-  refine ⟨pureNBMixture_zero_is_gap _, ?_, hEndB⟩
+  refine ⟨gate3_kernel_endpoint_shape _ _ _,
+    gate3_kernel_endpoint_shape _ _ _,
+    pureNBMixture_zero_is_gap _, ?_, hEndB⟩
   constructor
   · rw [hPositive]
     exact Rat.le_refl

@@ -239,7 +239,17 @@ Risky General Non-Extreme Priority. An exact-length chain theorem isolates the
 `r` applications of a reciprocal risk increment `p` with `r * p = 1`. If those
 steps support an endpoint comparison while an independent condition rejects
 it, Lean derives the 4-PEL value `B`; a finite witness keeps an unrelated claim
-at `N`. A focused axiom audit is compiled in CI. See
+at `N`.
+
+Gate 3 instantiates that contract on a four-level ordered welfare carrier. Lean
+checks the probability side conditions uniformly for every admissible `k` and
+an explicit two-step path `0 -> p -> p+p=1`. A concrete population kernel maps
+its endpoint outcomes to pure `N`/`B` evidence, so the path begins at a gap and
+ends at classical conflict with 4-PEL value `B`. Constructing the chain also
+exposes anonymity as structural: successive list representations compose only
+up to population permutation. The move relation is still syntactically
+generated, not yet derived from a substantive axiology. A focused axiom audit
+is compiled in CI. See
 `docs/FINITE_FINE_GRAINEDNESS_4PEL.md` for hypotheses and formalization limits.
 
 ---
@@ -256,7 +266,7 @@ at `N`. A focused axiom audit is compiled in CI. See
 | Sorites | gradual evidence vs categorical status | threshold gap/glut geometry | Lean-verified |
 | Surprise Examination | update and backward elimination | dynamic reversal + context transport failure | Lean-verified |
 | Fitch / Church-Fitch | knowability, Moorean conjunction, possibility duality | stability reflection + transport + NoGap/NoGlut phase boundaries | Lean-verified conditional classification |
-| Population axiology | finite small-step chains + reciprocal-risk interpolation | connectivity transport; normalized evidence-kernel lift to non-trivial `B` | Lean-verified Gate 2 structural core |
+| Population axiology | finite small-step chains + reciprocal-risk interpolation | permutation-invariant path composition; normalized evidence-kernel lift to non-trivial `B` | Lean-verified Gate 3 instance |
 
 ---
 
