@@ -139,17 +139,18 @@ theorem gate4PriorityRejects_equivalent
 
 theorem gate4_riskShift_safety_score
     (background : Population Gate3Welfare)
-    (upper compensation : Gate3Welfare)
+    (distinguished compensation : Gate3Welfare)
     (k : Rat) :
     gate4SafetyScore
-        (riskShiftProspect background upper (gate3Lower upper) 1
+        (riskShiftProspect background distinguished
+          (gate3Lower distinguished) 1
           compensation k) =
       gate4PopulationScore background +
         gate4WelfareContribution compensation := by
   simp only [gate4SafetyScore, riskShiftProspect, addWelfareBlock,
     gate3Lower, gate4PopulationScore_append, List.replicate_succ,
-    List.replicate_zero, List.append_nil, gate4PopulationScore,
-    gate4WelfareContribution, Rat.add_zero, Rat.zero_add, Rat.add_assoc]
+    List.replicate_zero, gate4PopulationScore,
+    gate4WelfareContribution, Rat.add_zero]
 
 /-- Unlike the generated Gate 3 relation, the comparison relation here is
 fixed in advance. Its safety-floor ordering proves the complete quantifier
@@ -157,8 +158,13 @@ contract of rational RGNEP on the four-level carrier. -/
 theorem gate4_semantic_rgnep :
     RationalRiskyGeneralNonExtremePriority
       gate3Lower gate3BarelyPositive gate3VeryPositive Gate4Supports := by
-  intro upper
-  refine ⟨1, 2, 1 / (2 : Rat), by decide, by decide, rfl, ?_⟩
+  intro distinguished
+  have hTwoPositive : (0 : Rat) < 2 := by decide
+  have hHalfPositive : (0 : Rat) < 1 / 2 := by
+    apply (Rat.lt_div_iff hTwoPositive).2
+    rw [Rat.zero_mul]
+    decide
+  refine ⟨1, 2, 1 / (2 : Rat), by decide, hHalfPositive, rfl, ?_⟩
   intro k _ _ barely very hBarely hVery background
   rcases hBarely with rfl
   rcases hVery with rfl
@@ -172,15 +178,21 @@ theorem gate4_semantic_rgnep :
 
 theorem gate4_start_safety_score :
     gate4SafetyScore gate3StartProspect = 2 := by
-  rfl
+  simp only [gate4SafetyScore, gate3StartProspect,
+    gate3TwoBlockProspect, gate3Lower, gate4PopulationScore,
+    gate4WelfareContribution, Rat.zero_add, Rat.add_zero]
 
 theorem gate4_middle_safety_score (p : Rat) :
     gate4SafetyScore (gate3MiddleProspect p) = 3 := by
-  rfl
+  simp only [gate4SafetyScore, gate3MiddleProspect,
+    gate3TwoBlockProspect, gate3Lower, gate4PopulationScore,
+    gate4WelfareContribution, Rat.zero_add, Rat.add_zero]
 
 theorem gate4_finish_safety_score (p : Rat) :
     gate4SafetyScore (gate3FinishProspect p) = 4 := by
-  rfl
+  simp only [gate4SafetyScore, gate3FinishProspect,
+    gate3TwoBlockProspect, gate3Lower, gate4PopulationScore,
+    gate4WelfareContribution, Rat.zero_add, Rat.add_zero]
 
 theorem gate4_first_step_supported (p : Rat) :
     Gate4Supports gate3StartProspect (gate3MiddleProspect p) := by
