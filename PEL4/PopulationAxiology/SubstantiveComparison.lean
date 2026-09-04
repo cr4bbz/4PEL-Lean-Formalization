@@ -181,18 +181,21 @@ theorem gate4_start_safety_score :
   simp only [gate4SafetyScore, gate3StartProspect,
     gate3TwoBlockProspect, gate3Lower, gate4PopulationScore,
     gate4WelfareContribution, Rat.zero_add, Rat.add_zero]
+  decide
 
 theorem gate4_middle_safety_score (p : Rat) :
     gate4SafetyScore (gate3MiddleProspect p) = 3 := by
   simp only [gate4SafetyScore, gate3MiddleProspect,
     gate3TwoBlockProspect, gate3Lower, gate4PopulationScore,
     gate4WelfareContribution, Rat.zero_add, Rat.add_zero]
+  decide
 
 theorem gate4_finish_safety_score (p : Rat) :
     gate4SafetyScore (gate3FinishProspect p) = 4 := by
   simp only [gate4SafetyScore, gate3FinishProspect,
     gate3TwoBlockProspect, gate3Lower, gate4PopulationScore,
     gate4WelfareContribution, Rat.zero_add, Rat.add_zero]
+  decide
 
 theorem gate4_first_step_supported (p : Rat) :
     Gate4Supports gate3StartProspect (gate3MiddleProspect p) := by
