@@ -56,7 +56,8 @@ def pureB : FourCellProbability :=
     b_nonnegative := by decide
     n_nonnegative := by decide
     f_nonnegative := by decide
-    normalized := by decide }
+    normalized := by
+      simp only [Rat.zero_add, Rat.add_zero] }
 
 /-- A pure gap profile: all evidence mass lies in cell `N`. -/
 def pureN : FourCellProbability :=
@@ -65,22 +66,25 @@ def pureN : FourCellProbability :=
     b_nonnegative := by decide
     n_nonnegative := by decide
     f_nonnegative := by decide
-    normalized := by decide }
+    normalized := by
+      simp only [Rat.zero_add, Rat.add_zero] }
 
 /-- The classical projection sees a contradiction in the pure-`B` profile. -/
 theorem pureB_classicalConflict :
     ClassicalConflict 1 pureB := by
-  decide
+  simp [ClassicalConflict, positive, negative, pureB]
 
 /-- The four-valued lift retains the contradiction as `B`. -/
 theorem pureB_thresholdValue :
     thresholdValue 1 pureB = FDEValue.B := by
-  decide
+  simp [thresholdValue, supportThresholdState, positive, negative, pureB,
+    FDEValue.B]
 
 /-- The pure-`N` profile remains a gap at the same threshold. -/
 theorem pureN_thresholdValue :
     thresholdValue 1 pureN = FDEValue.N := by
-  decide
+  simp [thresholdValue, supportThresholdState, positive, negative, pureN,
+    FDEValue.N]
 
 end FourCellProbability
 
@@ -104,12 +108,12 @@ def finiteWitnessKernel : EvidenceKernel KernelWelfare
 theorem finiteWitnessKernel_target_is_glut :
     FourCellProbability.thresholdValue 1
       (finiteWitnessKernel [KernelWelfare.marked]) = FDEValue.B := by
-  decide
+  exact FourCellProbability.pureB_thresholdValue
 
 theorem finiteWitnessKernel_unrelated_is_gap :
     FourCellProbability.thresholdValue 1
       (finiteWitnessKernel []) = FDEValue.N := by
-  decide
+  exact FourCellProbability.pureN_thresholdValue
 
 /-- The kernel witnesses the precise non-triviality boundary: one population
 can project to classical conflict and lift to `B`, while another remains `N`.
@@ -121,6 +125,8 @@ theorem finiteWitnessKernel_conflict_without_triviality :
         (finiteWitnessKernel [KernelWelfare.marked]) = FDEValue.B ∧
       FourCellProbability.thresholdValue 1
         (finiteWitnessKernel []) = FDEValue.N := by
-  decide
+  exact ⟨FourCellProbability.pureB_classicalConflict,
+    finiteWitnessKernel_target_is_glut,
+    finiteWitnessKernel_unrelated_is_gap⟩
 
 end PEL4.PopulationAxiology
