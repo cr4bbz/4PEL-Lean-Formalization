@@ -72,19 +72,33 @@ def pureN : FourCellProbability :=
 /-- The classical projection sees a contradiction in the pure-`B` profile. -/
 theorem pureB_classicalConflict :
     ClassicalConflict 1 pureB := by
-  simp [ClassicalConflict, positive, negative, pureB]
+  have hPositive : pureB.positive = 1 := by
+    simp only [positive, pureB, Rat.zero_add]
+  have hNegative : pureB.negative = 1 := by
+    simp only [negative, pureB, Rat.zero_add]
+  constructor
+  · rw [hPositive]
+  · rw [hNegative]
 
 /-- The four-valued lift retains the contradiction as `B`. -/
 theorem pureB_thresholdValue :
     thresholdValue 1 pureB = FDEValue.B := by
-  simp [thresholdValue, supportThresholdState, positive, negative, pureB,
-    FDEValue.B]
+  have hPositive : pureB.positive = 1 := by
+    simp only [positive, pureB, Rat.zero_add]
+  have hNegative : pureB.negative = 1 := by
+    simp only [negative, pureB, Rat.zero_add]
+  rw [thresholdValue, hPositive, hNegative]
+  rfl
 
 /-- The pure-`N` profile remains a gap at the same threshold. -/
 theorem pureN_thresholdValue :
     thresholdValue 1 pureN = FDEValue.N := by
-  simp [thresholdValue, supportThresholdState, positive, negative, pureN,
-    FDEValue.N]
+  have hPositive : pureN.positive = 0 := by
+    simp only [positive, pureN, Rat.zero_add]
+  have hNegative : pureN.negative = 0 := by
+    simp only [negative, pureN, Rat.zero_add]
+  rw [thresholdValue, hPositive, hNegative]
+  rfl
 
 end FourCellProbability
 
