@@ -121,3 +121,4 @@ import PEL4.PopulationAxiology.PopulationProspect
 import PEL4.PopulationAxiology.FourCellKernel
 import PEL4.PopulationAxiology.RiskyCompensation
 import PEL4.PopulationAxiology.RiskyCompensationInstance
+import PEL4.PopulationAxiology.SubstantiveComparison

@@ -1,5 +1,6 @@
 import PEL4.PopulationAxiology.RiskyCompensation
 import PEL4.PopulationAxiology.RiskyCompensationInstance
+import PEL4.PopulationAxiology.SubstantiveComparison
 import PEL4.PopulationAxiology.ProspectGeometry
 
 /-!
@@ -29,3 +30,11 @@ computations currently use `native_decide`.
 #print axioms PEL4.PopulationAxiology.gate3ReciprocalRiskChain
 #print axioms PEL4.PopulationAxiology.gate3_kernel_endpoint_shape
 #print axioms PEL4.PopulationAxiology.gate3_kernel_coupled_endpoint
+#print axioms PEL4.PopulationAxiology.gate4PopulationScore_perm
+#print axioms PEL4.PopulationAxiology.gate4Supports_equivalent
+#print axioms PEL4.PopulationAxiology.gate4PriorityRejects_equivalent
+#print axioms PEL4.PopulationAxiology.gate4_semantic_rgnep
+#print axioms PEL4.PopulationAxiology.gate4_generated_and_supported_steps
+#print axioms PEL4.PopulationAxiology.gate4_exact_semantic_chain
+#print axioms PEL4.PopulationAxiology.gate4_substantive_endpoint_is_glut
+#print axioms PEL4.PopulationAxiology.gate4_reverse_comparison_is_gap
