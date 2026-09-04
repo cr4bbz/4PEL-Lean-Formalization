@@ -86,20 +86,52 @@ Therefore classical endpoint data does not determine the internal phase. A
 probability-simplex path can geometrically connect endpoints while retaining
 either underdetermination or contradiction.
 
-### H6 - Risk repairs connectivity but not semantic consistency - open
+### H6 - Risk repairs connectivity but not semantic consistency - structural core verified
 
 Thornley's move to population prospects may restore finite interpolation by
 varying probabilities. The 4-PEL hypothesis is that this restores a path in the
 prospect space without guaranteeing that the induced comparison is classical.
 
-The exact theorem requires:
+Gate 2 now provides:
 
-1. a faithful Lean encoding of the risky adequacy conditions;
-2. a typed separation between population outcomes, prospects, and comparison
-   evidence;
-3. a theorem identifying which inconsistent classical conclusions become `B`;
+1. a typed distinction between populations, finite normalized prospects, and
+   binary risk-shift prospects;
+2. a rational statement of Risky General Non-Extreme Priority whose quantifier
+   order fixes `m`, `r`, and `p = 1/r` before `k`, the welfare-band witnesses,
+   and the background population;
+3. an exact-length chain recording `r` applications of the same risk increment
+   and the closing equation `r * p = 1`;
+4. a theorem that local support plus transitivity transports support to the
+   endpoint; and
+5. a theorem that independent rejection of that endpoint yields `B`.
+
+The fifth point is the central bridge: probabilistic interpolation repairs the
+reachability problem, while 4-PEL keeps the consistency question separate.
+
+The full theorem still requires:
+
+1. a concrete ordered welfare carrier and proofs that the constructed binary
+   prospects satisfy all probability side conditions;
+2. the remaining adequacy conditions and their interaction;
+3. an instantiation deriving the exact sure-population endpoint comparison;
 4. a decision/extraction policy showing what practical recommendations, if
    any, are licensed by `B` and `N`.
+
+### H8 - Outcome and evidence simplexes are connected by a kernel - Lean-verified signature and witness
+
+`FourCellProbability` is a rational point `(t,b,n,f)` with nonnegative
+coordinates summing to one. It is deliberately distinct from both an outcome
+prospect and the integer-valued `FourCellMass` on the parallel complex-
+coordinates branch. An `EvidenceKernel Welfare` has type
+
+```text
+Population Welfare -> FourCellProbability.
+```
+
+A finite kernel witness maps one population to pure `B` and the empty
+background to pure `N`. At cutoff `1/2`, Lean verifies both the classical
+conflict projection of the target and the non-trivial four-valued lift
+`target = B`, `unrelated = N`.
 
 ### H7 - The contradiction may live in a forgotten fibre - open
 
@@ -117,6 +149,10 @@ The verified core currently establishes:
 - a lexical disconnected countermodel;
 - paraconsistent recoding of simultaneous support and rejection;
 - a concrete gap/glut path-lift separation.
+- a normalized rational four-cell evidence simplex and population-indexed
+  kernel signature;
+- the exact `r`-step transitivity engine for reciprocal risk increments;
+- a finite witness separating classical conflict from non-trivial 4-PEL `B`.
 
 It does not yet establish:
 
@@ -127,9 +163,18 @@ It does not yet establish:
 - novelty relative to existing paraconsistent social-choice or population-
   ethics literature.
 
+## Verification discipline
+
+The population-axiology modules use kernel-reduced `rfl` and `decide` proofs.
+The focused `AxiomAudit.lean` module prints the transitive assumptions of the
+publication-facing theorem chain, and CI compiles that audit separately from
+the library umbrella.
+
 ## Next gate
 
-Formalize a minimal population-prospect signature and one exact risky
-compensation condition. The first target should be a small finite witness, not
-the full Sixth Impossibility Theorem. The gate succeeds only if Lean verifies
-both the classical conflict projection and its non-trivial four-valued lift.
+Instantiate the rational Risky General Non-Extreme Priority contract on a
+small ordered welfare carrier. Prove the probability-validity side conditions
+for every permitted `k`, construct the `r` successive prospects explicitly,
+and connect the resulting endpoint comparison to a four-cell evidence kernel.
+This remains a deliberately smaller target than the full Risky Sixth
+Impossibility Theorem.

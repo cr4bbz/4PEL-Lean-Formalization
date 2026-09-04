@@ -79,6 +79,6 @@ theorem target_comparison_is_glut :
 
 theorem unrelated_claim_not_true :
     nonExplosiveWitness .unrelated ≠ FDEValue.T := by
-  native_decide
+  decide
 
 end PEL4.PopulationAxiology

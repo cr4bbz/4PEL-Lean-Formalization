@@ -231,7 +231,15 @@ The first 4-PEL bridge is also explicit: finite-chain support plus independent
 rejection yields the glut value `B` rather than arbitrary derivability. Two
 affine support paths with the same classical endpoints `T -> F` have different
 midpoint phases (`N` versus `B`), showing that convex interpolation restores a
-path without forcing bivalence. See
+path without forcing bivalence.
+
+Gate 2 adds normalized finite population prospects, a rational four-cell
+evidence kernel `Population -> Delta^3`, and a quantifier-faithful contract for
+Risky General Non-Extreme Priority. An exact-length chain theorem isolates the
+`r` applications of a reciprocal risk increment `p` with `r * p = 1`. If those
+steps support an endpoint comparison while an independent condition rejects
+it, Lean derives the 4-PEL value `B`; a finite witness keeps an unrelated claim
+at `N`. A focused axiom audit is compiled in CI. See
 `docs/FINITE_FINE_GRAINEDNESS_4PEL.md` for hypotheses and formalization limits.
 
 ---
@@ -248,7 +256,7 @@ path without forcing bivalence. See
 | Sorites | gradual evidence vs categorical status | threshold gap/glut geometry | Lean-verified |
 | Surprise Examination | update and backward elimination | dynamic reversal + context transport failure | Lean-verified |
 | Fitch / Church-Fitch | knowability, Moorean conjunction, possibility duality | stability reflection + transport + NoGap/NoGlut phase boundaries | Lean-verified conditional classification |
-| Population axiology | finite small-step chains + risky interpolation | connectivity transport; gap/glut path-lift split | Lean-verified structural bridge |
+| Population axiology | finite small-step chains + reciprocal-risk interpolation | connectivity transport; normalized evidence-kernel lift to non-trivial `B` | Lean-verified Gate 2 structural core |
 
 ---
 

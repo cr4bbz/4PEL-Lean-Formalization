@@ -117,3 +117,6 @@ import PEL4.Paradoxes.SyntheseExtensions
 import PEL4.PopulationAxiology.FiniteFineGrainedness
 import PEL4.PopulationAxiology.ParaconsistentComparison
 import PEL4.PopulationAxiology.ProspectGeometry
+import PEL4.PopulationAxiology.PopulationProspect
+import PEL4.PopulationAxiology.FourCellKernel
+import PEL4.PopulationAxiology.RiskyCompensation
