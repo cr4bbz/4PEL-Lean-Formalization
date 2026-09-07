@@ -16,6 +16,7 @@ import PEL4.TopologicalEvidenceFixedPoints
 import PEL4.TopologicalKnowledgeIdempotence
 import PEL4.TopologicalEvidenceValueFibres
 import PEL4.TopologicalEvidencePhaseNerve
+import PEL4.TopologicalEvidenceAlexandrovNerve
 import PEL4.Evidence
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
