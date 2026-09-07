@@ -2,7 +2,7 @@ import PEL4.PaperReviewBoundaries
 import PEL4.ConvexModelPath
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
-The associated checker distinguishes native evaluation from standard axioms.
+The associated strict checker rejects native-evaluation and project-specific axioms.
 -/
 #print axioms PEL4.modal_knowledge_as_stability_filtered_belief
 #print axioms PEL4.evalModal_conditionalize_of_probabilityFree

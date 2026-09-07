@@ -1,7 +1,10 @@
 \section{Admissible Conditionalization and Dynamic Knowledge Phases}
 \label{sec:dynamics}
 
-The update operator conditions each local probability function on the positive extension of an evidence formula \(E\). Let
+The update operator conditions each local set function on the prior positive
+extension of an evidence formula \(E\) in the legacy language (atoms, negation,
+conjunction, and belief). It is not currently defined for arbitrary formulas
+with primitive \(\Know\) or raw possibility. Let
 \[
   E^+_{i,w}
   =\{u\in R_i(w):\llbracket E\rrbracket_u^+=1\}.
@@ -13,7 +16,14 @@ For a finite set \(S\subseteq W\), the raw updated local probability is
   \frac{\mu_{i,w}(S\cap E^+_{i,w})}
        {\mu_{i,w}(E^+_{i,w})}
 \]
-whenever the denominator is nonzero. At the model level, the Lean constructor requires an explicit \emph{ConditionalizationAdmissible} proof. This supplies positive evidence mass at every local state together with the normalization obligations of the updated measure.
+whenever the denominator is nonzero. At the model level, the Lean constructor
+requires an explicit \emph{ConditionalizationAdmissible} proof. Its field named
+\texttt{positive\_mass} literally asserts \emph{nonzero} mass at every
+agent/world pair, not strict positivity. Nonzero becomes positive when
+nonnegativity is separately available. Two further proof fields require the
+updated total mass to be one and its empty-event mass zero. They do not certify
+all strong probability laws. The event is evaluated in the prior model and
+held fixed for this update; this is not iterative reevaluation of its formula.
 
 The update is intentionally conservative:
 \[
@@ -36,9 +46,9 @@ This result isolates a first dynamic boundary:
 \]
 The converse is false. Later sections exhibit formulas containing \(\Bel\) whose probabilities change while their threshold status remains invariant.
 
-\subsection{Two dynamic channels for knowledge}
+\subsection{Two cases in the knowledge factorization}
 
-The factorization theorem from Section~\ref{sec:kernel} yields a complete two-state classification for \(\Know_i\varphi\). Let \(M_0\) and \(M_1\) be two models on the same modal language. The stability states of \(\varphi\) determine how the belief channel is exposed at the knowledge layer:
+The factorization theorem from Section~\ref{sec:kernel} yields four combinations of the before/after stability bits for \(\Know_i\varphi\). Let \(M_0\) and \(M_1\) be two models on the same modal language. The stability states of \(\varphi\) determine how the belief channel is exposed at the knowledge layer:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -66,9 +76,9 @@ A second witness restores stability in the opposite direction:
   \Know(\Bel p):\ \Fval\to\Tval.
 \]
 
-\begin{corollary}[No monotone knowledge direction]
-Admissible probabilistic conditionalization is neither intrinsically monotone knowledge gain nor intrinsically monotone knowledge loss in the evidence-stable semantics.
-\statusverified
+\begin{corollary}[Truth-only status can be lost and regained]
+There are admissible conditionalizations taking \(\Know(\Bel p)\) from \(\Tval\) to \(\Fval\), and others from \(\Fval\) to \(\Tval\). Thus preservation of the truth-only status is not an unconditional update law. This is not a monotonicity theorem about unspecified truth or information orders.
+\statuswitness
 \end{corollary}
 
 This phase table motivates the stronger question addressed next. Instead of asking only whether stability can fracture or recover, one can ask which complete four-valued endpoints are reachable when the belief profile is kept homogeneous so that the outer knowledge filter remains transparent.

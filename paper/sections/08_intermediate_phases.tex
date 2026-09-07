@@ -78,6 +78,9 @@ For opposite endpoints, both intermediate states are adjacent to source and targ
 \]
 Hence every sequential diagonal displacement decomposes into two one-wall phases.
 
+\paragraph{Boundary values at a simultaneous hit.}
+The threshold convention is inclusive. At the common hit \((c,c)\) the value is always \(\Bval\), verified by \texttt{PaperReview.threshold\_intersection\_is\_B}. Consequently ``no intermediate open phase'' does not mean ``no intermediate value at any parameter.'' For example, at \(c=3/5\), the segment from \((4/5,2/5)\) to \((2/5,4/5)\) has \(\Tval\) at zero, \(\Bval\) at \(1/2\), and \(\Fval\) at one. The common hit is an isolated \(\Bval\) between the two open phases; \texttt{PaperReview.simultaneous\_T\_F\_has\_B\_hit} checks the three values. The theorem about a sequential midpoint does not include the crossing instants.
+
 \subsection{Concrete diagonal table}
 
 The complete verified table is:
@@ -124,4 +127,4 @@ Every two-wall conditionalized belief transition admits an affine crossing pair 
 \end{theorem}
 
 \paragraph{Scope of this theorem.}
-The theorem in this section classifies the explicit affine interpolation of the two support masses. Section~\ref{sec:model-paths} subsequently verifies a genuine path of complete strong 4-PEL models for weight-generated endpoints and proves that every fixed event mass follows exactly such an affine trajectory. The remaining gap is therefore no longer model existence in general, but the formula-level identification of the positive and negative support events with fixed events along the model path. For arbitrary probability-sensitive modal formulas those event memberships may themselves change with the path parameter.
+The theorem in this section classifies the explicit affine interpolation of the two support masses. Section~\ref{sec:model-paths} subsequently verifies a genuine path of complete strong 4-PEL models for weight-generated endpoints and proves that every fixed event mass follows exactly such an affine trajectory. This does not realize arbitrary legacy support endpoints as a strong model path. For weight-generated endpoints the further gap is the formula-level identification of the positive and negative support events with fixed events along the model path. For arbitrary probability-sensitive modal formulas those event memberships may themselves change with the path parameter.

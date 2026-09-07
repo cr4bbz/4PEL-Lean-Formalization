@@ -26,9 +26,9 @@ if and only if the positive threshold decision is unchanged and the negative thr
 \statusverified
 \end{theorem}
 
-The raw probabilities may therefore move substantially while the categorical result remains fixed. The invariant is not the precise support mass but the pair of threshold sides occupied by the two masses.
+This equivalence is immediate from equality of Boolean pairs; it is a useful interface lemma, not a new probability law. In the general two-model theorem, each model uses its own threshold. Under conditionalization the threshold is fixed. The raw masses may therefore move substantially while the categorical result remains fixed. The invariant is not the precise support mass but the pair of threshold sides occupied by the two masses.
 
-The Lean development packages this fact in a compositional predicate, \texttt{ModalConditionalizationRobust}. At a belief node, robustness requires only that the two threshold decisions be preserved at every world. The embedded formula itself need not be dynamically invariant. Negation, conjunction, evidence-stable knowledge, and raw possibility propagate robustness compositionally. The previously verified probability-free fragment is contained in this semantic class, but the inclusion is strict: a diagonal member of the reachability family gives a formula containing \(\Bel\) whose probability distribution changes nontrivially while the belief value stays fixed.
+The Lean development gives a sufficient compositional certificate (not a complete characterization of invariance for all formulas), \texttt{ModalConditionalizationRobust}. At a belief node, robustness requires only that the two threshold decisions be preserved at every world. The embedded formula itself need not be dynamically invariant. Negation, conjunction, evidence-stable knowledge, and raw possibility propagate robustness compositionally. The previously verified probability-free fragment is contained in this semantic class, but the inclusion is strict: a diagonal member of the reachability family gives a formula containing \(\Bel\) whose probability distribution changes nontrivially while the belief value stays fixed.
 
 \subsection{The threshold square}
 
@@ -46,10 +46,10 @@ Since every FDE value is already a pair of threshold bits, the categorical state
   \node (T) at (1,0) {$\Tval$};
   \node (F) at (0,1) {$\Fval$};
   \node (B) at (1,1) {$\Bval$};
-  \draw[-{Latex[length=2mm]}] (N) -- (T);
-  \draw[-{Latex[length=2mm]}] (N) -- (F);
-  \draw[-{Latex[length=2mm]}] (T) -- (B);
-  \draw[-{Latex[length=2mm]}] (F) -- (B);
+  \draw (N) -- (T);
+  \draw (N) -- (F);
+  \draw (T) -- (B);
+  \draw (F) -- (B);
   \draw[dashed] (N) -- (B);
   \draw[dashed] (T) -- (F);
   \node[below=4mm of N] {$(0,0)$};
@@ -59,7 +59,7 @@ Since every FDE value is already a pair of threshold bits, the categorical state
 \end{tikzpicture}
 \end{center}
 
-Define the threshold-wall count
+The solid edges indicate undirected adjacency, not a preferred update direction or a factivity ordering. Define the endpoint threshold-wall count
 \[
   \dthr(a,b)
   =\mathbf{1}[a^+\neq b^+]

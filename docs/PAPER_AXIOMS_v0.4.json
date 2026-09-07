@@ -1,0 +1,449 @@
+{
+  "commit": "07fbc5193e0f7e43de565158c0eaf0cbb9c08dfb",
+  "lean_toolchain": "leanprover/lean4:v4.31.0",
+  "ci_run": 34133500237,
+  "declarations": [
+    {
+      "declaration": "PEL4.modal_knowledge_as_stability_filtered_belief",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.evalModal_conditionalize_of_probabilityFree",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.modal_knowledge_phase_stable_stable",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.modal_knowledge_phase_stable_unstable",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.modal_knowledge_phase_unstable_stable",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.modal_knowledge_phase_unstable_unstable",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_realizes_both_stability_phase_directions",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.dynamic_reachability_evidence_admissible",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_realizes_every_knowledge_value_transition",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_can_create_knowledge_glut",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_can_turn_knowledge_glut_into_gap",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_can_turn_knowledge_gap_into_truth",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.modal_belief_value_eq_iff_threshold_bits_eq",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.evalModal_conditionalize_of_robust",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.diagonal_reachability_belief_is_robust",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.diagonal_reachability_belief_not_probabilityFree",
+      "axioms": [],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.thresholdWallCount_le_two",
+      "axioms": [],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.thresholdWallCount_eq_zero_iff",
+      "axioms": [],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.thresholdWallCount_eq_two_iff",
+      "axioms": [],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.robust_formula_has_zero_threshold_displacement",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.threshold_decision_ne_iff_straddles",
+      "axioms": [
+        "propext"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_belief_two_walls_iff_both_supports_straddle",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.thresholdStraddles_has_affine_unit_crossing",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_belief_change_has_affine_threshold_crossing",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_belief_two_walls_has_two_affine_crossings",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineRatPath_threshold_hit_unique",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineCrossingPair_order_trichotomy",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineCrossingPair_simultaneous_iff_common_hit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_belief_two_walls_crossing_order",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineCrossingMidpoint_between_positive_first",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineCrossingMidpoint_between_negative_first",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affine_threshold_side_before_crossing_eq_source",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affine_threshold_side_after_crossing_eq_target",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineCrossingPair_positive_first_midpoint_state",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affineCrossingPair_negative_first_midpoint_state",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.positiveFirstIntermediate_adjacent_to_diagonal_endpoints",
+      "axioms": [
+        "propext"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.negativeFirstIntermediate_adjacent_to_diagonal_endpoints",
+      "axioms": [
+        "propext"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.affine_diagonal_intermediate_vertex_table",
+      "axioms": [],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.conditionalization_belief_two_walls_intermediate_phase",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.weightGeneratedMeasure_integrity",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexWeightDistribution",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.weightedEventMass_convex",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexStrongModelAt",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexStrongModelAt_worlds",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexStrongModelAt_accessibility",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexStrongModelAt_valuation",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexStrongModelAt_threshold",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.convexStrongModelAt_eventMass",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.PaperReview.accessibility_nonempty",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.PaperReview.knowledge_ignores_probability_for_fixed_values",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.PaperReview.threshold_intersection_is_B",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    },
+    {
+      "declaration": "PEL4.PaperReview.simultaneous_T_F_has_B_hit",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "trust": "standard-lean"
+    }
+  ]
+}

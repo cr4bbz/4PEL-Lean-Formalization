@@ -15,3 +15,4 @@ paper/*.synctex.gz
 
 # Python audit caches
 scripts/__pycache__/
+paper-axioms.json

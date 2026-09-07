@@ -8,7 +8,7 @@ Probabilistic epistemic models are usually asked two different questions. One co
 \]
 following the Belnap--Dunn/FDE tradition \cite{Belnap1977,Dunn1976}.
 
-The 4-PEL project combines these ideas in a finite probabilistic epistemic semantics. Positive and negative extensions are assigned local probability masses independently. A Lockean threshold is applied to each mass, producing a four-valued belief state. A separate evidence-stable knowledge operator then checks whether the complete FDE profile is invariant across the accessible range. This yields an exact factorization:
+The 4-PEL project combines these ideas in a finite-accessibility evidence semantics. Positive and negative extensions are measured separately by the same local set function. A Lockean threshold is applied to each mass, producing a four-valued belief state. A separate evidence-stable knowledge operator then checks whether the complete FDE profile is invariant across the accessible range. This yields an exact factorization:
 \[
   \Know_i\varphi=
   \begin{cases}
@@ -18,10 +18,10 @@ The 4-PEL project combines these ideas in a finite probabilistic epistemic seman
 \]
 The knowledge operator is therefore not a second probability threshold. It is a qualitative stability filter on top of threshold belief.
 
-The present paper asks what happens dynamically when local probability is updated while accessibility, atomic valuation, and threshold remain fixed. The central research question is:
+The lightweight interface and its stronger probability-certified subclass are distinguished in Section~\ref{sec:kernel}. The paper studies one-step conditionalization and, separately, a chosen affine interpolation of its support endpoints:
 
 \begin{question}[Dynamic phase geometry]
-How does admissible probabilistic conditionalization move four-valued belief and knowledge between \(\Tval,\Fval,\Bval,\Nval\), and what geometric and temporal structure is hidden by the endpoint transition alone?
+Which four-valued belief and knowledge endpoints can admissible conditionalization connect, and what additional phase structure follows if their signed supports are interpolated affinely?
 \end{question}
 
 The machine-checked answer develops in several layers. First, admissible conditionalization can both destroy and restore the stability gate. More strongly, a fixed six-world construction scheme realizes every ordered pair of four-valued values at the level of \(\Know(\Bel p)\). Thus the categorical reachability graph is complete. That global permissiveness is paired with a sharp local invariant: a belief value changes exactly when at least one of its two threshold decisions changes.
@@ -50,11 +50,11 @@ or
 \[
   \Nval\to\Fval\to\Bval.
 \]
-The same classification holds for the other diagonal orientations.
+The same classification holds for the other diagonal orientations. Here ``time'' means the interpolation parameter, not elapsed time or an inferred intermediate stage of a one-step update. Wall count counts differing endpoint bits, not crossings along an arbitrary path.
 
-A further verified layer now connects this geometry to complete probabilistic models. Nonnegative normalized rational point weights generate local measures satisfying an explicit finite-probability integrity contract. Convex interpolation preserves those distributions and makes the mass of every fixed event affine in the interpolation parameter. The local paths can then be packaged into complete strong 4-PEL models while worlds, accessibility, atomic valuation, and threshold remain fixed.
+A separate verified layer constructs complete probability-integrity-certified models. Nonnegative normalized rational point weights generate local measures satisfying an explicit finite-probability integrity contract. Convex interpolation preserves those distributions and makes the mass of every fixed event affine in the interpolation parameter. The local paths can then be packaged into complete strong 4-PEL models while worlds, accessibility, atomic valuation, and threshold remain fixed.
 
-This yields a compact structural picture:
+For fixed events this yields a compact structural picture; applying it to the support of a varying modal formula requires an additional bridge:
 \[
 \boxed{
 \begin{gathered}
@@ -64,6 +64,9 @@ This yields a compact structural picture:
 \longrightarrow\text{FDE phase sequence}.
 \end{gathered}}
 \]
+
+\paragraph{Reliability refinement.}
+Section~\ref{sec:mpfg} studies a second information-loss map: six reliability-tagged evidence cells project to four coarse cells. Projection preserves support and mixing, but not the recoverability of reliability. Fine modal stability is equivalent to coarse stability plus local fibre rigidity. These elementary semantic results are not a six-valued logical calculus; they extend the paper's investigation of which structure a coarse observation forgets.
 
 \paragraph{Methodological discipline.}
 The paper distinguishes four levels throughout. Machine-checked theorems are reported as such. Finite witness constructions are not silently generalized beyond their quantified statement. Geometric and philosophical readings are identified as interpretations. Literature and novelty claims remain deliberately modest until a systematic comparison has been completed.

@@ -24,3 +24,18 @@ jobs:
         with:
           name: paper-axiom-inventory
           path: paper-axioms.json
+
+  paper:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install manuscript toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-extra texlive-pictures lmodern poppler-utils
+      - name: Render manuscript and check committed PDF
+        run: python3 scripts/check_paper.py --check-committed
+      - uses: actions/upload-artifact@v4
+        with:
+          name: working-manuscript
+          path: paper/main.pdf

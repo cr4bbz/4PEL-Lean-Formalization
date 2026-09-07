@@ -7,6 +7,35 @@ The threshold connection between all-or-nothing belief and degrees of belief bel
 
 The update perspective is adjacent to dynamic epistemic logic, where informational actions transform epistemic models and knowledge states \cite{vanDitmarschHoekKooi2007}. The conditionalization operator studied here is narrower: it preserves worlds, accessibility, valuation, and threshold and changes only local probabilities. Conversely, the four-valued signed-support geometry developed here is not part of the standard DEL vocabulary. The manuscript reports this construction without claiming that it is novel relative to all probabilistic or nonclassical dynamic epistemic systems.
 
+\paragraph{Direct probability predecessors.}
+Klein, Majer, and Rafiee Rad~\cite{KleinMajerRad2021} already develop
+probabilities over Belnap--Dunn logic, including axiomatization and Bayesian
+and Jeffrey-style updating. Thus neither probabilistic gaps/gluts nor their
+updating is introduced by the present paper. B{\'i}lkov{\'a} et al.
+\cite{BilkovaEtAl2025} explicitly compare signed probabilities with the
+four-region account and give two-layered logical systems. Their languages and
+representation results are important comparators, not theorems inherited by
+our recursively nested threshold language. No translation from their full
+logics to \texttt{ModalFormula} is proved here.
+
+\paragraph{Reliability and status modalities.}
+Coniglio and Rodrigues~\cite{ConiglioRodrigues2024} provide six-valued logics
+with classicality propagation; their six-scenario motivation predates the
+2026 probability preprint of Borja Macias, Coniglio, and Hern{\'a}ndez-Tello
+\cite{BorjaMaciasEtAl2026}. The latter's abstract announces probability and
+Jeffrey-update results over that logic. MPFG does not reproduce these results:
+its tags are given data, it has no classicality connective or truth tables,
+and it has not yet defined reliability-sensitive updates. Likewise, Petrukhin
+\cite{Petrukhin2026} gives four-valued essence/accident modalities and S5-based
+proof systems. Our ordinary meta-level status predicates are not those
+object-language operators or their completeness theorems.
+
+This is a targeted positioning check, not an exhaustive novelty search.
+The comparisons use the published descriptions and, for the two-layered and
+six-valued works, the accessible preprint text. The 2026 probability work is
+used at abstract level only; no detailed equivalence or priority judgment
+depends on an unavailable full-text comparison.
+
 \paragraph{Novelty boundary.}
 No strong novelty claim is made in this version. The individual mathematical ingredients are elementary: Boolean pairs, threshold comparisons, affine interpolation, finite convex probability, linear order, and midpoint arguments. The research contribution currently established internally to the project is the machine-checked composition of these ingredients into one dependency chain connecting admissible probabilistic update to four-valued categorical reachability, robustness, crossing order, intermediate phase structure, and a model-valued rational probability path. A systematic literature audit is publication-critical.
 
@@ -26,7 +55,15 @@ Atomic propositions are the natural first case because their valuation is fixed 
 When can the intermediate models of a convex strong model path themselves be obtained by admissible conditionalization of the source model, possibly using a parameterized family of evidence events?
 \end{question}
 
-A model-valued path and an update-generated path are different notions. C17D verifies the former and deliberately does not infer the latter.
+A model-valued path and an update-generated path are different notions. The
+convex-model-path module verifies the former and deliberately does not infer
+the latter. On a fixed finite universe, event-only conditioning of one fixed
+prior yields only finitely many posteriors (one per positive-mass event).
+A nonconstant affine weight segment, in contrast, has infinitely many rational
+points. Hence a general identification cannot hold without changing the update
+mechanism. This elementary obstruction is a mathematical observation here,
+not an additional Lean theorem. Soft evidence or likelihood updates would
+require a separately specified semantics.
 
 \subsection{Open problem 2: arbitrary continuous paths}
 

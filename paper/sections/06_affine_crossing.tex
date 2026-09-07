@@ -77,20 +77,23 @@ If rational endpoints \(x,y\) straddle rational threshold \(c\), then
 \statusverified
 \end{theorem}
 
-No abstract topology is used. The proof is constructive for the chosen affine interpolation and introduces no Mathlib dependency.
+\begin{proof}[Proof sketch]
+Straddling implies distinct endpoints. Solve \(x+t(y-x)=c\) for \(t=(c-x)/(y-x)\); the straddling inequalities give \(0\le t\le1\), accounting for the sign of the denominator. Substitution verifies the hit. A hit can be at an endpoint; the theorem does not require \(0<t<1\).
+\end{proof}
+No abstract topology is used, and there is no Mathlib dependency.
 
 \begin{corollary}[Belief change has a literal affine wall hit]
-If admissible conditionalization changes the complete FDE value of \(\Bel_i\varphi\), then at least one of the two affine support paths
+If admissible conditionalization changes the complete FDE value of \(\Bel_i\varphi\), then at least one of the two chosen interpolations of its endpoint support masses
 \[
   t\mapsto \Ppos_t(\varphi),
   \qquad
   t\mapsto \Pneg_t(\varphi)
 \]
-hits \(c_i\) at some rational \(t\in[0,1]\).
+hits \(c_i\) at some rational \(t\in[0,1]\). Here \(\Ppos_t=(1-t)\Ppos_0+t\Ppos_1\), and likewise for negative support; this notation does not yet denote evaluation in an intermediate model.
 \statusverified
 \end{corollary}
 
-For a two-wall transition, both signed support coordinates have crossing witnesses, though they need not cross at the same parameter. This opens a genuinely temporal question that the endpoint square cannot answer: which wall is hit first?
+For a two-wall transition, both signed support coordinates have crossing witnesses, though they need not cross at the same parameter. This asks an order question about the chosen interpolation: which wall is hit first?
 
 \paragraph{Support-plane picture.}
 The two masses define a point
@@ -114,4 +117,4 @@ The threshold lines \(\Ppos=c\) and \(\Pneg=c\) partition the plane into the fou
 \end{tikzpicture}
 \end{center}
 
-The Boolean threshold square can therefore be read as the coarse four-cell projection of this signed support plane.
+The threshold square is the four-region categorical observation of the signed support plane. These four regions must not be confused with the four evidence masses \((t,b,n,f)\) in a probability simplex. For integrity-certified models the relevant support points lie in the unit square; the algebraic lemmas themselves permit arbitrary rational coordinates.

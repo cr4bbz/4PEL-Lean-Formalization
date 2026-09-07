@@ -14,7 +14,9 @@
 \renewcommand{\texttt}[1]{\unbrokentexttt{\seqsplit{#1}}}
 \usepackage{enumitem}
 \usepackage{tikz}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\urlstyle{tt}
 \usetikzlibrary{arrows.meta,positioning,shapes.misc}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -41,23 +43,26 @@
 \newcommand{\cond}{\mid}
 \newcommand{\llbracket}{\mathopen{[\![}}
 \newcommand{\rrbracket}{\mathclose{]\!]}}
-\newcommand{\statusverified}{\textsc{Status: Lean-verified.}}
+\newcommand{\statusverified}{\textup{\textsc{Status: Proved; trust inventory in Appendix~\ref{app:formal}.}}}
+\newcommand{\statuswitness}{\textup{\textsc{Status: Finite-witness; trust inventory in Appendix~\ref{app:formal}.}}}
 \newcommand{\statusinterpretive}{\textsc{Status: structural interpretation.}}
 \newcommand{\statusopen}{\textsc{Status: open.}}
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
-\author{Julian Voigt}
-\date{Working manuscript, version 0.3, 7 September 2026}
+\author{Julian L. Voigt (cr4bbz)}
+\date{Working manuscript, version 0.4, 7 September 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-I study the dynamics of threshold belief and evidence-stable knowledge in a finite four-valued probabilistic epistemic logic based on Belnap--Dunn/FDE values. Positive and negative support are tracked independently, so each formula occupies one of four complete statuses: truth only, falsity only, both, or neither. Probabilistic belief thresholds the positive and negative support masses separately, while evidence-stable knowledge filters that belief through a qualitative invariance test on the complete accessible FDE profile. The resulting factorization is exact: knowledge equals threshold belief on stable profiles and collapses to strict falsity on unstable profiles.
+I investigate how four-valued evidence changes under probability-only conditionalization and what is lost when quantitative support is reduced to categorical belief. In the 4-PEL semantics, belief thresholds positive and negative support separately. A primitive, qualitative operator called evidence-stable knowledge returns that belief value on homogeneous accessible profiles and strict falsity otherwise. The term ``knowledge'' denotes this stipulated operator, not an independently established theory of epistemic justification.
 
-The dynamic results develop this architecture from endpoint reachability to an explicit phase geometry. Admissible conditionalization changes only local probability. A six-world family realizes every ordered transition between the four FDE values at the level of \(\Know(\Bel p)\), so the categorical reachability graph is complete. At the same time, belief is pointwise invariant exactly when neither of its two Lockean threshold bits changes. This yields a Boolean threshold square with a Hamming-style wall count \(\dthr\in\{0,1,2\}\). A categorical wall flip is equivalent to endpoint straddling of the corresponding rational support mass. For the directed affine interpolation \(\gamma(t)=x+t(y-x)\), straddling yields an explicit rational threshold-hit parameter in \([0,1]\). Two-wall transitions therefore carry two unique crossing times. Their order is positive-first, simultaneous, or negative-first; simultaneity is exactly passage through \((\thr,\thr)\) in the two-dimensional support plane. If the crossings are sequential, the rational midpoint between them occupies a necessary adjacent FDE phase. Thus a diagonal endpoint transition such as \(\Nval\to\Bval\) decomposes along the affine support path as either \(\Nval\to\Tval\to\Bval\) or \(\Nval\to\Fval\to\Bval\), according to crossing order.
+A six-world witness family realizes all sixteen source--target values of \(\Know(\Bel p)\). For a chosen rational affine interpolation of support endpoints, threshold-bit changes determine unique wall-hit parameters; their order determines adjacent intermediate states. These parameters describe the interpolation, not an inferred history of the discrete update. Separately, normalized nonnegative world weights yield certified finite measures and convex model-valued paths whose fixed-event masses are affine. Formula-level identification for probability-sensitive events and generation of intermediate models by conditionalization remain open.
 
-The mechanization now also supplies a stronger finite-probability layer. Nonnegative normalized rational world weights generate finitely additive, extensional local measures; rational convex interpolation preserves valid distributions; and every fixed event mass varies affinely along the same parameter. These local paths lift to complete \texttt{StrongProbabilityModel} paths with worlds, accessibility, valuation, and threshold fixed. Thus model-valued realizability is verified for weight-generated endpoints on a common semantic skeleton. The remaining boundary is formula-level and update-level: probability-sensitive formulas can change the event whose mass is measured, and the intermediate models are not claimed to arise from repeated conditionalization of the source. No general continuity or measure-theoretic theorem is claimed. A systematic literature audit is also still required before any strong novelty claim.
+A further six-cell refinement records reliability tags while preserving four-cell support and convex mixing. Fine modal stability is equivalent to coarse stability plus local fibre rigidity; explicit S5-frame counterexamples show that coarse stability alone loses reliability information. This is a semantic projection result, not an axiomatization of a six-valued logic.
+
+The Lean 4.31 artifact distinguishes the lightweight model interface from probability-integrity-certified models and records declaration-level axiom dependencies, rejecting native evaluation in the selected manuscript proof chains. The contribution is a mechanized case study with explicit preservation and information-loss boundaries; no completeness, general continuity, or priority claim is made.
 \end{abstract}
 
 \input{sections/01_introduction}

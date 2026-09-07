@@ -1,15 +1,30 @@
 \section{Four-Valued Probabilistic Epistemic Semantics}
 \label{sec:kernel}
 
-The formal development uses a finite Kripke-style model
+The formal development starts with a lightweight, finite-accessibility interface
 \[
   M=(W,R,\mu,v,c),
 \]
-where \(W\) is a finite list of worlds, \(R_i(w)\) is the finite accessible range for agent \(i\) at world \(w\), \(\mu_{i,w}\) is a rational local set function, \(v\) assigns complete FDE values to atoms, and \(c_i\) is a Lockean threshold satisfying
+where \(W\) is the world type, \(R_i(w)\) is a finite accessibility list, \(\mu_{i,w}\) is a rational-valued function on event lists, \(v\) assigns FDE values to atoms, and \(c_i\) satisfies
 \[
   \frac12<c_i\le 1.
 \]
-The model interface requires normalization on the accessible range and on the empty set.
+The interface requires only \(\mu_{i,w}(R_i(w))=1\) and
+\(\mu_{i,w}(\varnothing)=0\), besides the threshold bounds. It does \emph{not}
+require nonnegativity, additivity, extensionality, or duplicate-free lists.
+Consequently a general \texttt{Model} is not yet a certified probability model;
+``support mass'' below means its rational set-function value unless integrity
+is explicitly assumed. The stronger \texttt{StrongProbabilityModel} contract
+in Section~\ref{sec:model-paths} supplies ordinary finite-measure laws on
+accessible, duplicate-free events. Both signed masses then lie in \([0,1]\).
+
+The stored \texttt{worlds} list need not exhaust the type \(W\), and the interface
+does not enforce accessibility closure into that list. The displayed finite
+witnesses do use exhaustive finite types and closed ranges. Generic theorems
+quantify over the literal Lean interface, not over an unstated finite-universe
+axiom. No reflexivity, transitivity, or Euclidean condition is generally assumed.
+Normalization does exclude an empty accessible range: otherwise its mass would
+be both zero and one (\texttt{PaperReview.accessibility\_nonempty}).
 
 \subsection{Bilateral four-valued information}
 
@@ -24,7 +39,7 @@ with the four canonical values
   \Bval=(1,1),\qquad
   \Nval=(0,0).
 \]
-The positive coordinate records support for the formula and the negative coordinate records support against it. Thus \(\Bval\) is a glut and \(\Nval\) is a gap. Negation exchanges the two coordinates, while conjunction takes conjunction on positive support and disjunction on negative support.
+The positive coordinate records support for the formula and the negative coordinate records support against it. Thus \(\Bval\) is a glut and \(\Nval\) is a gap. Negation exchanges the two coordinates, while conjunction takes conjunction on positive support and disjunction on negative support. Independence here means that the coordinates are not logical complements; it does not assert stochastic independence of their support events. In an integrity-certified model the two events share one measure and may overlap.
 
 This bilateral representation is crucial for the dynamic analysis. The two coordinates can cross a probabilistic threshold at different times, producing a temporal structure that would be invisible in a single Boolean belief status.
 
@@ -64,7 +79,24 @@ For the present paper, the central modal predicate is full-value stability. Let
 \[
   \Stable_i^M(w,\varphi)
 \]
-mean that every world in \(R_i(w)\) gives \(\varphi\) the same complete FDE value. The formal knowledge semantics treats heterogeneity itself as negative evidence against knowledge.
+mean pairwise homogeneity on the accessible range:
+\[
+ H_i(w,\varphi)\iff\forall u,z\in R_i(w),\quad
+ \llbracket\varphi\rrbracket_u=\llbracket\varphi\rrbracket_z.
+\]
+Here \(H_i=\Stable_i^M\). This does not compare the range with the current world
+unless that world is accessible. The primitive definition, writing
+\(x_u=\llbracket\varphi\rrbracket_u\), is
+\[
+ (\Know_i\varphi)^+=H_i\land\forall u\in R_i(w)\;x_u^+,
+ \qquad
+ (\Know_i\varphi)^-=\neg H_i\lor\exists u\in R_i(w)\;x_u^-.
+\]
+These are classical meta-level Boolean operations on evidence coordinates.
+In particular, primitive \(\Know\) does not directly inspect \(\mu\) or \(c\).
+Heterogeneity is stipulated to count as negative evidence for this operator.
+Without frame assumptions no factivity principle at the current world is
+inferred; even on reflexive frames, a glut is not classical truth only.
 
 The resulting relationship between knowledge and belief is exact.
 
@@ -81,6 +113,19 @@ For every finite 4-PEL model, agent, world, and modal formula,
 \statusverified
 \end{theorem}
 
+\begin{proof}[Proof sketch]
+The accessible range is nonempty. If homogeneous, each signed extension is
+either the entire range or empty. Normalization and \(0<c_i\le1\) make its
+threshold bit equal the corresponding common evidence bit. The definition of
+\(\Know\) returns those same bits. If heterogeneous, its positive bit is false
+and its negative bit true. No additivity assumption is needed.
+\end{proof}
+
 Hence an unstable accessible profile is not merely low-confidence evidence. It is a structural failure mode that absorbs every probabilistic belief value into strict \(\Fval\) at the knowledge layer. Conversely, on a homogeneous profile the stability filter is transparent and \(\Know_i\varphi\) preserves the complete four-valued belief state.
 
-This factorization will later separate two dynamic channels: probability can move the threshold belief value, and updates can also move a formula between stable and unstable profile phases.
+For a fixed interpretation \(u\mapsto x_u\) and fixed accessible range, changing
+only probability cannot change \(\Know\). This is verified separately by
+\texttt{PaperReview.knowledge\_ignores\_probability\_for\_fixed\_values}.
+Probability affects \(\Know\varphi\) only through probability-sensitive
+subformulas of \(\varphi\); the two-case factorization is not a claim of two
+independent numerical inputs to primitive knowledge.

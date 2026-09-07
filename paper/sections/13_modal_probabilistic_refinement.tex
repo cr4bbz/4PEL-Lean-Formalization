@@ -1,11 +1,11 @@
-\section{A conservative modal-probabilistic refinement gate}
+\section{Modal-probabilistic refinement and information loss}
 \label{sec:mpfg}
 
 This extension is a semantic refinement of evidence, not a replacement of the
 four-valued algebra. Its formal declarations are in
 \texttt{PEL4/ModalProbability/Refinement.lean} and
 \texttt{PEL4/ModalProbability/StatusTransport.lean}.
-The gate's validation status is recorded in
+Here ``conservative'' means preservation of the specified observations under projection, not proof-theoretic conservativity of a new calculus. The gate's validation status is recorded in
 \texttt{docs/MODAL\_PROBABILISTIC\_FINE\_GRAINING.md}.
 
 \begin{definition}[Reliability-tagged evidence profile]
@@ -15,10 +15,11 @@ A fine profile is a nonnegative rational vector
   \pi(q)=(t+t_r,b,n,f+f_r).
 \]
 The reliability tags are supplied semantic data, not proofs of empirical
-truth. The untagged lift of \((t,b,n,f)\) is \((t,b,n,f,0,0)\).
+truth. Untagged does not mean unreliable. The six cells select a subset of the earlier unrestricted \texttt{EvidenceStatus}, which also permits other tag combinations; they do not classify that whole type. The untagged lift of \((t,b,n,f)\) is \((t,b,n,f,0,0)\).
 \end{definition}
 
-Consequently \(\pi\) has a right inverse. Signed support is preserved:
+\begin{proposition}[Affine projection with a section]
+The untagged lift is a right inverse of \(\pi\). Signed support is preserved:
 \(P^+(q)=t+t_r+b\) and \(P^-(q)=f+f_r+b\).
 For \(0\le a\le1\), both normalized rational simplexes are closed under mixing,
 and the formal projection identity is
@@ -30,11 +31,16 @@ assert that thresholding is affine; the raw belief compatibility follows from
 the chosen definitions. Moreover, no function of the coarse profile recovers
 reliable mass \(t_r+f_r\) in general: pure untagged truth and pure reliable truth
 have the same projection, but reliable masses zero and one.
+\statusverified
+\end{proposition}
+\begin{proof}[Proof sketch]
+Summing the two truth-tag coordinates and the two falsity-tag coordinates commutes with coordinatewise convex mixing by distributivity. The untagged lift sets both tag masses to zero. If reliability were a function of the coarse profile, the two pure-truth profiles would force its value to be both zero and one.
+\end{proof}
 
 \begin{definition}[Status stability and local fibre rigidity]
 For any relation \(R\), observation \(v\), and projection \(\pi\), put
 \begin{align*}
- \mathrm{Stable}(v,w)
+ \mathrm{Stable}_{\mathrm{cur}}(v,w)
    &\iff \forall u\,(Rwu\Rightarrow v(u)=v(w)),\\
  \mathrm{Rigid}(v,\pi,w)
    &\iff \forall u\,(Rwu\Rightarrow
@@ -42,20 +48,34 @@ For any relation \(R\), observation \(v\), and projection \(\pi\), put
 \end{align*}
 \end{definition}
 
-The exact transport boundary is
+The subscript distinguishes current-world stability from the accessible-range homogeneity \(H\) used by primitive \(\Know\). On reflexive frames they agree for the same observation, but no such identification is used on arbitrary frames.
+
+\begin{theorem}[Local stability decomposition]
+For any observation and projection, with no frame assumptions,
 \[
- \mathrm{Stable}(v,w)\iff
- \mathrm{Stable}(\pi\circ v,w)\land\mathrm{Rigid}(v,\pi,w).
+ \mathrm{Stable}_{\mathrm{cur}}(v,w)\iff
+ \mathrm{Stable}_{\mathrm{cur}}(\pi\circ v,w)\land\mathrm{Rigid}(v,\pi,w).
 \]
-This is a local decomposition, not a claim that fibre rigidity is automatic.
+\statusverified
+\end{theorem}
+\begin{proof}
+Fine stability implies both coarse stability (apply \(\pi\)) and rigidity. Conversely, coarse stability puts every accessible observation in the current coarse fibre, and rigidity then identifies its fine value with the current one.
+\end{proof}
+This is an elementary local decomposition, not a test that guarantees rigidity independently. It does not assert that \(\pi\) is globally injective.
 Two universally accessible worlds carrying untagged and reliable truth witness
 coarse stability with fine instability, even on a reflexive, transitive,
 Euclidean frame. A second witness distinguishes mass stability from categorical
 stability: \((0,1,0,0)\) and \((0,3/4,1/4,0)\) both yield \(\Bval\) at threshold
 \(3/5\), although their glut masses differ.
 
-The auxiliary essence predicate means conditionally retaining the current
-specified status across accessible worlds; it may hold vacuously. Its accidental
+For a status \(s\), the auxiliary predicates are
+\[
+ \mathrm{Ess}_s(w)\iff(v(w)=s\Rightarrow\forall u\,(Rwu\Rightarrow v(u)=s)),
+\]
+\[
+ \mathrm{Acc}_s(w)\iff v(w)=s\land\exists u\,(Rwu\land v(u)\ne s).
+\]
+Thus \(\mathrm{Ess}_s\) may hold vacuously when the current value is not \(s\). Its accidental
 counterpart requires an actual different accessible status. These are classical
 meta-level predicates, not additional FDE connectives. Their relationship to
 the existing executable stability test and \(\Know\) is stated separately:
