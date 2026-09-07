@@ -215,6 +215,7 @@ theorem pairPhaseR_reflexive : SuccessorReflexive pairPhaseR := by
 
 theorem pairPhaseR_transitive : SuccessorTransitive pairPhaseR := by
   intro w u hu v hv
+  rcases w with ⟨a, b⟩
   simp [pairPhaseR] at hu hv ⊢
   rcases hu with rfl | rfl <;> simp_all
 
