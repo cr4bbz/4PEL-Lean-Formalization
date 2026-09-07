@@ -13,5 +13,5 @@ paper/*.out
 paper/*.toc
 paper/*.synctex.gz
 
-# Rendered working manuscript
-paper/main.pdf
+# Python audit caches
+scripts/__pycache__/

@@ -4,8 +4,12 @@ Gate: **MPFG-1 - conservative refinement and modal transport**.
 Branch: `research/modal-probabilistic-fine-graining`.
 Base: `research/finite-fine-grainedness-4pel`, commit `a6db0af` (population Gate 4).
 Date: 2026-09-07.
-Verification: **PENDING CI**. Do not promote the declarations below to
-`PROVED` until the full build and focused assumption audit pass.
+Verification: **PASSED** on Lean 4.31.0. The full build (121 jobs), the inherited
+population-axiology audit, and the focused MPFG audit passed for commit
+`741d07a0c7f2660013f010b1f7850089c987eb97` in
+[CI run 34131189314](https://github.com/cr4bbz/4PEL-Lean-Formalization/actions/runs/34131189314).
+All 24 focused declarations use only the audited standard Lean principles
+`propext`, `Classical.choice`, and `Quot.sound` (or a subset).
 
 ## Question and scope
 
@@ -47,7 +51,7 @@ of cells is not the same assumption as finite-path Finite Fine-Grainedness.
 
 The identifiers below live in `PEL4.ModalProbability` (abbreviated `MP`).
 
-| Target | Lean declaration | Intended status after validation |
+| Target | Lean declaration | Verified status |
 | --- | --- | --- |
 | Every coarse profile has an untagged lift | `SixCellProbability.coarse_untagged` | PROVED |
 | Signed support and threshold belief survive projection | `coarse_positive`, `coarse_negative`, `threshold_coarse` in `SixCellProbability` | PROVED |
@@ -161,9 +165,14 @@ git fetch origin
 git switch research/modal-probabilistic-fine-graining
 lake build
 lake env lean PEL4/ModalProbability/AxiomAudit.lean
+python3 scripts/check_mpfg_axioms.py
 ```
 
 The focused audit must contain no project-specific axioms, `sorryAx`, or native
 decision axioms. Ordinary Lean principles such as `propext` and `Classical.choice`
 are reported separately from project assumptions. Legacy axioms elsewhere in
 the repository are not removed or silently reclassified by this gate.
+
+Three inherited rational score examples in `SubstantiveComparison.lean` were
+changed from `decide` to `decide +kernel` to pass the Lean 4.31 build; their
+statements and mathematical definitions are unchanged.

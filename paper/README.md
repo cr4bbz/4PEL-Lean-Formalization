@@ -47,7 +47,12 @@ PEL4/ConvexModelPath.lean
 
 have passed fresh local Lean 4.31 `lake build` checks with the modules imported through `PEL4.lean`.
 
-The LaTeX manuscript previously passed a fresh local `latexmk -pdf main.tex` build and produced `paper/main.pdf`. Because version 0.2 adds a new model-path section and revises several existing sections, the updated manuscript should be rendered again after pulling the latest branch.
+Version 0.3 passed a fresh `latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex`
+build on 2026-09-07. The rendered `paper/main.pdf` has 25 pages and no overfull
+boxes. Long declaration names and the correspondence appendix now wrap across
+lines and pages. The MPFG Lean extension passed the full 121-job build and its
+24-declaration assumption audit in
+[CI run 34131189314](https://github.com/cr4bbz/4PEL-Lean-Formalization/actions/runs/34131189314).
 
 The stronger probability development now verifies:
 
@@ -111,6 +116,7 @@ sections/
   10_mechanization.tex
   11_related_work_and_limits.tex
   12_conclusion.tex
+  13_modal_probabilistic_refinement.tex
   A_formal_correspondence.tex
 ```
 

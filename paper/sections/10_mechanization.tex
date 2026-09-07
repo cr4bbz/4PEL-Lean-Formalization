@@ -1,7 +1,7 @@
 \section{Lean Mechanization and Verification Status}
 \label{sec:mechanization}
 
-The results in this manuscript are implemented in Lean 4.31 on the branch \texttt{research/preface-case-study}. The root module \texttt{PEL4.lean} imports the dynamic development, so a successful
+The results in this manuscript are implemented in Lean 4.31. The current extension is on branch \texttt{research/modal-probabilistic-fine-graining}, building on the earlier dynamic research line. The root module \texttt{PEL4.lean} imports the development, so a successful
 \begin{verbatim}
 lake build
 \end{verbatim}
@@ -41,7 +41,7 @@ Lean module & role in the paper\\
 
 The development combines generic theorems with finite executable witnesses. The generic parts include the knowledge/belief factorization, robustness equivalence, Boolean wall-count laws, rational affine crossing, crossing uniqueness, order trichotomy, midpoint phase classification, finite-probability integrity, convexity of the rational probability simplex, affine fixed-event mass, and construction of complete strong model paths. Finite constructions are used where an existential semantic possibility is at issue, most notably for stability fracture/restoration and complete dynamic reachability.
 
-Several of the finite cases are discharged by \texttt{native\_decide}. This does not weaken their status: the corresponding propositions are closed finite statements, and Lean's kernel checks the resulting proof term. The paper nevertheless distinguishes these executable witnesses from general symbolic theorems because their quantifier structure is different.
+Several inherited finite cases use \texttt{native\_decide}, which relies on native evaluation and has a different trust boundary from kernel reduction alone. The new MPFG gate instead uses \texttt{decide +kernel} for its rational witnesses. Its focused audit checks all 24 selected declarations and rejects project-specific axioms, \texttt{sorryAx}, and native-decision axioms; only \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound} are permitted. This audit is not a claim about every legacy declaration in the repository. Finite witnesses and general symbolic theorems also remain distinct in their quantifier structure.
 
 The affine path development intentionally avoids adding Mathlib. It imports Lean Core rational lemmas and proves the required unit-interval, linearity, and monotonicity facts directly. This keeps the current result lightweight and makes the boundary to a future topology-heavy development explicit.
 
@@ -60,9 +60,10 @@ The central dynamic and probability-path modules through \texttt{ConvexModelPath
 \paragraph{Reproducibility.}
 A minimal reproduction sequence is:
 \begin{verbatim}
-git fetch origin research/preface-case-study
-git checkout research/preface-case-study
+git fetch origin
+git switch research/modal-probabilistic-fine-graining
 git pull --ff-only
 lake build
+python3 scripts/check_mpfg_axioms.py
 \end{verbatim}
 The paper source itself is intentionally separate from the Lean build so that manuscript compilation does not become a prerequisite for checking the formal logic.
