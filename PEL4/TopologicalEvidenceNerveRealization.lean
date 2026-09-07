@@ -130,7 +130,7 @@ theorem phaseRealization_symmetric (K : FDEPhaseComplex)
     w ∈ phaseRealizationR K u := by
   exact (mem_phaseRealizationR K u w).2 ((mem_phaseRealizationR K w u).1 hu).symm
 
-def phaseRealizationSemantics (K : FDEPhaseComplex) :
+noncomputable def phaseRealizationSemantics (K : FDEPhaseComplex) :
     InteriorSemantics (PhaseRealizationWorld K) :=
   successorInteriorSemantics (phaseRealizationR K)
     (phaseRealization_reflexive K) (phaseRealization_transitive K)
@@ -169,8 +169,7 @@ theorem every_phase_complex_realized (K : FDEPhaseComplex) (hVertex : K.HasVerte
     (phases : FDEValue → Prop) :
     FDEPhaseSimplex (phaseRealizationSemantics K) (phaseRealizationValue K) phases ↔
       K.face phases := by
-  classical
-  rw [alexandrov_phase_simplex_iff (phaseRealizationR K)
+  rw [phaseRealizationSemantics, alexandrov_phase_simplex_iff (phaseRealizationR K)
     (phaseRealization_reflexive K) (phaseRealization_transitive K)]
   constructor
   · rintro ⟨w, hw⟩
@@ -178,7 +177,7 @@ theorem every_phase_complex_realized (K : FDEPhaseComplex) (hVertex : K.HasVerte
       (fun q hq => (phaseRealization_reachable_iff K w q).1 (hw q hq))
       (((mem_allowedPhaseCandidates K w.val).1 w.property).1)
   · intro hK
-    by_cases hNonempty : ∃ q, phases q
+    rcases Classical.em (∃ q, phases q) with hNonempty | hNonempty
     · rcases hNonempty with ⟨q, hq⟩
       have hMask := phaseMaskOf_region phases
       have hValid : K.face (phaseMaskOf phases).region ∧
