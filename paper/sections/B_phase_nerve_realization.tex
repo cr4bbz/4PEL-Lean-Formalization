@@ -1,0 +1,101 @@
+\section{Alexandrov Phase Nerves and Finite Realization}
+\label{app:phase-nerve}
+
+This research addendum concerns arbitrary complete FDE value profiles on
+relational frames. It does not impose probabilistic thresholds or persistence
+of the positive and negative valuation channels. It is separate from the
+probability-path results in the main text.
+
+\paragraph{Definitions and convention.}
+Let $Q=\{\Tval,\Fval,\Bval,\Nval\}$ and let $v:W\to Q$.
+For a reflexive, transitive relation $R$, use the successor Alexandrov topology,
+so that $\operatorname{Int}(A)=\{w: \forall u\,(wRu\Rightarrow u\in A)\}$.
+Write $X_q=v^{-1}(q)$ and
+\[
+ S_w=\{q\in Q: \exists u\,(wRu\ \wedge\ v(u)=q)\}.
+\]
+The witness-based phase nerve is
+\[
+ \mathcal N_{R,v}
+ =\{\sigma\subseteq Q: \exists w\in W\;
+          \forall q\in\sigma\; w\in\operatorname{Cl}(X_q)\}.
+\]
+When $W$ is nonempty, this includes the empty face. A phase whose fibre is empty
+does not appear as a vertex. No claim about the homotopy type of $W$ follows
+merely from this definition.
+
+\begin{theorem}[Successor-profile classification]
+For every $\sigma\subseteq Q$,
+\[
+ \sigma\in\mathcal N_{R,v}
+ \quad\Longleftrightarrow\quad
+ \exists w\in W\;\sigma\subseteq S_w.
+\]
+\end{theorem}
+\begin{proof}
+Dualizing successor interior gives
+$w\in\operatorname{Cl}(X_q)$ if and only if some successor of $w$ has value $q$.
+Substitution into the definition of the nerve gives the equivalence.
+\end{proof}
+
+\begin{theorem}[Universal finite equivalence-frame realization]
+Let $K\subseteq\mathcal P(Q)$ be downward closed and have at least one vertex.
+There exists a finite reflexive, symmetric, transitive frame and an FDE profile
+whose phase nerve equals $K$, including its empty face and absent vertices.
+\end{theorem}
+\begin{proof}
+Use incidence worlds
+\[
+ W_K=\{(\tau,q):\tau\in K,\ q\in\tau\},\qquad
+ v(\tau,q)=q.
+\]
+Put $(\tau,q)R(\rho,r)$ precisely when $\tau=\rho$.
+This is an equivalence relation. A world labelled by $\tau$ sees exactly the
+phases in $\tau$. Consequently,
+\[
+ \sigma\in\mathcal N_{R,v}
+ \quad\Longleftrightarrow\quad
+ \exists\tau\in K\;(\tau\ne\varnothing\ \wedge\ \sigma\subseteq\tau).
+\]
+Downward closure gives the forward implication to $\sigma\in K$.
+For a nonempty $\sigma\in K$, choose $\tau=\sigma$; for the empty face, use
+the assumed vertex. This proves equality, not just containment of nerves.
+\end{proof}
+
+\paragraph{Finite implementation and trust boundary.}
+The Lean construction encodes faces by four Boolean flags and enumerates all
+face/phase candidates. The formal bound is a list of at most $64$ worlds
+containing every world. Selection from an arbitrary proposition-valued complex
+uses classical decidability; this is not a claim of an executable decision
+procedure for an unspecified input predicate. A focused axiom report is emitted
+when the realization module is built. The new proofs introduce no project axiom,
+\texttt{sorry}, or native-evaluation proof step.
+
+\paragraph{Boundary and significance.}
+The complex consisting only of the empty face is excluded: any world witnesses
+the singleton containing its own value. On an empty world type the witness-based
+nerve has no faces at all. Thus the vertex hypothesis cannot simply be replaced
+by the assertion that $K$ has a face.
+
+The construction shows that even equivalence-frame (S5) accessibility imposes
+no restriction on the abstract phase-complex shapes, when world count and
+valuation are allowed to vary. This does not say that every complex can be
+realized on one fixed frame. Restrictions may arise from fixed accessibility,
+valuation regularity, persistence, or formula-specific threshold geometry.
+Nor is the realizing frame claimed to be $T_0$ or antisymmetric. The ingredients
+are standard; priority for this particular combination remains unaudited.
+
+\paragraph{Formal correspondence.}
+The classification theorem is
+\path{alexandrov_phase_simplex_iff}. Its module is:
+\par\noindent{\small\path{PEL4.TopologicalEvidenceAlexandrovNerve}}\par
+
+The realization module is:
+\par\noindent{\small\path{PEL4.TopologicalEvidenceNerveRealization}}\par
+Its principal declarations are:
+\begin{itemize}
+\item \path{every_phase_complex_realized};
+\item \path{phaseRealizationWorlds_complete};
+\item \path{phaseRealizationWorlds_length_le};
+\item \path{phaseRealization_symmetric}.
+\end{itemize}

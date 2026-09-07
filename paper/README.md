@@ -8,6 +8,23 @@ Author: Julian Voigt
 
 Current manuscript version: **0.2**
 
+### Topological-branch research addendum (2026-09-07)
+
+Appendix B now records the exact Alexandrov successor-profile classification
+and the finite equivalence-frame realization of every downward-closed
+four-phase complex with at least one vertex. See
+[`../docs/ALEXANDROV_PHASE_NERVE.md`](../docs/ALEXANDROV_PHASE_NERVE.md)
+for the verification boundary and exact Lean declarations. The two-page
+appendix was separately rendered and visually checked. Existing committed
+PDFs have not been regenerated and do not include this addendum.
+
+Appendix C adds the persistent-evidence results of Gate 12: S5 local constancy
+and singleton nerves; forced N completion of S4 T/F contacts; and a persistent,
+antisymmetric four-world S4 tetrahedron. See
+[`../docs/PERSISTENT_PHASE_NERVE.md`](../docs/PERSISTENT_PHASE_NERVE.md).
+Appendices B/C were separately rendered together (four pages) and visually
+checked. This does not replace the older full-manuscript PDF.
+
 ## Scope
 
 This paper records the verified dynamic research line developed on `research/preface-case-study`:
