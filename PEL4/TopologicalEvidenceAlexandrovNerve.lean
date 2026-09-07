@@ -191,6 +191,68 @@ theorem alexandrov_phase_tetrahedron_iff
         R hRefl hTrans value w FDEValue.N).2 hN⟩
 
 /-!
+## Pairwise completeness does not fill higher simplices
+
+The following small S4 model has one two-point accessibility component for
+each ordered pair of phases.  Hence every distinct pair occurs together in
+some successor profile, while no profile contains more than two phases.
+-/
+
+/-- Worlds are ordered pairs of FDE phases. -/
+abbrev PairPhaseWorld := FDEValue × FDEValue
+
+/-- Each world sees itself and the world with its two coordinates exchanged. -/
+def pairPhaseR (w : PairPhaseWorld) : FiniteSet PairPhaseWorld :=
+  [w, (w.2, w.1)]
+
+/-- A pair world carries its first coordinate as its actual phase. -/
+def pairPhaseValue (w : PairPhaseWorld) : FDEValue :=
+  w.1
+
+theorem pairPhaseR_reflexive : SuccessorReflexive pairPhaseR := by
+  intro w
+  simp [pairPhaseR]
+
+theorem pairPhaseR_transitive : SuccessorTransitive pairPhaseR := by
+  intro w u hu v hv
+  simp only [pairPhaseR, List.mem_cons, List.mem_singleton] at hu hv ⊢
+  rcases hu with rfl | rfl <;> rcases hv with rfl | rfl <;> simp
+
+/-- Reachability in the pair model means equality with one of the two coordinates. -/
+theorem pairPhase_reachable_iff (w : PairPhaseWorld) (q : FDEValue) :
+    ReachableFDEPhase pairPhaseR pairPhaseValue w q ↔
+      w.1 = q ∨ w.2 = q := by
+  simp [ReachableFDEPhase, pairPhaseR, pairPhaseValue]
+
+/-- Every two distinct phases are adjacent in the pair model. -/
+theorem pairPhase_complete_contact_graph
+    (q r : FDEValue) (hqr : q ≠ r) :
+    FDEPhaseAdjacent
+      (successorInteriorSemantics pairPhaseR
+        pairPhaseR_reflexive pairPhaseR_transitive)
+      pairPhaseValue q r := by
+  rw [alexandrov_phase_adjacent_iff pairPhaseR
+    pairPhaseR_reflexive pairPhaseR_transitive]
+  refine ⟨hqr, (q, r), ?_, ?_⟩
+  · exact (pairPhase_reachable_iff (q, r) q).2 (Or.inl rfl)
+  · exact (pairPhase_reachable_iff (q, r) r).2 (Or.inr rfl)
+
+/-- Despite its complete one-skeleton, the pair model has no four-phase simplex. -/
+theorem pairPhase_no_tetrahedron :
+    ¬ FDEPhaseTetrahedron
+      (successorInteriorSemantics pairPhaseR
+        pairPhaseR_reflexive pairPhaseR_transitive)
+      pairPhaseValue := by
+  rw [alexandrov_phase_tetrahedron_iff pairPhaseR
+    pairPhaseR_reflexive pairPhaseR_transitive]
+  rintro ⟨w, hT, hF, hB, _hN⟩
+  rw [pairPhase_reachable_iff] at hT hF hB
+  rcases hT with hT | hT <;>
+    rcases hF with hF | hF <;>
+    rcases hB with hB | hB <;>
+    simp_all [FDEValue.T, FDEValue.F, FDEValue.B]
+
+/-!
 ## Interpretation
 
 For every world `w`, let `ReachPhases(w)` be the set of FDE values occurring
