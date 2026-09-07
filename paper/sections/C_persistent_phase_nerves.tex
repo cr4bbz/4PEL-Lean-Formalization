@@ -1,0 +1,90 @@
+\section{Phase Contacts under Persistent Evidence}
+\label{app:persistent-phase-nerve}
+
+The universal construction of Appendix~\ref{app:phase-nerve} allows arbitrary
+value profiles. A further condition changes the result sharply. Define the
+information order by
+\[
+ a\leq_k b\quad\Longleftrightarrow\quad
+ (a^+=1\Rightarrow b^+=1)\ \wedge\ (a^-=1\Rightarrow b^-=1).
+\]
+Here $a^+$ and $a^-$ denote the positive and negative Boolean evidence bits.
+Thus $\Nval\leq_k\Tval,\Fval\leq_k\Bval$, while $\Tval$ and $\Fval$ are
+incomparable. A profile is \emph{persistent} if $wRu$ implies
+$v(w)\leq_k v(u)$: neither evidence channel loses support.
+This is an extra assumption on the chosen profile, not a theorem asserting
+that every formula of 4PEL is persistent.
+
+\begin{theorem}[S5 collapse under persistence]
+On a reflexive, symmetric, transitive frame, a persistent profile is locally
+constant everywhere. Moreover,
+\[
+ \sigma\in\mathcal N_{R,v}
+ \quad\Longleftrightarrow\quad
+ \exists w\;\forall q\in\sigma\;(v(w)=q).
+\]
+In particular, no two distinct phase closures meet.
+\end{theorem}
+\begin{proof}
+If $wRu$, symmetry gives $uRw$. Persistence gives both
+$v(w)\leq_k v(u)$ and $v(u)\leq_k v(w)$, hence equality by antisymmetry of
+the information order. Reflexivity ensures each successor profile is exactly
+the singleton $\{v(w)\}$. Apply the classification from Appendix~\ref{app:phase-nerve}.
+\end{proof}
+
+This is constancy within each accessibility component; disconnected components
+may carry different values. Constant $\Bval$ profiles are permitted: stable
+inconsistency does not violate the persistence assumption.
+
+\begin{theorem}[Forced phase completion on S4 frames]
+Let $R$ be reflexive and transitive and let $v$ be persistent. If $w$ lies in
+both $\operatorname{Cl}(X_{\Tval})$ and $\operatorname{Cl}(X_{\Fval})$, then
+$v(w)=\Nval$. Consequently, if a nerve face $\sigma$ contains both $\Tval$
+and $\Fval$, then $\sigma\cup\{\Nval\}$ is also a face, witnessed at the same
+world. In particular:
+\begin{itemize}
+\item a $\Tval$--$\Fval$ edge forces the filled $\Nval,\Tval,\Fval$ triangle;
+\item a filled $\Tval,\Fval,\Bval$ triangle forces the full tetrahedron.
+\end{itemize}
+\end{theorem}
+\begin{proof}
+The two closure memberships supply successors of values $\Tval$ and $\Fval$.
+Persistence makes $v(w)$ a common information lower bound of both. The only
+such value is $\Nval$: positive evidence would exclude a $\Fval$ successor,
+and negative evidence would exclude a $\Tval$ successor. Since every point
+belongs to the closure of its own fibre, the same witness supplies the extra
+$\Nval$ contact.
+\end{proof}
+
+\begin{proposition}[Sharpness: dimension three survives]
+The full phase tetrahedron is realized by a persistent profile on a four-world
+reflexive, transitive, antisymmetric frame.
+\end{proposition}
+\begin{proof}
+Take the worlds $Q$, with actual profile $v(q)=q$. Let $\Nval$ see all four
+worlds and let each of $\Tval,\Fval,\Bval$ see only itself. This relation is
+reflexive, transitive and antisymmetric. Every edge out of $\Nval$ preserves
+both evidence bits, and the other edges are loops. All four phases are
+reachable at $\Nval$, giving the tetrahedron. The frame is not symmetric.
+\end{proof}
+
+Thus persistence imposes constraints on which faces can occur without larger
+faces; it does not itself lower the maximal S4 nerve dimension. A complete
+characterization of all persistent S4 nerves remains a separate target.
+
+\paragraph{Formal correspondence.}
+All results in this appendix are in:
+\par\noindent{\small\path{PEL4.TopologicalEvidencePersistentNerve}}\par
+The principal declarations are:
+\begin{itemize}
+\item \path{persistent_s5_simplex_iff};
+\item \path{persistent_s5_locally_constant};
+\item \path{persistent_s5_no_phase_edges};
+\item \path{persistent_simplex_T_F_adjoin_N};
+\item \path{persistent_T_F_B_triangle_forces_tetrahedron};
+\item \path{persistent_s4_full_tetrahedron}.
+\end{itemize}
+The construction also verifies its persistence and antisymmetry separately.
+The new module prints a focused axiom report for the S5 classification,
+forced-completion theorem, and tetrahedron witness. No historical priority
+claim is made.
