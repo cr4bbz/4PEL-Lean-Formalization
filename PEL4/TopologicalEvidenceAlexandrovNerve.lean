@@ -217,7 +217,11 @@ theorem pairPhaseR_transitive : SuccessorTransitive pairPhaseR := by
   intro w u hu v hv
   rcases w with ⟨a, b⟩
   simp [pairPhaseR] at hu hv ⊢
-  rcases hu with rfl | rfl <;> simp_all
+  rcases hu with rfl | rfl
+  · exact hv
+  · rcases hv with hv | hv
+    · exact Or.inr hv
+    · exact Or.inl hv
 
 /-- Reachability in the pair model means equality with one of the two coordinates. -/
 theorem pairPhase_reachable_iff (w : PairPhaseWorld) (q : FDEValue) :
