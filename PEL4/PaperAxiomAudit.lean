@@ -1,0 +1,58 @@
+import PEL4.PaperReviewBoundaries
+import PEL4.ConvexModelPath
+
+/-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
+The associated checker distinguishes native evaluation from standard axioms.
+-/
+#print axioms PEL4.modal_knowledge_as_stability_filtered_belief
+#print axioms PEL4.evalModal_conditionalize_of_probabilityFree
+#print axioms PEL4.modal_knowledge_phase_stable_stable
+#print axioms PEL4.modal_knowledge_phase_stable_unstable
+#print axioms PEL4.modal_knowledge_phase_unstable_stable
+#print axioms PEL4.modal_knowledge_phase_unstable_unstable
+#print axioms PEL4.conditionalization_realizes_both_stability_phase_directions
+#print axioms PEL4.dynamic_reachability_evidence_admissible
+#print axioms PEL4.conditionalization_realizes_every_knowledge_value_transition
+#print axioms PEL4.conditionalization_can_create_knowledge_glut
+#print axioms PEL4.conditionalization_can_turn_knowledge_glut_into_gap
+#print axioms PEL4.conditionalization_can_turn_knowledge_gap_into_truth
+#print axioms PEL4.modal_belief_value_eq_iff_threshold_bits_eq
+#print axioms PEL4.evalModal_conditionalize_of_robust
+#print axioms PEL4.diagonal_reachability_belief_is_robust
+#print axioms PEL4.diagonal_reachability_belief_not_probabilityFree
+#print axioms PEL4.thresholdWallCount_le_two
+#print axioms PEL4.thresholdWallCount_eq_zero_iff
+#print axioms PEL4.thresholdWallCount_eq_two_iff
+#print axioms PEL4.robust_formula_has_zero_threshold_displacement
+#print axioms PEL4.threshold_decision_ne_iff_straddles
+#print axioms PEL4.conditionalization_belief_two_walls_iff_both_supports_straddle
+#print axioms PEL4.thresholdStraddles_has_affine_unit_crossing
+#print axioms PEL4.conditionalization_belief_change_has_affine_threshold_crossing
+#print axioms PEL4.conditionalization_belief_two_walls_has_two_affine_crossings
+#print axioms PEL4.affineRatPath_threshold_hit_unique
+#print axioms PEL4.affineCrossingPair_order_trichotomy
+#print axioms PEL4.affineCrossingPair_simultaneous_iff_common_hit
+#print axioms PEL4.conditionalization_belief_two_walls_crossing_order
+#print axioms PEL4.affineCrossingMidpoint_between_positive_first
+#print axioms PEL4.affineCrossingMidpoint_between_negative_first
+#print axioms PEL4.affine_threshold_side_before_crossing_eq_source
+#print axioms PEL4.affine_threshold_side_after_crossing_eq_target
+#print axioms PEL4.affineCrossingPair_positive_first_midpoint_state
+#print axioms PEL4.affineCrossingPair_negative_first_midpoint_state
+#print axioms PEL4.positiveFirstIntermediate_adjacent_to_diagonal_endpoints
+#print axioms PEL4.negativeFirstIntermediate_adjacent_to_diagonal_endpoints
+#print axioms PEL4.affine_diagonal_intermediate_vertex_table
+#print axioms PEL4.conditionalization_belief_two_walls_intermediate_phase
+#print axioms PEL4.weightGeneratedMeasure_integrity
+#print axioms PEL4.convexWeightDistribution
+#print axioms PEL4.weightedEventMass_convex
+#print axioms PEL4.convexStrongModelAt
+#print axioms PEL4.convexStrongModelAt_worlds
+#print axioms PEL4.convexStrongModelAt_accessibility
+#print axioms PEL4.convexStrongModelAt_valuation
+#print axioms PEL4.convexStrongModelAt_threshold
+#print axioms PEL4.convexStrongModelAt_eventMass
+#print axioms PEL4.PaperReview.accessibility_nonempty
+#print axioms PEL4.PaperReview.knowledge_ignores_probability_for_fixed_values
+#print axioms PEL4.PaperReview.threshold_intersection_is_B
+#print axioms PEL4.PaperReview.simultaneous_T_F_has_B_hit

@@ -16,3 +16,11 @@ jobs:
         run: lake env lean PEL4/PopulationAxiology/AxiomAudit.lean
       - name: Audit modal-probabilistic refinement assumptions
         run: python3 scripts/check_mpfg_axioms.py
+      - name: Test manuscript audit checker
+        run: python3 -m unittest discover -s scripts -p 'test_*.py'
+      - name: Audit manuscript theorem assumptions
+        run: python3 scripts/check_paper_axioms.py --report paper-axioms.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paper-axiom-inventory
+          path: paper-axioms.json
