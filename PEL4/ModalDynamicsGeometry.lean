@@ -40,21 +40,21 @@ theorem thresholdWallCount_symm (a b : FDEValue) :
     thresholdWallCount a b = thresholdWallCount b a := by
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide +kernel
 
 /-- The Boolean square has diameter two. -/
 theorem thresholdWallCount_le_two (a b : FDEValue) :
     thresholdWallCount a b ≤ 2 := by
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide +kernel
 
 /-- Zero threshold displacement is exactly equality of complete FDE status. -/
 theorem thresholdWallCount_eq_zero_iff (a b : FDEValue) :
     thresholdWallCount a b = 0 ↔ a = b := by
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide +kernel
 
 /-- Distance two means that both threshold coordinates flip. -/
 theorem thresholdWallCount_eq_two_iff (a b : FDEValue) :
@@ -62,7 +62,7 @@ theorem thresholdWallCount_eq_two_iff (a b : FDEValue) :
       a.pos ≠ b.pos ∧ a.neg ≠ b.neg := by
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide +kernel
 
 /-- Every pair lies at combinatorial distance zero, one, or two. -/
 theorem thresholdWallCount_trichotomy (a b : FDEValue) :
@@ -71,7 +71,7 @@ theorem thresholdWallCount_trichotomy (a b : FDEValue) :
     thresholdWallCount a b = 2 := by
   rcases a with ⟨ap, an⟩
   rcases b with ⟨bp, bn⟩
-  cases ap <;> cases an <;> cases bp <;> cases bn <;> native_decide
+  cases ap <;> cases an <;> cases bp <;> cases bn <;> decide +kernel
 
 /-- Every genuine status change flips either one or both threshold coordinates. -/
 theorem thresholdWallCount_of_ne (a b : FDEValue) (h : a ≠ b) :
@@ -94,12 +94,12 @@ F -- B
 while `T/F` and `N/B` are the two diagonals.
 -/
 
-example : thresholdWallCount FDEValue.N FDEValue.T = 1 := by native_decide
-example : thresholdWallCount FDEValue.N FDEValue.F = 1 := by native_decide
-example : thresholdWallCount FDEValue.T FDEValue.B = 1 := by native_decide
-example : thresholdWallCount FDEValue.F FDEValue.B = 1 := by native_decide
-example : thresholdWallCount FDEValue.T FDEValue.F = 2 := by native_decide
-example : thresholdWallCount FDEValue.N FDEValue.B = 2 := by native_decide
+example : thresholdWallCount FDEValue.N FDEValue.T = 1 := by decide +kernel
+example : thresholdWallCount FDEValue.N FDEValue.F = 1 := by decide +kernel
+example : thresholdWallCount FDEValue.T FDEValue.B = 1 := by decide +kernel
+example : thresholdWallCount FDEValue.F FDEValue.B = 1 := by decide +kernel
+example : thresholdWallCount FDEValue.T FDEValue.F = 2 := by decide +kernel
+example : thresholdWallCount FDEValue.N FDEValue.B = 2 := by decide +kernel
 
 /-!
 ## Dynamic interpretation
@@ -173,7 +173,7 @@ theorem dynamic_reachability_realizes_two_wall_truth_false :
           DynamicReachabilityWorld.focus dynamicReachabilityKBelP)
         (evalModal (DynamicReachabilityUpdated FDEValue.T FDEValue.F)
           DynamicReachabilityWorld.focus dynamicReachabilityKBelP) = 2 := by
-  native_decide
+  decide +kernel
 
 /-!
 ## Interpretation

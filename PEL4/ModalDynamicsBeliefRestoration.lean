@@ -60,19 +60,19 @@ def DynamicRestorationModel :
   , mu_total := by
       intro ag w
       cases ag
-      cases w <;> native_decide
+      cases w <;> decide +kernel
   , mu_empty := by
       intro ag w
       cases ag
-      cases w <;> native_decide
+      cases w <;> decide +kernel
   , c_gt_half := by
       intro ag
       cases ag
-      native_decide
+      decide +kernel
   , c_le_one := by
       intro ag
       cases ag
-      native_decide
+      decide +kernel
   }
 
 /-- Restoration evidence is `p` itself.  Its positive extension is exactly
@@ -89,13 +89,13 @@ theorem dynamic_restoration_evidence_admissible :
   constructor
   · intro ag w
     cases ag
-    cases w <;> native_decide
+    cases w <;> decide +kernel
   · intro ag w
     cases ag
-    cases w <;> native_decide
+    cases w <;> decide +kernel
   · intro ag w
     cases ag
-    cases w <;> native_decide
+    cases w <;> decide +kernel
 
 /-- Posterior model after learning `p`. -/
 def DynamicRestorationUpdated :
@@ -111,7 +111,7 @@ theorem dynamic_restoration_belief_profile_before :
         dynamicInstabilityBelP = FDEValue.N ∧
     evalModal DynamicRestorationModel DynamicInstabilityWorld.c
         dynamicInstabilityBelP = FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- Hence `B p` is unstable before the update. -/
 theorem dynamic_restoration_unstable_before :
@@ -120,7 +120,7 @@ theorem dynamic_restoration_unstable_before :
           DynamicInstabilityWorld.a)
         (fun u => evalModal DynamicRestorationModel u dynamicInstabilityBelP) =
       false := by
-  native_decide
+  decide +kernel
 
 /-- Conditioning on `p` makes the posterior probability of `p` equal to one at
 every local state, so `B p` becomes `T` at all three worlds. -/
@@ -131,7 +131,7 @@ theorem dynamic_restoration_belief_profile_after :
         dynamicInstabilityBelP = FDEValue.T ∧
     evalModal DynamicRestorationUpdated DynamicInstabilityWorld.c
         dynamicInstabilityBelP = FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- The posterior belief profile is therefore full-value stable. -/
 theorem dynamic_restoration_stable_after :
@@ -140,14 +140,14 @@ theorem dynamic_restoration_stable_after :
           DynamicInstabilityWorld.a)
         (fun u => evalModal DynamicRestorationUpdated u dynamicInstabilityBelP) =
       true := by
-  native_decide
+  decide +kernel
 
 /-- Outer knowledge rejects the heterogeneous prior belief profile. -/
 theorem dynamic_restoration_outer_knowledge_false_before :
     evalModal DynamicRestorationModel DynamicInstabilityWorld.a
         (ModalFormula.know DynamicInstabilityAgent.i dynamicInstabilityBelP) =
       FDEValue.F := by
-  native_decide
+  decide +kernel
 
 /-- Once conditionalization restores a homogeneous `T/T/T` belief profile,
 outer knowledge recovers strict `T`. -/
@@ -155,7 +155,7 @@ theorem dynamic_restoration_outer_knowledge_true_after :
     evalModal DynamicRestorationUpdated DynamicInstabilityWorld.a
         (ModalFormula.know DynamicInstabilityAgent.i dynamicInstabilityBelP) =
       FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- Complete dynamic restoration: admissible conditionalization changes
 `T/N/T` into `T/T/T`, flips stability from false to true, and moves outer
@@ -177,7 +177,7 @@ theorem conditionalization_can_restore_belief_mediated_stability :
     evalModal DynamicRestorationUpdated DynamicInstabilityWorld.a
         (ModalFormula.know DynamicInstabilityAgent.i dynamicInstabilityBelP) =
       FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-!
 ## Interpretation

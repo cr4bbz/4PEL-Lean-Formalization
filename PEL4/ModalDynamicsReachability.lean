@@ -90,19 +90,19 @@ def DynamicReachabilityModel (source target : FDEValue) :
   , mu_total := by
       intro ag w
       cases ag
-      native_decide
+      decide +kernel
   , mu_empty := by
       intro ag w
       cases ag
-      native_decide
+      decide +kernel
   , c_gt_half := by
       intro ag
       cases ag
-      native_decide
+      decide +kernel
   , c_le_one := by
       intro ag
       cases ag
-      native_decide
+      decide +kernel
   }
 
 /-- Update evidence selects exactly the target-bearing focus world. -/
@@ -124,7 +124,7 @@ theorem dynamic_reachability_evidence_admissible
       intro ag w <;>
       cases ag <;>
       cases w <;>
-      native_decide
+      decide +kernel
 
 /-- Posterior model: only the probability measure changes. -/
 def DynamicReachabilityUpdated (source target : FDEValue) :
@@ -179,7 +179,7 @@ theorem dynamic_reachability_belief_before
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
   cases sp <;> cases sn <;> cases tp <;> cases tn <;>
-    cases w <;> native_decide
+    cases w <;> decide +kernel
 
 /-- After conditioning, all mass lies on `focus`, whose complete value is the
 chosen target. Threshold belief therefore reproduces the target exactly. -/
@@ -191,7 +191,7 @@ theorem dynamic_reachability_belief_after
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
   cases sp <;> cases sn <;> cases tp <;> cases tn <;>
-    cases w <;> native_decide
+    cases w <;> decide +kernel
 
 /-- The belief profile is homogeneous before update. -/
 theorem dynamic_reachability_stable_before
@@ -201,7 +201,7 @@ theorem dynamic_reachability_stable_before
         dynamicReachabilityBelP = true := by
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
-  cases sp <;> cases sn <;> cases tp <;> cases tn <;> native_decide
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;> decide +kernel
 
 /-- The belief profile is homogeneous after update as well. -/
 theorem dynamic_reachability_stable_after
@@ -211,7 +211,7 @@ theorem dynamic_reachability_stable_after
         dynamicReachabilityBelP = true := by
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
-  cases sp <;> cases sn <;> cases tp <;> cases tn <;> native_decide
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;> decide +kernel
 
 /-- Outer knowledge therefore equals the arbitrary chosen source before update. -/
 theorem dynamic_reachability_knowledge_before
@@ -220,7 +220,7 @@ theorem dynamic_reachability_knowledge_before
         DynamicReachabilityWorld.focus dynamicReachabilityKBelP = source := by
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
-  cases sp <;> cases sn <;> cases tp <;> cases tn <;> native_decide
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;> decide +kernel
 
 /-- And it equals the arbitrary chosen target after update. -/
 theorem dynamic_reachability_knowledge_after
@@ -229,7 +229,7 @@ theorem dynamic_reachability_knowledge_after
         DynamicReachabilityWorld.focus dynamicReachabilityKBelP = target := by
   rcases source with ⟨sp, sn⟩
   rcases target with ⟨tp, tn⟩
-  cases sp <;> cases sn <;> cases tp <;> cases tn <;> native_decide
+  cases sp <;> cases sn <;> cases tp <;> cases tn <;> decide +kernel
 
 /-- Complete four-valued dynamic reachability.
 

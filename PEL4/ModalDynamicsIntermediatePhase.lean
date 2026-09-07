@@ -61,7 +61,7 @@ theorem rat_mul_two (a : Rat) :
   calc
     a * 2 = a * (1 + 1) := by
       congr 1
-      native_decide
+      decide +kernel
     _ = a * 1 + a * 1 := Rat.mul_add _ _ _
     _ = a + a := by simp only [Rat.mul_one]
 
@@ -71,7 +71,7 @@ theorem ratMidpoint_strictly_between
     (a b : Rat)
     (hab : a < b) :
     a < ratMidpoint a b ∧ ratMidpoint a b < b := by
-  have htwo : (0 : Rat) < 2 := by native_decide
+  have htwo : (0 : Rat) < 2 := by decide +kernel
   constructor
   · unfold ratMidpoint
     apply (Rat.lt_div_iff htwo).2
@@ -306,7 +306,7 @@ theorem affine_diagonal_intermediate_vertex_table :
     negativeFirstIntermediate FDEValue.T FDEValue.F = FDEValue.B ∧
     positiveFirstIntermediate FDEValue.F FDEValue.T = FDEValue.B ∧
     negativeFirstIntermediate FDEValue.F FDEValue.T = FDEValue.N := by
-  native_decide
+  decide +kernel
 
 /-- Every two-wall conditionalized belief transition therefore admits an affine
 crossing pair whose temporal order either is simultaneous or determines an

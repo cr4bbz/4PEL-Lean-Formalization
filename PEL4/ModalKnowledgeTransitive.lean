@@ -37,7 +37,7 @@ theorem model_accessibility_nonempty
     calc
       (0 : Rat) = m.mu i w [] := by symm; exact hZero
       _ = 1 := hTotal
-  exact (by native_decide : (0 : Rat) ≠ 1) hZeroOne
+  exact (by decide +kernel : (0 : Rat) ≠ 1) hZeroOne
 
 /-- A nonempty homogeneous accessible profile is recovered exactly by the
 primitive knowledge operator.  Unlike the strict helper from the preceding
@@ -194,8 +194,8 @@ theorem introspection_countermodel_not_transitive_at_root :
   have hBad :
       IntrospectionWorld.left ∈
         IntrospectionModel.R IntrospectionAgent.a IntrospectionWorld.root := by
-    exact hTrans IntrospectionWorld.middle (by native_decide)
-      IntrospectionWorld.left (by native_decide)
+    exact hTrans IntrospectionWorld.middle (by decide +kernel)
+      IntrospectionWorld.left (by decide +kernel)
   simp [IntrospectionModel, introspectionR] at hBad
 
 /-!

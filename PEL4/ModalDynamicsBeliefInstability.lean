@@ -83,19 +83,19 @@ def DynamicInstabilityModel :
   , mu_total := by
       intro ag w
       cases ag
-      cases w <;> native_decide
+      cases w <;> decide +kernel
   , mu_empty := by
       intro ag w
       cases ag
-      cases w <;> native_decide
+      cases w <;> decide +kernel
   , c_gt_half := by
       intro ag
       cases ag
-      native_decide
+      decide +kernel
   , c_le_one := by
       intro ag
       cases ag
-      native_decide
+      decide +kernel
   }
 
 /-- Legacy evidence used for conditionalization. -/
@@ -111,13 +111,13 @@ theorem dynamic_instability_evidence_admissible :
   constructor
   · intro ag w
     cases ag
-    cases w <;> native_decide
+    cases w <;> decide +kernel
   · intro ag w
     cases ag
-    cases w <;> native_decide
+    cases w <;> decide +kernel
   · intro ag w
     cases ag
-    cases w <;> native_decide
+    cases w <;> decide +kernel
 
 /-- Updated model after learning `e`. -/
 def DynamicInstabilityUpdated :
@@ -148,7 +148,7 @@ theorem dynamic_instability_belief_profile_before :
         dynamicInstabilityBelP = FDEValue.T ∧
     evalModal DynamicInstabilityModel DynamicInstabilityWorld.c
         dynamicInstabilityBelP = FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- Hence the accessible profile of `B p` is stable before update. -/
 theorem dynamic_instability_stable_before :
@@ -157,7 +157,7 @@ theorem dynamic_instability_stable_before :
           DynamicInstabilityWorld.a)
         (fun u => evalModal DynamicInstabilityModel u dynamicInstabilityBelP) =
       true := by
-  native_decide
+  decide +kernel
 
 /-- After conditioning on `e`, the local posterior belief values split:
 `T` at `a,c`, but `N` at `b`. -/
@@ -168,7 +168,7 @@ theorem dynamic_instability_belief_profile_after :
         dynamicInstabilityBelP = FDEValue.N ∧
     evalModal DynamicInstabilityUpdated DynamicInstabilityWorld.c
         dynamicInstabilityBelP = FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- The update therefore creates complete-value instability in `B p`. -/
 theorem dynamic_instability_unstable_after :
@@ -177,7 +177,7 @@ theorem dynamic_instability_unstable_after :
           DynamicInstabilityWorld.a)
         (fun u => evalModal DynamicInstabilityUpdated u dynamicInstabilityBelP) =
       false := by
-  native_decide
+  decide +kernel
 
 /-- Before update, outer knowledge of the homogeneous belief profile is strict
 `T`. -/
@@ -185,7 +185,7 @@ theorem dynamic_instability_outer_knowledge_true_before :
     evalModal DynamicInstabilityModel DynamicInstabilityWorld.a
         (ModalFormula.know DynamicInstabilityAgent.i dynamicInstabilityBelP) =
       FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- After update, the newly heterogeneous belief profile forces outer knowledge
 to strict `F`. -/
@@ -193,7 +193,7 @@ theorem dynamic_instability_outer_knowledge_false_after :
     evalModal DynamicInstabilityUpdated DynamicInstabilityWorld.a
         (ModalFormula.know DynamicInstabilityAgent.i dynamicInstabilityBelP) =
       FDEValue.F := by
-  native_decide
+  decide +kernel
 
 /-- Complete dynamic fracture: admissible conditionalization turns a stable
 `T/T/T` belief profile into `T/N/T`, and outer knowledge flips from `T` to `F`. -/
@@ -214,7 +214,7 @@ theorem conditionalization_can_create_belief_mediated_instability :
     evalModal DynamicInstabilityUpdated DynamicInstabilityWorld.a
         (ModalFormula.know DynamicInstabilityAgent.i dynamicInstabilityBelP) =
       FDEValue.F := by
-  native_decide
+  decide +kernel
 
 /-- Contrast: atomic `p`, which is probability-free, has invariant outer
 knowledge under the same update. -/

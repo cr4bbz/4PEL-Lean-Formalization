@@ -62,7 +62,7 @@ theorem modal_belief_recovers_constant_profile
   have hNegFilter := filterWorlds_constant_component
     (m.R i w) value v (fun z => z.neg) hConst
   have hZeroLt : (0 : Rat) < m.c i :=
-    Std.lt_trans (by native_decide : (0 : Rat) < 1 / 2) (m.c_gt_half i)
+    Std.lt_trans (by decide +kernel : (0 : Rat) < 1 / 2) (m.c_gt_half i)
   have hZeroNotGe : ¬ (0 : Rat) ≥ m.c i :=
     Std.not_le_of_gt hZeroLt
   have hOneGe : (1 : Rat) ≥ m.c i := m.c_le_one i
@@ -156,13 +156,13 @@ So instability can separate knowledge and belief maximally:
 theorem modal_knowledge_belief_gate_knowledge_false :
     evalModal KnowledgeGateModel KnowledgeGateWorld.root
       (ModalFormula.know KnowledgeGateAgent.a modalGateP) = FDEValue.F := by
-  native_decide
+  decide +kernel
 
 /-- In the same model, threshold belief is strict `T`. -/
 theorem modal_knowledge_belief_gate_belief_true :
     evalModal KnowledgeGateModel KnowledgeGateWorld.root
       (ModalFormula.bel KnowledgeGateAgent.a modalGateP) = FDEValue.T := by
-  native_decide
+  decide +kernel
 
 /-- Therefore knowledge and belief need not coincide on unstable profiles. -/
 theorem modal_knowledge_belief_can_diverge_under_instability :
@@ -174,8 +174,8 @@ theorem modal_knowledge_belief_can_diverge_under_instability :
     evalModal KnowledgeGateModel KnowledgeGateWorld.root
         (ModalFormula.bel KnowledgeGateAgent.a modalGateP) = FDEValue.T := by
   constructor
-  · native_decide
-  constructor <;> native_decide
+  · decide +kernel
+  constructor <;> decide +kernel
 
 /-!
 ## Interpretation

@@ -224,10 +224,10 @@ theorem diagonal_reachability_belief_is_robust
   apply ModalConditionalizationRobust.bel
   · intro w
     rcases v with ⟨vp, vn⟩
-    cases vp <;> cases vn <;> cases w <;> native_decide
+    cases vp <;> cases vn <;> cases w <;> decide +kernel
   · intro w
     rcases v with ⟨vp, vn⟩
-    cases vp <;> cases vn <;> cases w <;> native_decide
+    cases vp <;> cases vn <;> cases w <;> decide +kernel
 
 /-- The diagonal witness really lies outside the probability-free fragment. -/
 theorem diagonal_reachability_belief_not_probabilityFree :
