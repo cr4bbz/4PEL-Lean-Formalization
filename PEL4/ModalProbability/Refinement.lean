@@ -128,8 +128,7 @@ theorem reliability_not_determined_by_coarse :
     pureT.reliableMass = 0 ∧ pureReliableT.reliableMass = 1 := by
   constructor
   · simp only [coarse, pureT, pureReliableT, Rat.add_zero, Rat.zero_add]
-  · simp only [reliableMass, pureT, pureReliableT, Rat.add_zero]
-    exact ⟨rfl, rfl⟩
+  · simp [reliableMass, pureT, pureReliableT, Rat.add_zero]
 
 theorem no_reliability_reconstruction :
     ¬ ∃ recover : FourCellProbability → Rat,
