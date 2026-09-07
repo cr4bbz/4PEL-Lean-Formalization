@@ -1,0 +1,71 @@
+\section{A conservative modal-probabilistic refinement gate}
+\label{sec:mpfg}
+
+This extension is a semantic refinement of evidence, not a replacement of the
+four-valued algebra. Its formal declarations are in
+\texttt{PEL4/ModalProbability/Refinement.lean} and
+\texttt{PEL4/ModalProbability/StatusTransport.lean}.
+The gate's validation status is recorded in
+\texttt{docs/MODAL\_PROBABILISTIC\_FINE\_GRAINING.md}.
+
+\begin{definition}[Reliability-tagged evidence profile]
+A fine profile is a nonnegative rational vector
+\(q=(t,b,n,f,t_r,f_r)\) of total mass one. Its coarse projection is
+\[
+  \pi(q)=(t+t_r,b,n,f+f_r).
+\]
+The reliability tags are supplied semantic data, not proofs of empirical
+truth. The untagged lift of \((t,b,n,f)\) is \((t,b,n,f,0,0)\).
+\end{definition}
+
+Consequently \(\pi\) has a right inverse. Signed support is preserved:
+\(P^+(q)=t+t_r+b\) and \(P^-(q)=f+f_r+b\).
+For \(0\le a\le1\), both normalized rational simplexes are closed under mixing,
+and the formal projection identity is
+\[
+ \pi((1-a)q+ar)=(1-a)\pi(q)+a\pi(r).
+\]
+Thus raw threshold belief commutes with forgetting reliability. This does not
+assert that thresholding is affine; the raw belief compatibility follows from
+the chosen definitions. Moreover, no function of the coarse profile recovers
+reliable mass \(t_r+f_r\) in general: pure untagged truth and pure reliable truth
+have the same projection, but reliable masses zero and one.
+
+\begin{definition}[Status stability and local fibre rigidity]
+For any relation \(R\), observation \(v\), and projection \(\pi\), put
+\begin{align*}
+ \mathrm{Stable}(v,w)
+   &\iff \forall u\,(Rwu\Rightarrow v(u)=v(w)),\\
+ \mathrm{Rigid}(v,\pi,w)
+   &\iff \forall u\,(Rwu\Rightarrow
+       (\pi(v(u))=\pi(v(w))\Rightarrow v(u)=v(w))).
+\end{align*}
+\end{definition}
+
+The exact transport boundary is
+\[
+ \mathrm{Stable}(v,w)\iff
+ \mathrm{Stable}(\pi\circ v,w)\land\mathrm{Rigid}(v,\pi,w).
+\]
+This is a local decomposition, not a claim that fibre rigidity is automatic.
+Two universally accessible worlds carrying untagged and reliable truth witness
+coarse stability with fine instability, even on a reflexive, transitive,
+Euclidean frame. A second witness distinguishes mass stability from categorical
+stability: \((0,1,0,0)\) and \((0,3/4,1/4,0)\) both yield \(\Bval\) at threshold
+\(3/5\), although their glut masses differ.
+
+The auxiliary essence predicate means conditionally retaining the current
+specified status across accessible worlds; it may hold vacuously. Its accidental
+counterpart requires an actual different accessible status. These are classical
+meta-level predicates, not additional FDE connectives. Their relationship to
+the existing executable stability test and \(\Know\) is stated separately:
+applying the unchanged knowledge interpretation to raw fine belief or to its
+coarse projection yields the same value. No identification of \(\Know\) with
+ordinary S5 necessity is made.
+
+Finally, the existing finite-step-chain theorem transports threshold status
+when each edge preserves it. Cell refinement is distinct from population
+Finite Fine-Grainedness, and connectivity alone does not imply status
+preservation. Normalized reliability-sensitive updates, probability-one versus
+necessity under full-support assumptions, and any representation of
+proof-theoretic fractional values remain subsequent research targets.

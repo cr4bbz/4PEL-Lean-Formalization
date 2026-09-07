@@ -3,9 +3,9 @@
 
 This appendix maps the principal mathematical claims in the manuscript to the Lean modules and theorem names that support them. The list is selective rather than exhaustive.
 
-\begin{center}
+\begingroup
 \small
-\begin{tabular}{p{0.28\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+\begin{longtable}{@{}p{0.28\textwidth}p{0.31\textwidth}p{0.31\textwidth}@{}}
 \toprule
 Paper claim & Lean theorem / definition & Module\\
 \midrule
@@ -91,8 +91,8 @@ Worlds, accessibility, valuation, and threshold fixed & \texttt{convexStrongMode
 \addlinespace
 Fixed-event mass affine along full model path & \texttt{convexStrongModelAt\_eventMass} & \texttt{PEL4/ConvexModelPath.lean}\\
 \bottomrule
-\end{tabular}
-\end{center}
+\end{longtable}
+\endgroup
 
 \paragraph{Verification note.}
 The active branch has passed fresh local Lean 4.31 builds through \texttt{PEL4/ConvexModelPath.lean}. The manuscript therefore treats the claims listed above as machine-checked at the formal level represented by their exact theorem statements. The formula-level lift from fixed events to arbitrary probability-sensitive support events remains separate and is not inferred from the model-path theorem.

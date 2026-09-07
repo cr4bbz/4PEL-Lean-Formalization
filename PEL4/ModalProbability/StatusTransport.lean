@@ -32,7 +32,23 @@ theorem accidental_iff_not_essential {W S : Type}
     (R : W → W → Prop) (v : W → S) (s : S) (w : W) :
     AccidentalAt R v s w ↔ ¬ EssentialAt R v s w := by
   classical
-  simp only [AccidentalAt, EssentialAt, NecessaryAt, not_imp, not_forall]
+  constructor
+  · rintro ⟨hw, u, hu, hneq⟩ hEssential
+    exact hneq (hEssential hw u hu)
+  · intro hNot
+    have hw : v w = s := by
+      by_cases hw : v w = s
+      · exact hw
+      · exact False.elim (hNot (fun h => False.elim (hw h)))
+    refine ⟨hw, ?_⟩
+    by_cases hWitness : ∃ u, R w u ∧ v u ≠ s
+    · exact hWitness
+    · apply False.elim
+      apply hNot
+      intro _ u hu
+      by_cases heq : v u = s
+      · exact heq
+      · exact False.elim (hWitness ⟨u, hu, heq⟩)
 
 theorem stable_iff_essential_current {W S : Type}
     (R : W → W → Prop) (v : W → S) (w : W) :

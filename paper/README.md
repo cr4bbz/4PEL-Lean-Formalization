@@ -6,7 +6,13 @@ Working manuscript:
 
 Author: Julian Voigt
 
-Current manuscript version: **0.2**
+Current manuscript version: **0.3** (2026-09-07).
+
+Version 0.3 adds `sections/13_modal_probabilistic_refinement.tex`: a conservative
+six-cell probability refinement, affine coarse projection, and a local
+fibre-rigidity boundary for modal stability. This is not a full LET-K+
+axiomatization or a new interpretation of the existing knowledge operator.
+See `docs/MODAL_PROBABILISTIC_FINE_GRAINING.md` for validation and scope.
 
 ## Scope
 

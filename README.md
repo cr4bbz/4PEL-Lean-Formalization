@@ -385,6 +385,15 @@ The project aims to distinguish **theorem, finite model, interpretation, and nov
 
 ## Current research direction
 
+The `research/modal-probabilistic-fine-graining` branch adds the **MPFG-1** gate
+on top of population Gate 4: reliability-tagged six-cell probabilities with an
+affine projection to the existing four-cell simplex, unchanged raw threshold
+belief, and an exact local fibre-rigidity criterion for lifting modal stability.
+Finite witnesses separate fine mass, coarse mass, and threshold-status stability.
+Validation status and the staged update agenda are in
+[`docs/MODAL_PROBABILISTIC_FINE_GRAINING.md`](docs/MODAL_PROBABILISTIC_FINE_GRAINING.md).
+The gate does not replace `FDEValue` or the existing evidence-stable `K`.
+
 The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axiom-4/axiom-5 discovery phase is now consolidated. Near-term priorities are:
 
 1. classify interaction between evidence-stable `K` and probabilistic `B`;

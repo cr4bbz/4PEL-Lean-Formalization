@@ -4,9 +4,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{microtype}
+\usepackage[margin=25mm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{longtable}
+\usepackage{seqsplit}
+\let\unbrokentexttt\texttt
+\renewcommand{\texttt}[1]{\unbrokentexttt{\seqsplit{#1}}}
 \usepackage{enumitem}
 \usepackage{tikz}
 \usepackage{hyperref}
@@ -42,7 +47,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian Voigt}
-\date{Working manuscript, version 0.2}
+\date{Working manuscript, version 0.3, 7 September 2026}
 
 \begin{document}
 \maketitle
@@ -67,6 +72,7 @@ The mechanization now also supplies a stronger finite-probability layer. Nonnega
 \input{sections/09_structural_interpretation}
 \input{sections/10_mechanization}
 \input{sections/11_related_work_and_limits}
+\input{sections/13_modal_probabilistic_refinement}
 \input{sections/12_conclusion}
 
 \appendix

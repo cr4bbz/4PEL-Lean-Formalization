@@ -15,4 +15,4 @@ jobs:
       - name: Audit finite-fine-grainedness theorem assumptions
         run: lake env lean PEL4/PopulationAxiology/AxiomAudit.lean
       - name: Audit modal-probabilistic refinement assumptions
-        run: lake env lean PEL4/ModalProbability/AxiomAudit.lean
+        run: python3 scripts/check_mpfg_axioms.py
