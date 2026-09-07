@@ -122,3 +122,6 @@ import PEL4.PopulationAxiology.FourCellKernel
 import PEL4.PopulationAxiology.RiskyCompensation
 import PEL4.PopulationAxiology.RiskyCompensationInstance
 import PEL4.PopulationAxiology.SubstantiveComparison
+
+import PEL4.ModalProbability.Refinement
+import PEL4.ModalProbability.StatusTransport
