@@ -215,8 +215,8 @@ theorem pairPhaseR_reflexive : SuccessorReflexive pairPhaseR := by
 
 theorem pairPhaseR_transitive : SuccessorTransitive pairPhaseR := by
   intro w u hu v hv
-  simp only [pairPhaseR, List.mem_cons, List.mem_singleton] at hu hv ⊢
-  rcases hu with rfl | rfl <;> rcases hv with rfl | rfl <;> simp
+  simp [pairPhaseR] at hu hv ⊢
+  rcases hu with rfl | rfl <;> simp_all
 
 /-- Reachability in the pair model means equality with one of the two coordinates. -/
 theorem pairPhase_reachable_iff (w : PairPhaseWorld) (q : FDEValue) :
