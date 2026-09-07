@@ -111,7 +111,7 @@ def pureT : SixCellProbability :=
     f_nonnegative := by decide
     reliableT_nonnegative := by decide
     reliableF_nonnegative := by decide
-    normalized := by decide }
+    normalized := by simp only [Rat.add_zero, Rat.zero_add] }
 
 def pureReliableT : SixCellProbability :=
   { t := 0, b := 0, n := 0, f := 0, reliableT := 1, reliableF := 0
@@ -121,12 +121,15 @@ def pureReliableT : SixCellProbability :=
     f_nonnegative := by decide
     reliableT_nonnegative := by decide
     reliableF_nonnegative := by decide
-    normalized := by decide }
+    normalized := by simp only [Rat.add_zero, Rat.zero_add] }
 
 theorem reliability_not_determined_by_coarse :
     pureT.coarse = pureReliableT.coarse ∧
     pureT.reliableMass = 0 ∧ pureReliableT.reliableMass = 1 := by
-  exact ⟨rfl, rfl, rfl⟩
+  constructor
+  · simp only [coarse, pureT, pureReliableT, Rat.add_zero, Rat.zero_add]
+  · simp only [reliableMass, pureT, pureReliableT, Rat.add_zero]
+    exact ⟨rfl, rfl⟩
 
 theorem no_reliability_reconstruction :
     ¬ ∃ recover : FourCellProbability → Rat,
@@ -135,6 +138,8 @@ theorem no_reliability_reconstruction :
   have h0 := h pureT
   have h1 := h pureReliableT
   rw [← reliability_not_determined_by_coarse.1] at h1
+  rw [reliability_not_determined_by_coarse.2.1] at h0
+  rw [reliability_not_determined_by_coarse.2.2] at h1
   have bad : (0 : Rat) = 1 := h0.symm.trans h1
   exact (by decide : (0 : Rat) ≠ 1) bad
 

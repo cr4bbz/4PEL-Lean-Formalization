@@ -3,6 +3,8 @@ import PEL4.PopulationAxiology.FiniteFineGrainedness
 
 namespace PEL4.ModalProbability
 
+open PopulationAxiology
+
 /-!
 # MPFG-1: modal status and projection loss
 
@@ -139,9 +141,16 @@ theorem probability_profile_projection_hides_instability :
     StableAt everywhere (fun w => (reliabilityProfile w).coarse) false ∧
     ¬ StableAt everywhere reliabilityProfile false := by
   constructor
-  · intro u _; cases u <;> rfl
+  · intro u _
+    cases u
+    · rfl
+    · exact SixCellProbability.reliability_not_determined_by_coarse.1.symm
   · intro h
     have heq := congrArg SixCellProbability.reliableMass (h true True.intro)
+    change SixCellProbability.pureReliableT.reliableMass =
+      SixCellProbability.pureT.reliableMass at heq
+    rw [SixCellProbability.reliability_not_determined_by_coarse.2.1,
+      SixCellProbability.reliability_not_determined_by_coarse.2.2] at heq
     exact (by decide : (1 : Rat) ≠ 0) heq
 
 /-- Even raw threshold-status stability need not mean mass-profile stability:
@@ -149,10 +158,10 @@ both worlds are B at cutoff 3/5, while their glut masses differ. -/
 def dilutedB : FourCellProbability :=
   { t := 0, b := 3 / 4, n := 1 / 4, f := 0
     t_nonnegative := by decide
-    b_nonnegative := by decide
-    n_nonnegative := by decide
+    b_nonnegative := by decide +kernel
+    n_nonnegative := by decide +kernel
     f_nonnegative := by decide
-    normalized := by decide }
+    normalized := by decide +kernel }
 
 def glutProfile : Bool → FourCellProbability
   | false => .pureB
@@ -162,16 +171,16 @@ theorem stable_B_does_not_mean_constant_mass :
     StableAt everywhere (fun w => (glutProfile w).thresholdValue (3 / 5)) false ∧
     (glutProfile false).thresholdValue (3 / 5) = FDEValue.B ∧
     ¬ StableAt everywhere glutProfile false := by
-  refine ⟨?_, by decide, ?_⟩
-  · intro u _; cases u <;> decide
+  refine ⟨?_, by decide +kernel, ?_⟩
+  · intro u _; cases u <;> decide +kernel
   · intro h
     have heq := congrArg FourCellProbability.b (h true True.intro)
-    exact (by decide : (3 / 4 : Rat) ≠ 1) heq
+    exact (by decide +kernel : (3 / 4 : Rat) ≠ 1) heq
 
 /-- B remains a status, not a proof of Lean False; an unrelated profile is N. -/
 theorem refinement_retains_B_and_N :
     (SixCellProbability.untagged FourCellProbability.pureB).thresholdValue 1 = .B ∧
     (SixCellProbability.untagged FourCellProbability.pureN).thresholdValue 1 = .N := by
-  constructor <;> decide
+  constructor <;> decide +kernel
 
 end PEL4.ModalProbability
