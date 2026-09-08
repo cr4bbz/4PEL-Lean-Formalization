@@ -1,22 +1,28 @@
 \section{Lean Mechanization and Verification Status}
 \label{sec:mechanization}
 
-The artifact uses Lean 4.31.0 without Mathlib. The current branch is
+The artifact uses Lean 4.31.0 without Mathlib. The present extension is developed
+on \texttt{research/matroid-evidence}, branched from
 \texttt{research/modal-probabilistic-fine-graining}; the root module
 \texttt{PEL4.lean} imports the relevant development. Appendix~\ref{app:formal}
-provides the claim-to-declaration map, including the reliability refinement.
-The explicit audit files are the machine-readable list of selected claims;
-this selection is not a certification of every declaration in the repository.
+provides the selective claim-to-declaration map for the established manuscript
+core. The matroid extension additionally carries its own declaration-level
+audit in \texttt{PEL4/MatroidEvidenceAxiomAudit.lean}. Audit selections are not
+a certification of every declaration in the repository.
 
 \subsection{Verification contract}
 A successful build establishes that declarations typecheck, not that all their
-assumptions are proved. Version 0.4 therefore audits 52 manuscript declarations
-in \texttt{PEL4/PaperAxiomAudit.lean} and 24 MPFG declarations in its separate
-audit. The full build and both strict audits passed for source revision
+assumptions are proved. Version 0.4 audited 52 manuscript declarations in
+\texttt{PEL4/PaperAxiomAudit.lean} and 24 MPFG declarations in its separate
+audit. Those audits passed for source revision
 \texttt{07fbc5193e0f7e43de565158c0eaf0cbb9c08dfb}; the review report records the
 CI run and exact dependencies. Only \texttt{propext}, \texttt{Classical.choice},
-and \texttt{Quot.sound}, or subsets thereof, occur in these selected chains.
+and \texttt{Quot.sound}, or subsets thereof, occur in those selected chains.
 \texttt{sorryAx}, project-specific axioms, and native-decision axioms are rejected.
+Version 0.5 adds a separate audit target for the channel-matroid construction,
+its exchange theorem package, coarse-state conservativity, and the four
+channel-rank reductions. The working revision's CI result is the authoritative
+check for these new declarations.
 
 The review found that some general headlines inherited native-evaluation
 assumptions through elementary helpers. In eight source modules, the relevant
@@ -47,9 +53,10 @@ not additional model-realization certificates.
 From a clean clone, or after preserving local work:
 \begin{verbatim}
 git fetch origin
-git switch research/modal-probabilistic-fine-graining
+git switch research/matroid-evidence
 git pull --ff-only
 lake build
+lake env lean PEL4/MatroidEvidenceAxiomAudit.lean
 python3 scripts/check_mpfg_axioms.py
 python3 scripts/check_paper_axioms.py --report paper-axioms.json
 python3 -m unittest discover -s scripts -p 'test_*.py'

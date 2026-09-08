@@ -50,7 +50,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian L. Voigt (cr4bbz)}
-\date{Working manuscript, version 0.4, 7 September 2026}
+\date{Working manuscript, version 0.5, 8 September 2026}
 
 \begin{document}
 \maketitle
@@ -61,6 +61,8 @@ I investigate how four-valued evidence changes under probability-only conditiona
 A six-world witness family realizes all sixteen source--target values of \(\Know(\Bel p)\). For a chosen rational affine interpolation of support endpoints, threshold-bit changes determine unique wall-hit parameters; their order determines adjacent intermediate states. These parameters describe the interpolation, not an inferred history of the discrete update. Separately, normalized nonnegative world weights yield certified finite measures and convex model-valued paths whose fixed-event masses are affine. Formula-level identification for probability-sensitive events and generation of intermediate models by conditionalization remain open.
 
 A further six-cell refinement records reliability tags while preserving four-cell support and convex mixing. Fine modal stability is equivalent to coarse stability plus local fibre rigidity; explicit S5-frame counterexamples show that coarse stability alone loses reliability information. This is a semantic projection result, not an axiomatization of a six-valued logic.
+
+At the coarsest evidence level, the bilateral positive/negative signature also induces a two-class matroid closure: same-polarity atoms are parallel, closure preserves the four-valued state, and the channel ranks of \(\Nval,\Tval,\Fval,\Bval\) are respectively \(0,1,1,2\). This is a structural theorem about the 4-PEL projection, not a claim that arbitrary epistemic evidence is matroidal.
 
 The Lean 4.31 artifact distinguishes the lightweight model interface from probability-integrity-certified models and records declaration-level axiom dependencies, rejecting native evaluation in the selected manuscript proof chains. The contribution is a mechanized case study with explicit preservation and information-loss boundaries; no completeness, general continuity, or priority claim is made.
 \end{abstract}
@@ -78,6 +80,7 @@ The Lean 4.31 artifact distinguishes the lightweight model interface from probab
 \input{sections/10_mechanization}
 \input{sections/11_related_work_and_limits}
 \input{sections/13_modal_probabilistic_refinement}
+\input{sections/14_matroid_evidence}
 \input{sections/12_conclusion}
 
 \appendix
