@@ -24,6 +24,8 @@ import PEL4.MatroidTopologicalSierpinski
 import PEL4.MatroidTopologicalAxiomAudit
 import PEL4.MatroidEvidenceCircuits
 import PEL4.MatroidEvidenceCircuitAxiomAudit
+import PEL4.MatroidEvidenceMinors
+import PEL4.MatroidEvidenceMinorAxiomAudit
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
 import PEL4.StructuralTransport
