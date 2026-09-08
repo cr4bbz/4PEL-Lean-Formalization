@@ -1,0 +1,155 @@
+\section{Circuits as minimal evidential redundancy}
+\label{sec:matroid-circuits}
+
+Gate~2 identified the exact topological boundary at which the coarse 4-PEL
+closure also satisfies matroid exchange. Gate~3 turns from closure geometry to
+combinatorial dependence. In matroid theory a circuit is a minimal dependent
+set \cite{Whitney1935,Oxley2011}. For the two-channel 4-PEL projection this
+notion admits a particularly sharp interpretation: a circuit is a smallest body
+of evidence containing a coarse redundancy that disappears as soon as either of
+its members is removed.
+
+\begin{definition}[Channel dependence]
+Let \(\chi:E\to\{+,-\}\) be the coarse evidence polarity. A body of evidence
+\(A\subseteq E\) is \emph{channel-dependent} when
+\[
+  \exists x,y\in A\quad x\neq y
+  \quad\text{and}\quad
+  \chi(x)=\chi(y).
+\]
+It is channel-independent when no such pair exists. A \emph{channel circuit}
+is a channel-dependent set with no proper channel-dependent subset.
+\end{definition}
+
+The definition is equivalent to the expected closure formulation.
+
+\begin{proposition}[Closure witness for dependence]
+For every \(A\subseteq E\),
+\[
+  A\text{ is channel-dependent}
+  \quad\Longleftrightarrow\quad
+  \exists x\in A:\
+  x\in\operatorname{cl}_{\chi}(A\setminus\{x\}).
+\]
+Thus coarse dependence means that at least one retained atom is already generated
+by the remainder of the evidence body.
+\textup{\textsc{Status: Lean-proved in
+\texttt{PEL4/MatroidEvidenceCircuits.lean}.}}
+\end{proposition}
+
+\begin{theorem}[Complete circuit classification]
+A body \(C\subseteq E\) is a channel circuit if and only if there exist distinct
+\(x,y\in E\) such that
+\[
+  \chi(x)=\chi(y)
+  \qquad\text{and}\qquad
+  C=\{x,y\}.
+\]
+Equivalently, the circuits of the coarse 4-PEL partition matroid are exactly the
+two-element same-polarity pairs.
+\textup{\textsc{Status: Lean-proved in
+\texttt{PEL4/MatroidEvidenceCircuits.lean}.}}
+\end{theorem}
+\begin{proof}[Proof sketch]
+Every distinct same-polarity pair is dependent. Any dependent subset of that
+pair must contain two distinct elements, so it must contain both members and
+therefore equals the pair. Conversely, if \(C\) is minimally dependent, choose
+two distinct same-polarity witnesses \(x,y\in C\). The pair \(\{x,y\}\) is
+already dependent, hence minimality forces every member of \(C\) to lie in that
+pair. Since both witnesses lie in \(C\), equality follows.
+\end{proof}
+
+This theorem turns the informal phrase ``redundant evidence'' into an exact
+structural claim. At the coarse bilateral projection, a circuit does not mean
+that one item of evidence is false, weak, or dispensable in every epistemic
+sense. It means only that two distinct atoms occupy the same one-bit direction
+seen by the FDE kernel.
+
+\begin{proposition}[Circuit closure redundancy]
+If \(x\neq y\) and \(\chi(x)=\chi(y)\), then for every \(e\in E\),
+\[
+  e\in\operatorname{cl}_{\chi}(\{x,y\})
+  \quad\Longleftrightarrow\quad
+  e\in\operatorname{cl}_{\chi}(\{x\}).
+\]
+By symmetry the same holds with \(\{y\}\). Hence removing either member of a
+circuit leaves the coarse generated channel unchanged.
+\textup{\textsc{Status: Lean-proved.}}
+\end{proposition}
+
+The circuit-elimination behaviour is correspondingly transparent. Suppose
+\(\{x,y\}\) and \(\{x,z\}\) are distinct circuits sharing \(x\). Then all three
+atoms have the same polarity; if \(y\neq z\), the pair \(\{y,z\}\) is itself a
+circuit contained in the union after removing the common element. This is the
+two-channel instance of the standard circuit-elimination pattern
+\cite{Oxley2011}.
+
+\begin{proposition}[Two-channel circuit elimination]
+Let \(x,y,z\) be pairwise distinct with
+\(\chi(x)=\chi(y)=\chi(z)\). Then
+\[
+  \{x,y\},\{x,z\}\text{ circuits}
+  \quad\Longrightarrow\quad
+  \{y,z\}\text{ is a circuit}.
+\]
+\textup{\textsc{Status: Lean-proved.}}
+\end{proposition}
+
+\subsection{Contraction as accepted background evidence}
+
+Deletion and contraction are the canonical minor operations of matroid theory.
+The current repository interface, however, presents only a closure operator and
+has no explicit ground-set field. A full minor API would therefore be premature:
+removing an atom from the carrier cannot yet be represented without changing the
+ambient type or extending \texttt{MatroidClosure}. Gate~3 instead records the
+part of contraction semantics that is expressible without pretending that this
+missing structure already exists.
+
+Fix an evidence atom \(c\) and treat it as accepted background evidence. Define
+\[
+  \operatorname{cl}_{\chi}^{/c}(A)
+  :=\operatorname{cl}_{\chi}(A\cup\{c\}).
+\]
+This is a contraction-style background closure rather than a packaged matroid
+minor.
+
+\begin{proposition}[Parallel evidence becomes loop-like under background]
+For any atom \(e\),
+\[
+  \chi(c)=\chi(e)
+  \quad\Longrightarrow\quad
+  e\in\operatorname{cl}_{\chi}^{/c}(\varnothing),
+\]
+whereas
+\[
+  \chi(c)\neq\chi(e)
+  \quad\Longrightarrow\quad
+  e\notin\operatorname{cl}_{\chi}^{/c}(\varnothing).
+\]
+Thus accepting one positive atom as background makes every positive parallel
+atom generated without further evidence, while negative atoms remain a separate
+information direction; and conversely for negative background evidence.
+\textup{\textsc{Status: Lean-proved.}}
+\end{proposition}
+
+This is the strongest epistemic reading justified by the present formalism. In
+a genuine contraction of a partition matroid, the parallel partners of the
+contracted element become loops. Here the formal result captures exactly the
+corresponding closure fact: once one channel representative is fixed in the
+background, additional same-channel atoms contribute no new coarse rank.
+
+\paragraph{Gate-3 boundary.}
+The classification is exact only after the positive/negative projection. At a
+finer level, two positive reports may differ in reliability, causal origin,
+probability mass, inferential route, or independence of source. Such information
+can split a coarse two-element circuit into an independent fine-grained set.
+Consequently, ``minimal evidential redundancy'' is always indexed to a chosen
+projection.
+
+\paragraph{Next structural question.}
+Gate~4 should promote the lightweight closure presentation to an explicit
+finite-ground-set matroid layer, or bridge the project to a standard matroid API.
+Only then can deletion and contraction be stated as actual minors rather than
+background-closure probes. That gate would allow a precise comparison between
+source removal, background acceptance, rank loss, loop creation, and preservation
+of the four-valued state.
