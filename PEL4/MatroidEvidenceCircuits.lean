@@ -247,19 +247,22 @@ theorem channelClosure_pair_iff_singleton_of_samePolarity
         subst a
         exact ⟨x, Or.inl rfl, ha.2⟩
 
-/-- Circuit elimination in the two-channel case reduces to another same-polarity pair. -/
+/--
+Circuit elimination in the two-channel case: two pair-circuits sharing `x`
+force the pair of their remaining distinct members to be a circuit.
+-/
 theorem channelPair_circuit_elimination
     {α : Type u}
     (polarity : α → EvidencePolarity)
     {x y z : α}
-    (hxy : x ≠ y)
-    (hxz : x ≠ z)
-    (hyz : y ≠ z)
-    (hpolXY : polarity x = polarity y)
-    (hpolXZ : polarity x = polarity z) :
+    (hXY : ChannelCircuit polarity (EvidenceSet.pair x y))
+    (hXZ : ChannelCircuit polarity (EvidenceSet.pair x z))
+    (hyz : y ≠ z) :
     ChannelCircuit polarity (EvidenceSet.pair y z) := by
+  have hXYData := (channelPair_isCircuit_iff polarity x y).1 hXY
+  have hXZData := (channelPair_isCircuit_iff polarity x z).1 hXZ
   apply (channelPair_isCircuit_iff polarity y z).2
-  exact ⟨hyz, Eq.trans hpolXY.symm hpolXZ⟩
+  exact ⟨hyz, Eq.trans hXYData.2.symm hXZData.2⟩
 
 /--
 Contraction-style background closure: treat `c` as already accepted evidence before
