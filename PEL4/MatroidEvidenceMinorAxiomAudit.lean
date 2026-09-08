@@ -1,4 +1,4 @@
-import PEL4.MatroidEvidenceMinors
+import PEL4.MatroidEvidenceMinorSemantics
 
 namespace PEL4
 
@@ -12,5 +12,12 @@ namespace PEL4
 #print axioms delete_unique_channel_not_supported
 #print axioms contractElem_excludes_contracted_atom
 #print axioms finiteChannel_contract_unique_channel_not_supported
+#print axioms supportsChannel_delete_otherPolarity_iff
+#print axioms delete_unique_channel_profile
+#print axioms finiteChannel_no_loops
+#print axioms finiteChannel_supportsNonloop_iff_supportsGround
+#print axioms finiteChannel_contract_sameChannel_no_nonloop
+#print axioms finiteChannel_contract_opposite_not_loop
+#print axioms finiteChannel_contract_otherChannel_supportsNonloop_iff
 
 end PEL4
