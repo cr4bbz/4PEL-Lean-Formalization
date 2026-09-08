@@ -1,0 +1,175 @@
+\section{Genuine minors and residual evidence capacity}
+\label{sec:matroid-minors}
+
+Gate~3 could express contraction only as a background-closure probe because the
+lightweight \texttt{MatroidClosure} interface had no explicit ground set. Gate~4
+removes that limitation. The formal layer now records a ground predicate together
+with closure, ground containment, extensivity, monotonicity, idempotence, and
+exchange, plus a finite list certifying that every ground atom occurs in a finite
+support. The implementation is deliberately local to the repository and does not
+add Mathlib as a dependency.
+
+\begin{definition}[Explicit-ground deletion and contraction]
+Let \(M\) be a ground-set matroid closure on \(E\), with ground set
+\(E(M)\), and let \(D,C\subseteq E(M)\). Gate~4 defines
+\[
+  E(M\setminus D)=E(M)\setminus D,
+  \qquad
+  \operatorname{cl}_{M\setminus D}(A)
+  =\operatorname{cl}_M(A)\setminus D,
+\]
+and
+\[
+  E(M/C)=E(M)\setminus C,
+  \qquad
+  \operatorname{cl}_{M/C}(A)
+  =\operatorname{cl}_M(A\cup C)\setminus C.
+\]
+These are the standard closure formulas for deletion and contraction.
+\end{definition}
+
+\begin{theorem}[Minor closure preservation]
+Both constructions again satisfy the explicit-ground closure axioms, including
+Mac Lane--Steinitz exchange. The finite-ground wrappers retain a finite support
+certificate for the smaller ground set.
+\textup{\textsc{Status: Lean-proved in
+\texttt{PEL4/MatroidEvidenceMinors.lean}; both constructors are axiom-free.}}
+\end{theorem}
+
+The explicit carrier makes the distinction between the two minor operations
+mathematically literal. Deletion removes atoms from the problem. Contraction first
+allows the contracted evidence to participate in generation and then removes it
+from the residual carrier. It therefore represents a quotient by a fixed structural
+direction, not the same operation as merely forgetting a source.
+
+\subsection{Deletion: redundancy versus dispensability}
+
+For the finite two-channel 4-PEL matroid, let \(x\) and \(y\) be distinct
+same-polarity atoms in the ground set. Since \(\{x,y\}\) is a circuit, deleting
+\(x\) leaves \(y\) as a representative of the same channel.
+
+\begin{proposition}[Parallel deletion preserves the coarse state]
+If \(x\neq y\), \(\chi(x)=\chi(y)\), and \(y\in E(M)\), then deleting \(x\)
+preserves the presence or absence of both coarse support channels. Consequently,
+for every FDE value \(v\),
+\[
+  \operatorname{RealizesFDE}(E(M)\setminus\{x\},v)
+  \quad\Longleftrightarrow\quad
+  \operatorname{RealizesFDE}(E(M),v).
+\]
+\textup{\textsc{Status: Lean-proved. The support and packaged FDE equivalences
+use only the repository's allowed standard Lean axioms.}}
+\end{proposition}
+
+This sharpens the Gate-3 notion of redundancy. Circuit membership implies that a
+particular atom can be removed without changing the coarse observation only while
+a parallel representative remains. Redundant relative to closure is therefore not
+the same as globally dispensable under arbitrary subsequent deletions.
+
+The complementary case is exact as well. Call \(c\) a unique channel
+representative when it is the only ground atom of polarity \(\chi(c)\).
+
+\begin{proposition}[Unique-representative deletion profile]
+Deleting a unique channel representative removes exactly its own support channel;
+every different polarity channel is preserved. In the bilateral four-valued
+projection, the only possible one-atom information losses are therefore
+\[
+  \Tval\longrightarrow\Nval,
+  \qquad
+  \Fval\longrightarrow\Nval,
+  \qquad
+  \Bval\longrightarrow\Tval,
+  \qquad
+  \Bval\longrightarrow\Fval,
+\]
+with the direction determined by the deleted polarity and by which opposite
+channel was present beforehand.
+\textup{\textsc{Status: the exact channel-profile statement is Lean-proved and
+axiom-free; the displayed four-value arrows are its immediate bilateral
+corollaries.}}
+\end{proposition}
+
+Deletion thus exposes a useful distinction:
+\[
+  \text{coarse redundancy}
+  \;\neq\;
+  \text{unconditional removability}.
+\]
+An atom in a circuit is removable relative to another representative, but the last
+representative of a channel is structurally pivotal for the FDE projection.
+
+\subsection{Contraction: quotienting an independent direction}
+
+The canonical finite channel matroid has no loops before taking minors. For a
+single contracted atom \(c\), the general contraction identity gives
+\[
+  e\text{ is a loop in }M/c
+  \quad\Longleftrightarrow\quad
+  e\in E(M),\ e\neq c,
+  \text{ and }e\in\operatorname{cl}_M(\{c\}).
+\]
+For the two-channel closure this becomes a complete polarity classification.
+
+\begin{theorem}[Contraction loop profile]
+For every remaining atom \(e\),
+\[
+  e\text{ is a loop in }M/c
+  \quad\Longleftrightarrow\quad
+  e\in E(M),\quad e\neq c,\quad \chi(e)=\chi(c).
+\]
+Thus contracting one positive atom turns every remaining positive parallel atom
+into a loop, while no negative atom becomes a loop; conversely for negative
+contraction.
+\textup{\textsc{Status: Lean-proved and axiom-free in
+\texttt{PEL4/MatroidEvidenceMinors.lean}.}}
+\end{theorem}
+
+This motivates a second support notion. Ordinary coarse support asks only whether
+a polarity-labelled atom remains in the ground set. Define \emph{nonloop support}
+to require a remaining ground atom of that polarity that is not a loop. Before
+minor operations these notions coincide because the canonical channel matroid is
+loopless.
+
+\begin{proposition}[Residual channel capacity under contraction]
+After contracting \(c\):
+\begin{enumerate}[label=(\roman*)]
+  \item the channel \(\chi(c)\) has no nonloop support;
+  \item every channel different from \(\chi(c)\) has nonloop support after
+  contraction exactly when it had ordinary ground support before contraction.
+\end{enumerate}
+Hence contraction quotients out exactly one coarse independent direction and leaves
+the opposite independent direction active when present.
+\textup{\textsc{Status: Lean-proved and axiom-free in
+\texttt{PEL4/MatroidEvidenceMinorSemantics.lean}.}}
+\end{proposition}
+
+The distinction between ground support and nonloop support matters. A remaining
+same-polarity atom may still be physically present in the contracted carrier while
+contributing zero residual rank because it has become a loop. Consequently the
+Gate-1 channel-rank reading as ``number of present support bits'' is exact for the
+original loopless channel matroid but is not automatically invariant under minors.
+After contraction, polarity occupancy and residual independent-information capacity
+must be tracked separately.
+
+\paragraph{Epistemic boundary.}
+Genuine matroid contraction is a structural quotient. It is not, by itself, AGM
+belief contraction, Bayesian conditioning, public announcement, source acceptance,
+or a memory-bearing epistemic update. In particular, the contracted atom is absent
+from the minor ground set. If an epistemic model is meant to remember that atom as
+accepted background evidence, that memory must be represented by an additional
+state component rather than silently identified with the matroid minor. Gate~4
+therefore replaces the Gate-3 metaphor with a formal separation:
+\[
+  \text{source deletion}
+  \neq
+  \text{structural contraction}
+  \neq
+  \text{remembered background acceptance}.
+\]
+
+\paragraph{Next structural question.}
+The finite-ground minor layer now makes it possible to ask whether the six-cell
+reliability refinement admits a fine-grained matroid whose deletion and contraction
+project homomorphically to the two-channel minors. That question would test whether
+source reliability merely refines parallel classes or destroys the coarse minor
+correspondence altogether.

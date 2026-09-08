@@ -50,7 +50,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian L. Voigt (cr4bbz)}
-\date{Working manuscript, version 0.7, 8 September 2026}
+\date{Working manuscript, version 0.8, 8 September 2026}
 
 \begin{document}
 \maketitle
@@ -64,7 +64,7 @@ A further six-cell refinement records reliability tags while preserving four-cel
 
 At the coarsest evidence level, the bilateral positive/negative signature induces a two-class matroid closure: same-polarity atoms are parallel, closure preserves the four-valued state, and the channel ranks of \(\Nval,\Tval,\Fval,\Bval\) are respectively \(0,1,1,2\). The interaction with the existing topological evidence semantics has an exact boundary: topological closure satisfies the repository's exchange axiom exactly when singleton specialization is symmetric, the \(R_0\) condition for genuine topological spaces. The existing Sierpiński witness fails this boundary, while the coarse positive/negative channel matroid is recovered as the closure of its canonical partition topology.
 
-The circuit structure of this coarse matroid is completely classified: minimal dependent evidence sets are exactly distinct same-polarity pairs. Such a circuit generates the same coarse closure as either retained member, making ``minimal redundancy'' precise at the projected level. A contraction-style background construction further shows that accepting one atom makes all same-polarity parallel atoms loop-like over empty new evidence, while the opposite channel remains ungenerated. These are structural theorems about the 4-PEL projection, not claims that arbitrary epistemic evidence is matroidal.
+The circuit structure of this coarse matroid is completely classified: minimal dependent evidence sets are exactly distinct same-polarity pairs. Gate~4 upgrades the closure presentation to an explicit finite-ground layer with genuine deletion and contraction minors. Deleting one member of a parallel pair preserves the coarse FDE state, whereas deleting a unique channel representative removes exactly that support direction. Contracting one atom makes precisely its remaining same-polarity partners loops and removes nonloop capacity from that channel while preserving any opposite independent channel. This separates polarity occupancy from residual independent-information capacity after minors, and also separates structural contraction from a memory-bearing epistemic acceptance update. These are structural theorems about the 4-PEL projection, not claims that arbitrary epistemic evidence is matroidal.
 
 The Lean 4.31 artifact distinguishes the lightweight model interface from probability-integrity-certified models and records declaration-level axiom dependencies, rejecting native evaluation in the selected manuscript proof chains. The contribution is a mechanized case study with explicit preservation and information-loss boundaries; no completeness, general continuity, or priority claim is made.
 \end{abstract}
@@ -84,6 +84,7 @@ The Lean 4.31 artifact distinguishes the lightweight model interface from probab
 \input{sections/13_modal_probabilistic_refinement}
 \input{sections/14_matroid_evidence}
 \input{sections/15_matroid_circuits}
+\input{sections/16_matroid_minors}
 \input{sections/12_conclusion}
 
 \appendix

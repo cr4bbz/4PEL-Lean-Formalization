@@ -118,6 +118,20 @@ Complete circuit classification & \texttt{channelCircuit\_iff\_exists\_samePolar
 Circuit closure redundancy and elimination & \texttt{channelClosure\_pair\_iff\_singleton\_of\_samePolarity}, \texttt{channelPair\_circuit\_elimination} & \texttt{PEL4/MatroidEvidenceCircuits.lean}\\
 \addlinespace
 Contraction-style background loop effect & \texttt{background\_generates\_samePolarity}, \texttt{background\_does\_not\_generate\_oppositePolarity} & \texttt{PEL4/MatroidEvidenceCircuits.lean}\\
+\addlinespace
+Explicit-ground deletion and contraction preserve matroid closure axioms & \texttt{GroundMatroidClosure.delete}, \texttt{GroundMatroidClosure.contract} & \texttt{PEL4/MatroidEvidenceMinors.lean}\\
+\addlinespace
+Contraction loops equal closure of contracted set & \texttt{GroundMatroidClosure.contract\_isLoop\_iff\_mem\_closure} & \texttt{PEL4/MatroidEvidenceMinors.lean}\\
+\addlinespace
+Finite channel contraction loop profile & \texttt{finiteChannel\_contractElem\_isLoop\_iff} & \texttt{PEL4/MatroidEvidenceMinors.lean}\\
+\addlinespace
+Parallel deletion preserves coarse FDE state & \texttt{realizesFDE\_delete\_parallel\_iff} & \texttt{PEL4/MatroidEvidenceMinors.lean}\\
+\addlinespace
+Unique deletion removes exactly one channel & \texttt{delete\_unique\_channel\_profile} & \texttt{PEL4/MatroidEvidenceMinorSemantics.lean}\\
+\addlinespace
+Canonical finite channel matroid is loopless & \texttt{finiteChannel\_no\_loops}, \texttt{finiteChannel\_supportsNonloop\_iff\_supportsGround} & \texttt{PEL4/MatroidEvidenceMinorSemantics.lean}\\
+\addlinespace
+Contraction removes nonloop capacity from exactly one channel & \texttt{finiteChannel\_contract\_sameChannel\_no\_nonloop}, \texttt{finiteChannel\_contract\_otherChannel\_supportsNonloop\_iff} & \texttt{PEL4/MatroidEvidenceMinorSemantics.lean}\\
 \bottomrule
 \end{longtable}
 \endgroup
