@@ -1,0 +1,16 @@
+import PEL4.MatroidEvidenceMinors
+
+namespace PEL4
+
+#print axioms GroundMatroidClosure.delete
+#print axioms GroundMatroidClosure.contract
+#print axioms GroundMatroidClosure.contract_isLoop_iff_mem_closure
+#print axioms finiteChannelMatroid
+#print axioms finiteChannel_contractElem_isLoop_iff
+#print axioms supportsChannel_delete_parallel_iff
+#print axioms realizesFDE_delete_parallel_iff
+#print axioms delete_unique_channel_not_supported
+#print axioms contractElem_excludes_contracted_atom
+#print axioms finiteChannel_contract_unique_channel_not_supported
+
+end PEL4
