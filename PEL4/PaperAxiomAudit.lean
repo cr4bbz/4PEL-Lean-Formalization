@@ -1,6 +1,7 @@
 import PEL4.PaperReviewBoundaries
 import PEL4.ConvexModelPath
 import PEL4.MatroidTopologicalSierpinski
+import PEL4.MatroidEvidenceCircuits
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -72,3 +73,12 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.channelInteriorSemantics_closure_iff_channelClosure
 #print axioms PEL4.channelInteriorSemantics_exchange
 #print axioms PEL4.sierpinski_not_topologicalClosureExchange
+
+-- Matroid Evidence Gate 3 manuscript claims
+#print axioms PEL4.channelDependent_iff_mem_closure_erase
+#print axioms PEL4.channelPair_isCircuit_iff
+#print axioms PEL4.channelCircuit_iff_exists_samePolarity_pair
+#print axioms PEL4.channelClosure_pair_iff_singleton_of_samePolarity
+#print axioms PEL4.channelPair_circuit_elimination
+#print axioms PEL4.background_generates_samePolarity
+#print axioms PEL4.background_does_not_generate_oppositePolarity
