@@ -208,14 +208,10 @@ theorem complementaryMasses_supermajority_consistent
     (Rat.add_le_add_left (a := c) (b := n) (c := p)).2 hBoth.2
   have hcc : c + c ≤ p + n :=
     Rat.le_trans hcc₁ hcc₂
-  have hHalf₁ : (1 / 2 : Rat) + 1 / 2 < c + 1 / 2 :=
-    (Rat.add_lt_add_right (a := (1 / 2 : Rat)) (b := c)
-      (c := (1 / 2 : Rat))).2 hc
-  have hHalf₂ : c + 1 / 2 < c + c :=
-    (Rat.add_lt_add_left (a := (1 / 2 : Rat)) (b := c) (c := c)).2 hc
   have hHalf : (1 : Rat) < c + c := by
-    have h := Rat.lt_trans hHalf₁ hHalf₂
-    simpa using h
+    have h2pos : (0 : Rat) < 2 := by decide
+    have hmul := Rat.mul_lt_mul_of_pos_left hc h2pos
+    simpa [Rat.two_mul] using hmul
   have hOneLe : c + c ≤ 1 := by
     rw [hSum] at hcc
     exact hcc
