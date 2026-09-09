@@ -2,19 +2,19 @@
 \label{sec:mechanization}
 
 The artifact uses Lean 4.31.0 without Mathlib. The present extension is developed
-on \texttt{research/matroid-minors-gate4}, stacked on the preceding matroid gates;
-the root module \texttt{PEL4.lean} imports the relevant development.
+on \texttt{research/classical-recovery-gate5}, stacked on the preceding matroid
+gates; the root module \texttt{PEL4.lean} imports the relevant development.
 Appendix~\ref{app:formal} provides the selective claim-to-declaration map for the
-established manuscript core. The matroid program additionally carries
+established manuscript core. The matroid and recovery programs additionally carry
 separate declaration-level audits for the channel closure, topological bridge,
-circuits, and explicit-ground minor layers. Audit selections are not a
-certification of every declaration in the repository.
+circuits, explicit-ground minors, and classical-recovery layers. Audit selections are
+not a certification of every declaration in the repository.
 
 \subsection{Verification contract}
 A successful build establishes that declarations typecheck, not that all their
 assumptions are proved. The manuscript inventory in
-\texttt{PEL4/PaperAxiomAudit.lean} and the 24-declaration MPFG inventory are
-checked by CI against a strict allow-list. Only \texttt{propext},
+\texttt{PEL4/PaperAxiomAudit.lean} and the separate MPFG inventory are checked by CI
+against a strict allow-list. Only \texttt{propext},
 \texttt{Classical.choice}, and \texttt{Quot.sound}, or subsets thereof, may occur
 in selected manuscript chains; \texttt{sorryAx}, project-specific axioms, and
 native-decision axioms are rejected.
@@ -27,7 +27,14 @@ loop characterization, finite channel matroid, unique-channel deletion profile,
 and nonloop-capacity theorems are axiom-free. The packaged theorem asserting FDE
 state preservation under deletion of a parallel representative currently uses only
 the same allowed standard Lean axioms; no stronger trust claim is made for it.
-The working revision's CI output is authoritative for exact dependencies.
+
+Gate~5 adds \texttt{PEL4/ClassicalRecovery.lean} and
+\texttt{PEL4/ClassicalRecoveryStructural.lean}, with a dedicated
+\texttt{ClassicalRecoveryAxiomAudit.lean}. The selected inventory covers the
+geometry--value recovery, the recovered propositional slice, separated LEM/EFQ
+conditions, modal persistence, deletion robustness/fragility, and the nonloop
+capacity comparison before and after contraction. The working revision's CI output
+is authoritative for exact declaration dependencies.
 
 The review found that some general headlines inherited native-evaluation
 assumptions through elementary helpers. In eight source modules, the relevant
@@ -58,10 +65,10 @@ not additional model-realization certificates.
 From a clean clone, or after preserving local work:
 \begin{verbatim}
 git fetch origin
-git switch research/matroid-minors-gate4
+git switch research/classical-recovery-gate5
 git pull --ff-only
 lake build
-lake env lean PEL4/MatroidEvidenceMinorAxiomAudit.lean
+lake env lean PEL4/ClassicalRecoveryAxiomAudit.lean
 python3 scripts/check_mpfg_axioms.py
 python3 scripts/check_paper_axioms.py --report paper-axioms.json
 python3 -m unittest discover -s scripts -p 'test_*.py'
