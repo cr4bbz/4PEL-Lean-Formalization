@@ -211,8 +211,8 @@ theorem rat_half_add_half : (1 / 2 : Rat) + 1 / 2 = 1 := by
     exact (Rat.natCast_add 1 1).symm
   rw [Rat.div_def]
   calc
-    (2 : Rat)⁻¹ + 2⁻¹ = ((1 : Rat) + 1) * 2⁻¹ := by
-      rw [Rat.add_mul, Rat.one_mul, Rat.one_mul]
+    (1 : Rat) * 2⁻¹ + 1 * 2⁻¹ = ((1 : Rat) + 1) * 2⁻¹ := by
+      rw [← Rat.add_mul]
     _ = (2 : Rat) * 2⁻¹ := by rw [hTwo]
     _ = 1 := Rat.mul_inv_cancel (2 : Rat) h2
 
