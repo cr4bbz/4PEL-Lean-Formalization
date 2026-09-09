@@ -139,6 +139,36 @@ theorem complementaryMasses_supermajority_thresholdConsistent
   unfold ThresholdConsistentAt
   exact complementaryMasses_supermajority_noGlut p n c hSum hc
 
+/-- Below or at the critical threshold, completeness is automatic. Therefore
+regularity reduces exactly to the remaining consistency obligation. -/
+theorem complementaryMasses_atMostHalf_regular_iff_consistent
+    (p n c : Rat)
+    (hSum : ComplementaryMasses p n)
+    (hc : c ≤ (1 / 2 : Rat)) :
+    ThresholdRegularAt c p n ↔ ThresholdConsistentAt c p n := by
+  have hComplete := complementaryMasses_atMostHalf_complete p n c hSum hc
+  unfold ThresholdRegularAt
+  constructor
+  · intro h
+    exact h.2
+  · intro hCons
+    exact ⟨hComplete, hCons⟩
+
+/-- Above the critical threshold, consistency is automatic. Therefore regularity
+reduces exactly to the remaining completeness obligation. -/
+theorem complementaryMasses_supermajority_regular_iff_complete
+    (p n c : Rat)
+    (hSum : ComplementaryMasses p n)
+    (hc : (1 / 2 : Rat) < c) :
+    ThresholdRegularAt c p n ↔ ThresholdCompleteAt c p n := by
+  have hCons := complementaryMasses_supermajority_thresholdConsistent p n c hSum hc
+  unfold ThresholdRegularAt
+  constructor
+  · intro h
+    exact h.1
+  · intro hComplete
+    exact ⟨hComplete, hCons⟩
+
 /-- The exact 50/50 profile lies on the complementary-mass line. -/
 theorem halfHalf_complementary :
     ComplementaryMasses (1 / 2 : Rat) (1 / 2 : Rat) := by
