@@ -206,11 +206,15 @@ theorem rat_lt_trans {a b c : Rat} (hab : a < b) (hbc : b < c) : a < c := by
 
 /-- Exact arithmetic identity needed by the dependency-free rational proof. -/
 theorem rat_half_add_half : (1 / 2 : Rat) + 1 / 2 = 1 := by
-  rw [Rat.div_def, Rat.one_mul, Rat.one_mul]
-  rw [← Rat.add_mul]
-  rw [← Rat.natCast_add]
   have h2 : (2 : Rat) ≠ 0 := Rat.ne_of_gt (by decide)
-  simpa using Rat.mul_inv_cancel (2 : Rat) h2
+  have hTwo : (1 : Rat) + 1 = 2 := by
+    exact (Rat.natCast_add 1 1).symm
+  rw [Rat.div_def]
+  calc
+    (2 : Rat)⁻¹ + 2⁻¹ = ((1 : Rat) + 1) * 2⁻¹ := by
+      rw [Rat.add_mul, Rat.one_mul, Rat.one_mul]
+    _ = (2 : Rat) * 2⁻¹ := by rw [hTwo]
+    _ = 1 := Rat.mul_inv_cancel (2 : Rat) h2
 
 /-- Generic arithmetic core: complementary masses cannot both meet a threshold
 strictly above one half. -/
