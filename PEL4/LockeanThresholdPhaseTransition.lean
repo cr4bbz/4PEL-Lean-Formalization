@@ -211,7 +211,10 @@ theorem complementaryMasses_supermajority_consistent
   have hHalf : (1 : Rat) < c + c := by
     have h2pos : (0 : Rat) < 2 := by decide
     have hmul := Rat.mul_lt_mul_of_pos_left hc h2pos
-    simpa [Rat.two_mul] using hmul
+    have htwo : (2 : Rat) = 1 + 1 := by decide
+    have hhalves : (1 / 2 : Rat) + 1 / 2 = 1 := by decide
+    rw [htwo, Rat.add_mul, Rat.one_mul, Rat.one_mul, hhalves] at hmul
+    exact hmul
   have hOneLe : c + c ≤ 1 := by
     rw [hSum] at hcc
     exact hcc
