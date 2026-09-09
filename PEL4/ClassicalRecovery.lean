@@ -101,6 +101,15 @@ theorem evidentiallyRegularValue_iff_classical
         simp [EvidentiallyRegularValue, GapFreeValue, GlutFreeValue,
           isGap, isGlut, IsClassicalValue, FDEValue.T, FDEValue.F]
 
+/-- The only non-gap-free FDE value is N. -/
+theorem not_gapFreeValue_iff_eq_N
+    (v : FDEValue) :
+    ¬ GapFreeValue v ↔ v = FDEValue.N := by
+  cases v with
+  | mk pos neg =>
+      cases pos <;> cases neg <;>
+        simp [GapFreeValue, isGap, FDEValue.N]
+
 /-- Geometric recovery theorem: complete and consistent channel evidence
 realizes exactly a classical FDE value. -/
 theorem realizesFDE_channelRegular_iff_classical
@@ -225,6 +234,144 @@ theorem realizesFDE_channelConsistency_restores_LP_explosion
     LP_valid (contradictionValue v) q := by
   apply glutFree_restores_LP_explosion v q
   exact (realizesFDE_glutFree_iff_channelConsistent polarity A v hRealizes).2 hConsistent
+
+/-- Deleting one member of a same-polarity pair preserves channel completeness. -/
+theorem channelComplete_delete_parallel_iff
+    {α : Type u}
+    (ground : EvidenceSet α)
+    (polarity : α → EvidencePolarity)
+    {x y : α}
+    (hy : ground y)
+    (hxy : x ≠ y)
+    (hpol : polarity x = polarity y) :
+    ChannelComplete polarity
+        (EvidenceSet.diff ground (EvidenceSet.singleton x)) ↔
+      ChannelComplete polarity ground := by
+  change
+    (supportsGroundChannel
+        (EvidenceSet.diff ground (EvidenceSet.singleton x))
+        polarity EvidencePolarity.positive ∨
+      supportsGroundChannel
+        (EvidenceSet.diff ground (EvidenceSet.singleton x))
+        polarity EvidencePolarity.negative) ↔
+    (supportsGroundChannel ground polarity EvidencePolarity.positive ∨
+      supportsGroundChannel ground polarity EvidencePolarity.negative)
+  rw [supportsChannel_delete_parallel_iff ground polarity hy hxy hpol
+        EvidencePolarity.positive,
+      supportsChannel_delete_parallel_iff ground polarity hy hxy hpol
+        EvidencePolarity.negative]
+
+/-- Deleting one member of a same-polarity pair preserves channel consistency. -/
+theorem channelConsistent_delete_parallel_iff
+    {α : Type u}
+    (ground : EvidenceSet α)
+    (polarity : α → EvidencePolarity)
+    {x y : α}
+    (hy : ground y)
+    (hxy : x ≠ y)
+    (hpol : polarity x = polarity y) :
+    ChannelConsistent polarity
+        (EvidenceSet.diff ground (EvidenceSet.singleton x)) ↔
+      ChannelConsistent polarity ground := by
+  change
+    (¬ (supportsGroundChannel
+          (EvidenceSet.diff ground (EvidenceSet.singleton x))
+          polarity EvidencePolarity.positive ∧
+        supportsGroundChannel
+          (EvidenceSet.diff ground (EvidenceSet.singleton x))
+          polarity EvidencePolarity.negative)) ↔
+    ¬ (supportsGroundChannel ground polarity EvidencePolarity.positive ∧
+       supportsGroundChannel ground polarity EvidencePolarity.negative)
+  rw [supportsChannel_delete_parallel_iff ground polarity hy hxy hpol
+        EvidencePolarity.positive,
+      supportsChannel_delete_parallel_iff ground polarity hy hxy hpol
+        EvidencePolarity.negative]
+
+/-- Redundant source deletion preserves the full local classical-recovery condition. -/
+theorem channelRegular_delete_parallel_iff
+    {α : Type u}
+    (ground : EvidenceSet α)
+    (polarity : α → EvidencePolarity)
+    {x y : α}
+    (hy : ground y)
+    (hxy : x ≠ y)
+    (hpol : polarity x = polarity y) :
+    ChannelRegular polarity
+        (EvidenceSet.diff ground (EvidenceSet.singleton x)) ↔
+      ChannelRegular polarity ground := by
+  unfold ChannelRegular
+  rw [channelComplete_delete_parallel_iff ground polarity hy hxy hpol,
+      channelConsistent_delete_parallel_iff ground polarity hy hxy hpol]
+
+/-- Removing the unique representative from regular evidence destroys completeness.
+A locally classical state therefore need not be robust under arbitrary deletion. -/
+theorem delete_unique_from_channelRegular_not_complete
+    {α : Type u}
+    (ground : EvidenceSet α)
+    (polarity : α → EvidencePolarity)
+    (c : α)
+    (hUnique : UniqueChannelRepresentative ground polarity c)
+    (hRegular : ChannelRegular polarity ground) :
+    ¬ ChannelComplete polarity
+      (EvidenceSet.diff ground (EvidenceSet.singleton c)) := by
+  intro hDeletedComplete
+  have hProfile := delete_unique_channel_profile ground polarity c hUnique
+  have hConsistent := hRegular.2
+  unfold ChannelConsistent at hConsistent
+  change
+    ¬ (supportsGroundChannel ground polarity EvidencePolarity.positive ∧
+       supportsGroundChannel ground polarity EvidencePolarity.negative)
+    at hConsistent
+  change
+    supportsGroundChannel
+        (EvidenceSet.diff ground (EvidenceSet.singleton c))
+        polarity EvidencePolarity.positive ∨
+      supportsGroundChannel
+        (EvidenceSet.diff ground (EvidenceSet.singleton c))
+        polarity EvidencePolarity.negative
+    at hDeletedComplete
+  cases hpc : polarity c with
+  | positive =>
+      have hOwn :
+          supportsGroundChannel ground polarity EvidencePolarity.positive :=
+        ⟨c, hUnique.1, hpc⟩
+      rcases hDeletedComplete with hPos | hNeg
+      · exact hProfile.1 (by simpa [hpc] using hPos)
+      · have hNegGround :
+            supportsGroundChannel ground polarity EvidencePolarity.negative :=
+          (hProfile.2 EvidencePolarity.negative (by simp [hpc])).1 hNeg
+        exact hConsistent ⟨hOwn, hNegGround⟩
+  | negative =>
+      have hOwn :
+          supportsGroundChannel ground polarity EvidencePolarity.negative :=
+        ⟨c, hUnique.1, hpc⟩
+      rcases hDeletedComplete with hPos | hNeg
+      · have hPosGround :
+            supportsGroundChannel ground polarity EvidencePolarity.positive :=
+          (hProfile.2 EvidencePolarity.positive (by simp [hpc])).1 hPos
+        exact hConsistent ⟨hPosGround, hOwn⟩
+      · exact hProfile.1 (by simpa [hpc] using hNeg)
+
+/-- If a unique representative is deleted from regular evidence, every FDE value
+realized by the remaining evidence is N. -/
+theorem realizesFDE_delete_unique_from_regular_eq_N
+    {α : Type u}
+    (ground : EvidenceSet α)
+    (polarity : α → EvidencePolarity)
+    (c : α)
+    (hUnique : UniqueChannelRepresentative ground polarity c)
+    (hRegular : ChannelRegular polarity ground)
+    (v : FDEValue)
+    (hAfter : RealizesFDE polarity
+      (EvidenceSet.diff ground (EvidenceSet.singleton c)) v) :
+    v = FDEValue.N := by
+  apply (not_gapFreeValue_iff_eq_N v).1
+  intro hGapFree
+  have hComplete :=
+    (realizesFDE_gapFree_iff_channelComplete
+      polarity (EvidenceSet.diff ground (EvidenceSet.singleton c)) v hAfter).1 hGapFree
+  exact (delete_unique_from_channelRegular_not_complete
+    ground polarity c hUnique hRegular) hComplete
 
 /-- Stability is not needed for local T/F recovery. It becomes relevant when
 classicality must persist through a modal accessibility range. -/
