@@ -119,6 +119,35 @@ For complementary masses \(p+n=1\):
 \statusverified
 \end{theorem}
 
+The two implications make the remaining obstruction regime-dependent rather than
+merely one-sided.
+
+\begin{corollary}[Exact regime reduction]
+\label{cor:threshold-regime-reduction}
+For \(p+n=1\),
+\[
+  c\le\frac12
+  \quad\Longrightarrow\quad
+  \mathsf{ThresholdRegular}
+  \Longleftrightarrow
+  \mathsf{ThresholdConsistent},
+\]
+whereas
+\[
+  c>\frac12
+  \quad\Longrightarrow\quad
+  \mathsf{ThresholdRegular}
+  \Longleftrightarrow
+  \mathsf{ThresholdComplete}.
+\]
+\statusverified
+\end{corollary}
+
+Thus the critical value separates which half of regularity still needs to be checked.
+At or below one half, underdecision is ruled out and only overacceptance can spoil
+regularity.  Above one half, overacceptance is ruled out and only underdecision can
+spoil regularity.
+
 The critical value is therefore not merely a conventional midpoint.  It separates
 two qualitatively different failure guarantees.  Lower thresholds protect against
 indecision but permit overacceptance; strict supermajority thresholds protect
