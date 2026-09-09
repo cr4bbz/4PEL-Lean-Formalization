@@ -126,7 +126,6 @@ theorem eval_eq_evalCPELPair
   | mk pos neg =>
       rw [hEval] at hpos hneg
       simp at hpos hneg
-      rw [hEval]
       simp [evalCPELPair, hpos, hneg]
 
 /-- A four-valued point is classical exactly when its negative support bit is the
