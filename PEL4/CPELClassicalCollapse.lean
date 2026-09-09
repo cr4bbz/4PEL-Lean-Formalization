@@ -130,9 +130,9 @@ theorem eval_eq_ofClassicalBool_tr_pos
     eval m w phi =
       FDEValue.ofClassicalBool (evalCPEL m w (tr_pos phi)) := by
   rcases hClassical with hT | hF
-  · rw [hT, evalCPEL_tr_pos]
+  · rw [evalCPEL_tr_pos, hT]
     rfl
-  · rw [hF, evalCPEL_tr_pos]
+  · rw [evalCPEL_tr_pos, hF]
     rfl
 
 /-- Gate-8 collapse theorem. Under probability integrity and the Gate-7 recursive
