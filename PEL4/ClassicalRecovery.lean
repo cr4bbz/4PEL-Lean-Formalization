@@ -76,8 +76,7 @@ theorem realizesFDE_gapFree_iff_channelComplete
   cases v with
   | mk pos neg =>
       cases pos <;> cases neg <;>
-        simp [GapFreeValue, isGap, ChannelComplete, RealizesFDE] at h ⊢ <;>
-        aesop
+        simp_all [GapFreeValue, isGap, ChannelComplete, RealizesFDE]
 
 /-- Glut-freedom is exactly coarse channel consistency for a realized value. -/
 theorem realizesFDE_glutFree_iff_channelConsistent
@@ -90,8 +89,7 @@ theorem realizesFDE_glutFree_iff_channelConsistent
   cases v with
   | mk pos neg =>
       cases pos <;> cases neg <;>
-        simp [GlutFreeValue, isGlut, ChannelConsistent, RealizesFDE] at h ⊢ <;>
-        aesop
+        simp_all [GlutFreeValue, isGlut, ChannelConsistent, RealizesFDE]
 
 /-- Regular four-valued evidence is exactly the classical T/F slice. -/
 theorem evidentiallyRegularValue_iff_classical
