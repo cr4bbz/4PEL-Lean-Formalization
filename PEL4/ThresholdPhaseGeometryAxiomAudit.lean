@@ -12,6 +12,8 @@ Selected model-independent threshold geometry declarations.
 #print axioms PEL4.complementaryMasses_atMostHalf_noGap
 #print axioms PEL4.complementaryMasses_supermajority_noGlut
 #print axioms PEL4.complementaryMasses_supermajority_thresholdConsistent
+#print axioms PEL4.complementaryMasses_atMostHalf_regular_iff_consistent
+#print axioms PEL4.complementaryMasses_supermajority_regular_iff_complete
 #print axioms PEL4.halfHalf_complementary
 #print axioms PEL4.halfHalf_thresholdGlut_iff_atMostHalf
 #print axioms PEL4.halfHalf_thresholdGap_iff_supermajority
