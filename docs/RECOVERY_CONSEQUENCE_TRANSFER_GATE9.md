@@ -36,10 +36,13 @@ to strict LEM and universal LP explosion at every world of the chosen model.
 For consequence, `LP_SemanticEntailsIn` and `ST_SemanticEntailsIn` quantify only over
 worlds of one fixed model.  They coincide whenever the antecedent is classical
 throughout that model.  The analogous globally quantified relations coincide when
-restricted pointwise to classical evaluations.
+restricted pointwise to classical antecedent evaluations; no classicality premise on
+the consequent is needed.
 
-This restricted collapse is not unrestricted global classical consequence.  Direct
-contradiction entails every formula under ST because it is never strictly `T`.
+This antecedent-classical-restricted collapse is not unrestricted global classical
+consequence.  Its weaker semantic test validates strictly more formula pairs than
+unrestricted LP consequence.  Direct contradiction entails every formula under ST
+because it is never strictly `T`.
 Under LP, a one-world `B`/`F` countermodel still refutes explosion.  The theorem
 `classicalRestricted_explosion_not_global` records both the recovered validity and
 the unrestricted failure.
@@ -57,6 +60,7 @@ the unrestricted failure.
 - `universalLPExplosionIn_of_probabilityRecoveryAdmissible`
 - `ST_iff_LP_SemanticEntailsIn_of_classicalAntecedent`
 - `classicalRestricted_ST_iff_LP`
+- `LP_SemanticEntails_implies_classicalRestricted`
 - `contradiction_ST_SemanticEntails`
 - `classicalRestricted_explosion_not_global`
 
@@ -88,7 +92,7 @@ Current verified snapshot:
 
 - full Lean build: 151 jobs;
 - Gate 9 audit: 23 declarations;
-- central manuscript audit: 156 declarations, all standard-allow-listed;
+- central manuscript audit: 157 declarations, all standard-allow-listed;
 - MPFG audit: 24 declarations;
 - script tests: six passing;
 - manuscript: 54 pages, with the committed-text check enabled after commit.

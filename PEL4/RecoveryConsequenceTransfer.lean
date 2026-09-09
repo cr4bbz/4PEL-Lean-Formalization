@@ -306,22 +306,21 @@ theorem ST_iff_LP_SemanticEntailsIn_of_classicalAntecedent
 
 /-! ## Globally quantified consequence, restricted to recovered points -/
 
-/-- LP consequence over all model/world points at which both displayed formulas
-have classical values.  The restriction is local to each quantified point. -/
+/-- LP consequence over all model/world points at which the antecedent has a
+classical value.  The restriction is local to each quantified point; no
+classicality premise on the consequent is needed. -/
 def ClassicalRestrictedLP_SemanticEntails
     {Atom Ag : Type} (phi psi : Formula Atom Ag) : Prop :=
   ∀ {W : Type} [DecidableEq W] (m : Model W Ag Atom) (w : W),
     IsClassicalValue (eval m w phi) →
-    IsClassicalValue (eval m w psi) →
     (eval m w phi).pos = true →
       (eval m w psi).pos = true
 
-/-- ST consequence over the same locally classical points. -/
+/-- ST consequence over the same antecedent-classical points. -/
 def ClassicalRestrictedST_SemanticEntails
     {Atom Ag : Type} (phi psi : Formula Atom Ag) : Prop :=
   ∀ {W : Type} [DecidableEq W] (m : Model W Ag Atom) (w : W),
     IsClassicalValue (eval m w phi) →
-    IsClassicalValue (eval m w psi) →
     eval m w phi = FDEValue.T →
       (eval m w psi).pos = true
 
@@ -332,14 +331,14 @@ theorem classicalRestricted_ST_iff_LP
     ClassicalRestrictedST_SemanticEntails phi psi ↔
       ClassicalRestrictedLP_SemanticEntails phi psi := by
   constructor
-  · intro hST W _ m w hPhi hPsi hPos
-    apply hST m w hPhi hPsi
+  · intro hST W _ m w hPhi hPos
+    apply hST m w hPhi
     rcases hPhi with hT | hF
     · exact hT
     · rw [hF] at hPos
       contradiction
-  · intro hLP W _ m w hPhi hPsi hT
-    apply hLP m w hPhi hPsi
+  · intro hLP W _ m w hPhi hT
+    apply hLP m w hPhi
     rw [hT]
     rfl
 
@@ -348,7 +347,7 @@ theorem LP_SemanticEntails_implies_classicalRestricted
     {Atom Ag : Type} (phi psi : Formula Atom Ag)
     (h : LP_SemanticEntails phi psi) :
     ClassicalRestrictedLP_SemanticEntails phi psi := by
-  intro W _ m w _ _ hPos
+  intro W _ m w _ hPos
   exact h m w hPos
 
 /-- Direct contradictions are never strictly true, independently of recovery. -/
@@ -368,12 +367,13 @@ theorem contradiction_ST_SemanticEntails
   intro W _ m w hT
   exact False.elim (contradictionValue_ne_T (eval m w phi) hT)
 
-/-- On recovered points, direct contradiction also entails every formula under LP. -/
+/-- At points where the contradictory antecedent is recovered, direct contradiction
+entails every formula under LP; the consequent need not itself be classical. -/
 theorem contradiction_classicalRestrictedLP_SemanticEntails
     {Atom Ag : Type} (phi psi : Formula Atom Ag) :
     ClassicalRestrictedLP_SemanticEntails
       (Formula.contradiction phi) psi := by
-  intro W _ m w hPremise _ hPos
+  intro W _ m w hPremise hPos
   have hT : eval m w (Formula.contradiction phi) = FDEValue.T := by
     rcases hPremise with hT | hF
     · exact hT

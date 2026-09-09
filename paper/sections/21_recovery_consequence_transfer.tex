@@ -135,10 +135,12 @@ No classicality premise on the consequent is required for this equivalence.
 \end{theorem}
 
 One can also quantify over every model/world point while restricting attention at
-each point to evaluations where the displayed formulas are classical. On this
-\emph{classical-restricted} domain, the ST and LP definitions again coincide. This
-is a semantic restriction of their domains; it is not an assertion that unrestricted
-ST and LP consequence coincide over all four-valued models.
+each point to evaluations where the antecedent is classical. No classicality premise
+on the consequent is needed. On this \emph{antecedent-classical-restricted} domain,
+the ST and LP definitions again coincide. This is a semantic restriction of their
+domains; it is not an assertion that unrestricted ST and LP consequence coincide over
+all four-valued models. Unrestricted LP consequence always implies its
+antecedent-classical restriction because the latter tests fewer points.
 
 \subsection{Explosion exposes the global boundary}
 
@@ -153,13 +155,15 @@ LP consequence is different. At \(v=\Bval\), the direct contradiction is again
 \[
 (p\land\neg p)\not\models_{\mathrm{LP}}q.
 \]
-At every point where the displayed values are recovered, the same explosion schema
-is valid. The artifact packages both facts into one separation theorem.
+At every point where the contradictory antecedent is recovered, the same explosion
+schema is valid for an arbitrary consequent, whether or not that consequent is
+classical. The artifact packages both facts into one separation theorem.
 
 \begin{theorem}[Recovered explosion is not global LP explosion]
 \label{thm:gate9-explosion-boundary}
-There are formulas for which classical-restricted LP explosion holds while
-unrestricted LP consequence fails:
+There are formulas for which antecedent-classical-restricted LP explosion holds
+without any recovery assumption on the consequent, while unrestricted LP consequence
+fails:
 \[
 \boxed{
 (p\land\neg p)\models^{\mathrm{class}}_{\mathrm{LP}}q
@@ -180,7 +184,7 @@ Gate~9 proves exact local characterizations of tolerant LEM, strict LEM, and
 universal LP explosion; rewrites them through the Gate~8 split representation;
 transfers Gate~7 probability recovery to those laws throughout a fixed model; and
 identifies a model-relative ST/LP collapse under classical antecedents. An explicit
-glut witness separates classical-restricted explosion from unrestricted LP
-consequence. No global classical completeness theorem, proof-system equivalence,
-arbitrary-CPEL-model theorem, or claim that every formula is recovery-admissible is
-made.
+glut witness shows that antecedent-classical-restricted LP validates strictly more
+formula pairs than unrestricted LP consequence. No global classical completeness
+theorem, proof-system equivalence, arbitrary-CPEL-model theorem, or claim that every
+formula is recovery-admissible is made.

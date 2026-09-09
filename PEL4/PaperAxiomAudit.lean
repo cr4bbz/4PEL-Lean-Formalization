@@ -189,5 +189,6 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.universalLPExplosionIn_of_probabilityRecoveryAdmissible
 #print axioms PEL4.ST_iff_LP_SemanticEntailsIn_of_classicalAntecedent
 #print axioms PEL4.classicalRestricted_ST_iff_LP
+#print axioms PEL4.LP_SemanticEntails_implies_classicalRestricted
 #print axioms PEL4.contradiction_ST_SemanticEntails
 #print axioms PEL4.classicalRestricted_explosion_not_global
