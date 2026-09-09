@@ -23,11 +23,21 @@ def tr_neg {Atom Ag : Type} : Formula Atom Ag → CPELFormula (Atom × Bool) Ag
 
 end
 
-/- The Completeness Reduction strategy:
-    A 4-PEL formula $\phi$ is valid if and only if its positive and negative 
-    translations are valid in Classical PEL over the split atomic space (Atom x Bool).
-    Because CPEL formulas with probability threshold inequalities admit standard 
-    Fagin-Halpern canonical models, this guarantees strong completeness and decidability 
-    for the static fragment of 4-PEL. -/
+/-!
+## Intended completeness-reduction strategy
+
+The split translation is designed to represent the positive and negative support
+conditions of a 4-PEL formula inside a classical probabilistic epistemic target
+language over `(Atom × Bool)`.
+
+Gate 8 proves the semantic bit-correctness of `tr_pos` and `tr_neg` for the explicit
+CPEL evaluator in `PEL4.CPELClassicalCollapse`, and proves that the two channels
+collapse to Boolean complements on the recovered classical sector.
+
+Those translation theorems are not, by themselves, a strong-completeness or
+decidability theorem. A genuine completeness reduction still requires a separately
+formalized CPEL model theory, validity notion, and the appropriate canonical-model or
+completeness result for that target semantics.
+-/
 
 end PEL4
