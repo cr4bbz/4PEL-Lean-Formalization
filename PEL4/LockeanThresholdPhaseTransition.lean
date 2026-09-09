@@ -9,19 +9,19 @@ namespace PEL4
 # Gate 7: Lockean threshold phase transition
 
 Gate 6 identified `BeliefThresholdRegular` as the exact local condition under
-which Lockean belief remains in the recovered classical `{T,F}` sector.  The
+which Lockean belief remains in the recovered classical `{T,F}` sector. The
 condition was semantic, however: threshold consistency and threshold
 completeness were still obligations rather than consequences of the stronger
 probability layer.
 
-Gate 7 begins the missing bridge.  On an integrity-certified local probability
+Gate 7 begins the missing bridge. On an integrity-certified local probability
 space, a classical accessible profile partitions the accessibility support into
-positive and negative events.  Their masses therefore sum to one.  Since the
+positive and negative events. Their masses therefore sum to one. Since the
 legacy 4-PEL `Model` already requires the Lockean threshold to be strictly above
 one half, both threshold decisions cannot fire simultaneously.
 
 Thus probabilistic integrity + a classical accessible profile derives the
-*consistency* half of classical Lockean belief.  The remaining obstruction is
+*consistency* half of classical Lockean belief. The remaining obstruction is
 threshold incompleteness, i.e. the indecision gap isolated by Gate 6.
 -/
 
@@ -87,14 +87,14 @@ theorem classicalSupportEvents_disjoint
       (negativeSupportEvent support value) := by
   intro x hxPos hxNeg
   have hx : x ∈ support := (List.mem_filter.mp hxPos).1
-  have hp : (value x).pos = true := by
-    exact (List.mem_filter.mp hxPos).2
-  have hn : (value x).neg = true := by
-    exact (List.mem_filter.mp hxNeg).2
+  have hp : (value x).pos = true :=
+    (List.mem_filter.mp hxPos).2
+  have hn : (value x).neg = true :=
+    (List.mem_filter.mp hxNeg).2
   rcases hClassical x hx with hT | hF
-  · subst value x
+  · rw [hT] at hn
     simp [FDEValue.T] at hn
-  · subst value x
+  · rw [hF] at hp
     simp [FDEValue.F] at hp
 
 /-- On a classical profile every accessible world belongs to exactly one support
@@ -118,12 +118,10 @@ theorem classicalSupportEvents_cover
   · intro hx
     rcases hClassical x hx with hT | hF
     · have hxPos : x ∈ positiveSupportEvent support value := by
-        subst value x
-        simp [positiveSupportEvent, filterWorlds, hx, FDEValue.T]
+        simp [positiveSupportEvent, filterWorlds, hx, hT, FDEValue.T]
       exact List.mem_append.mpr (Or.inl hxPos)
     · have hxNeg : x ∈ negativeSupportEvent support value := by
-        subst value x
-        simp [negativeSupportEvent, filterWorlds, hx, FDEValue.F]
+        simp [negativeSupportEvent, filterWorlds, hx, hF, FDEValue.F]
       exact List.mem_append.mpr (Or.inr hxNeg)
 
 /-- The two support events form a duplicate-free list presentation of their
@@ -204,13 +202,23 @@ theorem complementaryMasses_supermajority_consistent
     (hc : (1 / 2 : Rat) < c) :
     ¬ (c ≤ p ∧ c ≤ n) := by
   intro hBoth
+  have hcc₁ : c + c ≤ p + c :=
+    (Rat.add_le_add_right (a := c) (b := p) (c := c)).2 hBoth.1
+  have hcc₂ : p + c ≤ p + n :=
+    (Rat.add_le_add_left (a := c) (b := n) (c := p)).2 hBoth.2
   have hcc : c + c ≤ p + n :=
-    Rat.add_le_add hBoth.1 hBoth.2
+    Rat.le_trans hcc₁ hcc₂
+  have hHalf₁ : (1 / 2 : Rat) + 1 / 2 < c + 1 / 2 :=
+    (Rat.add_lt_add_right (a := (1 / 2 : Rat)) (b := c)
+      (c := (1 / 2 : Rat))).2 hc
+  have hHalf₂ : c + 1 / 2 < c + c :=
+    (Rat.add_lt_add_left (a := (1 / 2 : Rat)) (b := c) (c := c)).2 hc
   have hHalf : (1 : Rat) < c + c := by
-    have h := Rat.add_lt_add hc hc
+    have h := Rat.lt_trans hHalf₁ hHalf₂
     simpa using h
   have hOneLe : c + c ≤ 1 := by
-    simpa [hSum] using hcc
+    rw [hSum] at hcc
+    exact hcc
   exact ((Rat.lt_iff_le_and_not_ge).1 hHalf).2 hOneLe
 
 /-- Gate-7 supermajority theorem: finite probability integrity and a classical
@@ -264,7 +272,7 @@ theorem probabilityIntegrity_classicalProfile_beliefClassical_iff_complete
 
 For the legacy model class, the threshold is already constrained to `c > 1/2`.
 Therefore Gate 7 does not yet quantify internally over the three regimes
-`c < 1/2`, `c = 1/2`, and `c > 1/2`.  What is proved here is the scientifically
+`c < 1/2`, `c = 1/2`, and `c > 1/2`. What is proved here is the scientifically
 relevant supermajority regime of 4-PEL itself:
 
 ```
