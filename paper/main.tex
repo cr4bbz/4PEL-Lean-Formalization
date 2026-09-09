@@ -50,7 +50,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian L. Voigt (cr4bbz)}
-\date{Working manuscript, version 0.10, 9 September 2026}
+\date{Working manuscript, version 0.11, 9 September 2026}
 
 \begin{document}
 \maketitle
@@ -68,7 +68,9 @@ The circuit structure of this coarse matroid is completely classified: minimal d
 
 Gate~5 asks when the four-valued layer recovers classical behavior from evidence structure rather than by stipulation. For a realized FDE value, channel completeness is equivalent to gap-freedom, channel consistency to glut-freedom, and their conjunction isolates exactly \(\{\Tval,\Fval\}\). The recovered slice is closed under the existing FDE negation, conjunction, and disjunction. Tolerant excluded middle requires only gap-freedom, LP ex falso only glut-freedom, while strict-\(\Tval\) excluded middle characterizes the full classical slice. Modal stability is not needed for local bivalence but propagates recovered classicality through the accessible range. Parallel deletion preserves the recovery condition, whereas deleting a unique representative from regular evidence destroys completeness and forces the remaining realized state to \(\Nval\). These are structural recovery theorems, not a completeness theorem for classical logic or a claim that arbitrary epistemic evidence is matroidal.
 
-Gate~6 lifts the recovered sector compositionally. Classical atomic valuations force every belief-free propositional formula to remain in \(\{\Tval,\Fval\}\), yielding strict formula-level excluded middle and a restricted formula-level explosion result. Primitive raw possibility and evidence-stable knowledge preserve classical accessible profiles, so every belief-free modal formula built from these operators remains classical under globally classical atoms. Lockean belief is the boundary: a verified two-world \(1/2\)--\(1/2\) profile at threshold \(3/5\) reopens \(\Nval\) despite classical atoms. Belief is classical exactly when its two threshold decisions are complete and consistent, and a recursive admissibility predicate lifts this condition to the full legacy formula syntax. Deriving belief regularity from the stronger finite-probability laws and proving the commented CPEL completeness reduction remain open.
+Gate~6 lifts the recovered sector compositionally. Classical atomic valuations force every belief-free propositional formula to remain in \(\{\Tval,\Fval\}\), yielding strict formula-level excluded middle and a restricted formula-level explosion result. Primitive raw possibility and evidence-stable knowledge preserve classical accessible profiles, so every belief-free modal formula built from these operators remains classical under globally classical atoms. Lockean belief is the boundary: a verified two-world \(1/2\)--\(1/2\) profile at threshold \(3/5\) reopens \(\Nval\) despite classical atoms. Belief is classical exactly when its two threshold decisions are complete and consistent, and a recursive admissibility predicate lifts this condition to the full legacy formula syntax.
+
+Gate~7 derives the missing consistency half from the stronger finite-probability semantics. On a classical accessible profile, probability integrity makes positive and negative support masses complementary, so their sum is one. The model's built-in \(c>1/2\) threshold then forbids simultaneous positive and negative acceptance. Classical belief therefore reduces exactly to threshold completeness, and nonclassical belief in this sector is exactly indecision. A model-independent threshold analysis shows that \(c\le 1/2\) guarantees completeness while \(c>1/2\) guarantees consistency; the exact \(1/2\)--\(1/2\) tie is glut-like on the first side and gap-like on the second. Consequently no inclusive Lockean threshold makes every complementary profile threshold-regular. Under probability integrity the recursive formula-recovery contract can therefore drop the separate consistency obligation at belief nodes. Decisiveness itself and the commented CPEL completeness reduction remain open.
 
 The Lean 4.31 artifact distinguishes the lightweight model interface from probability-integrity-certified models and records declaration-level axiom dependencies, rejecting native evaluation in the selected manuscript proof chains. The contribution is a mechanized case study with explicit preservation and information-loss boundaries; no completeness, general continuity, or priority claim is made.
 \end{abstract}
@@ -91,6 +93,7 @@ The Lean 4.31 artifact distinguishes the lightweight model interface from probab
 \input{sections/16_matroid_minors}
 \input{sections/17_classical_recovery}
 \input{sections/18_formula_classical_recovery}
+\input{sections/19_lockean_threshold_phase_transition}
 \input{sections/12_conclusion}
 
 \appendix
