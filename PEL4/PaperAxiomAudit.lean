@@ -11,6 +11,7 @@ import PEL4.LockeanThresholdPhaseTransition
 import PEL4.ThresholdPhaseGeometry
 import PEL4.ProbabilityIntegrityFormulaRecovery
 import PEL4.CPELClassicalCollapse
+import PEL4.CPELConsequenceBridge
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -170,3 +171,7 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.isClassicalValue_iff_splitTranslations_complement
 #print axioms PEL4.probabilityRecovery_splitTranslations_collapse
 #print axioms PEL4.probabilityRecovery_eval_reconstructed_from_tr_pos
+#print axioms PEL4.eval_eq_T_iff_split_strict
+#print axioms PEL4.LP_SemanticEntails_iff_CPELPositiveSemanticEntails
+#print axioms PEL4.ST_SemanticEntails_iff_CPELSplitSTSemanticEntails
+#print axioms PEL4.ST_derivation_sound_in_induced_CPEL

@@ -163,23 +163,67 @@ where \(\operatorname{ofClassicalBool}(1)=\Tval\) and
 The logical shape of Gates~5--8 can now be displayed as a compression chain:
 \[
 \begin{array}{c}
-\text{regular evidence / recursive recovery}\[2pt]
+\text{regular evidence / recursive recovery}\\[2pt]
 \Downarrow\\[2pt]
-\llbracket\varphi\rrbracket\in\{\Tval,\Fval\}\[2pt]
+\llbracket\varphi\rrbracket\in\{\Tval,\Fval\}\\[2pt]
 \Downarrow\\[2pt]
 \llbracket\operatorname{tr}_{-}(\varphi)\rrbracket^{C}
-=\neg\llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^{C}\[2pt]
+=\neg\llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^{C}\\[2pt]
 \Downarrow\\[2pt]
 \text{one Boolean coordinate reconstructs the recovered value.}
 \end{array}
 \]
 
+\subsection{Induced consequence, without a target completeness claim}
+
+The representation also transports the two source consequence relations already
+formalized in the artifact.  The target notions used here quantify over
+\emph{CPEL evaluations induced by the same 4-PEL models}; they are not validity
+relations over an independently axiomatized class of arbitrary CPEL models.
+
+For LP consequence, designatedness is exactly truth of the positive translation.
+Thus, for all formulas \(\varphi,\psi\),
+\[
+  \boxed{
+  \varphi\models_{\mathrm{LP}}\psi
+  \quad\Longleftrightarrow\quad
+  \operatorname{tr}_{+}(\varphi)
+  \models^{\mathrm{ind}}_{C,+}
+  \operatorname{tr}_{+}(\psi).
+  }
+\]
+For strict-to-tolerant consequence, strict truth of the antecedent is represented by
+the split profile \((\mathsf{true},\mathsf{false})\), while the consequent remains
+positively designated.  Hence
+\[
+  \boxed{
+  \varphi\models_{\mathrm{ST}}\psi
+  \quad\Longleftrightarrow\quad
+  \bigl(\operatorname{tr}_{+}(\varphi)=\mathsf{true}
+  \mathbin{\&}
+  \operatorname{tr}_{-}(\varphi)=\mathsf{false}\bigr)
+  \models^{\mathrm{ind}}_{C}
+  \operatorname{tr}_{+}(\psi)=\mathsf{true}.
+  }
+\]
+The exact strict-profile lemma is
+\(\llbracket\varphi\rrbracket=\Tval\) iff its two translated bits are
+\((\mathsf{true},\mathsf{false})\).  Combining the ST equivalence with the existing
+source soundness theorem transports every ST derivation soundly into the induced
+split target semantics.
+
+These are exact semantic bridges for the induced evaluator.  They neither define a
+CPEL proof calculus nor establish soundness or completeness for arbitrary target
+models.  In particular, source derivability is transported only in the sound
+direction already licensed by the source soundness theorem.
+
 \paragraph{Gate boundary.}
 Gate~8 proves an explicit Boolean semantics for the existing split CPEL target, an
 unconditional pointwise representation of both FDE support bits, an exact
-characterization of the classical sector as the complement locus, and the collapse
-to one Boolean coordinate under Gate~7 probability recovery.  It does \emph{not}
-formalize a CPEL Hilbert system, target validity, a canonical model, strong
+characterization of the classical sector as the complement locus, the collapse to
+one Boolean coordinate under Gate~7 probability recovery, and exact LP/ST
+consequence bridges for the induced evaluator.  It does \emph{not} formalize a CPEL
+Hilbert system, arbitrary target-model validity, a canonical model, strong
 completeness, or decidability.  The former source comment suggesting that the split
 translation by itself guaranteed those results has therefore been narrowed to an
 intended reduction strategy rather than promoted to a theorem.

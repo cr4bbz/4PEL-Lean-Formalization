@@ -53,15 +53,17 @@ profiles, supermajority-derived threshold consistency, the two threshold regimes
 the exact 50/50 obstruction, and the reduced recursive recovery contract under
 probability integrity.
 
-Gate~8 adds \texttt{PEL4/CPELClassicalCollapse.lean} and
-\texttt{PEL4/CPELClassicalCollapseAxiomAudit.lean}.  The target CPEL syntax is given
-an explicit Boolean evaluator over the existing finite model.  The audited claims
-cover exact positive/negative translation semantics, unconditional reconstruction of
-the FDE pair from the two translated Boolean channels, the classical complement-locus
-characterization, and the Gate~7 collapse/reconstruction theorem.  These declarations
-use only the standard allow-listed Lean axioms.  No target proof system, canonical
-model, completeness theorem, or decidability theorem is inferred from this semantic
-bridge.
+Gate~8 adds \texttt{PEL4/CPELClassicalCollapse.lean},
+\texttt{PEL4/CPELConsequenceBridge.lean}, and their corresponding axiom audits.  The
+target CPEL syntax is given an explicit Boolean evaluator over the existing finite
+model.  The audited claims cover exact positive/negative translation semantics,
+unconditional reconstruction of the FDE pair from the two translated Boolean
+channels, the classical complement-locus characterization, the Gate~7
+collapse/reconstruction theorem, and exact LP/ST consequence equivalences for the
+induced target evaluator.  Existing ST derivability is transported only through the
+source soundness theorem.  These declarations use only the standard allow-listed Lean
+axioms.  No target proof system, arbitrary target-model semantics, canonical model,
+completeness theorem, or decidability theorem is inferred from this bridge.
 
 The review found that some general headlines inherited native-evaluation assumptions
 through elementary helpers. In eight source modules, the relevant finite computations
@@ -97,6 +99,7 @@ git switch research/cpel-classical-collapse-gate8
 git pull --ff-only
 lake build
 lake env lean PEL4/CPELClassicalCollapseAxiomAudit.lean
+lake env lean PEL4/CPELConsequenceBridgeAxiomAudit.lean
 python3 scripts/check_mpfg_axioms.py
 python3 scripts/check_paper_axioms.py --report paper-axioms.json
 python3 -m unittest discover -s scripts -p 'test_*.py'
