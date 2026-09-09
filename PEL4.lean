@@ -82,6 +82,10 @@ import PEL4.Soundness
 import PEL4.ExFalso
 import PEL4.CPEL
 import PEL4.Translation
+import PEL4.CPELClassicalCollapse
+import PEL4.CPELClassicalCollapseAxiomAudit
+import PEL4.CPELConsequenceBridge
+import PEL4.CPELConsequenceBridgeAxiomAudit
 
 import PEL4.Dynamics
 import PEL4.ActionModel

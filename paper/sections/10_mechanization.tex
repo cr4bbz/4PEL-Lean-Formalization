@@ -2,13 +2,12 @@
 \label{sec:mechanization}
 
 The artifact uses Lean 4.31.0 without Mathlib. The present extension is developed
-on \texttt{research/formula-classical-recovery-gate6}, stacked on the preceding
-classical-recovery and matroid gates; the root module \texttt{PEL4.lean} imports the
-relevant development. Appendix~\ref{app:formal} provides the selective
-claim-to-declaration map for the established manuscript core. The matroid and
-recovery programs additionally carry separate declaration-level audits for the
-channel closure, topological bridge, circuits, explicit-ground minors, value-level
-classical recovery, and formula-level classical recovery. Audit selections are not a
+on \texttt{research/cpel-classical-collapse-gate8}, stacked on the Lockean threshold
+phase-transition branch and the preceding classical-recovery and matroid gates; the
+root module \texttt{PEL4.lean} imports the relevant development.
+Appendix~\ref{app:formal} provides the selective claim-to-declaration map for the
+established manuscript core. The matroid, recovery, threshold, and CPEL programs
+additionally carry separate declaration-level audits. Audit selections are not a
 certification of every declaration in the repository.
 
 \subsection{Verification contract}
@@ -44,22 +43,34 @@ The audited claims include propositional structural induction, formula-level LEM
 restricted LP explosion, the finite classical-atoms/nonclassical-belief witness,
 classical preservation by raw possibility and evidence-stable knowledge, the
 belief-free modal induction, the exact threshold-regularity characterization of
-classical belief output, and the recursive full-formula recovery contract.  The
-working revision's CI output is authoritative for exact declaration dependencies.
+classical belief output, and the recursive full-formula recovery contract.
 
-The Gate~6 belief witness and its threshold profile are checked without adding a
-native-decision dependency to the selected theorem chain.  The stronger question of
-deriving belief threshold consistency from finite additivity plus \(c>1/2\) is not
-claimed here; it belongs to the separate \texttt{FiniteProbabilityIntegrity} layer.
-Likewise, the source comment accompanying the CPEL translation is not promoted to a
-mechanized completeness result.
+Gate~7 adds \texttt{PEL4/LockeanThresholdPhaseTransition.lean},
+\texttt{PEL4/ThresholdPhaseGeometry.lean}, and
+\texttt{PEL4/ProbabilityIntegrityFormulaRecovery.lean}, each with a corresponding
+axiom audit.  The selected claims include complementary support masses for classical
+profiles, supermajority-derived threshold consistency, the two threshold regimes,
+the exact 50/50 obstruction, and the reduced recursive recovery contract under
+probability integrity.
 
-The review found that some general headlines inherited native-evaluation
-assumptions through elementary helpers. In eight source modules, the relevant
-finite computations were changed from \texttt{native\_decide} to
-\texttt{decide +kernel}, without changing statements or semantic definitions.
-Legacy declarations outside the audited chains may still use native evaluation
-or project axioms; no repository-wide axiom-freedom claim is made.
+Gate~8 adds \texttt{PEL4/CPELClassicalCollapse.lean},
+\texttt{PEL4/CPELConsequenceBridge.lean}, and their corresponding axiom audits.  The
+target CPEL syntax is given an explicit Boolean evaluator over the existing finite
+model.  The audited claims cover exact positive/negative translation semantics,
+unconditional reconstruction of the FDE pair from the two translated Boolean
+channels, the classical complement-locus characterization, the Gate~7
+collapse/reconstruction theorem, and exact LP/ST consequence equivalences for the
+induced target evaluator.  Existing ST derivability is transported only through the
+source soundness theorem.  These declarations use only the standard allow-listed Lean
+axioms.  No target proof system, arbitrary target-model semantics, canonical model,
+completeness theorem, or decidability theorem is inferred from this bridge.
+
+The review found that some general headlines inherited native-evaluation assumptions
+through elementary helpers. In eight source modules, the relevant finite computations
+were changed from \texttt{native\_decide} to \texttt{decide +kernel}, without
+changing statements or semantic definitions. Legacy declarations outside the audited
+chains may still use native evaluation or project axioms; no repository-wide
+axiom-freedom claim is made.
 
 \subsection{Status discipline}
 The manuscript follows the repository verification policy:
@@ -75,25 +86,27 @@ and prospective extensions without a corresponding established theorem.
 No manuscript headline is promoted from this category merely because it compiles.
 \end{enumerate}
 The proof sketches explain the main arguments for readers; Lean verifies their
-formal counterparts. The geometry uses rational algebra, not topological
-continuity. Numerical figure coordinates illustrate those statements and are
-not additional model-realization certificates.
+formal counterparts. The geometry uses rational algebra and discrete support
+coordinates, not an unproved topological or vector-space structure. Numerical figure
+coordinates illustrate established statements and are not additional model-realization
+certificates.
 
 \paragraph{Reproducibility.}
 From a clean clone, or after preserving local work:
 \begin{verbatim}
 git fetch origin
-git switch research/formula-classical-recovery-gate6
+git switch research/cpel-classical-collapse-gate8
 git pull --ff-only
 lake build
-lake env lean PEL4/FormulaClassicalRecoveryAxiomAudit.lean
+lake env lean PEL4/CPELClassicalCollapseAxiomAudit.lean
+lake env lean PEL4/CPELConsequenceBridgeAxiomAudit.lean
 python3 scripts/check_mpfg_axioms.py
 python3 scripts/check_paper_axioms.py --report paper-axioms.json
 python3 -m unittest discover -s scripts -p 'test_*.py'
 cd paper
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 \end{verbatim}
-The mutable branch is for ongoing development; use a recorded commit for an
-exact reproduction. Lean checking and manuscript rendering remain separate
-checks. The committed PDF is the rendered working artifact, not evidence of
-formal correctness by itself.
+The mutable branch is for ongoing development; use a recorded commit for an exact
+reproduction. Lean checking and manuscript rendering remain separate checks. The
+committed PDF is the rendered working artifact, not evidence of formal correctness by
+itself.

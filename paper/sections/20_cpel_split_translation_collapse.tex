@@ -1,0 +1,229 @@
+\section{Split CPEL representation and the classical anti-diagonal}
+\label{sec:cpel-classical-collapse}
+
+The preceding recovery gates characterize when a four-valued evaluation returns to
+\(\{\Tval,\Fval\}\).  Gate~8 asks a different question: what does that recovery look
+like through the repository's existing split translation into the classical
+probabilistic epistemic syntax \texttt{CPELFormula}?
+
+The translation was already present syntactically.  Positive support and negative
+support are sent to separate Boolean-tagged atomic channels,
+\[
+  p^+ \mapsto (p,\mathsf{true}),
+  \qquad
+  p^- \mapsto (p,\mathsf{false}),
+\]
+with negation exchanging the two translations, conjunction preserving positive
+support conjunctively, and negative support translated through derived classical
+disjunction.  Until this gate, however, the target syntax had no explicit evaluator
+connected back to the finite 4-PEL model semantics.
+
+\subsection{An explicit Boolean target semantics}
+
+Gate~8 defines \texttt{evalCPEL} on \texttt{CPELFormula (Atom $\times$ Bool) Ag}.
+At an atom, the Boolean tag selects either the positive or negative FDE support bit.
+Classical negation and conjunction use Boolean negation and conjunction.  Belief uses
+the same accessibility list, finite event-mass function, and threshold as the source
+model, but thresholds the Boolean truth set of the translated subformula.
+
+The derived CPEL disjunction then evaluates as ordinary Boolean disjunction.  This
+small bridge is enough to state the first main result without any recovery assumption.
+
+\begin{theorem}[Exact split-translation semantics]
+\label{thm:cpel-split-bits}
+For every legacy formula \(\varphi\), finite 4-PEL model \(m\), and world \(w\),
+\[
+  \llbracket \operatorname{tr}_{+}(\varphi)\rrbracket^{C}_{m,w}
+    = \bigl(\llbracket\varphi\rrbracket_{m,w}\bigr)^{+},
+\]
+and
+\[
+  \llbracket \operatorname{tr}_{-}(\varphi)\rrbracket^{C}_{m,w}
+    = \bigl(\llbracket\varphi\rrbracket_{m,w}\bigr)^{-}.
+\]
+\statusverified
+\end{theorem}
+
+The proof is by structural induction through atoms, negation, conjunction, and
+Lockean belief.  The belief case is important: the induction hypotheses identify the
+translated Boolean event lists pointwise with the source positive and negative
+support-event lists, so the same threshold comparison is recovered on both sides.
+No classicality, probability-integrity, or recovery premise is required.
+
+Package the two target truth values into one FDE-shaped pair,
+\[
+  \operatorname{Pair}_{C}(m,w,\varphi)
+  =
+  \left(
+    \llbracket \operatorname{tr}_{+}(\varphi)\rrbracket^{C}_{m,w},
+    \llbracket \operatorname{tr}_{-}(\varphi)\rrbracket^{C}_{m,w}
+  \right).
+\]
+The bitwise theorem immediately yields a pointwise representation theorem.
+
+\begin{theorem}[Two-Boolean representation]
+\label{thm:cpel-pair-representation}
+For every \(m,w,\varphi\),
+\[
+  \boxed{
+  \llbracket\varphi\rrbracket_{m,w}
+  =
+  \operatorname{Pair}_{C}(m,w,\varphi).
+  }
+\]
+Thus the split target semantics represents all four FDE values, not only the
+classically recovered ones.
+\statusverified
+\end{theorem}
+
+This theorem should be read semantically and pointwise.  It does not identify the
+source and target proof systems, and it is not a strong-completeness theorem.
+
+\subsection{The classical anti-diagonal}
+
+Because an FDE value is literally a pair of Boolean support coordinates, its four
+vertices are
+\[
+  \Nval=(0,0),\qquad
+  \Tval=(1,0),\qquad
+  \Fval=(0,1),\qquad
+  \Bval=(1,1).
+\]
+The classically recovered values are exactly the two vertices on which one coordinate
+is the Boolean complement of the other.
+
+\begin{theorem}[Classical anti-diagonal]
+\label{thm:classical-antidiagonal}
+For every FDE value \(v\),
+\[
+  v\in\{\Tval,\Fval\}
+  \quad\Longleftrightarrow\quad
+  v^{-}=\neg v^{+}.
+\]
+Consequently, for every formula,
+\[
+  \boxed{
+  \llbracket\varphi\rrbracket_{m,w}\in\{\Tval,\Fval\}
+  \quad\Longleftrightarrow\quad
+  \llbracket\operatorname{tr}_{-}(\varphi)\rrbracket^{C}_{m,w}
+  =
+  \neg\llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^{C}_{m,w}.
+  }
+\]
+\statusverified
+\end{theorem}
+
+The first equivalence is independent of formula syntax.  The second combines it with
+the exact split-translation theorem.  In the Boolean evidence square, the classical
+sector is therefore the discrete anti-diagonal
+\[
+  \{(1,0),(0,1)\}
+  =
+  \{(p,n)\in\{0,1\}^{2}: n=\neg p\}.
+\]
+The two nonclassical vertices fail the same equation in opposite ways:
+\(\Nval\) lacks both channels, while \(\Bval\) contains both.
+
+This gives a precise sense in which classical recovery removes one independent
+Boolean degree of freedom.  Outside the recovered slice, positive and negative
+support are genuinely separate coordinates.  On the anti-diagonal, choosing the
+positive coordinate fixes the negative coordinate.  The word ``degree'' here refers
+to discrete Boolean freedom, not vector-space dimension.
+
+\subsection{Gate~7 recovery collapses the split representation}
+
+Gate~7 supplies a sufficient recursive condition for classicality under
+\texttt{ModelProbabilityIntegrity}.  Combining that theorem with the anti-diagonal
+characterization turns semantic recovery into an explicit collapse result.
+
+\begin{corollary}[Probability-recovery split collapse]
+\label{cor:probability-recovery-cpel-collapse}
+Let \(m\) satisfy \texttt{ModelProbabilityIntegrity}, and let \(\varphi\) satisfy
+\texttt{Formula.ProbabilityRecoveryAdmissible}.  Then at every world \(w\),
+\[
+  \llbracket\operatorname{tr}_{-}(\varphi)\rrbracket^{C}_{m,w}
+  =
+  \neg\llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^{C}_{m,w}.
+\]
+Moreover, the full recovered FDE value can be reconstructed from the positive target
+bit alone:
+\[
+  \llbracket\varphi\rrbracket_{m,w}
+  =
+  \operatorname{ofClassicalBool}
+  \left(
+    \llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^{C}_{m,w}
+  \right),
+\]
+where \(\operatorname{ofClassicalBool}(1)=\Tval\) and
+\(\operatorname{ofClassicalBool}(0)=\Fval\).
+\statusverified
+\end{corollary}
+
+The logical shape of Gates~5--8 can now be displayed as a compression chain:
+\[
+\begin{array}{c}
+\text{regular evidence / recursive recovery}\\[2pt]
+\Downarrow\\[2pt]
+\llbracket\varphi\rrbracket\in\{\Tval,\Fval\}\\[2pt]
+\Downarrow\\[2pt]
+\llbracket\operatorname{tr}_{-}(\varphi)\rrbracket^{C}
+=\neg\llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^{C}\\[2pt]
+\Downarrow\\[2pt]
+\text{one Boolean coordinate reconstructs the recovered value.}
+\end{array}
+\]
+
+\subsection{Induced consequence, without a target completeness claim}
+
+The representation also transports the two source consequence relations already
+formalized in the artifact.  The target notions used here quantify over
+\emph{CPEL evaluations induced by the same 4-PEL models}; they are not validity
+relations over an independently axiomatized class of arbitrary CPEL models.
+
+For LP consequence, designatedness is exactly truth of the positive translation.
+Thus, for all formulas \(\varphi,\psi\),
+\[
+  \boxed{
+  \varphi\models_{\mathrm{LP}}\psi
+  \quad\Longleftrightarrow\quad
+  \operatorname{tr}_{+}(\varphi)
+  \models^{\mathrm{ind}}_{C,+}
+  \operatorname{tr}_{+}(\psi).
+  }
+\]
+For strict-to-tolerant consequence, strict truth of the antecedent is represented by
+the split profile \((\mathsf{true},\mathsf{false})\), while the consequent remains
+positively designated.  Hence
+\[
+  \boxed{
+  \varphi\models_{\mathrm{ST}}\psi
+  \quad\Longleftrightarrow\quad
+  \bigl(\operatorname{tr}_{+}(\varphi)=\mathsf{true}
+  \mathbin{\&}
+  \operatorname{tr}_{-}(\varphi)=\mathsf{false}\bigr)
+  \models^{\mathrm{ind}}_{C}
+  \operatorname{tr}_{+}(\psi)=\mathsf{true}.
+  }
+\]
+The exact strict-profile lemma is
+\(\llbracket\varphi\rrbracket=\Tval\) iff its two translated bits are
+\((\mathsf{true},\mathsf{false})\).  Combining the ST equivalence with the existing
+source soundness theorem transports every ST derivation soundly into the induced
+split target semantics.
+
+These are exact semantic bridges for the induced evaluator.  They neither define a
+CPEL proof calculus nor establish soundness or completeness for arbitrary target
+models.  In particular, source derivability is transported only in the sound
+direction already licensed by the source soundness theorem.
+
+\paragraph{Gate boundary.}
+Gate~8 proves an explicit Boolean semantics for the existing split CPEL target, an
+unconditional pointwise representation of both FDE support bits, an exact
+characterization of the classical sector as the complement locus, the collapse to
+one Boolean coordinate under Gate~7 probability recovery, and exact LP/ST
+consequence bridges for the induced evaluator.  It does \emph{not} formalize a CPEL
+Hilbert system, arbitrary target-model validity, a canonical model, strong
+completeness, or decidability.  The former source comment suggesting that the split
+translation by itself guaranteed those results has therefore been narrowed to an
+intended reduction strategy rather than promoted to a theorem.
