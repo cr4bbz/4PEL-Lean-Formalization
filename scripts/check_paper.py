@@ -1,7 +1,10 @@
-"""Build the manuscript, reject layout/reference errors, and detect stale PDF text.
+"""Build the manuscript, reject layout/reference errors, and detect stale PDF content.
 
-Text comparison ignores PDF timestamps and whitespace, but does not replace
-visual inspection. Use --check-committed in CI after committing the new render.
+The committed-PDF comparison uses ordered ASCII word/identifier tokens.  This keeps
+the freshness check stable across TeX/Poppler versions whose math-glyph extraction,
+hyphenation, and page breaks differ, while still detecting stale prose or declaration
+names.  It does not replace visual inspection. Use --check-committed in CI after
+committing the new render.
 """
 
 import argparse
@@ -17,7 +20,8 @@ def pdf_text(pdf: bytes) -> str:
     text = subprocess.check_output(
         ["pdftotext", "-nopgbrk", "-enc", "UTF-8", "-", "-"], input=pdf
     ).decode("utf-8")
-    return " ".join(unicodedata.normalize("NFKC", text).split())
+    normalized = unicodedata.normalize("NFKC", text)
+    return " ".join(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", normalized)).casefold()
 
 
 def main() -> int:
