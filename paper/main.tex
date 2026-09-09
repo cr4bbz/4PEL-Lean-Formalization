@@ -50,7 +50,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian L. Voigt (cr4bbz)}
-\date{Working manuscript, version 0.11, 9 September 2026}
+\date{Working manuscript, version 0.12, 9 September 2026}
 
 \begin{document}
 \maketitle
@@ -70,7 +70,9 @@ Gate~5 asks when the four-valued layer recovers classical behavior from evidence
 
 Gate~6 lifts the recovered sector compositionally. Classical atomic valuations force every belief-free propositional formula to remain in \(\{\Tval,\Fval\}\), yielding strict formula-level excluded middle and a restricted formula-level explosion result. Primitive raw possibility and evidence-stable knowledge preserve classical accessible profiles, so every belief-free modal formula built from these operators remains classical under globally classical atoms. Lockean belief is the boundary: a verified two-world \(1/2\)--\(1/2\) profile at threshold \(3/5\) reopens \(\Nval\) despite classical atoms. Belief is classical exactly when its two threshold decisions are complete and consistent, and a recursive admissibility predicate lifts this condition to the full legacy formula syntax.
 
-Gate~7 derives the missing consistency half from the stronger finite-probability semantics. On a classical accessible profile, probability integrity makes positive and negative support masses complementary, so their sum is one. The model's built-in \(c>1/2\) threshold then forbids simultaneous positive and negative acceptance. Classical belief therefore reduces exactly to threshold completeness, and nonclassical belief in this sector is exactly indecision. A model-independent threshold analysis shows that \(c\le 1/2\) guarantees completeness while \(c>1/2\) guarantees consistency; the exact \(1/2\)--\(1/2\) tie is glut-like on the first side and gap-like on the second. Consequently no inclusive Lockean threshold makes every complementary profile threshold-regular. Under probability integrity the recursive formula-recovery contract can therefore drop the separate consistency obligation at belief nodes. Decisiveness itself and the commented CPEL completeness reduction remain open.
+Gate~7 derives the missing consistency half from the stronger finite-probability semantics. On a classical accessible profile, probability integrity makes positive and negative support masses complementary, so their sum is one. The model's built-in \(c>1/2\) threshold then forbids simultaneous positive and negative acceptance. Classical belief therefore reduces exactly to threshold completeness, and nonclassical belief in this sector is exactly indecision. A model-independent threshold analysis shows that \(c\le 1/2\) guarantees completeness while \(c>1/2\) guarantees consistency; the exact \(1/2\)--\(1/2\) tie is glut-like on the first side and gap-like on the second. Consequently no inclusive Lockean threshold makes every complementary profile threshold-regular. Under probability integrity the recursive formula-recovery contract can therefore drop the separate consistency obligation at belief nodes. Decisiveness itself remains a genuine semantic condition.
+
+Gate~8 gives the repository's existing split CPEL translation an explicit Boolean target semantics. For every legacy formula, the positive and negative translations reproduce the two FDE support bits exactly, yielding an unconditional pointwise representation of all four values by two Boolean coordinates. The classical sector is characterized exactly by the complement equation between those coordinates: \(\Tval\) and \(\Fval\) form the discrete anti-diagonal of the four-valued evidence square. Under Gate~7 probability recovery, the negative translation is therefore determined by the positive one and the full recovered FDE value is reconstructible from one Boolean target bit. This is a semantic representation and collapse theorem, not a CPEL completeness, canonical-model, or decidability result.
 
 The Lean 4.31 artifact distinguishes the lightweight model interface from probability-integrity-certified models and records declaration-level axiom dependencies, rejecting native evaluation in the selected manuscript proof chains. The contribution is a mechanized case study with explicit preservation and information-loss boundaries; no completeness, general continuity, or priority claim is made.
 \end{abstract}
@@ -94,6 +96,7 @@ The Lean 4.31 artifact distinguishes the lightweight model interface from probab
 \input{sections/17_classical_recovery}
 \input{sections/18_formula_classical_recovery}
 \input{sections/19_lockean_threshold_phase_transition}
+\input{sections/20_cpel_split_translation_collapse}
 \input{sections/12_conclusion}
 
 \appendix
