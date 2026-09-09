@@ -194,6 +194,16 @@ theorem classicalSupportMasses_sum_one
     _ = m.mu i w (m.R i w) := hExt
     _ = 1 := hInt.total
 
+/-- Strict transitivity for rational order, derived only from the core Rat order
+interface used by this dependency-free repository. -/
+theorem rat_lt_trans {a b c : Rat} (hab : a < b) (hbc : b < c) : a < c := by
+  apply (Rat.lt_iff_le_and_not_ge).2
+  constructor
+  · exact Rat.le_trans (Rat.le_of_lt hab) (Rat.le_of_lt hbc)
+  · intro hca
+    have hba : b ≤ a := Rat.le_trans (Rat.le_of_lt hbc) hca
+    exact ((Rat.lt_iff_le_and_not_ge).1 hab).2 hba
+
 /-- Generic arithmetic core: complementary masses cannot both meet a threshold
 strictly above one half. -/
 theorem complementaryMasses_supermajority_consistent
@@ -214,7 +224,7 @@ theorem complementaryMasses_supermajority_consistent
   have hHalf₂ : c + 1 / 2 < c + c :=
     (Rat.add_lt_add_left (a := (1 / 2 : Rat)) (b := c) (c := c)).2 hc
   have hHalf : (1 : Rat) < c + c := by
-    have h := lt_trans hHalf₁ hHalf₂
+    have h := rat_lt_trans hHalf₁ hHalf₂
     simpa using h
   have hOneLe : c + c ≤ 1 := by
     rw [hSum] at hcc
