@@ -206,7 +206,7 @@ theorem rat_lt_trans {a b c : Rat} (hab : a < b) (hbc : b < c) : a < c := by
 
 /-- Exact arithmetic identity needed by the dependency-free rational proof. -/
 theorem rat_half_add_half : (1 / 2 : Rat) + 1 / 2 = 1 := by
-  rw [Rat.div_def, Rat.div_def, Rat.one_mul, Rat.one_mul]
+  rw [Rat.div_def, Rat.one_mul, Rat.one_mul]
   rw [← Rat.add_mul]
   rw [← Rat.natCast_add]
   have h2 : (2 : Rat) ≠ 0 := Rat.ne_of_gt (by decide)
