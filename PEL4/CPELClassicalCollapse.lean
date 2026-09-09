@@ -120,9 +120,14 @@ theorem eval_eq_evalCPELPair
     (m : Model W Ag Atom) (w : W)
     (phi : Formula Atom Ag) :
     eval m w phi = evalCPELPair m w phi := by
-  apply FDEValue.ext
-  · exact (evalCPEL_tr_pos m w phi).symm
-  · exact (evalCPEL_tr_neg m w phi).symm
+  have hpos := evalCPEL_tr_pos m w phi
+  have hneg := evalCPEL_tr_neg m w phi
+  cases hEval : eval m w phi with
+  | mk pos neg =>
+      rw [hEval] at hpos hneg
+      simp at hpos hneg
+      rw [hEval]
+      simp [evalCPELPair, hpos, hneg]
 
 /-- A four-valued point is classical exactly when its negative support bit is the
 Boolean complement of its positive support bit. This identifies the classical sector
