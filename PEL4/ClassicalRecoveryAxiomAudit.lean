@@ -1,4 +1,4 @@
-import PEL4.ClassicalRecovery
+import PEL4.ClassicalRecoveryStructural
 
 /-!
 # Gate 5 axiom audit
@@ -27,3 +27,9 @@ layer inside the repository's explicit trust boundary.
 #print axioms PEL4.delete_unique_from_channelRegular_not_complete
 #print axioms PEL4.realizesFDE_delete_unique_from_regular_eq_N
 #print axioms PEL4.stable_regular_value_is_classical_through_accessibility
+#print axioms PEL4.finiteChannel_nonloopComplete_iff_channelComplete
+#print axioms PEL4.finiteChannel_nonloopConsistent_iff_channelConsistent
+#print axioms PEL4.finiteChannel_nonloopRegular_iff_channelRegular
+#print axioms PEL4.finiteChannel_contract_regular_not_nonloopComplete
+#print axioms PEL4.finiteChannel_contract_regular_not_nonloopRegular
+#print axioms PEL4.finiteChannel_contract_parallel_occupancy_without_nonloop
