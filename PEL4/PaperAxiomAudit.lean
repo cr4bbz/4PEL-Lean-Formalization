@@ -4,6 +4,9 @@ import PEL4.MatroidTopologicalSierpinski
 import PEL4.MatroidEvidenceCircuits
 import PEL4.MatroidEvidenceMinorSemantics
 import PEL4.ClassicalRecoveryStructural
+import PEL4.FormulaClassicalRecovery
+import PEL4.ModalFormulaClassicalRecovery
+import PEL4.BeliefClassicalRecovery
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -120,3 +123,20 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.finiteChannel_contract_regular_not_nonloopComplete
 #print axioms PEL4.finiteChannel_contract_regular_not_nonloopRegular
 #print axioms PEL4.finiteChannel_contract_parallel_occupancy_without_nonloop
+
+-- Formula-level Classical Recovery Gate 6 manuscript claims
+#print axioms PEL4.eval_isClassical_of_propositional
+#print axioms PEL4.eval_excludedMiddle_eq_T_of_propositional
+#print axioms PEL4.eval_contradiction_eq_F_of_propositional
+#print axioms PEL4.propositional_contradiction_LP_valid
+#print axioms PEL4.gate6BeliefBoundary_atomicClassical
+#print axioms PEL4.gate6BeliefBoundary_belief_is_N
+#print axioms PEL4.atomicClassical_does_not_force_belief_classical
+#print axioms PEL4.modalRawPossibilityValue_classical_of_profile
+#print axioms PEL4.modalKnowledgeValue_classical_of_profile
+#print axioms PEL4.evalModal_isClassical_of_beliefFree
+#print axioms PEL4.belief_isClassical_iff_thresholdRegular
+#print axioms PEL4.gate6BeliefBoundary_not_thresholdComplete
+#print axioms PEL4.gate6BeliefBoundary_thresholdConsistent
+#print axioms PEL4.eval_isClassical_of_recoveryAdmissible
+#print axioms PEL4.eval_isClassical_of_global_recoveryAdmissible
