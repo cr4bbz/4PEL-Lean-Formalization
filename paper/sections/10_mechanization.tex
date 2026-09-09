@@ -2,13 +2,14 @@
 \label{sec:mechanization}
 
 The artifact uses Lean 4.31.0 without Mathlib. The present extension is developed
-on \texttt{research/classical-recovery-gate5}, stacked on the preceding matroid
-gates; the root module \texttt{PEL4.lean} imports the relevant development.
-Appendix~\ref{app:formal} provides the selective claim-to-declaration map for the
-established manuscript core. The matroid and recovery programs additionally carry
-separate declaration-level audits for the channel closure, topological bridge,
-circuits, explicit-ground minors, and classical-recovery layers. Audit selections are
-not a certification of every declaration in the repository.
+on \texttt{research/formula-classical-recovery-gate6}, stacked on the preceding
+classical-recovery and matroid gates; the root module \texttt{PEL4.lean} imports the
+relevant development. Appendix~\ref{app:formal} provides the selective
+claim-to-declaration map for the established manuscript core. The matroid and
+recovery programs additionally carry separate declaration-level audits for the
+channel closure, topological bridge, circuits, explicit-ground minors, value-level
+classical recovery, and formula-level classical recovery. Audit selections are not a
+certification of every declaration in the repository.
 
 \subsection{Verification contract}
 A successful build establishes that declarations typecheck, not that all their
@@ -33,8 +34,25 @@ Gate~5 adds \texttt{PEL4/ClassicalRecovery.lean} and
 \texttt{ClassicalRecoveryAxiomAudit.lean}. The selected inventory covers the
 geometry--value recovery, the recovered propositional slice, separated LEM/EFQ
 conditions, modal persistence, deletion robustness/fragility, and the nonloop
-capacity comparison before and after contraction. The working revision's CI output
-is authoritative for exact declaration dependencies.
+capacity comparison before and after contraction.
+
+Gate~6 adds \texttt{PEL4/FormulaClassicalRecovery.lean},
+\texttt{PEL4/ModalFormulaClassicalRecovery.lean}, and
+\texttt{PEL4/BeliefClassicalRecovery.lean}, with the selected declarations collected
+in \texttt{FormulaClassicalRecoveryAxiomAudit.lean} and the manuscript inventory.
+The audited claims include propositional structural induction, formula-level LEM and
+restricted LP explosion, the finite classical-atoms/nonclassical-belief witness,
+classical preservation by raw possibility and evidence-stable knowledge, the
+belief-free modal induction, the exact threshold-regularity characterization of
+classical belief output, and the recursive full-formula recovery contract.  The
+working revision's CI output is authoritative for exact declaration dependencies.
+
+The Gate~6 belief witness and its threshold profile are checked without adding a
+native-decision dependency to the selected theorem chain.  The stronger question of
+deriving belief threshold consistency from finite additivity plus \(c>1/2\) is not
+claimed here; it belongs to the separate \texttt{FiniteProbabilityIntegrity} layer.
+Likewise, the source comment accompanying the CPEL translation is not promoted to a
+mechanized completeness result.
 
 The review found that some general headlines inherited native-evaluation
 assumptions through elementary helpers. In eight source modules, the relevant
@@ -65,10 +83,10 @@ not additional model-realization certificates.
 From a clean clone, or after preserving local work:
 \begin{verbatim}
 git fetch origin
-git switch research/classical-recovery-gate5
+git switch research/formula-classical-recovery-gate6
 git pull --ff-only
 lake build
-lake env lean PEL4/ClassicalRecoveryAxiomAudit.lean
+lake env lean PEL4/FormulaClassicalRecoveryAxiomAudit.lean
 python3 scripts/check_mpfg_axioms.py
 python3 scripts/check_paper_axioms.py --report paper-axioms.json
 python3 -m unittest discover -s scripts -p 'test_*.py'
