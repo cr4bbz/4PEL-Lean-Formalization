@@ -164,6 +164,22 @@ Belief is classical exactly at threshold regularity & \texttt{belief\_isClassica
 Balanced belief witness is incomplete but consistent & \texttt{gate6BeliefBoundary\_not\_thresholdComplete}, \texttt{gate6BeliefBoundary\_thresholdConsistent} & \texttt{PEL4/BeliefClassicalRecovery.lean}\\
 \addlinespace
 Full legacy formulas recover classically under recursive admissibility & \texttt{eval\_isClassical\_of\_recoveryAdmissible}, \texttt{eval\_isClassical\_of\_global\_recoveryAdmissible} & \texttt{PEL4/BeliefClassicalRecovery.lean}\\
+\addlinespace
+Classical accessible profiles have complementary support masses & \texttt{classicalSupportMasses\_sum\_one} & \texttt{PEL4/LockeanThresholdPhaseTransition.lean}\\
+\addlinespace
+Supermajority probability integrity derives threshold consistency & \texttt{probabilityIntegrity\_classicalProfile\_thresholdConsistent} & \texttt{PEL4/LockeanThresholdPhaseTransition.lean}\\
+\addlinespace
+Under integrity, belief is classical iff threshold-complete & \texttt{probabilityIntegrity\_classicalProfile\_beliefClassical\_iff\_complete} & \texttt{PEL4/LockeanThresholdPhaseTransition.lean}\\
+\addlinespace
+At-most-half thresholds exclude gaps; supermajority thresholds exclude gluts & \texttt{complementaryMasses\_atMostHalf\_noGap}, \texttt{complementaryMasses\_supermajority\_noGlut} & \texttt{PEL4/ThresholdPhaseGeometry.lean}\\
+\addlinespace
+Exact 50/50 threshold phase dichotomy & \texttt{halfHalf\_thresholdGlut\_iff\_atMostHalf}, \texttt{halfHalf\_thresholdGap\_iff\_supermajority}, \texttt{halfHalf\_phase\_dichotomy} & \texttt{PEL4/ThresholdPhaseGeometry.lean}\\
+\addlinespace
+No inclusive threshold regularizes the 50/50 tie & \texttt{halfHalf\_never\_thresholdRegular} & \texttt{PEL4/ThresholdPhaseGeometry.lean}\\
+\addlinespace
+Probability-integrity formula recovery needs only belief completeness & \texttt{eval\_isClassical\_of\_probabilityRecoveryAdmissible}, \texttt{eval\_isClassical\_of\_global\_probabilityRecoveryAdmissible} & \texttt{PEL4/ProbabilityIntegrityFormulaRecovery.lean}\\
+\addlinespace
+Nonclassical belief is exactly incompleteness on classical integrity profiles & \texttt{probabilityIntegrity\_classicalProfile\_beliefNonclassical\_iff\_incomplete} & \texttt{PEL4/ProbabilityIntegrityFormulaRecovery.lean}\\
 \bottomrule
 \end{longtable}
 \endgroup
