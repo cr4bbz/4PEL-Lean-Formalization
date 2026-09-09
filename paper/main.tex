@@ -50,7 +50,7 @@
 
 \title{From Threshold Belief to Epistemic Phase Geometry:\\Mechanized Dynamics in a Four-Valued Probabilistic Epistemic Logic}
 \author{Julian L. Voigt (cr4bbz)}
-\date{Working manuscript, version 0.9, 9 September 2026}
+\date{Working manuscript, version 0.10, 9 September 2026}
 
 \begin{document}
 \maketitle
@@ -67,6 +67,8 @@ At the coarsest evidence level, the bilateral positive/negative signature induce
 The circuit structure of this coarse matroid is completely classified: minimal dependent evidence sets are exactly distinct same-polarity pairs. Gate~4 upgrades the closure presentation to an explicit finite-ground layer with genuine deletion and contraction minors. Deleting one member of a parallel pair preserves the coarse FDE state, whereas deleting a unique channel representative removes exactly that support direction. Contracting one atom makes precisely its remaining same-polarity partners loops and removes nonloop capacity from that channel while preserving any opposite independent channel. This separates polarity occupancy from residual independent-information capacity after minors, and also separates structural contraction from a memory-bearing epistemic acceptance update.
 
 Gate~5 asks when the four-valued layer recovers classical behavior from evidence structure rather than by stipulation. For a realized FDE value, channel completeness is equivalent to gap-freedom, channel consistency to glut-freedom, and their conjunction isolates exactly \(\{\Tval,\Fval\}\). The recovered slice is closed under the existing FDE negation, conjunction, and disjunction. Tolerant excluded middle requires only gap-freedom, LP ex falso only glut-freedom, while strict-\(\Tval\) excluded middle characterizes the full classical slice. Modal stability is not needed for local bivalence but propagates recovered classicality through the accessible range. Parallel deletion preserves the recovery condition, whereas deleting a unique representative from regular evidence destroys completeness and forces the remaining realized state to \(\Nval\). These are structural recovery theorems, not a completeness theorem for classical logic or a claim that arbitrary epistemic evidence is matroidal.
+
+Gate~6 lifts the recovered sector compositionally. Classical atomic valuations force every belief-free propositional formula to remain in \(\{\Tval,\Fval\}\), yielding strict formula-level excluded middle and a restricted formula-level explosion result. Primitive raw possibility and evidence-stable knowledge preserve classical accessible profiles, so every belief-free modal formula built from these operators remains classical under globally classical atoms. Lockean belief is the boundary: a verified two-world \(1/2\)--\(1/2\) profile at threshold \(3/5\) reopens \(\Nval\) despite classical atoms. Belief is classical exactly when its two threshold decisions are complete and consistent, and a recursive admissibility predicate lifts this condition to the full legacy formula syntax. Deriving belief regularity from the stronger finite-probability laws and proving the commented CPEL completeness reduction remain open.
 
 The Lean 4.31 artifact distinguishes the lightweight model interface from probability-integrity-certified models and records declaration-level axiom dependencies, rejecting native evaluation in the selected manuscript proof chains. The contribution is a mechanized case study with explicit preservation and information-loss boundaries; no completeness, general continuity, or priority claim is made.
 \end{abstract}
@@ -88,6 +90,7 @@ The Lean 4.31 artifact distinguishes the lightweight model interface from probab
 \input{sections/15_matroid_circuits}
 \input{sections/16_matroid_minors}
 \input{sections/17_classical_recovery}
+\input{sections/18_formula_classical_recovery}
 \input{sections/12_conclusion}
 
 \appendix
