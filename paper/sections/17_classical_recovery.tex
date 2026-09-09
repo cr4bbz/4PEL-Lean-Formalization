@@ -192,20 +192,83 @@ evidential gap:
 Classicality is therefore not merely a label on a value; its robustness depends on
 redundancy in the supporting evidence geometry.
 
+\subsection{Independent-capacity recovery and contraction}
+
+Gate~4 also showed that ordinary ground occupancy and residual independent-information
+capacity diverge after contraction.  This motivates a stronger recovery predicate.
+Call a channel \emph{nonloop-supported} when it has a remaining ground atom that is
+not a loop in the current matroid minor.  Define \(\mathsf{NLComplete}\),
+\(\mathsf{NLConsistent}\), and \(\mathsf{NLRegular}\) by replacing ordinary channel
+support with nonloop support in the preceding definitions.
+
+\begin{theorem}[Occupancy and capacity coincide before minors]
+\label{thm:nonloop-regularity-before-minors}
+For the original finite channel matroid,
+\[
+  \mathsf{NLRegular}(M)=\mathsf{Regular}(E).
+\]
+Equivalently, nonloop completeness and consistency coincide separately with ordinary
+channel completeness and consistency.
+\statusverified
+\end{theorem}
+
+This equivalence holds because the canonical finite channel matroid is loopless before
+minors.  Hence the original \(\Tval/\Fval\) recovery theorem can be read either as a
+statement about occupancy or about independent channel capacity.
+
+Contraction breaks that identification.
+
+\begin{theorem}[Contraction destroys independent classical capacity]
+\label{thm:contraction-destroys-nonloop-regularity}
+Let \(E\) be channel-regular and let \(c\in E\).  After contracting \(c\), the
+resulting minor is not nonloop-complete and therefore not nonloop-regular:
+\[
+  \neg\mathsf{NLComplete}(M/c),
+  \qquad
+  \neg\mathsf{NLRegular}(M/c).
+\]
+\statusverified
+\end{theorem}
+
+The reason is structural.  Contraction makes every remaining atom of \(c\)'s polarity
+a loop, while channel regularity already excluded support for the opposite polarity.
+Thus no independent channel direction remains.
+
+The distinction is observable even when a same-polarity atom survives in the ground
+set.
+
+\begin{proposition}[Occupancy without capacity]
+\label{prop:occupancy-without-capacity}
+Suppose \(c\neq y\) are ground atoms of the same polarity.  After contracting \(c\),
+that polarity is still ordinarily supported by \(y\), but it has no nonloop support.
+\statusverified
+\end{proposition}
+
+Therefore a coarse support reading can continue to display a channel that has become
+structurally informationally inert.  Gate~5 consequently distinguishes
+\[
+  \boxed{
+  \text{classical-valued occupancy}
+  \quad\neq\quad
+  \text{classicality sustained by residual independent capacity}.}
+\]
+This is the first formal refinement of ``informational stability'' in the recovery
+program: classical value recovery is local, whereas structural classicality must also
+track what independent information survives admissible transformations.
+
 \subsection{Scope and next boundary}
 
-The current Gate~5 results establish a value-level and coarse-evidence recovery
-layer.  They do \emph{not} yet prove completeness of a classical proof calculus,
-classicality of every modal formula, or preservation under every evidence update.
-In particular, contraction from Gate~4 creates a new problem: ordinary polarity
-occupancy can remain while all same-polarity representatives become loops.  A future
-strengthening should therefore compare ordinary channel regularity with
-\emph{nonloop regularity}, where completeness is measured by residual independent
-information capacity rather than mere occupancy.
+The current Gate~5 results establish value-level, modal-persistence, deletion, and
+independent-capacity recovery layers.  They do \emph{not} yet prove completeness of a
+classical proof calculus, classicality of every modal formula, or preservation under
+every evidence update.  In particular, the present LP ex-falso theorem is a
+value-level semantic recovery under glut-freedom; its premise is undesignated there,
+and no stronger proof-theoretic conclusion is inferred.
 
-The reliability refinement raises a second boundary.  A coarse state can be regular
-while distinct fine reliability profiles project to it.  Hence a later gate must ask
-whether classical recovery commutes with forgetting reliability and with structural
-minors.  The present theorem is intentionally prior to that question: it identifies
-the exact coarse conditions whose stability can subsequently be tested under finer
-projections.
+The reliability refinement raises the next boundary.  A coarse state can be regular
+while distinct fine reliability profiles project to it.  A later gate should ask
+whether classical recovery commutes with forgetting reliability and whether a
+fine-grained notion of independent-capacity regularity survives that projection.
+Likewise, a formula-level recovery theorem should quantify regularity over the atomic
+valuation and prove closure inductively through the language, treating modal operators
+separately from the already verified propositional \(\Tval/\Fval\) subalgebra.
