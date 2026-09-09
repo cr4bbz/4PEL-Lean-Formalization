@@ -10,6 +10,7 @@ layer inside the repository's explicit trust boundary.
 #print axioms PEL4.realizesFDE_gapFree_iff_channelComplete
 #print axioms PEL4.realizesFDE_glutFree_iff_channelConsistent
 #print axioms PEL4.evidentiallyRegularValue_iff_classical
+#print axioms PEL4.not_gapFreeValue_iff_eq_N
 #print axioms PEL4.realizesFDE_channelRegular_iff_classical
 #print axioms PEL4.classicalValue_not
 #print axioms PEL4.classicalValue_and
@@ -20,4 +21,9 @@ layer inside the repository's explicit trust boundary.
 #print axioms PEL4.contradiction_designated_iff_glut
 #print axioms PEL4.glutFree_restores_LP_explosion
 #print axioms PEL4.realizesFDE_channelConsistency_restores_LP_explosion
+#print axioms PEL4.channelComplete_delete_parallel_iff
+#print axioms PEL4.channelConsistent_delete_parallel_iff
+#print axioms PEL4.channelRegular_delete_parallel_iff
+#print axioms PEL4.delete_unique_from_channelRegular_not_complete
+#print axioms PEL4.realizesFDE_delete_unique_from_regular_eq_N
 #print axioms PEL4.stable_regular_value_is_classical_through_accessibility
