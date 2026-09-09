@@ -3,7 +3,7 @@ import PEL4.ConvexModelPath
 import PEL4.MatroidTopologicalSierpinski
 import PEL4.MatroidEvidenceCircuits
 import PEL4.MatroidEvidenceMinorSemantics
-import PEL4.ClassicalRecovery
+import PEL4.ClassicalRecoveryStructural
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -116,3 +116,7 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.delete_unique_from_channelRegular_not_complete
 #print axioms PEL4.realizesFDE_delete_unique_from_regular_eq_N
 #print axioms PEL4.stable_regular_value_is_classical_through_accessibility
+#print axioms PEL4.finiteChannel_nonloopRegular_iff_channelRegular
+#print axioms PEL4.finiteChannel_contract_regular_not_nonloopComplete
+#print axioms PEL4.finiteChannel_contract_regular_not_nonloopRegular
+#print axioms PEL4.finiteChannel_contract_parallel_occupancy_without_nonloop
