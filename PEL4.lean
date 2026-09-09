@@ -36,6 +36,8 @@ import PEL4.BeliefClassicalRecovery
 import PEL4.FormulaClassicalRecoveryAxiomAudit
 import PEL4.LockeanThresholdPhaseTransition
 import PEL4.LockeanThresholdPhaseTransitionAxiomAudit
+import PEL4.ThresholdPhaseGeometry
+import PEL4.ThresholdPhaseGeometryAxiomAudit
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
 import PEL4.StructuralTransport
