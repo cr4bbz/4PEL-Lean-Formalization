@@ -30,6 +30,10 @@ import PEL4.MatroidEvidenceMinorAxiomAudit
 import PEL4.ClassicalRecovery
 import PEL4.ClassicalRecoveryStructural
 import PEL4.ClassicalRecoveryAxiomAudit
+import PEL4.FormulaClassicalRecovery
+import PEL4.ModalFormulaClassicalRecovery
+import PEL4.BeliefClassicalRecovery
+import PEL4.FormulaClassicalRecoveryAxiomAudit
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
 import PEL4.StructuralTransport
