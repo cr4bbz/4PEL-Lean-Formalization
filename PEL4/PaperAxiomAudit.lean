@@ -7,6 +7,9 @@ import PEL4.ClassicalRecoveryStructural
 import PEL4.FormulaClassicalRecovery
 import PEL4.ModalFormulaClassicalRecovery
 import PEL4.BeliefClassicalRecovery
+import PEL4.LockeanThresholdPhaseTransition
+import PEL4.ThresholdPhaseGeometry
+import PEL4.ProbabilityIntegrityFormulaRecovery
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -140,3 +143,19 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.gate6BeliefBoundary_thresholdConsistent
 #print axioms PEL4.eval_isClassical_of_recoveryAdmissible
 #print axioms PEL4.eval_isClassical_of_global_recoveryAdmissible
+
+-- Lockean Threshold Phase Transition Gate 7 manuscript claims
+#print axioms PEL4.classicalSupportMasses_sum_one
+#print axioms PEL4.complementaryMasses_supermajority_consistent
+#print axioms PEL4.probabilityIntegrity_classicalProfile_thresholdConsistent
+#print axioms PEL4.probabilityIntegrity_classicalProfile_beliefClassical_iff_complete
+#print axioms PEL4.complementaryMasses_atMostHalf_complete
+#print axioms PEL4.complementaryMasses_atMostHalf_noGap
+#print axioms PEL4.complementaryMasses_supermajority_noGlut
+#print axioms PEL4.halfHalf_thresholdGlut_iff_atMostHalf
+#print axioms PEL4.halfHalf_thresholdGap_iff_supermajority
+#print axioms PEL4.halfHalf_never_thresholdRegular
+#print axioms PEL4.halfHalf_phase_dichotomy
+#print axioms PEL4.eval_isClassical_of_probabilityRecoveryAdmissible
+#print axioms PEL4.eval_isClassical_of_global_probabilityRecoveryAdmissible
+#print axioms PEL4.probabilityIntegrity_classicalProfile_beliefNonclassical_iff_incomplete
