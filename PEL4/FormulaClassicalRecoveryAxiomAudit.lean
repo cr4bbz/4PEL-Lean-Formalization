@@ -1,10 +1,11 @@
 import PEL4.FormulaClassicalRecovery
 import PEL4.ModalFormulaClassicalRecovery
+import PEL4.BeliefClassicalRecovery
 
 /-!
 # Gate 6 axiom audit
 
-Selected formula-level recovery, modal preservation, and boundary declarations.
+Selected formula-level recovery, modal preservation, belief recovery, and boundary declarations.
 -/
 
 #print axioms PEL4.eval_formula_or
@@ -22,3 +23,10 @@ Selected formula-level recovery, modal preservation, and boundary declarations.
 #print axioms PEL4.modalRawPossibilityValue_classical_of_profile
 #print axioms PEL4.modalKnowledgeValue_classical_of_profile
 #print axioms PEL4.evalModal_isClassical_of_beliefFree
+#print axioms PEL4.belief_eq_thresholdBits
+#print axioms PEL4.belief_isClassical_iff_thresholdRegular
+#print axioms PEL4.gate6BeliefBoundary_not_thresholdComplete
+#print axioms PEL4.gate6BeliefBoundary_thresholdConsistent
+#print axioms PEL4.eval_isClassical_of_recoveryAdmissible
+#print axioms PEL4.propositional_recoveryAdmissible
+#print axioms PEL4.eval_isClassical_of_global_recoveryAdmissible
