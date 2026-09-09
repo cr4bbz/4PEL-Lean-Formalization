@@ -84,14 +84,50 @@ theorem belief_isClassical_iff_thresholdRegular
 theorem gate6BeliefBoundary_not_thresholdComplete :
     ¬ BeliefThresholdComplete gate6BeliefBoundaryModel () false
       (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) := by
-  decide +kernel
+  have hBits := belief_eq_thresholdBits gate6BeliefBoundaryModel () false
+    (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ()))
+  have hStruct :
+      { pos := beliefPositiveThresholdBit gate6BeliefBoundaryModel () false
+          (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ()))
+      , neg := beliefNegativeThresholdBit gate6BeliefBoundaryModel () false
+          (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) } =
+        FDEValue.N :=
+    hBits.symm.trans gate6BeliefBoundary_belief_is_N
+  have hpFalse :
+      beliefPositiveThresholdBit gate6BeliefBoundaryModel () false
+        (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) = false := by
+    simpa [FDEValue.N] using congrArg FDEValue.pos hStruct
+  have hnFalse :
+      beliefNegativeThresholdBit gate6BeliefBoundaryModel () false
+        (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) = false := by
+    simpa [FDEValue.N] using congrArg FDEValue.neg hStruct
+  unfold BeliefThresholdComplete
+  simp [hpFalse, hnFalse]
 
 /-- The same witness is not a contradiction problem: its threshold decisions are
 consistent, but incomplete. -/
 theorem gate6BeliefBoundary_thresholdConsistent :
     BeliefThresholdConsistent gate6BeliefBoundaryModel () false
       (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) := by
-  decide +kernel
+  have hBits := belief_eq_thresholdBits gate6BeliefBoundaryModel () false
+    (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ()))
+  have hStruct :
+      { pos := beliefPositiveThresholdBit gate6BeliefBoundaryModel () false
+          (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ()))
+      , neg := beliefNegativeThresholdBit gate6BeliefBoundaryModel () false
+          (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) } =
+        FDEValue.N :=
+    hBits.symm.trans gate6BeliefBoundary_belief_is_N
+  have hpFalse :
+      beliefPositiveThresholdBit gate6BeliefBoundaryModel () false
+        (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) = false := by
+    simpa [FDEValue.N] using congrArg FDEValue.pos hStruct
+  have hnFalse :
+      beliefNegativeThresholdBit gate6BeliefBoundaryModel () false
+        (fun u => eval gate6BeliefBoundaryModel u (Formula.prop ())) = false := by
+    simpa [FDEValue.N] using congrArg FDEValue.neg hStruct
+  unfold BeliefThresholdConsistent
+  simp [hpFalse, hnFalse]
 
 /-- Semantic admissibility for formula-level classical recovery. Propositional
 constructors recurse locally. A belief node requires the subformula to remain
