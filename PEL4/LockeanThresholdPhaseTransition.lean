@@ -204,6 +204,12 @@ theorem rat_lt_trans {a b c : Rat} (hab : a < b) (hbc : b < c) : a < c := by
     have hba : b ≤ a := Rat.le_trans (Rat.le_of_lt hbc) hca
     exact ((Rat.lt_iff_le_and_not_ge).1 hab).2 hba
 
+/-- Exact arithmetic identity needed by the dependency-free rational proof. -/
+theorem rat_half_add_half : (1 / 2 : Rat) + 1 / 2 = 1 := by
+  rw [← Rat.divInt_eq_div (1 : Int) (2 : Int)]
+  rw [← Rat.divInt_eq_div (1 : Int) (2 : Int)]
+  simp
+
 /-- Generic arithmetic core: complementary masses cannot both meet a threshold
 strictly above one half. -/
 theorem complementaryMasses_supermajority_consistent
@@ -225,7 +231,8 @@ theorem complementaryMasses_supermajority_consistent
     (Rat.add_lt_add_left (a := (1 / 2 : Rat)) (b := c) (c := c)).2 hc
   have hHalf : (1 : Rat) < c + c := by
     have h := rat_lt_trans hHalf₁ hHalf₂
-    simpa using h
+    rw [rat_half_add_half] at h
+    exact h
   have hOneLe : c + c ≤ 1 := by
     rw [hSum] at hcc
     exact hcc
