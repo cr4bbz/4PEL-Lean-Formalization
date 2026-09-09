@@ -132,6 +132,22 @@ Unique deletion removes exactly one channel & \texttt{delete\_unique\_channel\_p
 Canonical finite channel matroid is loopless & \texttt{finiteChannel\_no\_loops}, \texttt{finiteChannel\_supportsNonloop\_iff\_supportsGround} & \texttt{PEL4/MatroidEvidenceMinorSemantics.lean}\\
 \addlinespace
 Contraction removes nonloop capacity from exactly one channel & \texttt{finiteChannel\_contract\_sameChannel\_no\_nonloop}, \texttt{finiteChannel\_contract\_otherChannel\_supportsNonloop\_iff} & \texttt{PEL4/MatroidEvidenceMinorSemantics.lean}\\
+\addlinespace
+Gap-free iff channel-complete; glut-free iff channel-consistent & \texttt{realizesFDE\_gapFree\_iff\_channelComplete}, \texttt{realizesFDE\_glutFree\_iff\_channelConsistent} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Complete and consistent evidence recovers exactly T/F & \texttt{realizesFDE\_channelRegular\_iff\_classical} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Recovered T/F slice is closed under FDE connectives & \texttt{classicalValue\_not}, \texttt{classicalValue\_and}, \texttt{classicalValue\_or} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Tolerant and strict excluded-middle recovery & \texttt{excludedMiddle\_designated\_iff\_gapFree}, \texttt{excludedMiddle\_eq\_T\_iff\_classical} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Glut-freedom restores LP explosion & \texttt{glutFree\_restores\_LP\_explosion}, \texttt{realizesFDE\_channelConsistency\_restores\_LP\_explosion} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Modal stability propagates recovered classicality & \texttt{stable\_regular\_value\_is\_classical\_through\_accessibility} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Parallel deletion preserves channel regularity & \texttt{channelRegular\_delete\_parallel\_iff} & \texttt{PEL4/ClassicalRecovery.lean}\\
+\addlinespace
+Unique deletion from regular evidence forces N & \texttt{delete\_unique\_from\_channelRegular\_not\_complete}, \texttt{realizesFDE\_delete\_unique\_from\_regular\_eq\_N} & \texttt{PEL4/ClassicalRecovery.lean}\\
 \bottomrule
 \end{longtable}
 \endgroup

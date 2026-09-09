@@ -3,6 +3,7 @@ import PEL4.ConvexModelPath
 import PEL4.MatroidTopologicalSierpinski
 import PEL4.MatroidEvidenceCircuits
 import PEL4.MatroidEvidenceMinorSemantics
+import PEL4.ClassicalRecoveryStructural
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -96,3 +97,26 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.finiteChannel_supportsNonloop_iff_supportsGround
 #print axioms PEL4.finiteChannel_contract_sameChannel_no_nonloop
 #print axioms PEL4.finiteChannel_contract_otherChannel_supportsNonloop_iff
+
+-- Classical Recovery Gate 5 manuscript claims
+#print axioms PEL4.realizesFDE_gapFree_iff_channelComplete
+#print axioms PEL4.realizesFDE_glutFree_iff_channelConsistent
+#print axioms PEL4.evidentiallyRegularValue_iff_classical
+#print axioms PEL4.realizesFDE_channelRegular_iff_classical
+#print axioms PEL4.classicalValue_not
+#print axioms PEL4.classicalValue_and
+#print axioms PEL4.classicalValue_or
+#print axioms PEL4.excludedMiddle_designated_iff_gapFree
+#print axioms PEL4.excludedMiddle_eq_T_iff_classical
+#print axioms PEL4.realizesFDE_channelRegular_restores_strict_LEM
+#print axioms PEL4.contradiction_designated_iff_glut
+#print axioms PEL4.glutFree_restores_LP_explosion
+#print axioms PEL4.realizesFDE_channelConsistency_restores_LP_explosion
+#print axioms PEL4.channelRegular_delete_parallel_iff
+#print axioms PEL4.delete_unique_from_channelRegular_not_complete
+#print axioms PEL4.realizesFDE_delete_unique_from_regular_eq_N
+#print axioms PEL4.stable_regular_value_is_classical_through_accessibility
+#print axioms PEL4.finiteChannel_nonloopRegular_iff_channelRegular
+#print axioms PEL4.finiteChannel_contract_regular_not_nonloopComplete
+#print axioms PEL4.finiteChannel_contract_regular_not_nonloopRegular
+#print axioms PEL4.finiteChannel_contract_parallel_occupancy_without_nonloop
