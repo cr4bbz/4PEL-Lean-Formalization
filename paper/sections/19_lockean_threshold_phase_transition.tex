@@ -1,0 +1,237 @@
+\section{Lockean threshold phase transition under probability integrity}
+\label{sec:lockean-threshold-phase}
+
+Gate~6 isolated an exact local condition for classical Lockean belief, but its
+consistency component was still imposed semantically.  This section derives that
+component from the stronger finite-probability layer and then separates the role of
+the threshold itself from the legacy model contract.
+
+The result is a sharper boundary.  In an integrity-certified model with a classical
+accessible profile, positive and negative support are not merely two unrelated event
+lists.  They form a complementary partition of the accessibility support.  The
+legacy supermajority threshold \(c>1/2\) therefore excludes belief gluts
+structurally.  The only remaining failure mode for classical belief is indecision.
+
+\subsection{Classical profiles induce complementary support masses}
+
+Fix an agent \(i\), a world \(w\), and an FDE-valued profile \(v\) on the worlds
+accessible from \(w\).  Let
+\[
+  E^+ = \{u\in R_i(w) : v(u).\mathsf{pos}=\mathsf{true}\},
+  \qquad
+  E^- = \{u\in R_i(w) : v(u).\mathsf{neg}=\mathsf{true}\}.
+\]
+If every accessible value is classical, then each accessible world lies in exactly
+one of these two events.  Hence they are disjoint and cover the accessibility
+support.
+
+\begin{theorem}[Complementary classical support masses]
+\label{thm:classical-support-masses-sum-one}
+Let \(m\) satisfy \texttt{ModelProbabilityIntegrity}.  If every value in the
+accessible profile is in \(\{\Tval,\Fval\}\), then
+\[
+  \mu_{i,w}(E^+) + \mu_{i,w}(E^-) = 1.
+\]
+\statusverified
+\end{theorem}
+
+The proof uses the finite-probability integrity contract rather than the lightweight
+legacy probability interface.  Duplicate-freedom of the accessibility support is
+transported through the two filters, the events are shown disjoint, finite
+additivity combines their masses, and extensionality identifies their union with the
+whole support.
+
+This theorem closes the precise gap left open at the end of Gate~6: once the input
+profile is classical, the two threshold masses are genuine complements.
+
+\subsection{Supermajority eliminates the glut branch}
+
+Write
+\[
+  p=P^+(v),\qquad n=P^-(v).
+\]
+For a classical accessible profile under probability integrity,
+Theorem~\ref{thm:classical-support-masses-sum-one} gives \(p+n=1\).  The existing
+4-PEL model contract also requires
+\[
+  c>\frac12.
+\]
+These two facts are enough to rule out simultaneous threshold acceptance.
+
+\begin{theorem}[Supermajority threshold consistency]
+\label{thm:supermajority-threshold-consistency}
+If \(p+n=1\) and \(c>1/2\), then
+\[
+  \neg(c\le p\land c\le n).
+\]
+Consequently, every integrity-certified classical accessible profile satisfies
+\texttt{BeliefThresholdConsistent}.
+\statusverified
+\end{theorem}
+
+Thus the exact Gate~6 recovery boundary simplifies in the stronger model class.
+
+\begin{corollary}[Classical belief iff decisive belief]
+\label{cor:belief-classical-iff-complete-integrity}
+Under \texttt{ModelProbabilityIntegrity} and a classical accessible profile,
+\[
+  \Bel(v)\in\{\Tval,\Fval\}
+  \quad\Longleftrightarrow\quad
+  \mathsf{BelComplete}(v).
+\]
+Equivalently,
+\[
+  \Bel(v)\notin\{\Tval,\Fval\}
+  \quad\Longleftrightarrow\quad
+  \neg\mathsf{BelComplete}(v).
+\]
+\statusverified
+\end{corollary}
+
+The second form is conceptually useful.  Once the profile is classical and the
+probability laws are certified, nonclassical Lockean belief is exactly a gap caused
+by indecision.  A \(\Bval\)-valued belief is no longer a live possibility in this
+sector.
+
+\subsection{The model-independent threshold boundary}
+
+The preceding theorem uses the existing model's built-in supermajority assumption.
+To see what role \(1/2\) plays independently of that design choice, Gate~7 also
+factors the threshold arithmetic into a model-free layer.  For rational masses
+\(p,n\) with
+\[
+  p+n=1,
+\]
+define threshold completeness by \(c\le p\lor c\le n\), and threshold consistency
+by \(\neg(c\le p\land c\le n)\).
+
+Two complementary one-sided results follow.
+
+\begin{theorem}[Threshold phase boundary]
+\label{thm:threshold-phase-boundary}
+For complementary masses \(p+n=1\):
+\begin{enumerate}[label=(\roman*)]
+  \item if \(c\le 1/2\), threshold completeness is guaranteed, so a gap is
+        impossible;
+  \item if \(c>1/2\), threshold consistency is guaranteed, so a glut is
+        impossible.
+\end{enumerate}
+\statusverified
+\end{theorem}
+
+The critical value is therefore not merely a conventional midpoint.  It separates
+two qualitatively different failure guarantees.  Lower thresholds protect against
+indecision but permit overacceptance; strict supermajority thresholds protect
+against overacceptance but permit indecision.
+
+The inclusivity of the existing comparison matters at the boundary.  Because belief
+uses \(\ge c\), an exact tie behaves as follows.
+
+\begin{theorem}[Exact tie dichotomy]
+\label{thm:half-half-phase-dichotomy}
+For \(p=n=1/2\):
+\[
+  c\le\frac12
+  \quad\Longrightarrow\quad
+  c\le p\land c\le n,
+\]
+whereas
+\[
+  c>\frac12
+  \quad\Longrightarrow\quad
+  \neg(c\le p)\land\neg(c\le n).
+\]
+In particular, at \(c=1/2\) the tie is glut-like rather than gap-like.
+\statusverified
+\end{theorem}
+
+In four-valued language, the threshold image of the tie jumps across the critical
+value:
+\[
+  \boxed{
+  c\le\frac12 : \Bval
+  \qquad\vert\qquad
+  c>\frac12 : \Nval
+  }
+\]
+where the labels describe the two threshold bits, not the underlying world-level
+truth value.
+
+\subsection{No universal inclusive Lockean cutoff}
+
+The tie immediately yields a sharp impossibility statement.
+
+\begin{theorem}[No universal inclusive threshold]
+\label{thm:no-universal-inclusive-threshold}
+For every rational threshold \(c\), the complementary profile
+\[
+  p=n=\frac12
+\]
+is not threshold-regular.  Hence no single inclusive Lockean cutoff makes every
+complementary probability profile classically two-valued.
+\statusverified
+\end{theorem}
+
+This result should not be read as a defect of four-valued semantics.  It is a
+property of inclusive thresholding on a complementary probability line.  A single
+cutoff cannot simultaneously guarantee both completeness and consistency at the
+exact midpoint.  The legacy 4-PEL choice \(c>1/2\) resolves the ambiguity in favor
+of consistency, sending the balanced case to the gap side rather than the glut
+side.
+
+\subsection{Formula recovery with one fewer obligation}
+
+Gate~6 defined \texttt{Formula.ClassicalRecoveryAdmissibleAt}; every belief node
+required both threshold completeness and threshold consistency.  Gate~7 can now
+weaken this recursive contract for integrity-certified models.
+
+Define \texttt{Formula.ProbabilityRecoveryAdmissibleAt} exactly as before for atoms,
+negation, and conjunction.  At a belief node, require only:
+\begin{enumerate}[label=(\roman*)]
+  \item recursive admissibility of the subformula throughout the accessible range;
+  \item local threshold completeness.
+\end{enumerate}
+No independent threshold-consistency premise is included.
+
+\begin{theorem}[Formula recovery under probability integrity]
+\label{thm:probability-integrity-formula-recovery}
+Let \(m\) satisfy \texttt{ModelProbabilityIntegrity}.  For every legacy formula
+\(\varphi\),
+\[
+  \mathsf{ProbabilityRecoveryAdmissibleAt}(m,w,\varphi)
+  \quad\Longrightarrow\quad
+  \llbracket\varphi\rrbracket_{m,w}\in\{\Tval,\Fval\}.
+\]
+The corresponding global admissibility predicate yields classical evaluation at
+every world.
+\statusverified
+\end{theorem}
+
+At belief nodes the induction first obtains a classical accessible subformula
+profile.  Probability integrity then supplies complementary masses, the built-in
+supermajority threshold supplies consistency, and the sole explicit belief premise,
+completeness, finishes the classical-recovery step.
+
+This gives the Gate~7 hierarchy
+\[
+  \text{classical accessible profile}
+  + \text{probability integrity}
+  + c>\tfrac12
+  \Longrightarrow
+  \text{threshold consistency},
+\]
+followed by
+\[
+  \text{threshold completeness}
+  \Longleftrightarrow
+  \text{classical Lockean belief}.
+\]
+
+\paragraph{Gate boundary.}
+Gate~7 derives the consistency half of Lockean classical recovery from the stronger
+finite-probability semantics, formalizes the midpoint phase transition independently
+of the model, proves the exact tie obstruction for every inclusive threshold, and
+lifts the reduced recovery contract through the full legacy formula syntax.  It does
+not prove that arbitrary formulas are threshold-complete, nor does it prove the
+commented CPEL proof-system or translation completeness claim.  Decisiveness remains
+a genuine semantic obligation.
