@@ -1,0 +1,29 @@
+import PEL4.RecoveryConsequenceTransfer
+
+/-!
+# Gate 9 recovery/consequence-transfer axiom audit
+-/
+
+#print axioms PEL4.tolerantLEMAt_iff_gapFreeAt
+#print axioms PEL4.strictLEMAt_iff_classicalAt
+#print axioms PEL4.universal_LP_explosion_iff_glutFree
+#print axioms PEL4.universalLPExplosionAt_iff_glutFreeAt
+#print axioms PEL4.classicalAt_iff_tolerantLEMAt_and_universalLPExplosionAt
+#print axioms PEL4.tolerantLEMAt_iff_split_complete
+#print axioms PEL4.universalLPExplosionAt_iff_split_consistent
+#print axioms PEL4.strictLEMAt_iff_split_complement
+#print axioms PEL4.tolerantLEMIn_iff_gapFreeIn
+#print axioms PEL4.strictLEMIn_iff_classicalIn
+#print axioms PEL4.universalLPExplosionIn_iff_glutFreeIn
+#print axioms PEL4.classicalIn_of_probabilityRecoveryAdmissible
+#print axioms PEL4.strictLEMIn_of_probabilityRecoveryAdmissible
+#print axioms PEL4.universalLPExplosionIn_of_probabilityRecoveryAdmissible
+#print axioms PEL4.LP_SemanticEntailsIn_implies_ST
+#print axioms PEL4.ST_iff_LP_SemanticEntailsIn_of_classicalAntecedent
+#print axioms PEL4.classicalRestricted_ST_iff_LP
+#print axioms PEL4.LP_SemanticEntails_implies_classicalRestricted
+#print axioms PEL4.contradictionValue_ne_T
+#print axioms PEL4.contradiction_ST_SemanticEntails
+#print axioms PEL4.contradiction_classicalRestrictedLP_SemanticEntails
+#print axioms PEL4.contradiction_not_LP_SemanticEntails
+#print axioms PEL4.classicalRestricted_explosion_not_global

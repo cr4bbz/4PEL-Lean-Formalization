@@ -196,6 +196,18 @@ Strict FDE truth is exactly the split Boolean profile \((\mathsf{true},\mathsf{f
 LP and ST consequence are exactly represented in the induced CPEL evaluator & \texttt{LP\_SemanticEntails\_iff\_CPELPositiveSemanticEntails}, \texttt{ST\_SemanticEntails\_iff\_CPELSplitSTSemanticEntails} & \texttt{PEL4/CPELConsequenceBridge.lean}\\
 \addlinespace
 ST derivability is sound in the induced split CPEL semantics & \texttt{ST\_derivation\_sound\_in\_induced\_CPEL} & \texttt{PEL4/CPELConsequenceBridge.lean}\\
+\addlinespace
+Tolerant LEM iff gap-free; universal LP explosion iff glut-free & \texttt{tolerantLEMAt\_iff\_gapFreeAt}, \texttt{universalLPExplosionAt\_iff\_glutFreeAt} & \texttt{PEL4/RecoveryConsequenceTransfer.lean}\\
+\addlinespace
+Local classicality iff tolerant LEM plus universal LP explosion & \texttt{classicalAt\_iff\_tolerantLEMAt\_and\_universalLPExplosionAt} & \texttt{PEL4/RecoveryConsequenceTransfer.lean}\\
+\addlinespace
+Split-coordinate forms of LEM, explosion, and the anti-diagonal & \texttt{tolerantLEMAt\_iff\_split\_complete}, \texttt{universalLPExplosionAt\_iff\_split\_consistent}, \texttt{strictLEMAt\_iff\_split\_complement} & \texttt{PEL4/RecoveryConsequenceTransfer.lean}\\
+\addlinespace
+Probability recovery restores strict LEM and universal LP explosion model-wide & \texttt{strictLEMIn\_of\_probabilityRecoveryAdmissible}, \texttt{universalLPExplosionIn\_of\_probabilityRecoveryAdmissible} & \texttt{PEL4/RecoveryConsequenceTransfer.lean}\\
+\addlinespace
+ST and LP coincide in a fixed model under a classical antecedent & \texttt{ST\_iff\_LP\_SemanticEntailsIn\_of\_classicalAntecedent} & \texttt{PEL4/RecoveryConsequenceTransfer.lean}\\
+\addlinespace
+Classical-restricted ST/LP coincide but recovered explosion is not unrestricted LP explosion & \texttt{classicalRestricted\_ST\_iff\_LP}, \texttt{classicalRestricted\_explosion\_not\_global} & \texttt{PEL4/RecoveryConsequenceTransfer.lean}\\
 \bottomrule
 \end{longtable}
 \endgroup

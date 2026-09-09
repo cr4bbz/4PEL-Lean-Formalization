@@ -2,8 +2,8 @@
 \label{sec:mechanization}
 
 The artifact uses Lean 4.31.0 without Mathlib. The present extension is developed
-on \texttt{research/cpel-classical-collapse-gate8}, stacked on the Lockean threshold
-phase-transition branch and the preceding classical-recovery and matroid gates; the
+on \texttt{research/recovery-consequence-transfer-gate9}, stacked on the completed
+CPEL split-representation branch and the preceding recovery and matroid gates; the
 root module \texttt{PEL4.lean} imports the relevant development.
 Appendix~\ref{app:formal} provides the selective claim-to-declaration map for the
 established manuscript core. The matroid, recovery, threshold, and CPEL programs
@@ -65,6 +65,16 @@ source soundness theorem.  These declarations use only the standard allow-listed
 axioms.  No target proof system, arbitrary target-model semantics, canonical model,
 completeness theorem, or decidability theorem is inferred from this bridge.
 
+Gate~9 adds \texttt{PEL4/RecoveryConsequenceTransfer.lean} and
+\texttt{PEL4/RecoveryConsequenceTransferAxiomAudit.lean}. The audited layer defines
+local and fixed-model recovery predicates, characterizes tolerant/strict LEM and
+universal LP explosion exactly, rewrites those laws in split CPEL coordinates,
+transfers probability-recovery admissibility to both laws, and proves the
+model-relative ST/LP consequence collapse. A kernel-checked one-world witness keeps
+the unrestricted LP explosion failure explicit. The theorem statements distinguish
+local recovery, model-wide recovery, classical-restricted global consequence, and
+unrestricted global consequence.
+
 The review found that some general headlines inherited native-evaluation assumptions
 through elementary helpers. In eight source modules, the relevant finite computations
 were changed from \texttt{native\_decide} to \texttt{decide +kernel}, without
@@ -95,11 +105,12 @@ certificates.
 From a clean clone, or after preserving local work:
 \begin{verbatim}
 git fetch origin
-git switch research/cpel-classical-collapse-gate8
+git switch research/recovery-consequence-transfer-gate9
 git pull --ff-only
 lake build
 lake env lean PEL4/CPELClassicalCollapseAxiomAudit.lean
 lake env lean PEL4/CPELConsequenceBridgeAxiomAudit.lean
+lake env lean PEL4/RecoveryConsequenceTransferAxiomAudit.lean
 python3 scripts/check_mpfg_axioms.py
 python3 scripts/check_paper_axioms.py --report paper-axioms.json
 python3 -m unittest discover -s scripts -p 'test_*.py'
