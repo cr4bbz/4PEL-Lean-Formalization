@@ -1,0 +1,211 @@
+\section{Classical recovery from evidential regularity}
+\label{sec:classical-recovery}
+
+The preceding matroid analysis raises a natural reverse question.  Four-valued
+semantics permits both evidential gaps and evidential gluts; must classical logic
+therefore be rejected globally, or can a classical fragment be recovered when the
+underlying evidence structure satisfies stronger regularity conditions?  This section
+formalizes the latter possibility at the coarse two-channel level.
+
+The result is deliberately local and structural.  I do not assume bivalence as an
+extra semantic postulate.  Instead, the positive and negative evidence channels are
+constrained, and the induced four-valued state is then classified.  The resulting
+recovery separates three ideas that are easily conflated: local classical value,
+recovery of individual classical inference principles, and persistence of classicality
+under modal or evidential change.
+
+\subsection{Completeness and consistency of the channel geometry}
+
+Let \(A\) be a body of evidence with polarity map
+\(\chi:E\to\{+,-\}\).  Write
+\[
+  S_+(A) \quad\text{and}\quad S_-(A)
+\]
+for support of the positive and negative channels.  Define
+\begin{align*}
+  \mathsf{Complete}(A)
+    &:\Longleftrightarrow S_+(A)\lor S_-(A),\\
+  \mathsf{Consistent}(A)
+    &:\Longleftrightarrow \neg\bigl(S_+(A)\land S_-(A)\bigr),\\
+  \mathsf{Regular}(A)
+    &:\Longleftrightarrow
+       \mathsf{Complete}(A)\land\mathsf{Consistent}(A).
+\end{align*}
+At the value level let \(\mathsf{GapFree}(v)\) mean that \(v\neq\Nval\) in the
+bilateral sense, and \(\mathsf{GlutFree}(v)\) that \(v\neq\Bval\) in the bilateral
+sense.  The Lean definitions use the already existing Boolean gap/glut tests rather
+than introducing a second four-valued algebra.
+
+\begin{theorem}[Geometry--value recovery]
+\label{thm:classical-recovery-geometry}
+Suppose \(A\) realizes the FDE value \(v\).  Then
+\begin{align*}
+  \mathsf{GapFree}(v)
+    &\Longleftrightarrow \mathsf{Complete}(A),\\
+  \mathsf{GlutFree}(v)
+    &\Longleftrightarrow \mathsf{Consistent}(A),\\
+  \mathsf{Regular}(A)
+    &\Longleftrightarrow v\in\{\Tval,\Fval\}.
+\end{align*}
+\statusverified
+\end{theorem}
+
+Thus the classical two-valued slice need not be imposed by deleting \(\Nval\) and
+\(\Bval\) from the semantics.  It is exactly the image of evidence bodies satisfying
+both coverage and non-conflict at the coarse channel level:
+\[
+  \boxed{
+  \mathsf{Complete}+\mathsf{Consistent}
+  \quad\Longleftrightarrow\quad
+  \{\Tval,\Fval\}.}
+\]
+This is a recovery theorem inside the existing four-valued semantics, not a claim
+that all evidence bodies satisfy its hypotheses.
+
+\subsection{The recovered propositional slice}
+
+The recovered values are closed under the existing FDE propositional operations.
+
+\begin{proposition}[Classical subalgebra at the value level]
+\label{prop:classical-recovery-subalgebra}
+If \(v,w\in\{\Tval,\Fval\}\), then
+\[
+  \neg v\in\{\Tval,\Fval\},\qquad
+  v\land w\in\{\Tval,\Fval\},\qquad
+  v\lor w\in\{\Tval,\Fval\}.
+\]
+\statusverified
+\end{proposition}
+
+The proposition is modest but important.  Recovery is not merely a pointwise
+classification of two values: the existing four-valued connectives restrict to a
+closed classical propositional fragment on that slice.
+
+\subsection{LEM and EFQ return for different reasons}
+
+The two most conspicuous departures from classical reasoning separate cleanly under
+the bilateral semantics.  Let
+\[
+  \operatorname{LEM}(v)=v\lor\neg v,
+  \qquad
+  \operatorname{Contr}(v)=v\land\neg v.
+\]
+For LP-style designation, a value is tolerated when its positive bit is present.
+
+\begin{proposition}[Separated recovery conditions]
+\label{prop:lem-efq-separated-recovery}
+For every FDE value \(v\):
+\begin{enumerate}[label=(\roman*)]
+  \item \(\operatorname{LEM}(v)\) is LP-designated exactly when \(v\) is gap-free;
+  \item \(\operatorname{LEM}(v)=\Tval\) exactly when
+        \(v\in\{\Tval,\Fval\}\);
+  \item if \(v\) is glut-free, then
+        \(\operatorname{Contr}(v)\) LP-entails every conclusion value.
+\end{enumerate}
+\statusverified
+\end{proposition}
+
+Consequently, excluded middle and explosion do not reappear as an inseparable
+``classical package.''  Gap-freedom is the relevant structural boundary for tolerant
+excluded middle, whereas glut-freedom is the relevant boundary for LP ex falso.
+Full local classicality requires both.  In schematic form,
+\[
+\begin{array}{ccl}
+  \text{no gap} &\Longrightarrow& \text{tolerant LEM},\\
+  \text{no glut} &\Longrightarrow& \text{LP EFQ},\\
+  \text{no gap + no glut} &\Longleftrightarrow& \Tval/\Fval\text{ slice}.
+\end{array}
+\]
+The LP-explosion statement is vacuous in the precise semantic sense that, under
+GlutFree, the contradiction premise is not designated.  It should therefore not be
+read as a proof that an inconsistent evidential state has somehow generated arbitrary
+content.
+
+\subsection{Stability is persistence, not local bivalence}
+
+The modal-probabilistic refinement already distinguishes local status from stability
+through an accessibility range.  This distinction survives the recovery analysis.
+Local completeness and consistency are sufficient for a local \(\Tval\) or \(\Fval\)
+value; no modal stability assumption is needed for that classification.
+
+\begin{proposition}[Stable propagation of recovered classicality]
+\label{prop:stable-classical-recovery}
+Let \(v:W\to\{\Nval,\Tval,\Fval,\Bval\}\).  If \(v\) is stable at \(w\) and
+\(v(w)\) is evidentially regular, then every world accessible from \(w\) carries a
+classical value.  In fact stability gives the same classical value throughout the
+accessible range.
+\statusverified
+\end{proposition}
+
+This motivates a three-step reading of the original hypothesis:
+\[
+  \boxed{
+  \text{coverage}\;\to\;\text{no gap},\qquad
+  \text{consistency}\;\to\;\text{no glut},\qquad
+  \text{stability}\;\to\;\text{persistence}.}
+\]
+The third condition strengthens classicality dynamically or modally rather than
+creating local bivalence in the first place.
+
+\subsection{Deletion robustness and fragility}
+
+Gate~4 makes it possible to ask whether recovered classicality survives structural
+changes in its evidence base.  The answer already distinguishes redundancy from
+fragility.
+
+\begin{theorem}[Parallel deletion preserves regularity]
+\label{thm:parallel-deletion-preserves-regularity}
+Suppose \(x\neq y\) are evidence atoms of the same polarity and \(y\) remains in the
+ground set.  Deleting \(x\) preserves channel completeness, channel consistency, and
+therefore channel regularity exactly:
+\[
+  \mathsf{Regular}(E\setminus\{x\})
+  \Longleftrightarrow
+  \mathsf{Regular}(E).
+\]
+\statusverified
+\end{theorem}
+
+Thus local classical recovery is robust to deletion of a redundant parallel source.
+By contrast, the last source carrying a classical channel is structurally critical.
+
+\begin{theorem}[Unique-source deletion destroys completeness]
+\label{thm:unique-deletion-classical-to-gap}
+Suppose \(E\) is channel-regular and \(c\) is the unique representative of its
+polarity.  Then
+\[
+  \neg\mathsf{Complete}(E\setminus\{c\}).
+\]
+Moreover, every FDE value realized by the remaining evidence is \(\Nval\).
+\statusverified
+\end{theorem}
+
+This theorem gives a precise sense in which a classical state can be genuine but
+fragile.  The state is classical because the current evidence geometry is complete
+and consistent, yet removal of a structurally indispensable source reopens an
+evidential gap:
+\[
+  \Tval\to\Nval
+  \qquad\text{or}\qquad
+  \Fval\to\Nval.
+\]
+Classicality is therefore not merely a label on a value; its robustness depends on
+redundancy in the supporting evidence geometry.
+
+\subsection{Scope and next boundary}
+
+The current Gate~5 results establish a value-level and coarse-evidence recovery
+layer.  They do \emph{not} yet prove completeness of a classical proof calculus,
+classicality of every modal formula, or preservation under every evidence update.
+In particular, contraction from Gate~4 creates a new problem: ordinary polarity
+occupancy can remain while all same-polarity representatives become loops.  A future
+strengthening should therefore compare ordinary channel regularity with
+\emph{nonloop regularity}, where completeness is measured by residual independent
+information capacity rather than mere occupancy.
+
+The reliability refinement raises a second boundary.  A coarse state can be regular
+while distinct fine reliability profiles project to it.  Hence a later gate must ask
+whether classical recovery commutes with forgetting reliability and with structural
+minors.  The present theorem is intentionally prior to that question: it identifies
+the exact coarse conditions whose stability can subsequently be tested under finer
+projections.
