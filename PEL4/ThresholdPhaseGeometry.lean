@@ -71,8 +71,7 @@ theorem thresholdGlutAt_iff_not_consistent
   · intro h hCons
     exact hCons h
   · intro h
-    by_contra hNotBoth
-    exact h hNotBoth
+    exact Decidable.byContradiction fun hNotBoth => h hNotBoth
 
 /-- If the threshold is at most one half, complementary masses cannot both fall
 below it. Hence the threshold decision is always complete. -/
@@ -83,7 +82,8 @@ theorem complementaryMasses_atMostHalf_complete
     ThresholdCompleteAt c p n := by
   unfold ComplementaryMasses at hSum
   unfold ThresholdCompleteAt
-  by_contra hIncomplete
+  apply Decidable.byContradiction
+  intro hIncomplete
   have hp : p < c := by
     apply Rat.not_le.mp
     intro hcp
