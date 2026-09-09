@@ -182,6 +182,14 @@ No inclusive threshold regularizes the 50/50 tie & \texttt{halfHalf\_never\_thre
 Probability-integrity formula recovery needs only belief completeness & \texttt{eval\_isClassical\_of\_probabilityRecoveryAdmissible}, \texttt{eval\_isClassical\_of\_global\_probabilityRecoveryAdmissible} & \texttt{PEL4/ProbabilityIntegrityFormulaRecovery.lean}\\
 \addlinespace
 Nonclassical belief is exactly incompleteness on classical integrity profiles & \texttt{probabilityIntegrity\_classicalProfile\_beliefNonclassical\_iff\_incomplete} & \texttt{PEL4/ProbabilityIntegrityFormulaRecovery.lean}\\
+\addlinespace
+Split CPEL translations exactly recover both FDE support bits & \texttt{evalCPEL\_translation\_bits} & \texttt{PEL4/CPELClassicalCollapse.lean}\\
+\addlinespace
+Two translated Boolean channels represent the full FDE value & \texttt{eval\_eq\_evalCPELPair} & \texttt{PEL4/CPELClassicalCollapse.lean}\\
+\addlinespace
+Classical values are exactly the complement locus of the split channels & \texttt{classicalValue\_iff\_neg\_eq\_not\_pos}, \texttt{isClassicalValue\_iff\_splitTranslations\_complement} & \texttt{PEL4/CPELClassicalCollapse.lean}\\
+\addlinespace
+Probability recovery collapses and reconstructs the split representation from one Boolean channel & \texttt{probabilityRecovery\_splitTranslations\_collapse}, \texttt{probabilityRecovery\_eval\_reconstructed\_from\_tr\_pos} & \texttt{PEL4/CPELClassicalCollapse.lean}\\
 \bottomrule
 \end{longtable}
 \endgroup
