@@ -12,6 +12,7 @@ import PEL4.ThresholdPhaseGeometry
 import PEL4.ProbabilityIntegrityFormulaRecovery
 import PEL4.CPELClassicalCollapse
 import PEL4.CPELConsequenceBridge
+import PEL4.RecoveryConsequenceTransfer
 
 /-! Explicit manuscript claim inventory; MPFG has its separate strict audit.
 The associated strict checker rejects native-evaluation and project-specific axioms.
@@ -175,3 +176,19 @@ The associated strict checker rejects native-evaluation and project-specific axi
 #print axioms PEL4.LP_SemanticEntails_iff_CPELPositiveSemanticEntails
 #print axioms PEL4.ST_SemanticEntails_iff_CPELSplitSTSemanticEntails
 #print axioms PEL4.ST_derivation_sound_in_induced_CPEL
+
+-- Recovery-to-law and consequence transfer Gate 9 manuscript claims
+#print axioms PEL4.tolerantLEMAt_iff_gapFreeAt
+#print axioms PEL4.strictLEMAt_iff_classicalAt
+#print axioms PEL4.universalLPExplosionAt_iff_glutFreeAt
+#print axioms PEL4.classicalAt_iff_tolerantLEMAt_and_universalLPExplosionAt
+#print axioms PEL4.tolerantLEMAt_iff_split_complete
+#print axioms PEL4.universalLPExplosionAt_iff_split_consistent
+#print axioms PEL4.strictLEMAt_iff_split_complement
+#print axioms PEL4.strictLEMIn_of_probabilityRecoveryAdmissible
+#print axioms PEL4.universalLPExplosionIn_of_probabilityRecoveryAdmissible
+#print axioms PEL4.ST_iff_LP_SemanticEntailsIn_of_classicalAntecedent
+#print axioms PEL4.classicalRestricted_ST_iff_LP
+#print axioms PEL4.LP_SemanticEntails_implies_classicalRestricted
+#print axioms PEL4.contradiction_ST_SemanticEntails
+#print axioms PEL4.classicalRestricted_explosion_not_global

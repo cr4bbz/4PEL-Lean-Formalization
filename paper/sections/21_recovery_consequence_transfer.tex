@@ -1,0 +1,190 @@
+\section{Recovery transfer to laws and consequence}
+\label{sec:recovery-consequence-transfer}
+
+Gate~8 shows that the split CPEL translation represents the complete four-valued
+evaluation and that the classical sector is its Boolean anti-diagonal. Gate~9 asks
+what may be transferred from this local representation to familiar logical laws and
+consequence. The key methodological point is to distinguish three quantifier levels:
+\[
+\begin{array}{c}
+\text{one formula at one model/world point}\\[2pt]
+\Downarrow\\[2pt]
+\text{one formula throughout one fixed model}\\[2pt]
+\Downarrow\\[2pt]
+\text{consequence over every model and world.}
+\end{array}
+\]
+An implication between the first two levels does not by itself establish the third,
+and none of the results below is a completeness theorem for either the source or
+target proof system.
+
+\subsection{The two independent law boundaries}
+
+Write \(v=\llbracket\varphi\rrbracket_{m,w}\). Tolerant excluded middle means that
+\(\varphi\lor\neg\varphi\) has positive support. Universal local LP explosion means
+that \(\varphi\land\neg\varphi\) LP-entails every possible FDE conclusion value at
+that point. The latter quantifies over values rather than formulas so that the
+boundary does not depend on whether a particular fixed language and valuation happen
+to denote all four values.
+
+\begin{theorem}[Exact local recovery split]
+\label{thm:gate9-local-laws}
+For every \(m,w,\varphi\),
+\[
+\boxed{
+\begin{aligned}
+\operatorname{TLEM}_{m,w}(\varphi)
+&\Longleftrightarrow \operatorname{GapFree}(v),\\
+\operatorname{ULPExp}_{m,w}(\varphi)
+&\Longleftrightarrow \operatorname{GlutFree}(v),\\
+\operatorname{Classical}(v)
+&\Longleftrightarrow
+\operatorname{TLEM}_{m,w}(\varphi)
+\land
+\operatorname{ULPExp}_{m,w}(\varphi).
+\end{aligned}
+}
+\]
+Moreover, strict excluded middle is exact full recovery:
+\[
+\llbracket\varphi\lor\neg\varphi\rrbracket_{m,w}=\Tval
+\quad\Longleftrightarrow\quad
+\operatorname{Classical}(v).
+\]
+\statusverified
+\end{theorem}
+
+Thus LEM and LP explosion do not return as one indivisible classical package.
+Tolerant LEM removes \(\Nval\) but permits \(\Bval\); universal LP explosion removes
+\(\Bval\) but permits \(\Nval\). Their conjunction removes both nonclassical
+vertices, and strict-\(\Tval\) LEM already characterizes that conjunction.
+
+Gate~8 makes the same result visible directly in the split coordinates
+\[
+p=\llbracket\operatorname{tr}_{+}(\varphi)\rrbracket^C_{m,w},
+\qquad
+n=\llbracket\operatorname{tr}_{-}(\varphi)\rrbracket^C_{m,w}.
+\]
+
+\begin{corollary}[Coordinate form]
+\label{cor:gate9-coordinate-laws}
+At every model/world point,
+\[
+\boxed{
+\begin{aligned}
+\operatorname{TLEM}_{m,w}(\varphi)
+&\Longleftrightarrow (p=1\lor n=1),\\
+\operatorname{ULPExp}_{m,w}(\varphi)
+&\Longleftrightarrow \neg(p=1\land n=1),\\
+\operatorname{StrictLEM}_{m,w}(\varphi)
+&\Longleftrightarrow n=\neg p.
+\end{aligned}
+}
+\]
+\statusverified
+\end{corollary}
+
+Completeness of the evidence channels supplies tolerant LEM, consistency supplies LP
+explosion, and the anti-diagonal supplies both. This is a law-level reading of the
+same Boolean square, not a new target semantics.
+
+\subsection{Transfer from probability recovery}
+
+The pointwise equivalences lift by universal quantification over the worlds of one
+fixed model. In particular, the Gate~7 recursive condition
+\texttt{Formula.ProbabilityRecoveryAdmissible}, together with
+\texttt{ModelProbabilityIntegrity}, already yields classicality of the chosen
+formula at every world. Gate~9 composes this result with the exact law boundaries.
+
+\begin{corollary}[Probability recovery restores both laws]
+\label{cor:gate9-probability-laws}
+If \(m\) satisfies probability integrity and \(\varphi\) is probability-recovery
+admissible in \(m\), then throughout \(m\):
+\[
+\llbracket\varphi\lor\neg\varphi\rrbracket=\Tval
+\]
+and \(\varphi\land\neg\varphi\) LP-entails every FDE conclusion value.
+\statusverified
+\end{corollary}
+
+This is a formula- and model-relative theorem. Its premises must be proved for the
+formula in question; it does not state that every formula in every integrity model
+is recovered. Lockean incompleteness at a belief node remains a possible obstruction
+by Gate~7.
+
+\subsection{When ST and LP consequence coincide}
+
+Let \(\models^{m}_{\mathrm{ST}}\) and \(\models^{m}_{\mathrm{LP}}\) quantify over all
+worlds of one fixed model. LP consequence always implies ST consequence, since
+strict truth of the antecedent includes positive designation. The reverse direction
+needs only classicality of the antecedent throughout that model: a positively
+designated classical antecedent must be exactly \(\Tval\).
+
+\begin{theorem}[Model-relative consequence collapse]
+\label{thm:gate9-model-consequence-collapse}
+If \(\varphi\) is classical at every world of \(m\), then for every \(\psi\),
+\[
+\boxed{
+\varphi\models^{m}_{\mathrm{ST}}\psi
+\quad\Longleftrightarrow\quad
+\varphi\models^{m}_{\mathrm{LP}}\psi.
+}
+\]
+No classicality premise on the consequent is required for this equivalence.
+\statusverified
+\end{theorem}
+
+One can also quantify over every model/world point while restricting attention at
+each point to evaluations where the antecedent is classical. No classicality premise
+on the consequent is needed. On this \emph{antecedent-classical-restricted} domain,
+the ST and LP definitions again coincide. This is a semantic restriction of their
+domains; it is not an assertion that unrestricted ST and LP consequence coincide over
+all four-valued models. Unrestricted LP consequence always implies its
+antecedent-classical restriction because the latter tests fewer points.
+
+\subsection{Explosion exposes the global boundary}
+
+The consequence regime matters independently of recovery. A direct contradiction
+\(v\land\neg v\) is never strictly \(\Tval\), for any of the four input values.
+Consequently, direct contradiction entails every formula under unrestricted ST
+consequence: its strict antecedent condition is never met.
+
+LP consequence is different. At \(v=\Bval\), the direct contradiction is again
+\(\Bval\), hence designated. A one-world model in the artifact assigns one atom
+\(\Bval\) and a second atom \(\Fval\), verifying
+\[
+(p\land\neg p)\not\models_{\mathrm{LP}}q.
+\]
+At every point where the contradictory antecedent is recovered, the same explosion
+schema is valid for an arbitrary consequent, whether or not that consequent is
+classical. The artifact packages both facts into one separation theorem.
+
+\begin{theorem}[Recovered explosion is not global LP explosion]
+\label{thm:gate9-explosion-boundary}
+There are formulas for which antecedent-classical-restricted LP explosion holds
+without any recovery assumption on the consequent, while unrestricted LP consequence
+fails:
+\[
+\boxed{
+(p\land\neg p)\models^{\mathrm{class}}_{\mathrm{LP}}q
+\quad\land\quad
+(p\land\neg p)\not\models_{\mathrm{LP}}q.
+}
+\]
+\statuswitness
+\end{theorem}
+
+This separation blocks the tempting inference from local anti-diagonal behavior to a
+global completeness or consequence-collapse claim. Recovery transfers classical
+laws exactly on the recovered domain; it does not remove \(\Bval\) and \(\Nval\)
+from the ambient semantics.
+
+\paragraph{Gate boundary.}
+Gate~9 proves exact local characterizations of tolerant LEM, strict LEM, and
+universal LP explosion; rewrites them through the Gate~8 split representation;
+transfers Gate~7 probability recovery to those laws throughout a fixed model; and
+identifies a model-relative ST/LP collapse under classical antecedents. An explicit
+glut witness shows that antecedent-classical-restricted LP validates strictly more
+formula pairs than unrestricted LP consequence. No global classical completeness
+theorem, proof-system equivalence, arbitrary-CPEL-model theorem, or claim that every
+formula is recovery-admissible is made.

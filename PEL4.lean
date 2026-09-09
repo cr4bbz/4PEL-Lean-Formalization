@@ -86,6 +86,8 @@ import PEL4.CPELClassicalCollapse
 import PEL4.CPELClassicalCollapseAxiomAudit
 import PEL4.CPELConsequenceBridge
 import PEL4.CPELConsequenceBridgeAxiomAudit
+import PEL4.RecoveryConsequenceTransfer
+import PEL4.RecoveryConsequenceTransferAxiomAudit
 
 import PEL4.Dynamics
 import PEL4.ActionModel
