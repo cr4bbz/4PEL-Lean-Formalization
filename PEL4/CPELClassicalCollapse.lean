@@ -9,15 +9,18 @@ namespace PEL4
 
 The legacy translation sends positive and negative 4-PEL support into two classical
 atomic channels `(p, true)` and `(p, false)`. This file gives that target syntax an
-explicit Boolean semantics over an existing finite 4-PEL model and proves two facts:
+explicit Boolean semantics over an existing finite 4-PEL model and proves three facts:
 
 1. the positive and negative CPEL translations reproduce the two FDE support bits
    exactly, even outside the recovered classical sector;
-2. once Gate 7 recovers a classical `{T,F}` value, the two translated channels are
-   Boolean complements, so the split representation collapses to one classical bit.
+2. the pair of translated Boolean values is therefore an exact representation of the
+   full four-valued evaluation;
+3. classicality is exactly the locus on which the negative channel is the Boolean
+   complement of the positive channel, so the two-bit representation collapses to one
+   classical degree of freedom.
 
-This is a semantic translation theorem. It does not by itself prove completeness of
-CPEL or a canonical-model theorem for the source logic.
+This is a semantic translation and representation theorem. It does not by itself
+prove completeness of CPEL or a canonical-model theorem for the source logic.
 -/
 
 /-- Boolean evaluation of the split CPEL target over a 4-PEL model. The Boolean tag
@@ -101,6 +104,49 @@ theorem evalCPEL_tr_neg
     evalCPEL m w (tr_neg phi) = (eval m w phi).neg :=
   (evalCPEL_translation_bits m phi w).2
 
+/-- Package the two translated CPEL channels back into an FDE value. -/
+def evalCPELPair
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (w : W)
+    (phi : Formula Atom Ag) : FDEValue :=
+  { pos := evalCPEL m w (tr_pos phi)
+    neg := evalCPEL m w (tr_neg phi) }
+
+/-- Unconditional representation theorem: every 4-PEL formula value is exactly the
+pair of its positive and negative CPEL translations. This holds on all four values,
+not merely on the recovered classical slice. -/
+theorem eval_eq_evalCPELPair
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (w : W)
+    (phi : Formula Atom Ag) :
+    eval m w phi = evalCPELPair m w phi := by
+  apply FDEValue.ext
+  · exact (evalCPEL_tr_pos m w phi).symm
+  · exact (evalCPEL_tr_neg m w phi).symm
+
+/-- A four-valued point is classical exactly when its negative support bit is the
+Boolean complement of its positive support bit. This identifies the classical sector
+inside the two-bit evidence square independently of formula syntax. -/
+theorem classicalValue_iff_neg_eq_not_pos
+    (v : FDEValue) :
+    IsClassicalValue v ↔ v.neg = !v.pos := by
+  cases v with
+  | mk pos neg =>
+      cases pos <;> cases neg <;>
+        simp [IsClassicalValue, FDEValue.T, FDEValue.F]
+
+/-- Exact split-collapse characterization: a formula has a classical FDE value iff
+the two translated CPEL channels are Boolean complements. -/
+theorem isClassicalValue_iff_splitTranslations_complement
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (w : W)
+    (phi : Formula Atom Ag) :
+    IsClassicalValue (eval m w phi) ↔
+      evalCPEL m w (tr_neg phi) =
+        !(evalCPEL m w (tr_pos phi)) := by
+  rw [evalCPEL_tr_neg, evalCPEL_tr_pos]
+  exact classicalValue_iff_neg_eq_not_pos (eval m w phi)
+
 /-- On the recovered classical slice, the two split translations are semantically
 redundant: the negative translation is exactly the Boolean complement of the positive
 translation. -/
@@ -110,9 +156,8 @@ theorem splitTranslations_complement_of_classical
     (phi : Formula Atom Ag)
     (hClassical : IsClassicalValue (eval m w phi)) :
     evalCPEL m w (tr_neg phi) =
-      !(evalCPEL m w (tr_pos phi)) := by
-  rw [evalCPEL_tr_neg, evalCPEL_tr_pos]
-  exact classicalValue_neg_eq_not_pos (eval m w phi) hClassical
+      !(evalCPEL m w (tr_pos phi)) :=
+  (isClassicalValue_iff_splitTranslations_complement m w phi).1 hClassical
 
 /-- Reconstruct a classical FDE value from one Boolean support bit. -/
 def FDEValue.ofClassicalBool (b : Bool) : FDEValue :=
