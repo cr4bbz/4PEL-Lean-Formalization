@@ -6,10 +6,10 @@ terminology is governed by `docs/VERIFICATION_POLICY.md`.
 
 ## Active development baseline
 
-- Branch: `research/recovered-classical-equivalence-gate17`
+- Branch: `research/classical-calculus-soundness-gate18`
 - Lean toolchain: `leanprover/lean4:v4.31.0`
 - Root library target: `PEL4`
-- Current verified gate: Gate 17, recovered classical consequence equivalence
+- Current verified gate: Gate 18, independent classical-calculus soundness
 
 The branch is a development baseline, not a claim that every independent
 research branch has already been merged. In particular, the Alexandrov and
@@ -37,12 +37,13 @@ core four-valued probabilistic epistemic logic
 -> maximality and necessity of the recursive classical fragment (Gate 15)
 -> independent Boolean probabilistic-epistemic semantics (Gate 16)
 -> recovered truth and consequence equivalence (Gate 17)
+-> independent classical calculus and recovered soundness transfer (Gate 18)
 ```
 
 The latest gate boundary is documented in
-`docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md`.
+`docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md`.
 The corresponding manuscript currency and layout review is documented in
-`docs/PAPER_REVIEW_GATE12.md`.
+`docs/PAPER_REVIEW_GATE17.md`.
 
 ## Directory responsibilities
 
@@ -64,6 +65,7 @@ From the repository root:
 
 ```powershell
 lake build
+lake env lean PEL4/ClassicalModalCalculusAxiomAudit.lean
 lake env lean PEL4/RecoveredClassicalConsequenceEquivalenceAxiomAudit.lean
 lake env lean PEL4/IndependentClassicalModalSemanticsAxiomAudit.lean
 lake env lean PEL4/MaximalClassicalLawFragmentAxiomAudit.lean

@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/recovered-classical-equivalence-gate17`. Start with
+`research/classical-calculus-soundness-gate18`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -398,6 +398,17 @@ on that sector. This is not an unrestricted collapse or a proof-system
 completeness theorem. See
 [`docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md`](docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md).
 
+### 27. Independent classical-calculus soundness
+
+Gate 18 introduces a separate classical derivability relation with
+propositional rules and monotonicity rules for knowledge, possibility, and
+threshold belief. Lean proves soundness over independent classical models with
+finite probability integrity and transports every such derivation to LP and ST
+consequence in the recovered 4-PEL sector. A finite weak-measure witness shows
+why probability integrity is necessary for belief monotonicity. Completeness
+and decidability remain open. See
+[`docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md`](docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md).
+
 ---
 
 ## Paradox map
@@ -507,12 +518,14 @@ PEL4/RecursiveClassicalLawProfile.lean
 PEL4/MaximalClassicalLawFragment.lean
 PEL4/IndependentClassicalModalSemantics.lean
 PEL4/RecoveredClassicalConsequenceEquivalence.lean
+PEL4/ClassicalModalCalculus.lean
 ```
 
 Research notes:
 
 ```text
 docs/REPOSITORY_MAP.md
+docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md
 docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md
 docs/PAPER_REVIEW_GATE17.md
 docs/INDEPENDENT_CLASSICAL_MODAL_SEMANTICS_GATE16.md
@@ -542,7 +555,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/recovered-classical-equivalence-gate17
+git checkout research/classical-calculus-soundness-gate18
 lake build
 ```
 
@@ -577,17 +590,19 @@ The project aims to distinguish **theorem, finite model, interpretation, and nov
 
 ## Current research direction
 
-The active line has completed Gates 14--17. Recursive tolerant LEM plus
+The active line has completed Gates 14--18. Recursive tolerant LEM plus
 universal LP EFQ now exactly characterizes the compositional classical sector;
 that sector is maximal relative to the declared recursive closure notion. A
 separate Boolean probabilistic-epistemic semantics supplies truth
 preservation/reflection and model-relative consequence equivalence on recovered
 formulas. This remains narrower than unrestricted global collapse or
-proof-system completeness. Near-term priorities are:
+proof-system completeness. Gate 18 now supplies a sound independent classical
+calculus, including a strong-probability boundary for belief monotonicity.
+Near-term priorities are:
 
-1. choose the exact Gate-18 proof-theoretic target: soundness only,
-   soundness/completeness, or a larger decidability/canonical-model package;
-2. after Gate 18, classify nested modal recovery across finite update sequences;
+1. classify nested modal recovery across finite update sequences;
+2. assess whether a later proof-theory gate should replace the single-premise
+   calculus by finite contexts before attempting completeness;
 3. connect matroid deletion/contraction to explicit epistemic transformations
    without identifying the two by stipulation;
 4. eliminate the 20 convenience axioms listed in `docs/AXIOM_AUDIT.md` and

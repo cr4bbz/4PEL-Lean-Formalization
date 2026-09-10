@@ -113,6 +113,8 @@ import PEL4.IndependentClassicalModalSemantics
 import PEL4.IndependentClassicalModalSemanticsAxiomAudit
 import PEL4.RecoveredClassicalConsequenceEquivalence
 import PEL4.RecoveredClassicalConsequenceEquivalenceAxiomAudit
+import PEL4.ClassicalModalCalculus
+import PEL4.ClassicalModalCalculusAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics

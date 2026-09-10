@@ -61,7 +61,7 @@ The manuscript is intentionally narrower than the complete 4-PEL repository. Pre
 
 ## Verification boundary
 
-The current branch has passed a fresh local Lean 4.31 `lake build` with 167
+The current branch has passed a fresh local Lean 4.31 `lake build` with 169
 jobs. The live central manuscript audit checks 157 declarations, the separate
 MPFG audit checks 24 declarations, and the script suite contains six passing
 tests. All selected dependency chains use only the standard allow-list
@@ -161,9 +161,9 @@ The FDE phase figure is generated directly from TikZ source. It visualizes the t
 
 ## Next paper gate
 
-The Lean development now includes Gates 10--17. None is yet part of the version
+The Lean development now includes Gates 10--18. None is yet part of the version
 0.13 manuscript. A paper integration should first present Gates 10--13 as the
-dynamic recovery chain, then Gates 14--17 as a separate classical-boundary
+dynamic recovery chain, then Gates 14--18 as a separate classical-boundary
 chain:
 
 ```text
@@ -176,10 +176,11 @@ recursive LEM + EFQ
 The manuscript must preserve the proved scope: maximality is relative to the
 declared recursive-fragment comparison class, and consequence equivalence is
 model-relative and recovery-guarded. No proof-system completeness or
-unrestricted classical collapse is established. Gate 18 will determine whether
-the next manuscript increment should add a sound calculus only or attempt a
-full completeness result. Finite update sequences are scheduled after that
-decision.
+unrestricted classical collapse is established. Gate 18 now adds an independent
+calculus and proves soundness, including the probability-integrity requirement
+for belief monotonicity; it does not prove completeness. Finite update sequences
+are scheduled next, while the stronger proof-theoretic program is deferred
+until the calculus presentation and threshold-belief axioms are reassessed.
 
 The current post-Gate-17 manuscript review and version-0.14 integration plan is
 recorded in [`../docs/PAPER_REVIEW_GATE17.md`](../docs/PAPER_REVIEW_GATE17.md).

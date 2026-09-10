@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/recovered-classical-equivalence-gate17`.
+Active baseline: `research/classical-calculus-soundness-gate18`.
 
-Fresh verification on this baseline: Lean 4.31, 167 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 169 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -188,7 +188,8 @@ Boolean coordinates recover the positive and negative FDE bits. On classical
 values they lie on the anti-diagonal and collapse to one Boolean coordinate.
 Gate 8 itself does not define an independent CPEL model class or complete
 calculus. Gate 16 later adds a separate Boolean modal model class; an
-independent proof calculus and completeness theorem remain open for Gate 18.
+Gate 18 now supplies an independent sound calculus. Semantic completeness,
+canonical models, and decidability remain open.
 See `docs/CPEL_CLASSICAL_COLLAPSE_GATE8.md`.
 
 ### A23. Which classical laws return under recovery?
@@ -461,20 +462,21 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 17
+## D. Research order after Gate 18
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
 COMPLETED Gate 15: maximality and necessity of the static recovery sector
 COMPLETED Gate 16: independent Boolean probabilistic-epistemic semantics
 COMPLETED Gate 17: recovered truth and consequence equivalence
+COMPLETED Gate 18: independent classical calculus and soundness
 
-NEXT DECISION Gate 18: choose proof-theoretic scope
-  a. sound classical calculus
-  b. soundness plus semantic completeness
-  c. completeness plus decidability/canonical-model package
+NEXT: classify nested modal recovery across finite update sequences
 
-AFTER Gate 18: classify nested modal recovery across finite update sequences
+DEFERRED PROOF THEORY:
+1. assess finite-context versus single-premise presentation
+2. specify the intended threshold-belief axiomatics
+3. only then attempt semantic completeness or decidability
 
 LATER:
 1. connect matroid minors to explicit epistemic transformations
