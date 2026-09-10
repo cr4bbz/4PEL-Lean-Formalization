@@ -1,0 +1,26 @@
+import PEL4.DirectionalThresholdRecovery
+
+/-!
+# Gate 12 directional threshold-recovery axiom audit
+-/
+
+#print axioms PEL4.thresholdStraddles_iff_rises_or_falls
+#print axioms PEL4.thresholdRises_iff_decisions
+#print axioms PEL4.thresholdFalls_iff_decisions
+#print axioms PEL4.thresholdMotion_exhaustive
+#print axioms PEL4.thresholdPair_T_to_N_iff
+#print axioms PEL4.thresholdPair_F_to_N_iff
+#print axioms PEL4.thresholdPair_N_to_nonGap_iff
+#print axioms PEL4.thresholdPair_T_to_B_iff
+#print axioms PEL4.thresholdPair_F_to_B_iff
+#print axioms PEL4.classical_thresholdPair_to_N_iff_directionalGap
+#print axioms PEL4.classical_thresholdPair_to_B_iff_directionalGlut
+#print axioms PEL4.beliefThresholdComplete_iff_evalModal_bel_ne_N
+#print axioms PEL4.conditionalization_classical_belief_to_N_iff_directionalGap
+#print axioms PEL4.conditionalization_classical_belief_to_B_iff_directionalGlut
+#print axioms PEL4.conditionalization_N_belief_becomes_complete_iff_rise
+#print axioms PEL4.postUpdateBeliefCompleteAt_iff_noDirectionalGapAt
+#print axioms PEL4.compositionalRecovery_conditionalize_iff_noDirectionalGap
+#print axioms PEL4.dynamic_instability_b_realizes_directionalGap
+#print axioms PEL4.dynamic_restoration_b_realizes_thresholdRise
+#print axioms PEL4.dynamic_reachability_T_to_B_realizes_directionalGlut

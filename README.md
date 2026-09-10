@@ -8,7 +8,14 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > **Research status:** This repository contains machine-checked theorems, executable finite models, and explicitly marked research directions. Claims described as **Lean-verified** have compiled successfully on the active research branch with Lean 4.31. Interpretive names and broader philosophical theses remain working research terminology unless stated otherwise.
 
 > [!NOTE]
-> The paper PDF in the repository is a snapshot of an earlier stage. The active branch contains substantial results not yet incorporated into that manuscript.
+> `paper/main.pdf` is the current 54-page working-manuscript snapshot for this
+> branch. Results developed only on independent research branches are not
+> included unless they have been explicitly integrated.
+
+The current development baseline is
+`research/recovered-classical-equivalence-gate17`. Start with
+[`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
+gate sequence, verification entry points, and independent branch boundaries.
 
 ---
 
@@ -252,6 +259,145 @@ generated, not yet derived from a substantive axiology. A focused axiom audit
 is compiled in CI. See
 `docs/FINITE_FINE_GRAINEDNESS_4PEL.md` for hypotheses and formalization limits.
 
+### 14. Matroid evidence, circuits, and minors
+
+The current research line represents positive and negative evidence channels
+through a finite matroid-style closure interface. Lean verifies the channel
+closure model, its FDE realization, the classification of channel circuits,
+circuit elimination, and deletion/contraction semantics. Parallel deletion can
+preserve a channel, while deleting its unique representative destroys support;
+contraction separates visible occupancy from residual nonloop capacity.
+
+### 15. Structural and formula-level classical recovery
+
+Classical values are recovered internally rather than postulated globally:
+
+```text
+complete evidence + consistent evidence
+iff
+FDE value is T or F.
+```
+
+The recovered slice is closed under propositional negation, conjunction, and
+disjunction. Atomic classicality propagates through the propositional fragment,
+but does not by itself force threshold belief to be classical. Belief and modal
+recovery therefore require their own profile and threshold hypotheses.
+
+### 16. Lockean threshold phase boundary
+
+For complementary classical support masses, the threshold regime determines
+which nonclassical defect remains possible. At-most-half thresholds exclude
+gaps but allow gluts; supermajority thresholds exclude gluts but allow gaps.
+Probability integrity plus threshold completeness gives the exact recovery
+condition for classical belief.
+
+### 17. CPEL split representation and collapse
+
+The positive and negative translations recover the two FDE support bits exactly.
+Every 4-PEL evaluation is therefore represented by an induced Boolean pair. On
+the classical anti-diagonal the two coordinates become complements, and the
+representation collapses to one Boolean bit. LP and ST consequence also admit
+exact translations into this model-induced CPEL evaluator.
+
+### 18. Recovery transfer to laws and consequence
+
+Gate 9 transfers local recovery to logical laws and restricted consequence:
+
+```text
+tolerant LEM     iff gap-free
+universal LP EFQ iff glut-free
+strict LEM       iff classical
+classical        iff tolerant LEM and universal LP EFQ.
+```
+
+ST and LP consequence coincide when restricted to evaluations with a classical
+antecedent. This is not unrestricted global classical consequence: an explicit
+finite countermodel still refutes global LP explosion. See
+[`docs/RECOVERY_CONSEQUENCE_TRANSFER_GATE9.md`](docs/RECOVERY_CONSEQUENCE_TRANSFER_GATE9.md).
+
+### 19. Compositional modal recovery
+
+Gate 10 introduces a recursive recovery contract for the full `ModalFormula`
+language. Propositional constructors preserve recovery; knowledge and raw
+possibility require recovery throughout the accessible profile; threshold
+belief additionally requires threshold completeness. Under probability
+integrity, every recovered modal formula evaluates classically. A globally
+recovered antecedent then makes model-relative ST and LP consequence coincide.
+The Gate-6 threshold-gap witness confirms that classical atoms alone still do
+not recover belief. See
+[`docs/COMPOSITIONAL_CLASSICAL_RECOVERY_GATE10.md`](docs/COMPOSITIONAL_CLASSICAL_RECOVERY_GATE10.md).
+
+### 20. Dynamic compositional recovery
+
+Gate 11 connects the recovery contract to admissible conditionalization. Given
+prior recovery, posterior recovery holds exactly when every reachable belief
+node remains threshold-complete after the update. Threshold-side robustness
+also preserves classical antecedent evaluation and therefore the model-relative
+ST/LP collapse. Existing finite models now prove both recovery fracture
+(`T/T/T -> T/N/T`) and recovery restoration (`T/N/T -> T/T/T`), so the dynamic
+behavior is non-monotone. See
+[`docs/DYNAMIC_COMPOSITIONAL_RECOVERY_GATE11.md`](docs/DYNAMIC_COMPOSITIONAL_RECOVERY_GATE11.md).
+
+### 21. Directional threshold-wall recovery
+
+Gate 12 orients the existing threshold walls. Every support coordinate either
+stays below, rises, falls, or stays above threshold. From a prior classical
+belief, `T -> N` and `F -> N` are exactly downward loss patterns, while
+`T -> B` and `F -> B` are exactly upward conflict patterns. A prior gap becomes
+complete exactly when at least one support side rises. The classification lifts
+recursively: prior recovery plus probability integrity makes posterior recovery
+equivalent to the absence of a directed gap pattern at every reachable belief
+node. See
+[`docs/DIRECTIONAL_THRESHOLD_RECOVERY_GATE12.md`](docs/DIRECTIONAL_THRESHOLD_RECOVERY_GATE12.md).
+
+### 22. Probability integrity under conditionalization
+
+Gate 13 proves that no additional update axioms are needed to preserve the
+strong finite-probability contract. On a probability-integrity prior, the
+existing admissibility structure is equivalent to positive local evidence mass
+alone; its empty- and total-mass obligations are derivable. Every admissible
+conditionalization therefore remains probability-integrity-certified.
+
+This closes the Gate-12 boundary: for a previously recovered formula, absence
+of reachable directed gaps is exactly recursive semantic classicality in the
+posterior model. It also restores the model-relative ST/LP coincidence without
+requiring full value invariance. See
+[`docs/CONDITIONALIZATION_PROBABILITY_INTEGRITY_GATE13.md`](docs/CONDITIONALIZATION_PROBABILITY_INTEGRITY_GATE13.md).
+
+### 23. Recursive LEM/EFQ characterization
+
+Gate 14 lifts tolerant excluded middle and universal LP explosion from a single
+value to every subformula and accessible modal operand. Lean proves that this
+recursive law profile is exactly `CompositionallyClassical`; with probability
+integrity it is also exactly the compositional recovery certificate. See
+[`docs/RECURSIVE_CLASSICAL_LAW_PROFILE_GATE14.md`](docs/RECURSIVE_CLASSICAL_LAW_PROFILE_GATE14.md).
+
+### 24. Maximal recursive classical fragment
+
+Gate 15 proves that `CompositionallyClassicalAt` is the greatest fragment among
+candidate predicates required to satisfy the complete recursive LEM/EFQ
+traversal. Finite witnesses show that each law axis is independently necessary
+and that root-level classicality can mask a nonclassical subformula. See
+[`docs/MAXIMAL_CLASSICAL_LAW_FRAGMENT_GATE15.md`](docs/MAXIMAL_CLASSICAL_LAW_FRAGMENT_GATE15.md).
+
+### 25. Independent classical modal semantics
+
+Gate 16 adds a genuinely separate Boolean probabilistic-epistemic model and
+evaluator, with ordinary universal knowledge and existential possibility.
+Projection from 4-PEL preserves and reflects the complete formula value exactly
+on the recovered sector. See
+[`docs/INDEPENDENT_CLASSICAL_MODAL_SEMANTICS_GATE16.md`](docs/INDEPENDENT_CLASSICAL_MODAL_SEMANTICS_GATE16.md).
+
+### 26. Recovered classical consequence equivalence
+
+Gate 17 proves truth preservation and reflection and a model-relative
+conservativity theorem: for recovered antecedent and consequent, 4-PEL LP
+consequence agrees with ordinary consequence in the independent classical
+model. Under probability integrity, ST, LP, and classical consequence coincide
+on that sector. This is not an unrestricted collapse or a proof-system
+completeness theorem. See
+[`docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md`](docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md).
+
 ---
 
 ## Paradox map
@@ -339,9 +485,47 @@ PEL4/Paradoxes/ChurchFitchPhaseLandscape.lean
 PEL4/Paradoxes/ChurchFitchClassification.lean
 ```
 
+Current recovery-track modules include:
+
+```text
+PEL4/MatroidEvidence.lean
+PEL4/MatroidEvidenceCircuits.lean
+PEL4/MatroidEvidenceMinors.lean
+PEL4/ClassicalRecovery.lean
+PEL4/FormulaClassicalRecovery.lean
+PEL4/ModalFormulaClassicalRecovery.lean
+PEL4/LockeanThresholdPhaseTransition.lean
+PEL4/ProbabilityIntegrityFormulaRecovery.lean
+PEL4/CPELClassicalCollapse.lean
+PEL4/CPELConsequenceBridge.lean
+PEL4/RecoveryConsequenceTransfer.lean
+PEL4/CompositionalClassicalRecovery.lean
+PEL4/DynamicCompositionalRecovery.lean
+PEL4/DirectionalThresholdRecovery.lean
+PEL4/ConditionalizationProbabilityIntegrity.lean
+PEL4/RecursiveClassicalLawProfile.lean
+PEL4/MaximalClassicalLawFragment.lean
+PEL4/IndependentClassicalModalSemantics.lean
+PEL4/RecoveredClassicalConsequenceEquivalence.lean
+```
+
 Research notes:
 
 ```text
+docs/REPOSITORY_MAP.md
+docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md
+docs/INDEPENDENT_CLASSICAL_MODAL_SEMANTICS_GATE16.md
+docs/MAXIMAL_CLASSICAL_LAW_FRAGMENT_GATE15.md
+docs/RECURSIVE_CLASSICAL_LAW_PROFILE_GATE14.md
+docs/CONDITIONALIZATION_PROBABILITY_INTEGRITY_GATE13.md
+docs/DIRECTIONAL_THRESHOLD_RECOVERY_GATE12.md
+docs/PAPER_REVIEW_GATE12.md
+docs/DYNAMIC_COMPOSITIONAL_RECOVERY_GATE11.md
+docs/COMPOSITIONAL_CLASSICAL_RECOVERY_GATE10.md
+docs/RECOVERY_CONSEQUENCE_TRANSFER_GATE9.md
+docs/CPEL_CLASSICAL_COLLAPSE_GATE8.md
+docs/CLASSICAL_RECOVERY_GATE5.md
+docs/MATROID_EVIDENCE.md
 docs/MODAL_KNOWLEDGE_CLASSIFICATION.md
 docs/PARADOX_TRANSPORT_RESEARCH.md
 docs/RESEARCH_QUESTIONS.md
@@ -357,11 +541,14 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/preface-case-study
+git checkout research/recovered-classical-equivalence-gate17
 lake build
 ```
 
-A successful `lake build` checks every module imported by `PEL4.lean`.
+A successful `lake build` checks every module imported by `PEL4.lean`. The
+separate manuscript, MPFG, and population-axiology audit surfaces are exercised
+by CI; exact commands and exclusions are listed in
+[`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md).
 
 ---
 
@@ -374,9 +561,13 @@ Several distinctions remain explicit:
 - Primitive raw `Diamond` is not definitionally the same as `not K not`.
 - The Liar and Gödel-inspired modules are not complete formalizations of semantic diagonalization or incompleteness.
 - Conflict-Nerve Euler/signature results are formalized; general homology and persistence are not.
-- Dynamic evidence-stable knowledge remains largely open.
-- The zero-evidence conditionalization boundary in the dynamics layer still needs repair before strong general dynamic claims.
+- Dynamic classification is complete for the current finite conditionalization and affine-path interfaces; arbitrary update-generated, continuous, and measure-theoretic paths remain open.
+- Conditionalization requires the explicit `ConditionalizationAdmissible` safety contract; no update at zero local evidence mass is claimed.
 - Exact necessity/minimality of every modal frame correspondence is not yet proved.
+- Gate 8's split CPEL semantics remains model-induced. Gate 16 now supplies a
+  separate Boolean modal model class, but no independent proof calculus or
+  completeness theorem is yet supplied.
+- The recovered ST/LP coincidence is antecedent-classical-restricted, not an unrestricted global collapse.
 - Novelty claims for the combined structural and modal terminology require a systematic literature audit.
 
 The project aims to distinguish **theorem, finite model, interpretation, and novelty claim** rather than collapse them into one layer.
@@ -385,24 +576,27 @@ The project aims to distinguish **theorem, finite model, interpretation, and nov
 
 ## Current research direction
 
-The `research/modal-probabilistic-fine-graining` branch adds the **MPFG-1** gate
-on top of population Gate 4: reliability-tagged six-cell probabilities with an
-affine projection to the existing four-cell simplex, unchanged raw threshold
-belief, and an exact local fibre-rigidity criterion for lifting modal stability.
-Finite witnesses separate fine mass, coarse mass, and threshold-status stability.
-Validation status and the staged update agenda are in
-[`docs/MODAL_PROBABILISTIC_FINE_GRAINING.md`](docs/MODAL_PROBABILISTIC_FINE_GRAINING.md).
-The gate does not replace `FDEValue` or the existing evidence-stable `K`.
+The active line has completed Gates 14--17. Recursive tolerant LEM plus
+universal LP EFQ now exactly characterizes the compositional classical sector;
+that sector is maximal relative to the declared recursive closure notion. A
+separate Boolean probabilistic-epistemic semantics supplies truth
+preservation/reflection and model-relative consequence equivalence on recovered
+formulas. This remains narrower than unrestricted global collapse or
+proof-system completeness. Near-term priorities are:
 
-The detailed agenda is maintained in `docs/RESEARCH_QUESTIONS.md`. The modal axiom-4/axiom-5 discovery phase is now consolidated. Near-term priorities are:
+1. choose the exact Gate-18 proof-theoretic target: soundness only,
+   soundness/completeness, or a larger decidability/canonical-model package;
+2. after Gate 18, classify nested modal recovery across finite update sequences;
+3. connect matroid deletion/contraction to explicit epistemic transformations
+   without identifying the two by stipulation;
+4. eliminate the 20 convenience axioms listed in `docs/AXIOM_AUDIT.md` and
+   complete the product-update prototype;
+5. reconcile independent branches, especially the unmerged Alexandrov and
+   persistent phase-nerve results;
+6. perform the systematic literature and novelty audit required before
+   publication-level priority claims.
 
-1. classify interaction between evidence-stable `K` and probabilistic `B`;
-2. prove sharper necessity/minimality results for modal frame correspondences;
-3. repair the zero-evidence conditionalization boundary;
-4. study dynamic preservation and destruction of `K` under update;
-5. prove global independence/minimality results for Church-Fitch packages;
-6. expand the structural-transport abstraction across paradox families;
-7. deepen Conflict-Nerve topology to homology and persistence;
-8. perform a systematic literature/novelty audit before publication claims.
+The detailed backlog remains in `docs/RESEARCH_QUESTIONS.md`; the authoritative
+structural overview is `docs/REPOSITORY_MAP.md`.
 
 4-PEL is best read as a machine-checkable laboratory for the geometry, dynamics, modal structure, and information loss behind epistemic paradoxes.

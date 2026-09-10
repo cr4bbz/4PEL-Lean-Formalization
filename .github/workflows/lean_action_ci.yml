@@ -12,6 +12,24 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Audit Gate 17 recovered classical consequence equivalence
+        run: lake env lean PEL4/RecoveredClassicalConsequenceEquivalenceAxiomAudit.lean
+      - name: Audit Gate 16 independent classical modal semantics
+        run: lake env lean PEL4/IndependentClassicalModalSemanticsAxiomAudit.lean
+      - name: Audit Gate 15 maximal recursive classical fragment
+        run: lake env lean PEL4/MaximalClassicalLawFragmentAxiomAudit.lean
+      - name: Audit Gate 14 recursive LEM-EFQ profile
+        run: lake env lean PEL4/RecursiveClassicalLawProfileAxiomAudit.lean
+      - name: Audit Gate 13 conditionalization-integrity assumptions
+        run: lake env lean PEL4/ConditionalizationProbabilityIntegrityAxiomAudit.lean
+      - name: Audit Gate 12 directional recovery assumptions
+        run: lake env lean PEL4/DirectionalThresholdRecoveryAxiomAudit.lean
+      - name: Audit Gate 11 dynamic recovery assumptions
+        run: lake env lean PEL4/DynamicCompositionalRecoveryAxiomAudit.lean
+      - name: Audit Gate 10 compositional recovery assumptions
+        run: lake env lean PEL4/CompositionalClassicalRecoveryAxiomAudit.lean
+      - name: Verify project axiom inventory
+        run: python3 scripts/check_project_axioms.py
       - name: Audit finite-fine-grainedness theorem assumptions
         run: lake env lean PEL4/PopulationAxiology/AxiomAudit.lean
       - name: Audit modal-probabilistic refinement assumptions

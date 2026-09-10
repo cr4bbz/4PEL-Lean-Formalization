@@ -1,0 +1,30 @@
+import PEL4.ConditionalizationProbabilityIntegrity
+
+/-!
+# Gate 13 conditionalization-integrity axiom audit
+
+Selected structural helpers, the quotient-measure preservation theorem, and
+the posterior classicality/consequence chain.
+-/
+
+#print axioms PEL4.filterWorlds_nodup
+#print axioms PEL4.intersectWorlds_subset_left
+#print axioms PEL4.intersectWorlds_subset_right
+#print axioms PEL4.intersectWorlds_nodup
+#print axioms PEL4.intersectWorlds_monotone_left
+#print axioms PEL4.intersectWorlds_extensional_left
+#print axioms PEL4.intersectWorlds_disjoint_left
+#print axioms PEL4.intersectWorlds_append
+#print axioms PEL4.intersectWorlds_left_extensional_right
+#print axioms PEL4.conditionalizationEvidenceEvent_nodup
+#print axioms PEL4.conditionalizationEvidenceEvent_subset
+#print axioms PEL4.conditionalizationAdmissible_iff_positiveMass_of_probabilityIntegrity
+#print axioms PEL4.conditionalizationEvidenceMass_pos
+#print axioms PEL4.conditionalize_preserves_probabilityIntegrity
+#print axioms PEL4.conditionalizeStrong
+#print axioms PEL4.evalModal_isClassical_of_compositionallyClassicalAt
+#print axioms PEL4.compositionalRecoveryAt_iff_compositionallyClassicalAt
+#print axioms PEL4.compositionalRecovery_iff_compositionallyClassical
+#print axioms PEL4.compositionalClassical_conditionalize_iff_noDirectionalGap
+#print axioms PEL4.evalModal_conditionalize_isClassical_of_noDirectionalGap
+#print axioms PEL4.modalST_iff_LP_after_conditionalize_of_noDirectionalGap

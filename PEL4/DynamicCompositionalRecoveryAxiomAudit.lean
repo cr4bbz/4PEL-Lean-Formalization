@@ -1,0 +1,17 @@
+import PEL4.DynamicCompositionalRecovery
+
+/-!
+# Gate 11 dynamic-recovery axiom audit
+-/
+
+#print axioms PEL4.compositionalRecoveryAt_conditionalize_iff_postUpdateBeliefCompleteAt
+#print axioms PEL4.compositionalRecovery_conditionalize_iff_postUpdateBeliefComplete
+#print axioms PEL4.evalModal_conditionalize_isClassical_of_recovery_and_robust
+#print axioms PEL4.modalST_iff_LP_after_conditionalize_of_recovery_and_robust
+#print axioms PEL4.beliefThresholdComplete_of_evalModal_bel_eq_T
+#print axioms PEL4.not_beliefThresholdComplete_of_evalModal_bel_eq_N
+#print axioms PEL4.dynamic_instability_belP_recovered_before
+#print axioms PEL4.dynamic_instability_belP_not_recovered_after
+#print axioms PEL4.dynamic_restoration_belP_not_recovered_before
+#print axioms PEL4.dynamic_restoration_belP_recovered_after
+#print axioms PEL4.conditionalization_recovery_is_not_monotone

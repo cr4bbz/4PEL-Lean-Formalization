@@ -1,0 +1,10 @@
+import PEL4.RecoveredClassicalConsequenceEquivalence
+
+/-! # Gate 17 recovered consequence-equivalence axiom audit -/
+
+#print axioms PEL4.evalClassicalProjection_true_iff_evalModal_T
+#print axioms PEL4.evalClassicalProjection_false_iff_evalModal_F
+#print axioms PEL4.modalLP_iff_classicalProjection_entails_of_recovery
+#print axioms PEL4.modalST_iff_LP_iff_classicalProjection_entails_of_recovery
+#print axioms PEL4.evalClassicalModal_projection_fdeEmbedding
+#print axioms PEL4.modalLP_fdeEmbedding_iff_independentClassical_entails

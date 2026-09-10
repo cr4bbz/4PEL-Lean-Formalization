@@ -1,3 +1,4 @@
+-- Core models, probability, and four-valued semantics
 import PEL4.Model
 import PEL4.FiniteProbabilityIntegrity
 import PEL4.WeightGeneratedProbability
@@ -6,6 +7,8 @@ import PEL4.ConvexModelPath
 import PEL4.ConvexModelSupport
 import PEL4.Belief
 import PEL4.FDE
+
+-- Topological evidence and knowledge
 import PEL4.TopologicalEvidence
 import PEL4.TopologicalEvidenceSierpinski
 import PEL4.TopologicalEvidenceKripke
@@ -17,6 +20,8 @@ import PEL4.TopologicalKnowledgeIdempotence
 import PEL4.TopologicalEvidenceValueFibres
 import PEL4.TopologicalEvidencePhaseNerve
 import PEL4.Evidence
+
+-- Matroid evidence and structural classical recovery
 import PEL4.MatroidEvidence
 import PEL4.MatroidEvidenceAxiomAudit
 import PEL4.MatroidTopologicalBridge
@@ -40,6 +45,8 @@ import PEL4.ThresholdPhaseGeometry
 import PEL4.ThresholdPhaseGeometryAxiomAudit
 import PEL4.ProbabilityIntegrityFormulaRecovery
 import PEL4.ProbabilityIntegrityFormulaRecoveryAxiomAudit
+
+-- Epistemic status, modal knowledge, and modal dynamics
 import PEL4.Diagnostics
 import PEL4.EpistemicStatus
 import PEL4.StructuralTransport
@@ -76,6 +83,8 @@ import PEL4.ModalDynamicsIntermediatePhase
 import PEL4.ProbabilisticEvidence
 import PEL4.ReliableEvidence
 import PEL4.Revision
+
+-- Syntax, consequence, CPEL translation, and recovery transfer
 import PEL4.Theorems
 import PEL4.Syntax
 import PEL4.Soundness
@@ -88,11 +97,30 @@ import PEL4.CPELConsequenceBridge
 import PEL4.CPELConsequenceBridgeAxiomAudit
 import PEL4.RecoveryConsequenceTransfer
 import PEL4.RecoveryConsequenceTransferAxiomAudit
+import PEL4.CompositionalClassicalRecovery
+import PEL4.CompositionalClassicalRecoveryAxiomAudit
+import PEL4.DynamicCompositionalRecovery
+import PEL4.DynamicCompositionalRecoveryAxiomAudit
+import PEL4.DirectionalThresholdRecovery
+import PEL4.DirectionalThresholdRecoveryAxiomAudit
+import PEL4.ConditionalizationProbabilityIntegrity
+import PEL4.ConditionalizationProbabilityIntegrityAxiomAudit
+import PEL4.RecursiveClassicalLawProfile
+import PEL4.RecursiveClassicalLawProfileAxiomAudit
+import PEL4.MaximalClassicalLawFragment
+import PEL4.MaximalClassicalLawFragmentAxiomAudit
+import PEL4.IndependentClassicalModalSemantics
+import PEL4.IndependentClassicalModalSemanticsAxiomAudit
+import PEL4.RecoveredClassicalConsequenceEquivalence
+import PEL4.RecoveredClassicalConsequenceEquivalenceAxiomAudit
 
+-- Dynamic and product-update layer
 import PEL4.Dynamics
 import PEL4.ActionModel
 import PEL4.ProductUpdate
 import PEL4.ProductTheorems
+
+-- Dynamic and modal paradox case studies
 import PEL4.Paradoxes.ParadoxicalAction
 import PEL4.Paradoxes.Liar
 import PEL4.Paradoxes.Knower
@@ -108,10 +136,11 @@ import PEL4.Paradoxes.ChurchFitchNoGapIndependence
 import PEL4.Paradoxes.ChurchFitchPhaseLandscape
 import PEL4.Paradoxes.ChurchFitchClassification
 
+-- Conservation
 import PEL4.Conservation
-
 import PEL4.Paradoxes.ConservationTest
 
+-- Lottery and Preface research program
 import PEL4.Paradoxes.Lottery
 import PEL4.Paradoxes.Preface
 import PEL4.Paradoxes.PrefaceBoundary
@@ -132,10 +161,9 @@ import PEL4.Paradoxes.PrefaceConflictFiberDimensionN
 import PEL4.Paradoxes.PrefaceConflictNerveN
 import PEL4.Paradoxes.PrefaceConflictNerve3
 
+-- Additional paradox and interpretation modules
 import PEL4.Paradoxes.Moore
-
 import PEL4.Godel
-
 import PEL4.Paradoxes.Cartography
 import PEL4.Weatherson
 import PEL4.Geometry
@@ -143,6 +171,7 @@ import PEL4.Liminality
 import PEL4.LiarGamma
 import PEL4.Paradoxes.SyntheseExtensions
 
+-- Population axiology bridge
 import PEL4.PopulationAxiology.FiniteFineGrainedness
 import PEL4.PopulationAxiology.ParaconsistentComparison
 import PEL4.PopulationAxiology.ProspectGeometry
@@ -152,6 +181,7 @@ import PEL4.PopulationAxiology.RiskyCompensation
 import PEL4.PopulationAxiology.RiskyCompensationInstance
 import PEL4.PopulationAxiology.SubstantiveComparison
 
+-- Modal-probabilistic refinement and manuscript review boundaries
 import PEL4.ModalProbability.Refinement
 import PEL4.ModalProbability.StatusTransport
 import PEL4.PaperReviewBoundaries

@@ -1,5 +1,12 @@
 # 4-PEL research question map
 
+Active baseline: `research/recovered-classical-equivalence-gate17`.
+
+Fresh verification on this baseline: Lean 4.31, 167 build jobs; 157 central
+manuscript audit declarations; 24 MPFG audit declarations; six script tests;
+54-page committed manuscript check. Repository structure and independent branch
+boundaries are recorded in `docs/REPOSITORY_MAP.md`.
+
 Status legend:
 
 - **VERIFIED**: theorem or finite-model claim compiled on the active Lean 4.31 branch.
@@ -142,6 +149,113 @@ K(B p):       F    -> T.
 ```
 
 Together A16 and A17 show that conditionalization is neither monotone knowledge gain nor monotone knowledge loss.
+
+### A18. Can evidence support be organized matroidally?
+
+**VERIFIED for the channel-closure model.** The repository proves the closure
+laws, FDE realization, channel-rank classification, circuit characterization,
+circuit elimination, and deletion/contraction behavior for the chosen finite
+evidence representation. This is not a claim that every empirical evidence
+system is matroidal. See `docs/MATROID_EVIDENCE.md` and Gates 2–4.
+
+### A19. When is a four-valued state structurally classical?
+
+**VERIFIED.** Channel completeness excludes `N`, channel consistency excludes
+`B`, and their conjunction characterizes exactly `{T,F}`. The recovered slice
+is closed under the propositional FDE operations. Modal stability propagates a
+recovered value but is not needed to create local classicality. See
+`docs/CLASSICAL_RECOVERY_GATE5.md`.
+
+### A20. Does atomic classicality lift to formulas?
+
+**VERIFIED with an exact language boundary.** Atomic classicality propagates
+through the propositional fragment. Belief and modal constructors require
+additional profile and threshold recovery hypotheses; a finite witness shows
+that atomic classicality alone does not force classical threshold belief. See
+`docs/FORMULA_CLASSICAL_RECOVERY_GATE6.md`.
+
+### A21. How does the Lockean threshold control recovery?
+
+**VERIFIED.** For complementary classical support masses, at-most-half
+thresholds rule out gaps but permit gluts, while supermajority thresholds rule
+out gluts but permit gaps. Threshold regularity gives the exact classical-belief
+boundary under probability integrity.
+
+### A22. Does the split CPEL translation represent 4-PEL exactly?
+
+**VERIFIED for the evaluator induced by 4-PEL models.** The two translated
+Boolean coordinates recover the positive and negative FDE bits. On classical
+values they lie on the anti-diagonal and collapse to one Boolean coordinate.
+Gate 8 itself does not define an independent CPEL model class or complete
+calculus. Gate 16 later adds a separate Boolean modal model class; an
+independent proof calculus and completeness theorem remain open for Gate 18.
+See `docs/CPEL_CLASSICAL_COLLAPSE_GATE8.md`.
+
+### A23. Which classical laws return under recovery?
+
+**VERIFIED.** Tolerant excluded middle is equivalent to gap-freedom, universal
+value-level LP explosion to glut-freedom, and strict excluded middle to
+classicality. Classicality is therefore equivalent to the conjunction of the
+first two recovered laws.
+
+### A24. Does recovery collapse ST and LP consequence?
+
+**VERIFIED under an antecedent-classical restriction.** ST and LP coincide on
+a fixed model when the antecedent is classical throughout that model, and the
+global relations coincide after pointwise restriction to classical antecedent
+evaluations. Unrestricted LP explosion still fails in an explicit finite
+countermodel. See `docs/RECOVERY_CONSEQUENCE_TRANSFER_GATE9.md`.
+
+### A25. Does classical recovery compose through the full modal language?
+
+**VERIFIED for a semantic recursive recovery contract.** Atomic recovery,
+propositional closure, accessible-profile recovery for knowledge and raw
+possibility, and profile recovery plus threshold completeness for belief imply
+classical `ModalFormula` evaluation on probability-integrity models. Globally
+recovered modal antecedents make model-relative ST and LP consequence coincide.
+Atomic classicality alone remains insufficient for belief, as witnessed by the
+reused finite threshold-gap model. Necessity, update preservation, and the
+largest syntactic recovered fragment remain open. See
+`docs/COMPOSITIONAL_CLASSICAL_RECOVERY_GATE10.md`.
+
+### A26. Is compositional recovery preserved by conditionalization?
+
+**VERIFIED with an exact posterior-completeness boundary.** Relative to prior
+recovery, posterior recovery is equivalent to threshold completeness at every
+belief node reached by the recursive syntax/accessibility traversal. Prior
+recovery plus threshold-side robustness preserves classical evaluation and the
+model-relative ST/LP collapse after update. Finite three-world models prove
+that admissible conditionalization can both destroy and restore the recovery
+contract. The result is therefore non-monotone. See
+`docs/DYNAMIC_COMPOSITIONAL_RECOVERY_GATE11.md`.
+
+### A27. Which directed threshold crossings govern dynamic recovery?
+
+**VERIFIED.** Symmetric threshold straddling decomposes into rise and fall, and
+the four directed one-coordinate motions are exhaustive. From a prior classical
+belief, gap creation is exactly `T -> N` by positive fall with negative support
+remaining below, or `F -> N` by the dual pattern. Glut creation is exactly
+`T -> B` or `F -> B` by a rise on the previously inactive side while the active
+side remains above. A prior gap becomes complete exactly when at least one side
+rises. Recursively, prior recovery plus probability integrity makes posterior
+recovery equivalent to absence of these directed gap patterns at every
+reachable belief node. See `docs/DIRECTIONAL_THRESHOLD_RECOVERY_GATE12.md`.
+
+### A28. Does admissible conditionalization preserve finite probability integrity?
+
+**VERIFIED, with a sharper minimality result.** If the prior model satisfies
+`ModelProbabilityIntegrity`, the existing `ConditionalizationAdmissible`
+contract preserves all six finite-probability fields in the posterior model.
+No extra update axiom is required. Moreover, in this stronger prior class,
+admissibility is equivalent to nonzero evidence mass alone: the total- and
+empty-mass obligations are derivable quotient-measure laws.
+
+Posterior integrity turns the Gate-12 no-directed-gap condition into an exact
+equivalence with recursive semantic classicality throughout the updated model.
+It also yields the posterior model-relative ST/LP coincidence without the
+stronger Gate-11 value-invariance premise. Mere top-level classicality is not
+claimed to characterize the recursive certificate. See
+`docs/CONDITIONALIZATION_PROBABILITY_INTEGRITY_GATE13.md`.
 
 ## B. Questions with substantial but incomplete answers
 
@@ -325,16 +439,16 @@ Working name: **Affine Crossing-Order Geometry**.
 
 ### C16. Which FDE phase appears between two nonsimultaneous affine wall crossings?
 
-**ACTIVE BUILD GATE.** `PEL4/ModalDynamicsIntermediatePhase.lean` chooses the rational midpoint between the two unique crossing times and targets the exact intermediate-state classification.
+**VERIFIED.** `PEL4/ModalDynamicsIntermediatePhase.lean` chooses the rational midpoint between the two unique crossing times and proves the exact intermediate-state classification.
 
-For positive-first order, the midpoint should have
+For positive-first order, the constructed midpoint has
 
 ```text
 positive coordinate = target threshold side
 negative coordinate = source threshold side.
 ```
 
-For negative-first order the roles reverse. Thus every sequential diagonal transition should pass through a vertex adjacent to both endpoints along the affine support interpolation. The concrete target table is:
+For negative-first order the roles reverse. Thus every sequential diagonal transition passes through a vertex adjacent to both endpoints along the affine support interpolation. The verified table is:
 
 ```text
 N -> B : positive first -> T ; negative first -> F
@@ -347,19 +461,41 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Suggested research order
+## D. Research order after Gate 17
 
 ```text
-1. compile Affine Intermediate-Phase Geometry
-2. if successful, ask whether the intermediate support phase is realizable by a genuine admissible model path
-3. decide whether general path continuity now justifies a topology dependency
-4. seek algebraic/bilattice characterization of stability
-5. revisit frame-law and Church-Fitch minimality
-6. strengthen the general structural-transport abstraction
-7. perform literature/novelty audit
-8. deepen conflict topology to homology and persistence
-9. investigate automated finite-model search
+COMPLETED Gate 14: recursive LEM/EFQ profile
+COMPLETED Gate 15: maximality and necessity of the static recovery sector
+COMPLETED Gate 16: independent Boolean probabilistic-epistemic semantics
+COMPLETED Gate 17: recovered truth and consequence equivalence
+
+NEXT DECISION Gate 18: choose proof-theoretic scope
+  a. sound classical calculus
+  b. soundness plus semantic completeness
+  c. completeness plus decidability/canonical-model package
+
+AFTER Gate 18: classify nested modal recovery across finite update sequences
+
+LATER:
+1. connect matroid minors to explicit epistemic transformations
+2. eliminate convenience axioms and complete product update
+3. integrate or explicitly archive independent research branches
+4. perform the literature/novelty audit
+5. revisit homology, persistence, and automated finite-model search
 ```
+
+### D1. Classical-boundary research question (Gates 14--17)
+
+**VERIFIED, with an explicit scope restriction.** The completed sequence answers:
+
+> Is the compositional recovery sector the greatest subformula- and
+> accessibility-recursive region in which tolerant LEM and universal LP EFQ
+> hold at every relevant node, and does 4-PEL consequence there agree with an
+> independently defined classical probabilistic-epistemic semantics?
+
+The answer is yes relative to the declared recursive-fragment comparison class
+and for formulas satisfying recovery. This is semantic conservativity, not yet
+proof-system soundness or completeness. See the Gate 14--17 documents.
 
 The methodological separation remains essential:
 

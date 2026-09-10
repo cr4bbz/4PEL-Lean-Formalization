@@ -1,6 +1,9 @@
 # Project Axiom Audit
 
-Status: cleanup working document.
+Status: verified cleanup ledger for
+`research/recovered-classical-equivalence-gate17`.
+
+Current source inventory: **24 project-specific axiom declarations**.
 
 This file tracks project-specific `axiom` declarations separately from ordinary
 structure assumptions and Lean's trusted logical infrastructure.
@@ -38,15 +41,12 @@ prototype.
 These declarations occur in concrete finite examples and should be replaced by
 explicit `rfl`, `decide`, `native_decide`, or short case-analysis proofs.
 
-Known examples include model normalization and threshold facts in:
+The remaining 20 convenience axioms are located in:
 
-- `PEL4/Godel.lean`
-- `PEL4/ExFalso.lean`
-- `PEL4/Paradoxes/Liar.lean`
-- `PEL4/Paradoxes/Lottery.lean`
-- `PEL4/Paradoxes/Moore.lean`
-- `PEL4/Paradoxes/Cartography.lean`
-- `PEL4/Paradoxes/SyntheseExtensions.lean`
+- `PEL4/Paradoxes/Preface.lean` — 4 normalization/threshold declarations;
+- `PEL4/Paradoxes/PrefaceSigned.lean` — 4 normalization/threshold declarations;
+- `PEL4/Paradoxes/SurpriseExamination.lean` — 4 normalization/threshold declarations;
+- `PEL4/Paradoxes/SyntheseExtensions.lean` — 8 normalization/threshold declarations.
 
 This list is a cleanup ledger, not a claim that the listed mathematical facts
 are doubtful. The point is that finite decidable obligations should be proved
@@ -60,3 +60,29 @@ explicitly documented substantive prototype axioms.
 
 The remaining axioms after R0.2 should therefore coincide with modules whose
 primary status is `AXIOMATIC-PROTOTYPE`.
+
+## D. Reproduce the inventory
+
+From the repository root:
+
+```powershell
+python scripts/check_project_axioms.py
+```
+
+The checker verifies both names and source locations. Focused theorem dependency
+audits remain authoritative for deciding whether a particular result depends on
+any of these declarations. A source inventory alone does not establish
+dependency.
+
+## E. Gates 14--17 focused audits
+
+The four classical-boundary audit modules inspect 28 selected declarations:
+
+- Gate 14: 8 recursive LEM/EFQ declarations;
+- Gate 15: 7 maximality and finite-boundary declarations;
+- Gate 16: 7 independent-semantics and comparison declarations;
+- Gate 17: 6 truth/consequence equivalence declarations.
+
+All reported dependencies stay inside the standard repository allow-list
+`propext`, `Classical.choice`, and `Quot.sound`, or subsets thereof. No Gate
+14--17 theorem depends on a project-specific axiom or a native-decision axiom.

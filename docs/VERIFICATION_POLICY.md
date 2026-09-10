@@ -1,6 +1,7 @@
 # Verification Policy
 
-Status: normative repository policy for `research/preface-case-study`.
+Status: normative repository policy for the active development baseline named
+in `docs/REPOSITORY_MAP.md`.
 
 This document defines how formal results, finite models, prototypes, and research
 interpretations are described in 4-PEL. Its purpose is to prevent a successful
@@ -158,6 +159,11 @@ this policy.
 A future audit tool should expose these distinctions automatically, ideally by
 combining source-level scans with Lean dependency information such as
 `#print axioms` or an equivalent programmatic query.
+
+The current repository implements this incrementally through focused Lean audit
+modules and the scripts listed in `docs/REPOSITORY_MAP.md`. Passing those audits
+establishes the dependency status of the declarations they enumerate; it is not
+a repository-wide axiom-freedom claim.
 
 ---
 
