@@ -181,6 +181,8 @@ the next manuscript increment should add a sound calculus only or attempt a
 full completeness result. Finite update sequences are scheduled after that
 decision.
 
-The post-Gate-12 manuscript review, including the visual inspection and the
-prioritized version-0.14 integration plan, is recorded in
+The current post-Gate-17 manuscript review and version-0.14 integration plan is
+recorded in [`../docs/PAPER_REVIEW_GATE17.md`](../docs/PAPER_REVIEW_GATE17.md).
+The earlier post-Gate-12 review remains available as historical review
+provenance in
 [`../docs/PAPER_REVIEW_GATE12.md`](../docs/PAPER_REVIEW_GATE12.md).
