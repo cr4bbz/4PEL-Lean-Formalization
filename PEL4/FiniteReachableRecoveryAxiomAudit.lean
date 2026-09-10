@@ -1,0 +1,18 @@
+import PEL4.FiniteReachableRecovery
+
+/-! # Gate 21 finite recovery-observation audit -/
+
+#print axioms PEL4.compositionallyClassicalAt_iff_recoveryObservationSites
+#print axioms PEL4.compositionallyClassicalOn_iff_recoveryObservationSitesFrom
+#print axioms PEL4.compositionalRecoveryOn_iff_recoveryObservationSitesFrom
+#print axioms PEL4.recoveryObservationSitesFrom_atomic_or_belief
+#print axioms PEL4.recoveryObservationSites_conditionalize
+#print axioms PEL4.recoveryObservationSitesFrom_conditionalize
+#print axioms PEL4.atomicRecoveryObservation_stutters
+#print axioms PEL4.compositionalRecoveryOn_conditionalize_iff_of_observationsStutter
+#print axioms PEL4.recoveryOn_change_has_observation_change
+#print axioms PEL4.recoveryOn_change_has_belief_observation_change
+#print axioms PEL4.globalRecovery_change_has_finite_observation_change_of_covers
+#print axioms PEL4.gate21_gate19_recoveryObservation_count
+#print axioms PEL4.gate21_gate19_observation_map_stable_afterQ
+#print axioms PEL4.gate21_gate19_first_loss_observation_witness

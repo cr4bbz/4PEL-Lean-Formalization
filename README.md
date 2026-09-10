@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/recovery-flip-bounds-gate20`. Start with
+`research/recovery-observation-sites-gate21`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -429,6 +429,17 @@ global bound on recovery flips, because that requires a finite compiler for all
 formula-reachable belief sites and a recovery-stuttering theorem. See
 [`docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md`](docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md).
 
+### 30. Finite recovery-observation maps
+
+Gate 21 compiles the exact finite list of semantic observations used by the
+recursive recovery certificate on explicit starting worlds. The list is
+structurally invariant under conditionalization, and Lean proves a stuttering
+theorem: if every entry keeps its classical/nonclassical status, recovery
+cannot change. Since atomic entries always stutter, every recovery change has
+a concrete changed belief-result witness in the finite list. A coverage proof lifts the result to globally quantified
+recovery. See
+[`docs/FINITE_REACHABLE_RECOVERY_GATE21.md`](docs/FINITE_REACHABLE_RECOVERY_GATE21.md).
+
 ---
 
 ## Paradox map
@@ -541,12 +552,15 @@ PEL4/RecoveredClassicalConsequenceEquivalence.lean
 PEL4/ClassicalModalCalculus.lean
 PEL4/FiniteUpdateRecovery.lean
 PEL4/FiniteUpdateScopeBounds.lean
+PEL4/FiniteReachableRecovery.lean
 ```
 
 Research notes:
 
 ```text
 docs/REPOSITORY_MAP.md
+docs/FINITE_REACHABLE_RECOVERY_GATE21.md
+docs/PAPER_REVIEW_GATE21.md
 docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md
 docs/PAPER_REVIEW_GATE20.md
 docs/FINITE_UPDATE_RECOVERY_GATE19.md
@@ -581,7 +595,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/recovery-flip-bounds-gate20
+git checkout research/recovery-observation-sites-gate21
 lake build
 ```
 

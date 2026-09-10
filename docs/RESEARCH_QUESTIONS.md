@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/recovery-flip-bounds-gate20`.
+Active baseline: `research/recovery-observation-sites-gate21`.
 
-Fresh verification on this baseline: Lean 4.31, 173 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 175 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -291,6 +291,29 @@ not yet bound global recovery changes: recovery recursively observes several
 formula-reachable belief sites. See
 `docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md`.
 
+### A31. Can every recovery change be localized finitely?
+
+**VERIFIED for explicit finite roots; globally verified with world coverage.**
+Gate 21 compiles an exact finite list of the atomic and belief-result
+classicality observations inspected by a formula's recursive recovery
+certificate. Under probability integrity, recovery on the finite roots holds
+if and only if every compiled observation is classical.
+
+Conditionalization preserves the observation map itself because it leaves
+accessibility and syntax fixed. Lean proves the stuttering theorem and its
+contrapositive:
+
+```text
+all compiled statuses stutter -> recovery stutters;
+recovery changes -> some compiled belief-result status changes.
+```
+
+The globally quantified version requires an explicit proof that the finite
+root list covers the ambient world type. The Gate-19 instance compiles twenty
+observation positions and exhibits `B(p)` at world `a` as a concrete witness
+to the first recovery loss. See
+`docs/FINITE_REACHABLE_RECOVERY_GATE21.md`.
+
 ## B. Questions with substantial but incomplete answers
 
 ### B1. Is the modal correspondence picture minimal?
@@ -495,7 +518,7 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 20
+## D. Research order after Gate 21
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
@@ -505,11 +528,12 @@ COMPLETED Gate 17: recovered truth and consequence equivalence
 COMPLETED Gate 18: independent classical calculus and soundness
 COMPLETED Gate 19: finite update traces, first loss, and recovery return
 COMPLETED Gate 20: sharp local cumulative evidence-scope bounds
+COMPLETED Gate 21: exact finite recovery-observation maps and stuttering
 
 NEXT DECISION:
-1. compile the finite belief sites reachable from a fixed modal formula
-2. prove a stuttering bridge from unchanged reachable sites to unchanged recovery
-3. combine both with Gate 20 into a global recovery-flip bound
+1. connect each changed belief observation to strict cumulative support loss
+2. aggregate Gate-20 budgets across the Gate-21 observation map
+3. derive a finite global recovery-flip bound under world coverage
 4. extend the trace analysis to product updates
 5. return to the deferred finite-context proof theory
 
@@ -565,3 +589,15 @@ promoted to a general theorem: compositional recovery ranges recursively over
 multiple belief sites. A global flip bound now requires a finite compiler for
 the sites reachable from a formula and a theorem that recovery stutters when
 all compiled local data stutter.
+
+### D3. Finite recovery localization (Gate 21)
+
+**VERIFIED; NUMERICAL AGGREGATION OPEN.** The finite reachable-site compiler
+and recovery-stuttering bridge requested by Gate 20 now exist. For finite roots,
+every recovery change has a changed belief-result observation in an exact
+finite list; atomic observations provably stutter. With `WorldListCovers`, this localizes changes of the original global
+recovery predicate as well.
+
+The remaining step is quantitative rather than merely logical: prove that a
+changed compiled belief observation consumes a strict Gate-20 evidence/support
+resource, then prevent the same consumed resource from being counted again.

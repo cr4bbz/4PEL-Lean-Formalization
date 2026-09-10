@@ -119,6 +119,8 @@ import PEL4.FiniteUpdateRecovery
 import PEL4.FiniteUpdateRecoveryAxiomAudit
 import PEL4.FiniteUpdateScopeBounds
 import PEL4.FiniteUpdateScopeBoundsAxiomAudit
+import PEL4.FiniteReachableRecovery
+import PEL4.FiniteReachableRecoveryAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
