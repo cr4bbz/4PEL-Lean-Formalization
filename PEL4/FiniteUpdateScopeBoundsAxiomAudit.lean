@@ -1,0 +1,12 @@
+import PEL4.FiniteUpdateScopeBounds
+
+/-! # Gate 20 finite-update scope-bound audit -/
+
+#print axioms PEL4.FiniteEvidenceScopeDescent.finalScope_length_add_strictShrinkCount_le
+#print axioms PEL4.FiniteEvidenceScopeDescent.strictShrinkCount_le_initialLength
+#print axioms PEL4.FiniteEvidenceScopeDescent.strictShrinkCount_le_length
+#print axioms PEL4.FiniteConditionalizationTrace.evidenceScopeDescentFrom_length
+#print axioms PEL4.FiniteConditionalizationTrace.localEvidenceStrictShrinkCount_bounds
+#print axioms PEL4.FiniteConditionalizationTrace.localEvidenceFinalScope_budget
+#print axioms PEL4.gate20_local_bound_is_sharp
+#print axioms PEL4.gate20_gate19_trace_scope_profile

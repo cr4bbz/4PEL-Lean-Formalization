@@ -61,7 +61,7 @@ The manuscript is intentionally narrower than the complete 4-PEL repository. Pre
 
 ## Verification boundary
 
-The current branch has passed a fresh local Lean 4.31 `lake build` with 171
+The current branch has passed a fresh local Lean 4.31 `lake build` with 173
 jobs. The live central manuscript audit checks 157 declarations, the separate
 MPFG audit checks 24 declarations, and the script suite contains six passing
 tests. All selected dependency chains use only the standard allow-list
@@ -161,7 +161,7 @@ The FDE phase figure is generated directly from TikZ source. It visualizes the t
 
 ## Next paper gate
 
-The Lean development now includes Gates 10--19. None is yet part of the version
+The Lean development now includes Gates 10--20. None is yet part of the version
 0.13 manuscript. A paper integration should first present Gates 10--13 as the
 dynamic recovery chain, then Gates 14--18 as a separate classical-boundary
 chain:
@@ -181,12 +181,17 @@ unrestricted classical collapse is established. Gate 18 now adds an independent
 calculus and proves soundness, including the probability-integrity requirement
 for belief monotonicity; it does not prove completeness. Gate 19 now gives the
 finite-update preservation criterion, first-loss localization, and an explicit
-loss-then-restoration trace. The stronger proof-theoretic program remains
+loss-then-restoration trace. Gate 20 adds a sharp local evidence-scope budget,
+but deliberately does not claim a global bound on recovery flips before a
+finite reachable-site compiler and a recovery-stuttering theorem are proved.
+The stronger proof-theoretic program remains
 deferred until the calculus presentation and threshold-belief axioms are
 reassessed.
 
-The current post-Gate-19 manuscript review and version-0.14 integration plan is
-recorded in [`../docs/PAPER_REVIEW_GATE19.md`](../docs/PAPER_REVIEW_GATE19.md).
+The current post-Gate-20 manuscript review and version-0.14 integration plan is
+recorded in [`../docs/PAPER_REVIEW_GATE20.md`](../docs/PAPER_REVIEW_GATE20.md).
+The post-Gate-19 review remains available as historical review provenance in
+[`../docs/PAPER_REVIEW_GATE19.md`](../docs/PAPER_REVIEW_GATE19.md).
 The earlier post-Gate-17 and post-Gate-12 reviews remain available as historical
 review provenance in [`../docs/PAPER_REVIEW_GATE17.md`](../docs/PAPER_REVIEW_GATE17.md)
 and

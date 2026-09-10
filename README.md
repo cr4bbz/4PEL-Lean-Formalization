@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/finite-update-recovery-gate19`. Start with
+`research/recovery-flip-bounds-gate20`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -419,6 +419,16 @@ realizes `T -> N -> T`, proving that final recovery need not mean uninterrupted
 recovery. See
 [`docs/FINITE_UPDATE_RECOVERY_GATE19.md`](docs/FINITE_UPDATE_RECOVERY_GATE19.md).
 
+### 29. Finite local evidence-scope bounds
+
+Gate 20 compiles each dependent update trace into the cumulative evidence
+scope at a fixed agent/world belief site. Lean proves the sharp resource bound
+`final scope size + strict shrink count <= initial scope size`; the Gate-19
+loss-and-return trace has two such strict local shrinkages. This is not yet a
+global bound on recovery flips, because that requires a finite compiler for all
+formula-reachable belief sites and a recovery-stuttering theorem. See
+[`docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md`](docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md).
+
 ---
 
 ## Paradox map
@@ -530,12 +540,15 @@ PEL4/IndependentClassicalModalSemantics.lean
 PEL4/RecoveredClassicalConsequenceEquivalence.lean
 PEL4/ClassicalModalCalculus.lean
 PEL4/FiniteUpdateRecovery.lean
+PEL4/FiniteUpdateScopeBounds.lean
 ```
 
 Research notes:
 
 ```text
 docs/REPOSITORY_MAP.md
+docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md
+docs/PAPER_REVIEW_GATE20.md
 docs/FINITE_UPDATE_RECOVERY_GATE19.md
 docs/PAPER_REVIEW_GATE19.md
 docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md
@@ -568,7 +581,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/finite-update-recovery-gate19
+git checkout research/recovery-flip-bounds-gate20
 lake build
 ```
 

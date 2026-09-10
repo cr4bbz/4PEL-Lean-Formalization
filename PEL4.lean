@@ -117,6 +117,8 @@ import PEL4.ClassicalModalCalculus
 import PEL4.ClassicalModalCalculusAxiomAudit
 import PEL4.FiniteUpdateRecovery
 import PEL4.FiniteUpdateRecoveryAxiomAudit
+import PEL4.FiniteUpdateScopeBounds
+import PEL4.FiniteUpdateScopeBoundsAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics

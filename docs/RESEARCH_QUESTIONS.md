@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/finite-update-recovery-gate19`.
+Active baseline: `research/recovery-flip-bounds-gate20`.
 
-Fresh verification on this baseline: Lean 4.31, 171 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 173 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -273,6 +273,24 @@ four-world sequence realizes `B(p): T -> N -> T`, so recovery of the final
 state does not imply recovery throughout the run. See
 `docs/FINITE_UPDATE_RECOVERY_GATE19.md`.
 
+### A30. Is repeated finite evidence loss locally bounded?
+
+**VERIFIED, with the global recovery-flip bridge still open.** Gate 20 compiles
+a dependent conditionalization trace into the cumulative evidence restriction
+at any fixed agent/world site. Lean proves
+
+```text
+final cumulative scope size + strict shrink count
+<= initial accessibility-scope size.
+```
+
+Hence strict local shrinkage is bounded by both the initial scope length and
+the trace length, and a three-world witness attains the cardinality bound. The
+Gate-19 loss-and-return trace computes two strict local shrinkages. This does
+not yet bound global recovery changes: recovery recursively observes several
+formula-reachable belief sites. See
+`docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md`.
+
 ## B. Questions with substantial but incomplete answers
 
 ### B1. Is the modal correspondence picture minimal?
@@ -477,7 +495,7 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 19
+## D. Research order after Gate 20
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
@@ -486,11 +504,14 @@ COMPLETED Gate 16: independent Boolean probabilistic-epistemic semantics
 COMPLETED Gate 17: recovered truth and consequence equivalence
 COMPLETED Gate 18: independent classical calculus and soundness
 COMPLETED Gate 19: finite update traces, first loss, and recovery return
+COMPLETED Gate 20: sharp local cumulative evidence-scope bounds
 
 NEXT DECISION:
-1. bound or normalize repeated recovery changes in finite traces
-2. extend the trace analysis to product updates
-3. return to the deferred finite-context proof theory
+1. compile the finite belief sites reachable from a fixed modal formula
+2. prove a stuttering bridge from unchanged reachable sites to unchanged recovery
+3. combine both with Gate 20 into a global recovery-flip bound
+4. extend the trace analysis to product updates
+5. return to the deferred finite-context proof theory
 
 DEFERRED PROOF THEORY:
 1. assess finite-context versus single-premise presentation
@@ -527,3 +548,20 @@ finite executable witness
 structural/philosophical interpretation
 literature/novelty claim.
 ```
+
+### D2. Repeated-change bound (Gate 20)
+
+**LOCALLY VERIFIED; GLOBAL BRIDGE OPEN.** For every fixed agent/world belief
+site in a dependent finite conditionalization trace, Lean proves
+
+```text
+final cumulative scope size + strict cumulative shrink count
+<= initial accessibility-scope size.
+```
+
+The bound is sharp. The Gate-19 `T -> N -> T` witness exhibits two strict
+local scope losses alongside its two recovery changes. This coincidence is not
+promoted to a general theorem: compositional recovery ranges recursively over
+multiple belief sites. A global flip bound now requires a finite compiler for
+the sites reachable from a formula and a theorem that recovery stutters when
+all compiled local data stutter.
