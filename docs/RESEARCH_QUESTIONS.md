@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/classical-calculus-soundness-gate18`.
+Active baseline: `research/finite-update-recovery-gate19`.
 
-Fresh verification on this baseline: Lean 4.31, 169 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 171 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -258,6 +258,21 @@ stronger Gate-11 value-invariance premise. Mere top-level classicality is not
 claimed to characterize the recursive certificate. See
 `docs/CONDITIONALIZATION_PROBABILITY_INTEGRITY_GATE13.md`.
 
+### A29. What happens to recovery along finite update sequences?
+
+**VERIFIED for finite admissible conditionalization traces.** Because later
+admissibility depends on earlier posterior models, Gate 19 introduces a
+dependent trace type carrying strong probability integrity through every step.
+For an initially recovered formula, recovery holds at every posterior state if
+and only if no reachable belief node realizes a directed gap on any edge. If
+this fails, the finite trace has an exact earliest directed-gap witness.
+
+Recovery can nevertheless return later. A semantic return condition is proved
+necessary and sufficient at one edge and lifted to arbitrary traces. A concrete
+four-world sequence realizes `B(p): T -> N -> T`, so recovery of the final
+state does not imply recovery throughout the run. See
+`docs/FINITE_UPDATE_RECOVERY_GATE19.md`.
+
 ## B. Questions with substantial but incomplete answers
 
 ### B1. Is the modal correspondence picture minimal?
@@ -462,7 +477,7 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 18
+## D. Research order after Gate 19
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
@@ -470,8 +485,12 @@ COMPLETED Gate 15: maximality and necessity of the static recovery sector
 COMPLETED Gate 16: independent Boolean probabilistic-epistemic semantics
 COMPLETED Gate 17: recovered truth and consequence equivalence
 COMPLETED Gate 18: independent classical calculus and soundness
+COMPLETED Gate 19: finite update traces, first loss, and recovery return
 
-NEXT: classify nested modal recovery across finite update sequences
+NEXT DECISION:
+1. bound or normalize repeated recovery changes in finite traces
+2. extend the trace analysis to product updates
+3. return to the deferred finite-context proof theory
 
 DEFERRED PROOF THEORY:
 1. assess finite-context versus single-premise presentation
@@ -486,7 +505,7 @@ LATER:
 5. revisit homology, persistence, and automated finite-model search
 ```
 
-### D1. Classical-boundary research question (Gates 14--17)
+### D1. Classical-boundary research question (Gates 14--18)
 
 **VERIFIED, with an explicit scope restriction.** The completed sequence answers:
 
@@ -496,8 +515,9 @@ LATER:
 > independently defined classical probabilistic-epistemic semantics?
 
 The answer is yes relative to the declared recursive-fragment comparison class
-and for formulas satisfying recovery. This is semantic conservativity, not yet
-proof-system soundness or completeness. See the Gate 14--17 documents.
+and for formulas satisfying recovery. Gate 18 additionally proves soundness for
+an independent classical calculus on this strong semantic sector; completeness
+remains open. See the Gate 14--18 documents.
 
 The methodological separation remains essential:
 

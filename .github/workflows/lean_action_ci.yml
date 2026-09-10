@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Audit Gate 19 finite-update recovery
+        run: lake env lean PEL4/FiniteUpdateRecoveryAxiomAudit.lean
       - name: Audit Gate 18 independent classical-calculus soundness
         run: lake env lean PEL4/ClassicalModalCalculusAxiomAudit.lean
       - name: Audit Gate 17 recovered classical consequence equivalence

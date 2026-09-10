@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/classical-calculus-soundness-gate18`. Start with
+`research/finite-update-recovery-gate19`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -409,6 +409,16 @@ why probability integrity is necessary for belief monotonicity. Completeness
 and decidability remain open. See
 [`docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md`](docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md).
 
+### 28. Recovery along finite update sequences
+
+Gate 19 represents admissible conditionalizations as dependent finite traces.
+For an initially recovered formula, recovery at every later state is equivalent
+to excluding directed gap creation on every edge; every failure therefore has
+an earliest directed-gap witness. A four-world two-update model additionally
+realizes `T -> N -> T`, proving that final recovery need not mean uninterrupted
+recovery. See
+[`docs/FINITE_UPDATE_RECOVERY_GATE19.md`](docs/FINITE_UPDATE_RECOVERY_GATE19.md).
+
 ---
 
 ## Paradox map
@@ -519,12 +529,15 @@ PEL4/MaximalClassicalLawFragment.lean
 PEL4/IndependentClassicalModalSemantics.lean
 PEL4/RecoveredClassicalConsequenceEquivalence.lean
 PEL4/ClassicalModalCalculus.lean
+PEL4/FiniteUpdateRecovery.lean
 ```
 
 Research notes:
 
 ```text
 docs/REPOSITORY_MAP.md
+docs/FINITE_UPDATE_RECOVERY_GATE19.md
+docs/PAPER_REVIEW_GATE19.md
 docs/CLASSICAL_MODAL_CALCULUS_SOUNDNESS_GATE18.md
 docs/RECOVERED_CLASSICAL_CONSEQUENCE_EQUIVALENCE_GATE17.md
 docs/PAPER_REVIEW_GATE17.md
@@ -555,7 +568,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/classical-calculus-soundness-gate18
+git checkout research/finite-update-recovery-gate19
 lake build
 ```
 
@@ -578,9 +591,9 @@ Several distinctions remain explicit:
 - Dynamic classification is complete for the current finite conditionalization and affine-path interfaces; arbitrary update-generated, continuous, and measure-theoretic paths remain open.
 - Conditionalization requires the explicit `ConditionalizationAdmissible` safety contract; no update at zero local evidence mass is claimed.
 - Exact necessity/minimality of every modal frame correspondence is not yet proved.
-- Gate 8's split CPEL semantics remains model-induced. Gate 16 now supplies a
-  separate Boolean modal model class, but no independent proof calculus or
-  completeness theorem is yet supplied.
+- Gate 8's split CPEL semantics remains model-induced. Gate 16 supplies a
+  separate Boolean modal model class and Gate 18 a sound independent calculus,
+  but no completeness theorem is yet supplied.
 - The recovered ST/LP coincidence is antecedent-classical-restricted, not an unrestricted global collapse.
 - Novelty claims for the combined structural and modal terminology require a systematic literature audit.
 
@@ -590,17 +603,20 @@ The project aims to distinguish **theorem, finite model, interpretation, and nov
 
 ## Current research direction
 
-The active line has completed Gates 14--18. Recursive tolerant LEM plus
+The active line has completed Gates 14--19. Recursive tolerant LEM plus
 universal LP EFQ now exactly characterizes the compositional classical sector;
 that sector is maximal relative to the declared recursive closure notion. A
 separate Boolean probabilistic-epistemic semantics supplies truth
 preservation/reflection and model-relative consequence equivalence on recovered
 formulas. This remains narrower than unrestricted global collapse or
 proof-system completeness. Gate 18 now supplies a sound independent classical
-calculus, including a strong-probability boundary for belief monotonicity.
+calculus, including a strong-probability boundary for belief monotonicity. Gate
+19 characterizes uninterrupted recovery along finite conditionalization traces,
+localizes the first loss, and exhibits later restoration.
 Near-term priorities are:
 
-1. classify nested modal recovery across finite update sequences;
+1. determine whether finite traces admit useful bounds or normal forms for
+   repeated recovery loss and return;
 2. assess whether a later proof-theory gate should replace the single-premise
    calculus by finite contexts before attempting completeness;
 3. connect matroid deletion/contraction to explicit epistemic transformations

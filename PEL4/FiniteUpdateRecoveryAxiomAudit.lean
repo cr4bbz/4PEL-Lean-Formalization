@@ -1,0 +1,15 @@
+import PEL4.FiniteUpdateRecovery
+
+/-! # Gate 19 finite-update recovery audit -/
+
+#print axioms PEL4.FiniteConditionalizationTrace.finalModel
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryPreservedAlong_iff_noDirectionalGapAlong
+#print axioms PEL4.FiniteConditionalizationTrace.not_noDirectionalGapAlong_iff_hasFirstDirectionalGap
+#print axioms PEL4.FiniteConditionalizationTrace.not_recoveryPreservedAlong_iff_hasFirstDirectionalGap
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryReturn_iff_condition
+#print axioms PEL4.FiniteConditionalizationTrace.hasRecoveryReturn_iff_hasRecoveryReturnCondition
+#print axioms PEL4.gate19WeightDistribution
+#print axioms PEL4.gate19EvidenceQ_admissible
+#print axioms PEL4.gate19EvidenceR_afterQ_admissible
+#print axioms PEL4.gate19_loss_return_profile
+#print axioms PEL4.gate19_finite_trace_loses_then_restores

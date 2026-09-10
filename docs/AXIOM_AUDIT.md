@@ -1,7 +1,7 @@
 # Project Axiom Audit
 
 Status: verified cleanup ledger for
-`research/classical-calculus-soundness-gate18`.
+`research/finite-update-recovery-gate19`.
 
 Current source inventory: **24 project-specific axiom declarations**.
 
@@ -74,16 +74,17 @@ audits remain authoritative for deciding whether a particular result depends on
 any of these declarations. A source inventory alone does not establish
 dependency.
 
-## E. Gates 14--18 focused audits
+## E. Gates 14--19 focused audits
 
-The five classical-boundary audit modules inspect 35 selected declarations:
+The six recent-gate audit modules inspect 46 selected declarations:
 
 - Gate 14: 8 recursive LEM/EFQ declarations;
 - Gate 15: 7 maximality and finite-boundary declarations;
 - Gate 16: 7 independent-semantics and comparison declarations;
 - Gate 17: 6 truth/consequence equivalence declarations.
 - Gate 18: 7 calculus-soundness, transfer, and boundary declarations.
+- Gate 19: 11 finite-trace, transition, and loss-return declarations.
 
 All reported dependencies stay inside the standard repository allow-list
 `propext`, `Classical.choice`, and `Quot.sound`, or subsets thereof. No Gate
-14--18 theorem depends on a project-specific axiom or a native-decision axiom.
+14--19 theorem depends on a project-specific axiom or a native-decision axiom.

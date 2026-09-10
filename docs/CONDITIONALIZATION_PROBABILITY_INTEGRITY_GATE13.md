@@ -173,9 +173,7 @@ Gate 13 does not establish:
 ## Subsequent ordering decision
 
 Gate 13 originally recommended finite update sequences next. That recommendation
-was superseded by the classical-boundary sequence now completed as Gates
-14--17: recursive LEM/EFQ, maximality, independent classical semantics, and
-recovered consequence equivalence. Gate 18 is now the next decision point.
-Finite update sequences follow Gate 18. Gate 13 still supplies their central
+was superseded by the classical-boundary sequence completed as Gates 14--18.
+Gate 19 now implements finite update sequences. Gate 13 supplies their central
 induction invariant: every intermediate positive-mass update remains
 probability-integrity-certified.
