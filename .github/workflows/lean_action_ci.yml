@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build Gate 31 progress and stabilization bounds
+        run: lake build PEL4.RecoveryStabilizationBounds
       - name: Build and audit Gate 30 recovery confluence
         run: |
           lake build PEL4.RecoveryConfluence
