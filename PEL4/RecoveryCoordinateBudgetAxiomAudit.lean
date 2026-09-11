@@ -1,0 +1,15 @@
+import PEL4.RecoveryCoordinateBudget
+
+/-! # Gate 25 duplicate-free recovery-coordinate budget audit -/
+
+#print axioms PEL4.mem_dedupRecoveryKeys_iff
+#print axioms PEL4.recoveryCoordinateKey_mem_of_beliefSite
+#print axioms PEL4.recoveryCoordinateKeysFrom_conditionalize
+#print axioms PEL4.recoveryCoordinate_strictIndicator_add_nextLength_le
+#print axioms PEL4.recoveryCoordinateList_step_budget
+#print axioms PEL4.recoveryChangeIndicator_le_strictShrinkCoordinateCount
+#print axioms PEL4.recoveryStrictShrinkCoordinateCount_add_nextPotential_le
+#print axioms PEL4.recoveryChangeIndicator_add_nextCoordinatePotential_le
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_add_finalCoordinatePotential_le
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_add_finalCoordinatePotential_le_initialBudget
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_le_initialCoordinateBudget
