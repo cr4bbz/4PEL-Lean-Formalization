@@ -1,0 +1,9 @@
+import PEL4.RecoveryEndpointClassification
+
+#print axioms PEL4.eventuallyRecoveryStable_endpoint_classification
+#print axioms PEL4.eventuallyRecoveryStatus_exclusive
+#print axioms PEL4.recoveryTrajectory_endpoint_classification
+#print axioms PEL4.recoveryTrajectory_exactly_one_endpoint
+#print axioms PEL4.gate28_recovery_endpoint_possible
+#print axioms PEL4.gate28_nonRecovery_endpoint_possible
+#print axioms PEL4.gate28_eventual_stability_does_not_force_recovery
