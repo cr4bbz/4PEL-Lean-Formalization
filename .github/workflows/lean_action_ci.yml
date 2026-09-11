@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 29 epistemic path dependence
+        run: |
+          lake build PEL4.EpistemicPathDependence
+          lake env lean PEL4/EpistemicPathDependenceAxiomAudit.lean
       - name: Build and audit Gate 28 recovery endpoint classification
         run: |
           lake build PEL4.RecoveryEndpointClassification
