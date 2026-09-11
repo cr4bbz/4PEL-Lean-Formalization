@@ -1,4 +1,5 @@
 import PEL4.RecoveryEndpointClassification
+import PEL4.DynamicCompositionalRecovery
 
 namespace PEL4
 
@@ -11,8 +12,10 @@ Non-Recovery. Gate 29 strengthens the negative result: a *single* descent
 system can admit two valid infinite trajectories from the *same* initial state
 whose eventual recovery endpoints differ.
 
-This is the minimal formal notion of epistemic path dependence needed before
-asking whether concrete 4PEL conditionalization exhibits the same phenomenon.
+The gate has two layers. First, a minimal abstract descent system establishes
+same-start asymptotic path dependence. Second, the existing concrete 4PEL
+DynamicInstabilityModel is reused to show that two admissible conditionalization
+choices from the same recovered model can already split Recovery at one step.
 -/
 
 /-- Recovery endpoint path dependence at a particular initial state. -/
@@ -123,8 +126,8 @@ theorem gate29_nonRecoveryTrajectory_eventually_nonRecovery :
   | zero => omega
   | succ k => rfl
 
-/-- Main Gate-29 witness: same system, same start state, different eventual
-Recovery endpoints. -/
+/-- Main abstract Gate-29 witness: same system, same start state, different
+eventual Recovery endpoints. -/
 theorem gate29_same_start_different_endpoints :
     RecoveryPathDependentAt gate29System Gate29State.start := by
   refine ⟨gate29RecoveryTrajectory, gate29NonRecoveryTrajectory, rfl, rfl,
@@ -152,5 +155,89 @@ shared initial state. -/
 theorem gate29_paths_diverge_after_start :
     gate29RecoveryTrajectory 1 ≠ gate29NonRecoveryTrajectory 1 := by
   decide
+
+/-! ## Concrete 4PEL conditionalization split -/
+
+/-- Alternative evidence on the same DynamicInstabilityModel. Conditioning on
+`p` selects worlds `a,c`, where `p` itself is positive. -/
+def gate29RecoveryPreservingEvidence :
+    Formula DynamicInstabilityAtom DynamicInstabilityAgent :=
+  Formula.prop DynamicInstabilityAtom.p
+
+/-- Conditioning the shared starting model on `p` is admissible at every local
+agent/world pair. -/
+theorem gate29_recoveryPreservingEvidence_admissible :
+    ConditionalizationAdmissible DynamicInstabilityModel
+      gate29RecoveryPreservingEvidence := by
+  constructor
+  · intro ag w
+    cases ag
+    cases w <;> decide +kernel
+  · intro ag w
+    cases ag
+    cases w <;> decide +kernel
+  · intro ag w
+    cases ag
+    cases w <;> decide +kernel
+
+/-- Recovery-preserving successor reached from exactly the same concrete model
+used by the destructive `e` update. -/
+def Gate29RecoveryPreservingUpdated :
+    Model DynamicInstabilityWorld DynamicInstabilityAgent DynamicInstabilityAtom :=
+  conditionalize DynamicInstabilityModel gate29RecoveryPreservingEvidence
+    gate29_recoveryPreservingEvidence_admissible
+
+/-- After learning `p`, `B p` remains strict true at all three source worlds. -/
+theorem gate29_recoveryPreserving_belief_profile :
+    evalModal Gate29RecoveryPreservingUpdated DynamicInstabilityWorld.a
+        dynamicInstabilityBelP = FDEValue.T ∧
+    evalModal Gate29RecoveryPreservingUpdated DynamicInstabilityWorld.b
+        dynamicInstabilityBelP = FDEValue.T ∧
+    evalModal Gate29RecoveryPreservingUpdated DynamicInstabilityWorld.c
+        dynamicInstabilityBelP = FDEValue.T := by
+  decide +kernel
+
+/-- Hence the safe branch preserves the full recursive Recovery contract. -/
+theorem gate29_recoveryPreserving_update_recovered :
+    ModalFormula.CompositionalRecovery
+      Gate29RecoveryPreservingUpdated dynamicInstabilityBelP := by
+  intro w
+  constructor
+  · intro u _
+    cases u
+    · exact Or.inl rfl
+    · exact Or.inr rfl
+    · exact Or.inl rfl
+  · rcases gate29_recoveryPreserving_belief_profile with ⟨ha, hb, hc⟩
+    cases w
+    · exact beliefThresholdComplete_of_evalModal_bel_eq_T
+        Gate29RecoveryPreservingUpdated DynamicInstabilityAgent.i
+        DynamicInstabilityWorld.a dynamicInstabilityP ha
+    · exact beliefThresholdComplete_of_evalModal_bel_eq_T
+        Gate29RecoveryPreservingUpdated DynamicInstabilityAgent.i
+        DynamicInstabilityWorld.b dynamicInstabilityP hb
+    · exact beliefThresholdComplete_of_evalModal_bel_eq_T
+        Gate29RecoveryPreservingUpdated DynamicInstabilityAgent.i
+        DynamicInstabilityWorld.c dynamicInstabilityP hc
+
+/-- Concrete same-start split: the starting 4PEL model is recovered for `B p`;
+both evidence choices are admissible; learning `p` preserves Recovery while
+learning `e` destroys it. -/
+theorem gate29_concrete_conditionalization_split :
+    ModalFormula.CompositionalRecovery
+        DynamicInstabilityModel dynamicInstabilityBelP ∧
+    ConditionalizationAdmissible DynamicInstabilityModel
+        gate29RecoveryPreservingEvidence ∧
+    ModalFormula.CompositionalRecovery
+        Gate29RecoveryPreservingUpdated dynamicInstabilityBelP ∧
+    ConditionalizationAdmissible DynamicInstabilityModel
+        dynamicInstabilityEvidence ∧
+    ¬ ModalFormula.CompositionalRecovery
+        DynamicInstabilityUpdated dynamicInstabilityBelP := by
+  exact ⟨dynamic_instability_belP_recovered_before,
+    gate29_recoveryPreservingEvidence_admissible,
+    gate29_recoveryPreserving_update_recovered,
+    dynamic_instability_evidence_admissible,
+    dynamic_instability_belP_not_recovered_after⟩
 
 end PEL4
