@@ -143,6 +143,8 @@ import PEL4.EpistemicPathDependenceAsymptotic
 import PEL4.EpistemicPathDependenceAsymptoticAxiomAudit
 import PEL4.RecoveryConfluence
 import PEL4.RecoveryConfluenceAxiomAudit
+import PEL4.RecoveryStabilizationBounds
+import PEL4.RecoveryStabilizationBoundsAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
