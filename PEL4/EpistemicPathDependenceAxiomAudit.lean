@@ -1,0 +1,10 @@
+import PEL4.EpistemicPathDependence
+
+#print axioms PEL4.gate29_recoveryTrajectory_follows
+#print axioms PEL4.gate29_nonRecoveryTrajectory_follows
+#print axioms PEL4.gate29_recoveryTrajectory_eventually_recovery
+#print axioms PEL4.gate29_nonRecoveryTrajectory_eventually_nonRecovery
+#print axioms PEL4.gate29_same_start_different_endpoints
+#print axioms PEL4.gate29_start_is_recovered_now
+#print axioms PEL4.gate29_recovery_now_not_robust_future
+#print axioms PEL4.gate29_paths_diverge_after_start
