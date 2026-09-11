@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 27 eventual recovery stability
+        run: |
+          lake build PEL4.RecoveryEventualStability
+          lake env lean PEL4/RecoveryEventualStabilityAxiomAudit.lean
       - name: Build and audit Gate 26 abstract finite epistemic descent
         run: |
           lake build PEL4.FiniteEpistemicDescent
