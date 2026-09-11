@@ -55,6 +55,32 @@ theorem conditionalize_mu_prop_event_eq_one
   rw [Rat.div_def]
   exact Rat.mul_inv_cancel (m.mu i w event) hDenNe
 
+/-- Intersecting a requested set with the already learned atomic event does not
+change its first-update posterior mass. -/
+theorem conditionalize_mu_intersect_prop_event_eq
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (p : Atom)
+    (hAdm : ConditionalizationAdmissible m (Formula.prop p))
+    (i : Ag) (w : W) (S : FiniteSet W) :
+    conditionalize_mu m i w (Formula.prop p)
+        (intersectWorlds S
+          (filterWorlds (m.R i w)
+            (fun u => (eval m u (Formula.prop p)).pos))) =
+      conditionalize_mu m i w (Formula.prop p) S := by
+  let event := filterWorlds (m.R i w)
+    (fun u => (eval m u (Formula.prop p)).pos)
+  have hDenNe : m.mu i w event ≠ 0 := by
+    simpa [conditionalizationEvidenceMass, event] using hAdm.positive_mass i w
+  change conditionalize_mu m i w (Formula.prop p)
+      (intersectWorlds S event) =
+    conditionalize_mu m i w (Formula.prop p) S
+  simp only [conditionalize_mu, beq_iff_eq]
+  rw [if_neg hDenNe, if_neg hDenNe]
+  change m.mu i w (intersectWorlds (intersectWorlds S event) event) /
+        m.mu i w event =
+      m.mu i w (intersectWorlds S event) / m.mu i w event
+  rw [intersectWorlds_repeat_right]
+
 /-- Raw local measures are unchanged by a second conditioning on the same
 atomic proposition. -/
 theorem conditionalize_mu_repeat_prop_eq
@@ -65,30 +91,29 @@ theorem conditionalize_mu_repeat_prop_eq
     conditionalize_mu (conditionalize m (Formula.prop p) hAdm)
         i w (Formula.prop p) S =
       conditionalize_mu m i w (Formula.prop p) S := by
-  let event := filterWorlds (m.R i w)
-    (fun u => (eval m u (Formula.prop p)).pos)
-  have hDenNe : m.mu i w event ≠ 0 := by
-    simpa [conditionalizationEvidenceMass, event] using hAdm.positive_mass i w
-  have hEventMass :
-      conditionalize_mu m i w (Formula.prop p) event = 1 := by
-    simpa [event] using conditionalize_mu_prop_event_eq_one m p hAdm i w
-  have hInner :
-      conditionalize_mu m i w (Formula.prop p) (intersectWorlds S event) =
-        conditionalize_mu m i w (Formula.prop p) S := by
-    simp only [conditionalize_mu, beq_iff_eq]
-    rw [if_neg hDenNe, if_neg hDenNe]
-    change m.mu i w (intersectWorlds (intersectWorlds S event) event) /
-          m.mu i w event =
-        m.mu i w (intersectWorlds S event) / m.mu i w event
-    rw [intersectWorlds_repeat_right]
-  change
-    (if conditionalize_mu m i w (Formula.prop p) event = 0 then 0
-      else conditionalize_mu m i w (Formula.prop p)
-          (intersectWorlds S event) /
-        conditionalize_mu m i w (Formula.prop p) event) =
+  let m1 := conditionalize m (Formula.prop p) hAdm
+  let event1 := filterWorlds (m1.R i w)
+    (fun u => (eval m1 u (Formula.prop p)).pos)
+  have hMass1 : m1.mu i w event1 = 1 := by
+    change conditionalize_mu m i w (Formula.prop p) event1 = 1
+    rw [show event1 = filterWorlds (m.R i w)
+      (fun u => (eval m u (Formula.prop p)).pos) by rfl]
+    exact conditionalize_mu_prop_event_eq_one m p hAdm i w
+  have hInter1 :
+      m1.mu i w (intersectWorlds S event1) = m1.mu i w S := by
+    change conditionalize_mu m i w (Formula.prop p)
+        (intersectWorlds S event1) =
       conditionalize_mu m i w (Formula.prop p) S
-  rw [hEventMass]
-  simp [hInner]
+    rw [show event1 = filterWorlds (m.R i w)
+      (fun u => (eval m u (Formula.prop p)).pos) by rfl]
+    exact conditionalize_mu_intersect_prop_event_eq m p hAdm i w S
+  change conditionalize_mu m1 i w (Formula.prop p) S = m1.mu i w S
+  simp only [conditionalize_mu, beq_iff_eq]
+  change (if m1.mu i w event1 = 0 then 0
+    else m1.mu i w (intersectWorlds S event1) / m1.mu i w event1) =
+      m1.mu i w S
+  rw [hMass1]
+  simp [hInter1]
 
 /-- Atomic evidence remains admissible after it has already been learned once. -/
 theorem conditionalize_prop_repeat_admissible
@@ -129,9 +154,7 @@ theorem conditionalize_repeat_prop_mu_eq
   funext i w S
   exact conditionalize_mu_repeat_prop_eq m p hAdm i w S
 
-/-- Full-model idempotence for repeated atomic conditionalization. The proof
-uses equality of the only data field changed by conditionalization (`mu`); all
-normalization witnesses are propositions and hence proof-irrelevant. -/
+/-- Full-model idempotence for repeated atomic conditionalization. -/
 theorem conditionalize_repeat_prop_eq
     {W Ag Atom : Type} [DecidableEq W]
     (m : Model W Ag Atom) (p : Atom)
@@ -141,10 +164,11 @@ theorem conditionalize_repeat_prop_eq
         (Formula.prop p) hRepeat =
       conditionalize m (Formula.prop p) hAdm := by
   have hMu := conditionalize_repeat_prop_mu_eq m p hAdm hRepeat
-  cases m with
-  | mk worlds R mu val c hTotal hEmpty hHalf hOne =>
-      simp only [conditionalize] at hMu ⊢
-      cases hMu
-      rfl
+  apply Model.ext
+  · rfl
+  · rfl
+  · exact hMu
+  · rfl
+  · rfl
 
 end PEL4
