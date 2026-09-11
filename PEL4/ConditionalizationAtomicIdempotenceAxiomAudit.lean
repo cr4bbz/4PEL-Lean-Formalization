@@ -1,0 +1,11 @@
+import PEL4.ConditionalizationAtomicIdempotence
+
+#print axioms PEL4.intersectWorlds_repeat_right
+#print axioms PEL4.conditionalize_prop_event_eq
+#print axioms PEL4.conditionalize_mu_prop_event_eq_one
+#print axioms PEL4.conditionalize_mu_intersect_prop_event_eq
+#print axioms PEL4.conditionalize_mu_repeat_prop_eq
+#print axioms PEL4.conditionalize_prop_repeat_admissible
+#print axioms PEL4.conditionalize_repeat_prop_mu_eq
+#print axioms PEL4.model_eq_of_data_eq
+#print axioms PEL4.conditionalize_repeat_prop_eq
