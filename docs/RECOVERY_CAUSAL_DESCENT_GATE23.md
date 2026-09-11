@@ -70,21 +70,22 @@ positions.
 
 ## What remains for a numerical bound
 
-Gate 23 establishes causal localization, but not yet trace-level counting. The
+Gate 23 established causal localization, but not yet trace-level counting. The
 compiler retains duplicate observation positions, and the same agent/world
 coordinate may occur through several syntactic paths. This does not prevent a
 finite upper bound: summing Gate-20 budgets over all belief positions safely
 overcounts duplicated resources. Deduplicating coordinates is needed only for
 a sharper bound.
 
-The next research question is:
+Gate 24 has now answered the next research question:
 
 > Can the number of recovery-changing edges in a finite update trace be
 > bounded by the sum of Gate-20 scope budgets over the belief positions in the
 > Gate-21 compiler?
 
-Gate 24 should first prove this safe position-wise bound. A subsequent
-coordinate quotient can sharpen it by removing duplicated budgets.
+The safe position-wise bound is proved, including the stronger invariant that
+retains the final unused potential. A subsequent coordinate quotient can
+sharpen it by removing duplicated budgets.
 
 ## Verification
 

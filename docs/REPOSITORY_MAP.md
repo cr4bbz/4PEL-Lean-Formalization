@@ -6,10 +6,10 @@ terminology is governed by `docs/VERIFICATION_POLICY.md`.
 
 ## Active development baseline
 
-- Branch: `research/recovery-causal-descent-gate23`
+- Branch: `research/recovery-flip-budget-gate24`
 - Lean toolchain: `leanprover/lean4:v4.31.0`
 - Root library target: `PEL4`
-- Current verified gate: Gate 23, recursive recovery causal descent
+- Current verified gate: Gate 24, finite recovery-flip budget
 
 The branch is a development baseline, not a claim that every independent
 research branch has already been merged. In particular, the Alexandrov and
@@ -43,12 +43,13 @@ core four-valued probabilistic epistemic logic
 -> exact finite recovery-observation maps and stuttering (Gate 21)
 -> posterior concentration and strict-shrink-or-body-change bridge (Gate 22)
 -> recursive localization at a strictly shrinking belief site (Gate 23)
+-> finite position-wise recovery-flip budget (Gate 24)
 ```
 
 The latest gate boundary is documented in
-`docs/RECOVERY_CAUSAL_DESCENT_GATE23.md`.
+`docs/FINITE_RECOVERY_FLIP_BUDGET_GATE24.md`.
 The corresponding manuscript currency and layout review is documented in
-`docs/PAPER_REVIEW_GATE23.md`.
+`docs/PAPER_REVIEW_GATE24.md`.
 
 ## Directory responsibilities
 
@@ -70,6 +71,7 @@ From the repository root:
 
 ```powershell
 lake build
+lake env lean PEL4/FiniteRecoveryFlipBudgetAxiomAudit.lean
 lake env lean PEL4/RecoveryCausalDescentAxiomAudit.lean
 lake env lean PEL4/RecoveryScopeStutteringAxiomAudit.lean
 lake env lean PEL4/FiniteReachableRecoveryAxiomAudit.lean

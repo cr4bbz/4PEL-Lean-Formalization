@@ -1,7 +1,7 @@
 # Project Axiom Audit
 
 Status: verified cleanup ledger for
-`research/recovery-causal-descent-gate23`.
+`research/recovery-flip-budget-gate24`.
 
 Current source inventory: **24 project-specific axiom declarations**.
 
@@ -74,9 +74,9 @@ audits remain authoritative for deciding whether a particular result depends on
 any of these declarations. A source inventory alone does not establish
 dependency.
 
-## E. Gates 14--23 focused audits
+## E. Gates 14--24 focused audits
 
-The ten recent-gate audit modules inspect 89 selected declarations:
+The eleven recent-gate audit modules inspect 103 selected declarations:
 
 - Gate 14: 8 recursive LEM/EFQ declarations;
 - Gate 15: 7 maximality and finite-boundary declarations;
@@ -88,7 +88,8 @@ The ten recent-gate audit modules inspect 89 selected declarations:
 - Gate 21: 14 compiler, stuttering, localization, and finite-instance declarations.
 - Gate 22: 12 concentration, local stuttering, causal-bridge, and trace declarations.
 - Gate 23: 9 modal descent, compiler-closure, strict-witness, and instance declarations.
+- Gate 24: 14 status, potential, trace-bound, and executable-instance declarations.
 
 All reported dependencies stay inside the standard repository allow-list
 `propext`, `Classical.choice`, and `Quot.sound`, or subsets thereof. No Gate
-14--23 theorem depends on a project-specific axiom or a native-decision axiom.
+14--24 theorem depends on a project-specific axiom or a native-decision axiom.

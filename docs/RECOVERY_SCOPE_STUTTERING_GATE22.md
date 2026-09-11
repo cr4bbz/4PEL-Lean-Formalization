@@ -79,13 +79,15 @@ knowledge, possibility, conjunction, and negation. Because the formula is
 finite and atomic values cannot change, Lean proves termination at a reachable
 belief node whose own scope shrinks strictly.
 
-The remaining quantitative research question is therefore:
+Gate 23 answered the causal question and Gate 24 has now completed the first
+quantitative aggregation:
 
-> Can repeated recovery-changing edges be charged to a finite duplicate-free
-> collection of reachable belief-coordinate budgets?
+> Can repeated recovery-changing edges be charged to the finite budgets of
+> reachable belief-observation positions?
 
-Gate 23 provides the causal input; Gate 24 must deduplicate coordinates and
-sum their Gate-20 budgets without double-counting one loss.
+Yes. Gate 24 sums over all positions; compiler duplicates safely loosen the
+bound. Removing them is the sharper coordinate-quotient question proposed for
+Gate 25.
 
 ## Verification
 

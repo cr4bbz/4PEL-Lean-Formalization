@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/recovery-causal-descent-gate23`.
+Active baseline: `research/recovery-flip-budget-gate24`.
 
-Fresh verification on this baseline: Lean 4.31, 179 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 181 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -560,7 +560,30 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 23
+### C17. Is there a finite bound on recovery changes along an update trace?
+
+**VERIFIED, with a position-wise rather than duplicate-free budget.** Gate 24
+defines an executable Boolean recovery status on the exact finite Gate-21
+compiler and counts the trace edges on which that status changes. Lean proves
+
+```text
+recovery-change count + final remaining position-wise potential
+<= initial position-wise potential.
+```
+
+The potential sums cumulative scope lengths over compiled belief-observation
+positions. It is independent of trace length. Under `WorldListCovers`, the
+Boolean status is exactly global compositional recovery, so the count receives
+the corresponding global interpretation.
+
+The Gate-19 `T -> N -> T` witness computes two status changes, initial
+potential 16, and final potential 4. Thus `2 + 4 <= 16` is a checked concrete
+instance. The looseness reflects position multiplicity and possibly multiple
+losses paying for one status change; optimality is not claimed.
+
+Working name: **Finite Recovery-Flip Budget**.
+
+## D. Research order after Gate 24
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
@@ -573,14 +596,13 @@ COMPLETED Gate 20: sharp local cumulative evidence-scope bounds
 COMPLETED Gate 21: exact finite recovery-observation maps and stuttering
 COMPLETED Gate 22: posterior concentration and local causal dichotomy
 COMPLETED Gate 23: recursive descent to strict reachable scope loss
+COMPLETED Gate 24: finite position-wise recovery-flip budget
 
 NEXT DECISION:
-1. define trace-level counting of recovery-changing edges
-2. aggregate Gate-20 budgets over finite Gate-21 belief positions
-3. derive a finite global recovery-flip bound under world coverage
-4. optionally sharpen it by deduplicating agent/world coordinates
-5. extend the trace analysis to product updates
-6. return to the deferred finite-context proof theory
+1. sharpen the bound by deduplicating agent/world coordinates (proposed Gate 25)
+2. test sharpness and characterize equality cases
+3. extend the trace analysis to product updates
+4. return to the deferred finite-context proof theory
 
 DEFERRED PROOF THEORY:
 1. assess finite-context versus single-premise presentation
@@ -688,9 +710,31 @@ recovery change
 -> strict scope loss at a reachable belief observation.
 ```
 
-It does not yet close the quantitative chain. Repeated syntactic positions may
-refer to the same agent/world coordinate, and one strict loss may change many
-observations on a single edge. Gate 24 can nevertheless sum over all finite
-belief positions: duplicates only make this first upper bound larger. A later
+At that gate the quantitative chain remained open. Repeated syntactic positions
+may refer to the same agent/world coordinate, and one strict loss may change
+many observations on a single edge. Gate 24 now sums over all finite belief
+positions: duplicates only make this first upper bound larger. A later
 coordinate quotient can sharpen the bound without being a prerequisite for
 finiteness.
+
+### D6. Finite recovery-flip accounting (Gate 24)
+
+**VERIFIED; DUPLICATE-FREE SHARPENING OPEN.** The quantitative chain is now
+closed for finite admissible conditionalization traces. Every recovery-changing
+edge costs at most the number of strict position losses on that edge, while
+strict losses plus the next potential never exceed the current potential.
+Trace induction yields the strengthened invariant
+
+```text
+changes + final potential <= initial potential.
+```
+
+The simpler recovery-change bound follows immediately and does not grow with
+trace length. Finite-root status is computed exactly; finite world coverage
+supplies the global recovery interpretation.
+
+The next focused question is whether belief observations can be mapped to a
+duplicate-free finite list of `(agent, world)` coordinates and the same
+charging proof repeated there. Success would produce a strictly sharper or
+equal initial budget. This is a refinement of the established theorem, not a
+missing soundness condition for Gate 24.

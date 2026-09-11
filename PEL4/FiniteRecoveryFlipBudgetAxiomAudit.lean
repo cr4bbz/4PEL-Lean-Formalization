@@ -1,0 +1,18 @@
+import PEL4.FiniteRecoveryFlipBudget
+
+/-! # Gate 24 finite recovery-flip budget audit -/
+
+#print axioms PEL4.recoveryStatusOnBool_eq_true_iff
+#print axioms PEL4.recoveryStatusOnBool_eq_true_iff_global_of_covers
+#print axioms PEL4.recoveryObservation_strictIndicator_add_nextLength_le
+#print axioms PEL4.recoveryObservationList_step_budget
+#print axioms PEL4.recoveryChangeIndicator_le_strictShrinkPositionCount
+#print axioms PEL4.recoveryStrictShrinkPositionCount_add_nextPotential_le
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_add_finalPotential_le
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_add_finalPotential_le_initialBudget
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_le_initialBudget
+#print axioms PEL4.FiniteConditionalizationTrace.recoveryChangeCountOn_le_length
+#print axioms PEL4.gate24_gate19_recoveryChangeCount
+#print axioms PEL4.gate24_gate19_initialRecoveryScopeBudget
+#print axioms PEL4.gate24_gate19_finalRecoveryScopePotential
+#print axioms PEL4.gate24_gate19_recoveryChangeCount_le_initialBudget

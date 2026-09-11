@@ -67,6 +67,5 @@ finite-update sequence and undergo a fresh render and visual review.
 ## Editorial decision
 
 Gate 23 is suitable for manuscript integration as a qualitative localization
-theorem. A numerical global recovery-flip bound must wait for Gate 24's
-trace-level counting result; coordinate deduplication can be a later
-sharpening.
+theorem. Gate 24 has since supplied the trace-level position-wise numerical
+bound; coordinate deduplication remains a later sharpening.

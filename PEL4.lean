@@ -125,6 +125,8 @@ import PEL4.RecoveryScopeStuttering
 import PEL4.RecoveryScopeStutteringAxiomAudit
 import PEL4.RecoveryCausalDescent
 import PEL4.RecoveryCausalDescentAxiomAudit
+import PEL4.FiniteRecoveryFlipBudget
+import PEL4.FiniteRecoveryFlipBudgetAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics

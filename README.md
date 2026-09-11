@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/recovery-causal-descent-gate23`. Start with
+`research/recovery-flip-budget-gate24`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -449,7 +449,8 @@ do not change, the complete four-valued belief result is unchanged. Combined
 with Gate 21, every recovery change therefore yields a compiled belief witness
 with either strict local scope shrinkage or a body change inherited from a
 deeper accessible node. Gate 23 now recursively traces that second disjunct;
-a global flip bound has not yet been claimed. See
+Gate 24 subsequently aggregates the resulting losses into a finite flip
+bound. See
 [`docs/RECOVERY_SCOPE_STUTTERING_GATE22.md`](docs/RECOVERY_SCOPE_STUTTERING_GATE22.md).
 
 ### 32. Recursive causal descent
@@ -459,11 +460,22 @@ through the finite modal syntax tree. Every changed modal value reaches a
 belief observation whose cumulative evidence scope shrinks strictly. Combined
 with Gate 21, every finite-root recovery change therefore has such a witness
 inside the original observation compiler; world coverage yields the global
-form. The remaining quantitative task is to sum over all compiler positions
-and charge repeated recovery-changing edges against their Gate-20 budgets.
-Duplicates only weaken that first bound; removing them is an optional
-sharpening. See
+form. Gate 24 now sums over all compiler positions and charges repeated
+recovery-changing edges against their Gate-20 budgets. Duplicates only weaken
+that first bound; removing them remains an optional sharpening. See
 [`docs/RECOVERY_CAUSAL_DESCENT_GATE23.md`](docs/RECOVERY_CAUSAL_DESCENT_GATE23.md).
+
+### 33. Finite recovery-flip budget
+
+Gate 24 converts Gate 23's strict-loss witness into a numerical theorem for
+arbitrary finite admissible conditionalization traces. Lean proves the stronger
+invariant `recovery changes + final remaining scope potential <= initial
+position-wise scope potential`, and hence a trace-length-independent upper
+bound on recovery changes. With finite world coverage the executable count has
+the original global recovery interpretation. The safe first bound retains
+duplicate compiler positions; quotienting them by agent/world coordinate is
+the proposed Gate-25 sharpening. See
+[`docs/FINITE_RECOVERY_FLIP_BUDGET_GATE24.md`](docs/FINITE_RECOVERY_FLIP_BUDGET_GATE24.md).
 
 ---
 
@@ -578,12 +590,21 @@ PEL4/ClassicalModalCalculus.lean
 PEL4/FiniteUpdateRecovery.lean
 PEL4/FiniteUpdateScopeBounds.lean
 PEL4/FiniteReachableRecovery.lean
+PEL4/RecoveryScopeStuttering.lean
+PEL4/RecoveryCausalDescent.lean
+PEL4/FiniteRecoveryFlipBudget.lean
 ```
 
 Research notes:
 
 ```text
 docs/REPOSITORY_MAP.md
+docs/FINITE_RECOVERY_FLIP_BUDGET_GATE24.md
+docs/PAPER_REVIEW_GATE24.md
+docs/RECOVERY_CAUSAL_DESCENT_GATE23.md
+docs/PAPER_REVIEW_GATE23.md
+docs/RECOVERY_SCOPE_STUTTERING_GATE22.md
+docs/PAPER_REVIEW_GATE22.md
 docs/FINITE_REACHABLE_RECOVERY_GATE21.md
 docs/PAPER_REVIEW_GATE21.md
 docs/FINITE_UPDATE_SCOPE_BOUNDS_GATE20.md
@@ -620,7 +641,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/recovery-causal-descent-gate23
+git checkout research/recovery-flip-budget-gate24
 lake build
 ```
 
