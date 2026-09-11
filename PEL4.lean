@@ -131,6 +131,8 @@ import PEL4.RecoveryCoordinateBudget
 import PEL4.RecoveryCoordinateBudgetAxiomAudit
 import PEL4.FiniteEpistemicDescent
 import PEL4.FiniteEpistemicDescentAxiomAudit
+import PEL4.RecoveryEventualStability
+import PEL4.RecoveryEventualStabilityAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
