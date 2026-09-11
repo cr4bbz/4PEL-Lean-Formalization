@@ -1,0 +1,13 @@
+import PEL4.RecoveryStabilizationBounds
+
+#print axioms PEL4.boundedRecoveryProgress_tail
+#print axioms PEL4.recoveryTrajectoryFollows_tail
+#print axioms PEL4.recoveryTrajectory_stabilizesBy_of_initialPotential_le
+#print axioms PEL4.recoveryTrajectory_stabilizesBy
+#print axioms PEL4.eventuallyRecoveryStable_of_boundedProgress
+#print axioms PEL4.gate31_sharp_trajectory_follows
+#print axioms PEL4.gate31_sharp_bounded_progress
+#print axioms PEL4.gate31_sharp_stabilizes_by_six
+#print axioms PEL4.gate31_sharp_not_stabilizes_by_five
+#print axioms PEL4.gate31_sharp_hits_bound
+#print axioms PEL4.gate31_stabilization_bound_is_sharp
