@@ -82,10 +82,12 @@ theorem recoveryTrajectory_status_eq_initial_of_zero_potential
   induction n with
   | zero => rfl
   | succ n ih =>
-      by_contra hChange
-      have hLt := sys.potential_lt_of_status_change (hFollows n) hChange
-      have hLe := recoveryTrajectory_potential_le_initial sys trajectory hFollows n
-      omega
+      by_cases hEq :
+          sys.status (trajectory (n + 1)) = sys.status (trajectory n)
+      · exact hEq.trans ih
+      · have hLt := sys.potential_lt_of_status_change (hFollows n) hEq
+        have hLe := recoveryTrajectory_potential_le_initial sys trajectory hFollows n
+        omega
 
 /-- Bounded-potential induction principle behind Gate 27. -/
 theorem recoveryTrajectory_eventuallyStable_of_initialPotential_le
@@ -110,8 +112,10 @@ theorem recoveryTrajectory_eventuallyStable_of_initialPotential_le
       · refine ⟨0, ?_⟩
         intro n hn
         simpa using hAll n
-      · push_neg at hAll
-        obtain ⟨n, hNe⟩ := hAll
+      · have hExists :
+            ∃ n, sys.status (trajectory n) ≠ sys.status (trajectory 0) :=
+          Classical.not_forall.mp hAll
+        obtain ⟨n, hNe⟩ := hExists
         obtain ⟨k, hk, hChange⟩ :=
           recoveryTrajectory_exists_adjacent_change_before sys trajectory hNe
         let tail : Nat -> State := fun j => trajectory (k + 1 + j)
