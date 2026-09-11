@@ -141,6 +141,8 @@ import PEL4.ConditionalizationAtomicIdempotence
 import PEL4.ConditionalizationAtomicIdempotenceAxiomAudit
 import PEL4.EpistemicPathDependenceAsymptotic
 import PEL4.EpistemicPathDependenceAsymptoticAxiomAudit
+import PEL4.RecoveryConfluence
+import PEL4.RecoveryConfluenceAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
