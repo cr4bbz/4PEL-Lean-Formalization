@@ -115,7 +115,9 @@ theorem conditionalize_mu_repeat_prop_eq
   rw [hMass1]
   rw [if_neg (by decide : (1 : Rat) ≠ 0)]
   rw [hInter1, Rat.div_def]
-  rw [show (1 : Rat)⁻¹ = 1 by decide]
+  have hInvOne : (1 : Rat)⁻¹ = 1 := by
+    rw [Rat.inv_def]
+  rw [hInvOne]
   exact Rat.mul_one _
 
 /-- Atomic evidence remains admissible after it has already been learned once. -/
