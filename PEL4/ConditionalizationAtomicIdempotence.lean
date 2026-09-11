@@ -117,6 +117,7 @@ theorem conditionalize_mu_repeat_prop_eq
   rw [hInter1, Rat.div_def]
   have hInvOne : (1 : Rat)⁻¹ = 1 := by
     rw [Rat.inv_def]
+    decide
   rw [hInvOne]
   exact Rat.mul_one _
 
