@@ -9,9 +9,9 @@ Gate 27 proves eventual recovery-status stability from a finite descent
 potential, but gives no numerical deadline: arbitrarily long status-preserving
 stuttering may separate the finitely many genuine changes.
 
-Gate 31 adds a bounded-liveness hypothesis.  If the current recovery phase will
+Gate 31 adds a bounded-liveness hypothesis. If the current recovery phase will
 ever be left again, then some adjacent recovery-status change must occur within
-the next `B` update edges.  Combined with the Gate-26 fact that every such
+the next `B` update edges. Combined with the Gate-26 fact that every such
 change consumes at least one unit of natural-valued potential, this turns the
 qualitative eventual-stability theorem into an explicit deadline.
 -/
@@ -25,7 +25,7 @@ def RecoveryStabilizesBy
 
 /-- Bounded recovery progress: whenever the status at time `n` will differ at
 some later time, an adjacent status-changing edge occurs within the next `B`
-edges.  For `B = 0`, this forces immediate permanent status stability. -/
+edges. For `B = 0`, this forces immediate permanent status stability. -/
 def BoundedRecoveryProgress
     {State : Type} (sys : RecoveryDescentSystem State)
     (trajectory : Nat -> State) (B : Nat) : Prop :=
@@ -61,11 +61,10 @@ theorem recoveryTrajectoryFollows_tail
     (hFollows : recoveryTrajectoryFollows sys trajectory) :
     recoveryTrajectoryFollows sys (fun j => trajectory (offset + j)) := by
   intro j
-  have hIndex : offset + (j + 1) = (offset + j) + 1 := by omega
-  rw [hIndex]
-  exact hFollows (offset + j)
+  change sys.Step (trajectory (offset + j)) (trajectory (offset + (j + 1)))
+  simpa [Nat.add_assoc] using hFollows (offset + j)
 
-/-- Quantitative bounded-potential induction.  If the initial potential is at
+/-- Quantitative bounded-potential induction. If the initial potential is at
 most `p`, then bounded progress with horizon `B` yields a stabilization time no
 later than `B * p`. -/
 theorem recoveryTrajectory_stabilizesBy_of_initialPotential_le
@@ -99,10 +98,9 @@ theorem recoveryTrajectory_stabilizesBy_of_initialPotential_le
             Classical.not_forall.mp hAll
           obtain ⟨m, hNe⟩ := hRaw
           have hm : 0 < m := by
-            by_contra hNot
-            have hm0 : m = 0 := by omega
-            subst m
-            exact hNe rfl
+            cases m with
+            | zero => exact False.elim (hNe rfl)
+            | succ m => omega
           exact ⟨m, hm, hNe⟩
         obtain ⟨k, hkB, hChange⟩ := hProgress 0 hExists
         let offset := k + 1
@@ -250,17 +248,23 @@ theorem gate31_sharp_stabilizes_by_six :
     RecoveryStabilizesBy recoveryBudgetSnapshotSystem
       gate31SharpTrajectory 6 := by
   intro n hn
-  simp [RecoveryStabilizesBy, recoveryBudgetSnapshotSystem,
-    gate31SharpTrajectory, show ¬ 6 < 3 by omega,
-    show ¬ 6 < 6 by omega, show ¬ n < 3 by omega,
-    show ¬ n < 6 by omega]
+  simp [recoveryBudgetSnapshotSystem, gate31SharpTrajectory,
+    show ¬ 6 < 3 by omega, show ¬ 6 < 6 by omega,
+    show ¬ n < 3 by omega, show ¬ n < 6 by omega]
 
 theorem gate31_sharp_not_stabilizes_by_five :
     ¬ RecoveryStabilizesBy recoveryBudgetSnapshotSystem
       gate31SharpTrajectory 5 := by
   intro hStable
   have h := hStable 6 (by omega)
-  norm_num [recoveryBudgetSnapshotSystem, gate31SharpTrajectory] at h
+  have h5 :
+      recoveryBudgetSnapshotSystem.status (gate31SharpTrajectory 5) = false := by
+    decide
+  have h6 :
+      recoveryBudgetSnapshotSystem.status (gate31SharpTrajectory 6) = true := by
+    decide
+  rw [h6, h5] at h
+  decide at h
 
 theorem gate31_sharp_hits_bound :
     6 = 3 * recoveryBudgetSnapshotSystem.potential
