@@ -8,3 +8,7 @@ import PEL4.EpistemicPathDependence
 #print axioms PEL4.gate29_start_is_recovered_now
 #print axioms PEL4.gate29_recovery_now_not_robust_future
 #print axioms PEL4.gate29_paths_diverge_after_start
+#print axioms PEL4.gate29_recoveryPreservingEvidence_admissible
+#print axioms PEL4.gate29_recoveryPreserving_belief_profile
+#print axioms PEL4.gate29_recoveryPreserving_update_recovered
+#print axioms PEL4.gate29_concrete_conditionalization_split
