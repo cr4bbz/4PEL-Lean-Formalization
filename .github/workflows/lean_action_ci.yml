@@ -15,9 +15,11 @@ jobs:
       - name: Build and audit Gate 29 epistemic path dependence
         run: |
           lake build PEL4.ConditionalizationAtomicIdempotence
+          lake env lean PEL4/ConditionalizationAtomicIdempotenceAxiomAudit.lean
           lake build PEL4.EpistemicPathDependence
           lake env lean PEL4/EpistemicPathDependenceAxiomAudit.lean
           lake build PEL4.EpistemicPathDependenceAsymptotic
+          lake env lean PEL4/EpistemicPathDependenceAsymptoticAxiomAudit.lean
       - name: Build and audit Gate 28 recovery endpoint classification
         run: |
           lake build PEL4.RecoveryEndpointClassification
