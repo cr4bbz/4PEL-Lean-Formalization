@@ -113,7 +113,7 @@ theorem conditionalize_mu_repeat_prop_eq
     else m1.mu i w (intersectWorlds S event1) / m1.mu i w event1) =
       m1.mu i w S
   rw [hMass1]
-  simp only [one_ne_zero, ↓reduceIte]
+  rw [if_neg (by decide : (1 : Rat) ≠ 0)]
   rw [hInter1, Rat.div_def]
   simp
 
@@ -160,7 +160,7 @@ theorem conditionalize_repeat_prop_mu_eq
 fields are propositions, so proof irrelevance closes the equality once the
 worlds, accessibility, measure, valuation, and thresholds agree. -/
 theorem model_eq_of_data_eq
-    {W Ag Atom : Type}
+    {W Ag Atom : Type} [DecidableEq W]
     (m n : Model W Ag Atom)
     (hWorlds : m.worlds = n.worlds)
     (hR : m.R = n.R)
