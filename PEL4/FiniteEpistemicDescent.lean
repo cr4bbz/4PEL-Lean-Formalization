@@ -191,7 +191,8 @@ def gate26RobotEnd : RecoveryBudgetSnapshot :=
 theorem gate26_robot_path_follows :
     recoveryDescentFollows recoveryBudgetSnapshotSystem gate26RobotStart
       [gate26RobotMiddle, gate26RobotEnd] := by
-  decide +kernel
+  simp [recoveryDescentFollows, recoveryBudgetSnapshotSystem,
+    recoveryChangeCost, gate26RobotStart, gate26RobotMiddle, gate26RobotEnd]
 
 theorem gate26_robot_two_flips :
     recoveryChangeCountFrom recoveryBudgetSnapshotSystem gate26RobotStart
