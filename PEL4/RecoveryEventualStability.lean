@@ -85,7 +85,11 @@ theorem recoveryTrajectory_status_eq_initial_of_zero_potential
       by_cases hEq :
           sys.status (trajectory (n + 1)) = sys.status (trajectory n)
       · exact hEq.trans ih
-      · have hLt := sys.potential_lt_of_status_change (hFollows n) hEq
+      · have hChange :
+            sys.status (trajectory n) ≠ sys.status (trajectory (n + 1)) := by
+          intro h
+          exact hEq h.symm
+        have hLt := sys.potential_lt_of_status_change (hFollows n) hChange
         have hLe := recoveryTrajectory_potential_le_initial sys trajectory hFollows n
         omega
 
@@ -122,7 +126,10 @@ theorem recoveryTrajectory_eventuallyStable_of_initialPotential_le
         have hTailFollows : recoveryTrajectoryFollows sys tail := by
           intro j
           dsimp [tail]
-          convert hFollows (k + 1 + j) using 1 <;> omega
+          have hIndex : k + 1 + (j + 1) = (k + 1 + j) + 1 := by
+            omega
+          rw [hIndex]
+          exact hFollows (k + 1 + j)
         have hKLe :
             sys.potential (trajectory k) ≤ sys.potential (trajectory 0) :=
           recoveryTrajectory_potential_le_initial sys trajectory hFollows k
