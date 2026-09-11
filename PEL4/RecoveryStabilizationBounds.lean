@@ -103,6 +103,10 @@ theorem recoveryTrajectory_stabilizesBy_of_initialPotential_le
             | succ m => omega
           exact ⟨m, hm, hNe⟩
         obtain ⟨k, hkB, hChange⟩ := hProgress 0 hExists
+        have hChange' :
+            sys.status (trajectory k) ≠
+              sys.status (trajectory (k + 1)) := by
+          simpa using hChange
         let offset := k + 1
         let tail : Nat -> State := fun j => trajectory (offset + j)
         have hTailFollows : recoveryTrajectoryFollows sys tail := by
@@ -116,7 +120,7 @@ theorem recoveryTrajectory_stabilizesBy_of_initialPotential_le
         have hK1Lt :
             sys.potential (trajectory (k + 1)) <
               sys.potential (trajectory k) :=
-          sys.potential_lt_of_status_change (hFollows k) hChange
+          sys.potential_lt_of_status_change (hFollows k) hChange'
         have hTailBound : sys.potential (tail 0) ≤ p := by
           dsimp [tail, offset]
           omega
@@ -125,7 +129,10 @@ theorem recoveryTrajectory_stabilizesBy_of_initialPotential_le
         refine ⟨offset + N, ?_, ?_⟩
         · dsimp [offset]
           have hk1 : k + 1 ≤ B := by omega
-          omega
+          calc
+            k + 1 + N ≤ B + (B * p) := Nat.add_le_add hk1 hNBound
+            _ = B * p + B := Nat.add_comm B (B * p)
+            _ = B * (p + 1) := (Nat.mul_succ B p).symm
         · intro n hn
           let j := n - offset
           have hOffsetLe : offset ≤ n := by omega
@@ -264,7 +271,7 @@ theorem gate31_sharp_not_stabilizes_by_five :
       recoveryBudgetSnapshotSystem.status (gate31SharpTrajectory 6) = true := by
     decide
   rw [h6, h5] at h
-  decide at h
+  simpa using h
 
 theorem gate31_sharp_hits_bound :
     6 = 3 * recoveryBudgetSnapshotSystem.potential
