@@ -109,7 +109,12 @@ theorem conditionalize_two_atoms_measure_eq_on_event
   have hQAfterPNe :
       (conditionalize m (Formula.prop p) hP).mu i w Q ≠ 0 := by
     have hRaw := hQAfterP.positive_mass i w
-    unfold conditionalizationEvidenceMass at hRaw
+    change
+      (conditionalize m (Formula.prop p) hP).mu i w
+        (filterWorlds ((conditionalize m (Formula.prop p) hP).R i w)
+          (fun u =>
+            (eval (conditionalize m (Formula.prop p) hP) u
+              (Formula.prop q)).pos)) ≠ 0 at hRaw
     have hEventEq :=
       conditionalize_prop_event_eq m (Formula.prop p) hP q i w
     rw [hEventEq] at hRaw
@@ -117,7 +122,12 @@ theorem conditionalize_two_atoms_measure_eq_on_event
   have hPAfterQNe :
       (conditionalize m (Formula.prop q) hQ).mu i w P ≠ 0 := by
     have hRaw := hPAfterQ.positive_mass i w
-    unfold conditionalizationEvidenceMass at hRaw
+    change
+      (conditionalize m (Formula.prop q) hQ).mu i w
+        (filterWorlds ((conditionalize m (Formula.prop q) hQ).R i w)
+          (fun u =>
+            (eval (conditionalize m (Formula.prop q) hQ) u
+              (Formula.prop p)).pos)) ≠ 0 at hRaw
     have hEventEq :=
       conditionalize_prop_event_eq m (Formula.prop q) hQ p i w
     rw [hEventEq] at hRaw
