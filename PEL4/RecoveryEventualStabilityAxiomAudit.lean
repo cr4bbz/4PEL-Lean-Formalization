@@ -1,0 +1,8 @@
+import PEL4.RecoveryEventualStability
+
+#print axioms PEL4.recoveryTrajectory_potential_le_initial
+#print axioms PEL4.recoveryTrajectory_exists_adjacent_change_before
+#print axioms PEL4.recoveryTrajectory_status_eq_initial_of_zero_potential
+#print axioms PEL4.recoveryTrajectory_eventuallyStable_of_initialPotential_le
+#print axioms PEL4.recoveryTrajectory_eventuallyRecoveryStable
+#print axioms PEL4.recoveryTrajectory_not_infinitely_often_changes
