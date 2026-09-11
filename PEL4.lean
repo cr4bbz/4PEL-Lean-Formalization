@@ -133,6 +133,8 @@ import PEL4.FiniteEpistemicDescent
 import PEL4.FiniteEpistemicDescentAxiomAudit
 import PEL4.RecoveryEventualStability
 import PEL4.RecoveryEventualStabilityAxiomAudit
+import PEL4.RecoveryEndpointClassification
+import PEL4.RecoveryEndpointClassificationAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
