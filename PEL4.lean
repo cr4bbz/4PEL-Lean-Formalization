@@ -123,6 +123,8 @@ import PEL4.FiniteReachableRecovery
 import PEL4.FiniteReachableRecoveryAxiomAudit
 import PEL4.RecoveryScopeStuttering
 import PEL4.RecoveryScopeStutteringAxiomAudit
+import PEL4.RecoveryCausalDescent
+import PEL4.RecoveryCausalDescentAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics

@@ -1,0 +1,13 @@
+import PEL4.RecoveryCausalDescent
+
+/-! # Gate 23 recursive causal-descent audit -/
+
+#print axioms PEL4.modalAccessibleValueStable_congr_on_mem
+#print axioms PEL4.modalKnowledgeValue_congr_on_accessible
+#print axioms PEL4.modalRawPossibilityValue_congr_on_accessible
+#print axioms PEL4.evalModal_change_has_strictShrink_beliefObservation
+#print axioms PEL4.recoveryObservationSites_closed_under_descendants
+#print axioms PEL4.recoveryOn_change_has_strictShrink_beliefObservation
+#print axioms PEL4.globalRecovery_change_has_strictShrink_beliefObservation_of_covers
+#print axioms PEL4.FiniteConditionalizationTrace.finalModel_recoveryOn_change_has_strictShrink_beliefObservation
+#print axioms PEL4.gate23_gate19_first_loss_has_strictShrink_beliefObservation

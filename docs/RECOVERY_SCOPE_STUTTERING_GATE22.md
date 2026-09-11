@@ -71,23 +71,21 @@ accessible body change. A trace-indexed theorem automatically chooses the
 actual cumulative final scope of the preceding update prefix and obtains its
 concentration proof from the trace.
 
-## What is not yet proved
+## Gate-23 resolution
 
-Gate 22 does not yet turn the disjunction into a numerical global flip bound.
-The inherited body change must first be chased recursively through belief,
-knowledge, possibility, conjunction, and negation until it reaches a belief
-node whose own scope strictly shrinks. Formula finiteness suggests termination,
-and atomic values cannot be the endpoint because conditionalization leaves the
-valuation unchanged, but that causal descent is a separate theorem.
+Gate 22 does not by itself turn the disjunction into a numerical global flip
+bound. Gate 23 now chases inherited body changes recursively through belief,
+knowledge, possibility, conjunction, and negation. Because the formula is
+finite and atomic values cannot change, Lean proves termination at a reachable
+belief node whose own scope shrinks strictly.
 
-The next research question is therefore:
+The remaining quantitative research question is therefore:
 
-> Can every recovery change be traced through the finite Gate-21 evaluation
-> tree to a reachable belief coordinate with strict cumulative-scope
-> shrinkage?
+> Can repeated recovery-changing edges be charged to a finite duplicate-free
+> collection of reachable belief-coordinate budgets?
 
-A successful Gate 23 would then provide the missing input for deduplicating
-coordinates and summing their Gate-20 budgets.
+Gate 23 provides the causal input; Gate 24 must deduplicate coordinates and
+sum their Gate-20 budgets without double-counting one loss.
 
 ## Verification
 

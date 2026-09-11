@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/recovery-scope-stuttering-gate22`.
+Active baseline: `research/recovery-causal-descent-gate23`.
 
-Fresh verification on this baseline: Lean 4.31, 177 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 179 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -335,6 +335,27 @@ change-to-budget injection is not yet justified: change may be inherited from
 deeper in the modal evaluation tree. See
 `docs/RECOVERY_SCOPE_STUTTERING_GATE22.md`.
 
+### A33. Does inherited modal change reach a strict scope loss?
+
+**VERIFIED.** Gate 23 follows every changed modal value through the finite
+syntax and accessibility tree. Negation and conjunction descend structurally;
+knowledge and possibility descend through an accessible changed body value;
+belief either shrinks locally or uses Gate 22 to descend into its body. Atomic
+values cannot change under conditionalization.
+
+Lean therefore proves:
+
+```text
+recovery changes on finite roots
+-> some belief observation in the original Gate-21 compiler
+   has strict cumulative-scope shrinkage.
+```
+
+The result lifts to global recovery under `WorldListCovers` and specializes to
+the next edge after any dependent finite update prefix. It establishes causal
+localization, not yet an injective count of repeated changes. See
+`docs/RECOVERY_CAUSAL_DESCENT_GATE23.md`.
+
 ## B. Questions with substantial but incomplete answers
 
 ### B1. Is the modal correspondence picture minimal?
@@ -539,7 +560,7 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 22
+## D. Research order after Gate 23
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
@@ -551,12 +572,13 @@ COMPLETED Gate 19: finite update traces, first loss, and recovery return
 COMPLETED Gate 20: sharp local cumulative evidence-scope bounds
 COMPLETED Gate 21: exact finite recovery-observation maps and stuttering
 COMPLETED Gate 22: posterior concentration and local causal dichotomy
+COMPLETED Gate 23: recursive descent to strict reachable scope loss
 
 NEXT DECISION:
-1. recursively trace inherited body changes to a strictly shrinking belief site
-2. deduplicate reachable agent/world coordinates in the Gate-21 map
-3. aggregate Gate-20 budgets across those coordinates
-4. derive a finite global recovery-flip bound under world coverage
+1. define trace-level counting of recovery-changing edges
+2. aggregate Gate-20 budgets over finite Gate-21 belief positions
+3. derive a finite global recovery-flip bound under world coverage
+4. optionally sharpen it by deduplicating agent/world coordinates
 5. extend the trace analysis to product updates
 6. return to the deferred finite-context proof theory
 
@@ -627,7 +649,7 @@ resource, then prevent the same consumed resource from being counted again.
 
 ### D4. Cumulative-scope stuttering (Gate 22)
 
-**VERIFIED; RECURSIVE CAUSAL DESCENT OPEN.** The cumulative Gate-20 scope now
+**VERIFIED; CAUSAL DESCENT RESOLVED BY GATE 23.** The cumulative Gate-20 scope now
 has a proved probabilistic meaning: after every update prefix, the posterior
 measure is concentrated on its final scope. An update that removes no further
 scope world preserves all local event masses. If the accessible interpretation
@@ -642,8 +664,33 @@ an inherited body-value change at an accessible world.
 ```
 
 Thus the earlier proposed direct injection from every changed compiled belief
-observation to its own local budget is too coarse. Gate 23 should prove a
-terminating recursive causal search through the finite modal evaluation tree.
-Because atomic valuations do not change, the intended endpoint is a reachable
-belief coordinate whose cumulative scope strictly shrinks. Only after that
-localization should coordinate deduplication and budget summation begin.
+observation to its own local budget is too coarse. Gate 23 now proves the
+terminating recursive causal search through the finite modal evaluation tree:
+because atomic valuations do not change, its endpoint is a reachable belief
+coordinate whose cumulative scope strictly shrinks. Coordinate deduplication
+and budget summation remain open.
+
+### D5. Recursive causal localization (Gate 23)
+
+**VERIFIED; DUPLICATE-FREE ACCOUNTING OPEN.** Every changed modal value under
+one admissible conditionalization now yields a belief observation in its exact
+Gate-21 compiler whose current cumulative scope shrinks strictly. Compiler
+closure lifts a descendant found below a changed observation back into the
+original finite-root map. Gate-21 recovery localization then supplies the
+recovery theorem, and Gate-22 concentration supplies its trace-indexed form.
+
+This closes the qualitative causal chain:
+
+```text
+recovery change
+-> changed compiled observation
+-> finite recursive value descent
+-> strict scope loss at a reachable belief observation.
+```
+
+It does not yet close the quantitative chain. Repeated syntactic positions may
+refer to the same agent/world coordinate, and one strict loss may change many
+observations on a single edge. Gate 24 can nevertheless sum over all finite
+belief positions: duplicates only make this first upper bound larger. A later
+coordinate quotient can sharpen the bound without being a prerequisite for
+finiteness.

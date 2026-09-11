@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/recovery-scope-stuttering-gate22`. Start with
+`research/recovery-causal-descent-gate23`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -448,9 +448,22 @@ update does not shrink that scope and the accessible values of a belief body
 do not change, the complete four-valued belief result is unchanged. Combined
 with Gate 21, every recovery change therefore yields a compiled belief witness
 with either strict local scope shrinkage or a body change inherited from a
-deeper accessible node. Recursively tracing that second disjunct is the next
-gate; a global flip bound has not yet been claimed. See
+deeper accessible node. Gate 23 now recursively traces that second disjunct;
+a global flip bound has not yet been claimed. See
 [`docs/RECOVERY_SCOPE_STUTTERING_GATE22.md`](docs/RECOVERY_SCOPE_STUTTERING_GATE22.md).
+
+### 32. Recursive causal descent
+
+Gate 23 eliminates Gate 22's inherited-change alternative by following it
+through the finite modal syntax tree. Every changed modal value reaches a
+belief observation whose cumulative evidence scope shrinks strictly. Combined
+with Gate 21, every finite-root recovery change therefore has such a witness
+inside the original observation compiler; world coverage yields the global
+form. The remaining quantitative task is to sum over all compiler positions
+and charge repeated recovery-changing edges against their Gate-20 budgets.
+Duplicates only weaken that first bound; removing them is an optional
+sharpening. See
+[`docs/RECOVERY_CAUSAL_DESCENT_GATE23.md`](docs/RECOVERY_CAUSAL_DESCENT_GATE23.md).
 
 ---
 
@@ -607,7 +620,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/recovery-scope-stuttering-gate22
+git checkout research/recovery-causal-descent-gate23
 lake build
 ```
 
