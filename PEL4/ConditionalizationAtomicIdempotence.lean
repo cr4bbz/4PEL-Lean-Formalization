@@ -19,6 +19,20 @@ theorem intersectWorlds_repeat_right
   apply intersectWorlds_eq_left_of_subset
   exact intersectWorlds_subset_right S E
 
+/-- Atomic evidence has exactly the same positive event before and after any
+conditionalization, because `conditionalize` leaves accessibility and atomic
+valuation unchanged. -/
+theorem conditionalize_prop_event_eq
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (E : Formula Atom Ag)
+    (hAdm : ConditionalizationAdmissible m E)
+    (p : Atom) (i : Ag) (w : W) :
+    filterWorlds ((conditionalize m E hAdm).R i w)
+        (fun u => (eval (conditionalize m E hAdm) u (Formula.prop p)).pos) =
+      filterWorlds (m.R i w)
+        (fun u => (eval m u (Formula.prop p)).pos) := by
+  rfl
+
 /-- After one admissible conditioning on atomic evidence `p`, that same event
 has posterior mass one. -/
 theorem conditionalize_mu_prop_event_eq_one
@@ -27,8 +41,10 @@ theorem conditionalize_mu_prop_event_eq_one
     (hAdm : ConditionalizationAdmissible m (Formula.prop p))
     (i : Ag) (w : W) :
     conditionalize_mu m i w (Formula.prop p)
-        (filterWorlds (m.R i w) (fun u => (m.val u p).pos)) = 1 := by
-  let event := filterWorlds (m.R i w) (fun u => (m.val u p).pos)
+        (filterWorlds (m.R i w)
+          (fun u => (eval m u (Formula.prop p)).pos)) = 1 := by
+  let event := filterWorlds (m.R i w)
+    (fun u => (eval m u (Formula.prop p)).pos)
   have hDenNe : m.mu i w event ≠ 0 := by
     simpa [conditionalizationEvidenceMass, event] using hAdm.positive_mass i w
   change conditionalize_mu m i w (Formula.prop p) event = 1
@@ -49,7 +65,8 @@ theorem conditionalize_mu_repeat_prop_eq
     conditionalize_mu (conditionalize m (Formula.prop p) hAdm)
         i w (Formula.prop p) S =
       conditionalize_mu m i w (Formula.prop p) S := by
-  let event := filterWorlds (m.R i w) (fun u => (m.val u p).pos)
+  let event := filterWorlds (m.R i w)
+    (fun u => (eval m u (Formula.prop p)).pos)
   have hDenNe : m.mu i w event ≠ 0 := by
     simpa [conditionalizationEvidenceMass, event] using hAdm.positive_mass i w
   have hEventMass :
@@ -60,6 +77,9 @@ theorem conditionalize_mu_repeat_prop_eq
         conditionalize_mu m i w (Formula.prop p) S := by
     simp only [conditionalize_mu, beq_iff_eq]
     rw [if_neg hDenNe, if_neg hDenNe]
+    change m.mu i w (intersectWorlds (intersectWorlds S event) event) /
+          m.mu i w event =
+        m.mu i w (intersectWorlds S event) / m.mu i w event
     rw [intersectWorlds_repeat_right]
   change
     (if conditionalize_mu m i w (Formula.prop p) event = 0 then 0
@@ -81,13 +101,18 @@ theorem conditionalize_prop_repeat_admissible
   · intro i w
     have hOne := conditionalize_mu_prop_event_eq_one m p hAdm i w
     change conditionalize_mu m i w (Formula.prop p)
-      (filterWorlds (m.R i w) (fun u => (m.val u p).pos)) ≠ 0
+      (filterWorlds (m.R i w)
+        (fun u => (eval m u (Formula.prop p)).pos)) ≠ 0
     rw [hOne]
     decide
   · intro i w
+    change conditionalize_mu (conditionalize m (Formula.prop p) hAdm)
+      i w (Formula.prop p) (m.R i w) = 1
     rw [conditionalize_mu_repeat_prop_eq m p hAdm i w (m.R i w)]
     exact hAdm.mu_total i w
   · intro i w
+    change conditionalize_mu (conditionalize m (Formula.prop p) hAdm)
+      i w (Formula.prop p) [] = 0
     rw [conditionalize_mu_repeat_prop_eq m p hAdm i w []]
     exact hAdm.mu_empty i w
 
@@ -105,7 +130,7 @@ theorem conditionalize_repeat_prop_mu_eq
   exact conditionalize_mu_repeat_prop_eq m p hAdm i w S
 
 /-- Full-model idempotence for repeated atomic conditionalization. The proof
-uses equality of the only field changed by conditionalization (`mu`); all
+uses equality of the only data field changed by conditionalization (`mu`); all
 normalization witnesses are propositions and hence proof-irrelevant. -/
 theorem conditionalize_repeat_prop_eq
     {W Ag Atom : Type} [DecidableEq W]
