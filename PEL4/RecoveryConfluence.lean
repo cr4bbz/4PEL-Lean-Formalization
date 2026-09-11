@@ -1,6 +1,7 @@
 import PEL4.EpistemicPathDependenceAsymptotic
 import PEL4.ConditionalizationProbabilityIntegrity
 import Init.Grind.Ring.Field
+import Init.GrindInstances.Ring.Rat
 
 namespace PEL4
 
@@ -8,13 +9,13 @@ namespace PEL4
 # Gate 30: Recovery confluence
 
 Gate 29 proves that admissible evidence choice can make Recovery genuinely path
-dependent.  Gate 30 asks for a positive boundary: when do two admissible update
+dependent. Gate 30 asks for a positive boundary: when do two admissible update
 orders necessarily agree?
 
 For atomic evidence, the conditioning events are static because conditionalize
-changes only `mu`.  Under finite probability integrity, conditioning first on
+changes only `mu`. Under finite probability integrity, conditioning first on
 `p` and then on `q`, or first on `q` and then on `p`, yields the same probability
-on every well-formed local event.  Because every event actually inspected by the
+on every well-formed local event. Because every event actually inspected by the
 modal evaluator is a duplicate-free subset of an accessibility range, this is
 enough for complete modal observational equivalence and hence Recovery
 confluence.
@@ -43,14 +44,14 @@ theorem intersectWorlds_right_swap_extensional
       (intersectWorlds (intersectWorlds S A) B)
       (intersectWorlds (intersectWorlds S B) A) := by
   intro x
-  simp [intersectWorlds, and_assoc, and_left_comm, and_comm]
+  simp [intersectWorlds, and_comm]
 
 /-- Quotient cancellation used by two-step conditioning. -/
 theorem rat_div_div_same_den_cancel
     (a b d : Rat) (hb : b ≠ 0) :
     (a / b) / (d / b) = a / d := by
-  rw [Field.div_div_right]
-  rw [Rat.div_mul_cancel hb]
+  rw [Lean.Grind.Field.div_div_right]
+  rw [Lean.Grind.Field.div_mul_cancel hb]
 
 /-- Once atomic evidence is known admissible, its raw conditionalized measure
 is the ordinary quotient by its positive event mass. -/
@@ -107,10 +108,20 @@ theorem conditionalize_two_atoms_measure_eq_on_event
     simpa [Q, conditionalizationEvidenceMass] using hQ.positive_mass i w
   have hQAfterPNe :
       (conditionalize m (Formula.prop p) hP).mu i w Q ≠ 0 := by
-    simpa [Q, conditionalizationEvidenceMass] using hQAfterP.positive_mass i w
+    have hRaw := hQAfterP.positive_mass i w
+    unfold conditionalizationEvidenceMass at hRaw
+    have hEventEq :=
+      conditionalize_prop_event_eq m (Formula.prop p) hP q i w
+    rw [hEventEq] at hRaw
+    simpa [Q] using hRaw
   have hPAfterQNe :
       (conditionalize m (Formula.prop q) hQ).mu i w P ≠ 0 := by
-    simpa [P, conditionalizationEvidenceMass] using hPAfterQ.positive_mass i w
+    have hRaw := hPAfterQ.positive_mass i w
+    unfold conditionalizationEvidenceMass at hRaw
+    have hEventEq :=
+      conditionalize_prop_event_eq m (Formula.prop q) hQ p i w
+    rw [hEventEq] at hRaw
+    simpa [P] using hRaw
 
   have hSupportNodup : (m.R i w).Nodup :=
     (hIntegrity i w).support_nodup
@@ -242,8 +253,8 @@ theorem belief_eq_of_modalObservationEquivalent
   unfold belief
   rw [hR, hV, hC]
   change
-    { pos := n.mu i w P ≥ m.c i, neg := n.mu i w N ≥ m.c i } =
-      { pos := m.mu i w P ≥ m.c i, neg := m.mu i w N ≥ m.c i }
+    ({ pos := n.mu i w P ≥ m.c i, neg := n.mu i w N ≥ m.c i } : FDEValue) =
+      ({ pos := m.mu i w P ≥ m.c i, neg := m.mu i w N ≥ m.c i } : FDEValue)
   rw [hPMass, hNMass]
 
 /-- Every modal formula has the same complete FDE value in observationally
@@ -315,13 +326,13 @@ theorem beliefThresholdComplete_iff_of_modalObservationEquivalent
   have hPos :
       beliefPositiveThresholdBit n i w vN =
         beliefPositiveThresholdBit m i w vM := by
-    have := congrArg FDEValue.pos hBel
-    simpa [belief_eq_thresholdBits] using this
+    have h := congrArg FDEValue.pos hBel
+    simpa [belief_eq_thresholdBits] using h
   have hNeg :
       beliefNegativeThresholdBit n i w vN =
         beliefNegativeThresholdBit m i w vM := by
-    have := congrArg FDEValue.neg hBel
-    simpa [belief_eq_thresholdBits] using this
+    have h := congrArg FDEValue.neg hBel
+    simpa [belief_eq_thresholdBits] using h
   unfold BeliefThresholdComplete
   rw [hPos, hNeg]
 
