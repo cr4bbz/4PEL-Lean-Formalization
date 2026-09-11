@@ -104,4 +104,22 @@ theorem conditionalize_repeat_prop_mu_eq
   funext i w S
   exact conditionalize_mu_repeat_prop_eq m p hAdm i w S
 
+/-- Full-model idempotence for repeated atomic conditionalization. The proof
+uses equality of the only field changed by conditionalization (`mu`); all
+normalization witnesses are propositions and hence proof-irrelevant. -/
+theorem conditionalize_repeat_prop_eq
+    {W Ag Atom : Type} [DecidableEq W]
+    (m : Model W Ag Atom) (p : Atom)
+    (hAdm : ConditionalizationAdmissible m (Formula.prop p))
+    (hRepeat := conditionalize_prop_repeat_admissible m p hAdm) :
+    conditionalize (conditionalize m (Formula.prop p) hAdm)
+        (Formula.prop p) hRepeat =
+      conditionalize m (Formula.prop p) hAdm := by
+  have hMu := conditionalize_repeat_prop_mu_eq m p hAdm hRepeat
+  cases m with
+  | mk worlds R mu val c hTotal hEmpty hHalf hOne =>
+      simp only [conditionalize] at hMu ⊢
+      cases hMu
+      rfl
+
 end PEL4
