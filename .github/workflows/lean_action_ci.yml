@@ -12,8 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
-      - name: Build Gate 30 recovery confluence
-        run: lake build PEL4.RecoveryConfluence
+      - name: Build and audit Gate 30 recovery confluence
+        run: |
+          lake build PEL4.RecoveryConfluence
+          lake env lean PEL4/RecoveryConfluenceAxiomAudit.lean
       - name: Build and audit Gate 29 epistemic path dependence
         run: |
           lake build PEL4.ConditionalizationAtomicIdempotence
