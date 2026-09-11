@@ -1,0 +1,10 @@
+import PEL4.EpistemicPathDependenceAsymptotic
+
+#print axioms PEL4.gate29_concreteRecovery_starts_at_common_model
+#print axioms PEL4.gate29_concreteNonRecovery_starts_at_common_model
+#print axioms PEL4.gate29_concreteRecovery_repeatedConditionalization
+#print axioms PEL4.gate29_concreteNonRecovery_repeatedConditionalization
+#print axioms PEL4.gate29_concreteRecovery_eventually_recovered
+#print axioms PEL4.gate29_concreteNonRecovery_eventually_nonRecovered
+#print axioms PEL4.gate29_concrete_paths_diverge_after_first_update
+#print axioms PEL4.gate29_concrete_asymptotic_path_dependence
