@@ -13,7 +13,7 @@ The project began as the formal backbone for *The Cartography of Paradoxes: Unif
 > included unless they have been explicitly integrated.
 
 The current development baseline is
-`research/recovery-observation-sites-gate21`. Start with
+`research/recovery-scope-stuttering-gate22`. Start with
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the repository layout,
 gate sequence, verification entry points, and independent branch boundaries.
 
@@ -440,6 +440,18 @@ a concrete changed belief-result witness in the finite list. A coverage proof li
 recovery. See
 [`docs/FINITE_REACHABLE_RECOVERY_GATE21.md`](docs/FINITE_REACHABLE_RECOVERY_GATE21.md).
 
+### 31. Cumulative-scope stuttering and causal inheritance
+
+Gate 22 proves that the posterior at the end of every finite update prefix is
+concentrated on its cumulative Gate-20 evidence scope. If the next
+update does not shrink that scope and the accessible values of a belief body
+do not change, the complete four-valued belief result is unchanged. Combined
+with Gate 21, every recovery change therefore yields a compiled belief witness
+with either strict local scope shrinkage or a body change inherited from a
+deeper accessible node. Recursively tracing that second disjunct is the next
+gate; a global flip bound has not yet been claimed. See
+[`docs/RECOVERY_SCOPE_STUTTERING_GATE22.md`](docs/RECOVERY_SCOPE_STUTTERING_GATE22.md).
+
 ---
 
 ## Paradox map
@@ -595,7 +607,7 @@ The project intentionally avoids a Mathlib dependency. For the active branch:
 ```bash
 git clone https://github.com/cr4bbz/4PEL-Lean-Formalization.git
 cd 4PEL-Lean-Formalization
-git checkout research/recovery-observation-sites-gate21
+git checkout research/recovery-scope-stuttering-gate22
 lake build
 ```
 

@@ -6,10 +6,10 @@ terminology is governed by `docs/VERIFICATION_POLICY.md`.
 
 ## Active development baseline
 
-- Branch: `research/recovery-observation-sites-gate21`
+- Branch: `research/recovery-scope-stuttering-gate22`
 - Lean toolchain: `leanprover/lean4:v4.31.0`
 - Root library target: `PEL4`
-- Current verified gate: Gate 21, finite recovery-observation maps
+- Current verified gate: Gate 22, cumulative-scope stuttering
 
 The branch is a development baseline, not a claim that every independent
 research branch has already been merged. In particular, the Alexandrov and
@@ -41,12 +41,13 @@ core four-valued probabilistic epistemic logic
 -> finite conditionalization traces, first loss, and recovery return (Gate 19)
 -> sharp local evidence-scope shrinkage bounds (Gate 20)
 -> exact finite recovery-observation maps and stuttering (Gate 21)
+-> posterior concentration and strict-shrink-or-body-change bridge (Gate 22)
 ```
 
 The latest gate boundary is documented in
-`docs/FINITE_REACHABLE_RECOVERY_GATE21.md`.
+`docs/RECOVERY_SCOPE_STUTTERING_GATE22.md`.
 The corresponding manuscript currency and layout review is documented in
-`docs/PAPER_REVIEW_GATE21.md`.
+`docs/PAPER_REVIEW_GATE22.md`.
 
 ## Directory responsibilities
 
@@ -68,6 +69,7 @@ From the repository root:
 
 ```powershell
 lake build
+lake env lean PEL4/RecoveryScopeStutteringAxiomAudit.lean
 lake env lean PEL4/FiniteReachableRecoveryAxiomAudit.lean
 lake env lean PEL4/FiniteUpdateScopeBoundsAxiomAudit.lean
 lake env lean PEL4/FiniteUpdateRecoveryAxiomAudit.lean

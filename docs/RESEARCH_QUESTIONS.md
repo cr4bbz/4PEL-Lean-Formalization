@@ -1,8 +1,8 @@
 # 4-PEL research question map
 
-Active baseline: `research/recovery-observation-sites-gate21`.
+Active baseline: `research/recovery-scope-stuttering-gate22`.
 
-Fresh verification on this baseline: Lean 4.31, 175 build jobs; 157 central
+Fresh verification on this baseline: Lean 4.31, 177 build jobs; 157 central
 manuscript audit declarations; 24 MPFG audit declarations; six script tests;
 54-page committed manuscript check. Repository structure and independent branch
 boundaries are recorded in `docs/REPOSITORY_MAP.md`.
@@ -314,6 +314,27 @@ observation positions and exhibits `B(p)` at world `a` as a concrete witness
 to the first recovery loss. See
 `docs/FINITE_REACHABLE_RECOVERY_GATE21.md`.
 
+### A32. Does every changed belief observation spend local scope budget?
+
+**VERIFIED AS AN EXACT DICHOTOMY; THE UNQUALIFIED CLAIM IS TOO STRONG.** Gate
+22 proves that posterior measures are concentrated on the cumulative Gate-20
+scope after every finite update prefix. Consequently,
+
+```text
+no strict local scope loss + no accessible body-value change
+-> complete four-valued belief result stutters.
+```
+
+Every changed belief classicality status therefore implies either strict
+cumulative-scope shrinkage at that agent/world coordinate or a changed body
+value at an accessible world. Combining this with Gate 21 gives the same
+dichotomy for a compiled witness to every finite-root recovery change.
+
+The body-change alternative shows why the anticipated pointwise
+change-to-budget injection is not yet justified: change may be inherited from
+deeper in the modal evaluation tree. See
+`docs/RECOVERY_SCOPE_STUTTERING_GATE22.md`.
+
 ## B. Questions with substantial but incomplete answers
 
 ### B1. Is the modal correspondence picture minimal?
@@ -518,7 +539,7 @@ The module deliberately classifies the constructed affine **support-mass path**.
 
 Working name: **Affine Intermediate-Phase Geometry**.
 
-## D. Research order after Gate 21
+## D. Research order after Gate 22
 
 ```text
 COMPLETED Gate 14: recursive LEM/EFQ profile
@@ -529,13 +550,15 @@ COMPLETED Gate 18: independent classical calculus and soundness
 COMPLETED Gate 19: finite update traces, first loss, and recovery return
 COMPLETED Gate 20: sharp local cumulative evidence-scope bounds
 COMPLETED Gate 21: exact finite recovery-observation maps and stuttering
+COMPLETED Gate 22: posterior concentration and local causal dichotomy
 
 NEXT DECISION:
-1. connect each changed belief observation to strict cumulative support loss
-2. aggregate Gate-20 budgets across the Gate-21 observation map
-3. derive a finite global recovery-flip bound under world coverage
-4. extend the trace analysis to product updates
-5. return to the deferred finite-context proof theory
+1. recursively trace inherited body changes to a strictly shrinking belief site
+2. deduplicate reachable agent/world coordinates in the Gate-21 map
+3. aggregate Gate-20 budgets across those coordinates
+4. derive a finite global recovery-flip bound under world coverage
+5. extend the trace analysis to product updates
+6. return to the deferred finite-context proof theory
 
 DEFERRED PROOF THEORY:
 1. assess finite-context versus single-premise presentation
@@ -601,3 +624,26 @@ recovery predicate as well.
 The remaining step is quantitative rather than merely logical: prove that a
 changed compiled belief observation consumes a strict Gate-20 evidence/support
 resource, then prevent the same consumed resource from being counted again.
+
+### D4. Cumulative-scope stuttering (Gate 22)
+
+**VERIFIED; RECURSIVE CAUSAL DESCENT OPEN.** The cumulative Gate-20 scope now
+has a proved probabilistic meaning: after every update prefix, the posterior
+measure is concentrated on its final scope. An update that removes no further
+scope world preserves all local event masses. If the accessible interpretation
+of a belief body also stutters, the complete FDE belief value stutters.
+
+The contrapositive refines every Gate-21 recovery witness to:
+
+```text
+strict scope shrinkage at this belief coordinate
+or
+an inherited body-value change at an accessible world.
+```
+
+Thus the earlier proposed direct injection from every changed compiled belief
+observation to its own local budget is too coarse. Gate 23 should prove a
+terminating recursive causal search through the finite modal evaluation tree.
+Because atomic valuations do not change, the intended endpoint is a reachable
+belief coordinate whose cumulative scope strictly shrinks. Only after that
+localization should coordinate deduplication and budget summation begin.

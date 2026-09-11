@@ -1,0 +1,16 @@
+import PEL4.RecoveryScopeStuttering
+
+/-! # Gate 22 cumulative-scope stuttering audit -/
+
+#print axioms PEL4.intersectWorlds_eq_left_of_subset
+#print axioms PEL4.subset_of_intersectWorlds_not_length_lt
+#print axioms PEL4.localMeasureConcentratedOn_accessibility
+#print axioms PEL4.conditionalize_preserves_localMeasureConcentration
+#print axioms PEL4.conditionalize_mu_eq_of_concentrated_scope_subset_evidence
+#print axioms PEL4.conditionalize_mu_eq_of_concentrated_not_strictShrink
+#print axioms PEL4.belief_conditionalize_eq_of_concentrated_not_strictShrink
+#print axioms PEL4.belief_classicality_change_implies_strictShrink_or_body_change
+#print axioms PEL4.recoveryOn_change_has_strictShrink_or_body_change
+#print axioms PEL4.FiniteConditionalizationTrace.finalModel_concentratedOn_finalScopeFrom
+#print axioms PEL4.FiniteConditionalizationTrace.finalModel_concentratedOn_finalScope
+#print axioms PEL4.FiniteConditionalizationTrace.finalModel_recoveryOn_change_has_strictShrink_or_body_change

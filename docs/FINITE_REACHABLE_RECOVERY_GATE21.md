@@ -92,19 +92,22 @@ identifies an explicit changed observation: at world `a`, `B(p)` is classical
 before conditioning on `q` and nonclassical afterward. Thus the abstract
 localization theorem matches the existing `T -> N -> T` witness.
 
-## What remains for a numerical flip bound
+## Gate-22 resolution and remaining numerical work
 
 Gate 21 proves finite localization, not yet a number bounding all changes along
-an entire trace. The next gate must connect the now-guaranteed changed compiled
-belief observation to the Gate-20 resource budget.
+an entire trace. Gate 22 connects the changed compiled belief observation to
+the Gate-20 resource budget, but reveals a necessary recursive qualification.
 
-The next proof obligation is therefore:
+The question posed here was:
 
 > Does every classical/nonclassical change at a compiled belief observation
 > require a strict loss of its cumulative positive-evidence support?
 
-If yes, the finitely many observation sites can be assigned Gate-20 budgets
-and summed into a global finite recovery-flip bound.
+Gate 22 answers: either that local scope shrinks strictly, or the belief body
+has already changed at an accessible world. The unqualified pointwise claim is
+therefore too strong. The next gate must chase inherited body changes through
+the finite evaluation tree to a strictly shrinking reachable belief
+coordinate; only then can distinct coordinate budgets be summed.
 
 ## Verification
 

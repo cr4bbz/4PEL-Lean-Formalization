@@ -1,7 +1,7 @@
 # Project Axiom Audit
 
 Status: verified cleanup ledger for
-`research/recovery-observation-sites-gate21`.
+`research/recovery-scope-stuttering-gate22`.
 
 Current source inventory: **24 project-specific axiom declarations**.
 
@@ -74,9 +74,9 @@ audits remain authoritative for deciding whether a particular result depends on
 any of these declarations. A source inventory alone does not establish
 dependency.
 
-## E. Gates 14--21 focused audits
+## E. Gates 14--22 focused audits
 
-The eight recent-gate audit modules inspect 68 selected declarations:
+The nine recent-gate audit modules inspect 80 selected declarations:
 
 - Gate 14: 8 recursive LEM/EFQ declarations;
 - Gate 15: 7 maximality and finite-boundary declarations;
@@ -86,7 +86,8 @@ The eight recent-gate audit modules inspect 68 selected declarations:
 - Gate 19: 11 finite-trace, transition, and loss-return declarations.
 - Gate 20: 8 local scope-bound, sharpness, and trace-profile declarations.
 - Gate 21: 14 compiler, stuttering, localization, and finite-instance declarations.
+- Gate 22: 12 concentration, local stuttering, causal-bridge, and trace declarations.
 
 All reported dependencies stay inside the standard repository allow-list
 `propext`, `Classical.choice`, and `Quot.sound`, or subsets thereof. No Gate
-14--21 theorem depends on a project-specific axiom or a native-decision axiom.
+14--22 theorem depends on a project-specific axiom or a native-decision axiom.
