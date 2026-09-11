@@ -137,6 +137,10 @@ import PEL4.RecoveryEndpointClassification
 import PEL4.RecoveryEndpointClassificationAxiomAudit
 import PEL4.EpistemicPathDependence
 import PEL4.EpistemicPathDependenceAxiomAudit
+import PEL4.ConditionalizationAtomicIdempotence
+import PEL4.ConditionalizationAtomicIdempotenceAxiomAudit
+import PEL4.EpistemicPathDependenceAsymptotic
+import PEL4.EpistemicPathDependenceAsymptoticAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
