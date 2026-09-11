@@ -129,6 +129,8 @@ import PEL4.FiniteRecoveryFlipBudget
 import PEL4.FiniteRecoveryFlipBudgetAxiomAudit
 import PEL4.RecoveryCoordinateBudget
 import PEL4.RecoveryCoordinateBudgetAxiomAudit
+import PEL4.FiniteEpistemicDescent
+import PEL4.FiniteEpistemicDescentAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
