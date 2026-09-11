@@ -1,0 +1,14 @@
+import PEL4.RecoveryConfluence
+
+#print axioms PEL4.intersectWorlds_comm_extensional
+#print axioms PEL4.intersectWorlds_right_swap_extensional
+#print axioms PEL4.rat_div_div_same_den_cancel
+#print axioms PEL4.conditionalize_mu_prop_eq_div
+#print axioms PEL4.conditionalize_two_atoms_measure_eq_on_event
+#print axioms PEL4.belief_eq_of_modalObservationEquivalent
+#print axioms PEL4.evalModal_eq_of_modalObservationEquivalent
+#print axioms PEL4.beliefThresholdComplete_iff_of_modalObservationEquivalent
+#print axioms PEL4.compositionalRecoveryAt_iff_of_modalObservationEquivalent
+#print axioms PEL4.compositionalRecovery_iff_of_modalObservationEquivalent
+#print axioms PEL4.conditionalize_two_atoms_observationEquivalent
+#print axioms PEL4.conditionalize_two_atoms_recovery_confluent
