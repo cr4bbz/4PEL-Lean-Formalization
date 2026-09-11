@@ -113,7 +113,9 @@ theorem conditionalize_mu_repeat_prop_eq
     else m1.mu i w (intersectWorlds S event1) / m1.mu i w event1) =
       m1.mu i w S
   rw [hMass1]
-  simp [hInter1]
+  simp only [one_ne_zero, ↓reduceIte]
+  rw [hInter1, Rat.div_def]
+  simp
 
 /-- Atomic evidence remains admissible after it has already been learned once. -/
 theorem conditionalize_prop_repeat_admissible
@@ -154,6 +156,30 @@ theorem conditionalize_repeat_prop_mu_eq
   funext i w S
   exact conditionalize_mu_repeat_prop_eq m p hAdm i w S
 
+/-- Extensionality for the data fields of a model. The remaining structure
+fields are propositions, so proof irrelevance closes the equality once the
+worlds, accessibility, measure, valuation, and thresholds agree. -/
+theorem model_eq_of_data_eq
+    {W Ag Atom : Type}
+    (m n : Model W Ag Atom)
+    (hWorlds : m.worlds = n.worlds)
+    (hR : m.R = n.R)
+    (hMu : m.mu = n.mu)
+    (hVal : m.val = n.val)
+    (hC : m.c = n.c) :
+    m = n := by
+  cases m with
+  | mk worlds R mu val c hTotal hEmpty hHalf hOne =>
+      cases n with
+      | mk worlds' R' mu' val' c' hTotal' hEmpty' hHalf' hOne' =>
+          dsimp at hWorlds hR hMu hVal hC
+          cases hWorlds
+          cases hR
+          cases hMu
+          cases hVal
+          cases hC
+          rfl
+
 /-- Full-model idempotence for repeated atomic conditionalization. -/
 theorem conditionalize_repeat_prop_eq
     {W Ag Atom : Type} [DecidableEq W]
@@ -163,11 +189,10 @@ theorem conditionalize_repeat_prop_eq
     conditionalize (conditionalize m (Formula.prop p) hAdm)
         (Formula.prop p) hRepeat =
       conditionalize m (Formula.prop p) hAdm := by
-  have hMu := conditionalize_repeat_prop_mu_eq m p hAdm hRepeat
-  apply Model.ext
+  apply model_eq_of_data_eq
   · rfl
   · rfl
-  · exact hMu
+  · exact conditionalize_repeat_prop_mu_eq m p hAdm hRepeat
   · rfl
   · rfl
 
