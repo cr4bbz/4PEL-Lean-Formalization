@@ -136,10 +136,10 @@ def RecoveryDescentSystem.toRegenerative
     (start : State) (successors : List State) :
     recoveryRegenerationTotalFrom sys.toRegenerative start successors = 0 := by
   induction successors generalizing start with
-  | nil => simp [recoveryRegenerationTotalFrom]
+  | nil => rfl
   | cons next rest ih =>
-      simp [recoveryRegenerationTotalFrom, RecoveryDescentSystem.toRegenerative,
-        ih next]
+      change 0 + recoveryRegenerationTotalFrom sys.toRegenerative next rest = 0
+      simpa using ih next
 
 /-- Gate 26 is recovered as the no-regeneration boundary of Gate 34. -/
 theorem recoveryDescent_changeCount_le_via_regenerative
@@ -186,7 +186,7 @@ def gate34RegenerativeSystem : RecoveryRegenerativeSystem Gate34State where
 theorem gate34_regenerative_path_follows :
     recoveryRegenerativeFollows gate34RegenerativeSystem Gate34State.start
       [Gate34State.regenerated, Gate34State.finish] := by
-  decide +kernel
+  simp [recoveryRegenerativeFollows, gate34RegenerativeSystem]
 
 /-- The path contains two Recovery flips despite starting with potential one. -/
 theorem gate34_regeneration_funds_extra_flip :
