@@ -1,0 +1,15 @@
+import PEL4.EpistemicHysteresis
+
+#print axioms PEL4.gate33_belP_initial_admissible
+#print axioms PEL4.gate33_e_after_belP_admissible
+#print axioms PEL4.gate33_belP_after_e_admissible
+#print axioms PEL4.gate33_belP_event_initial_full
+#print axioms PEL4.gate33_belP_event_after_e_shrinks
+#print axioms PEL4.gate33_belP_evidence_extension_changes
+#print axioms PEL4.gate33_bel_then_e_profile
+#print axioms PEL4.gate33_e_then_bel_profile
+#print axioms PEL4.gate33_orders_modally_diverge
+#print axioms PEL4.gate33_bel_then_e_not_recovered
+#print axioms PEL4.gate33_e_then_bel_recovered
+#print axioms PEL4.gate33_same_evidence_ingredients_different_recovery
+#print axioms PEL4.gate33_no_two_atom_recovery_hysteresis
