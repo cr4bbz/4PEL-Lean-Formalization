@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 40 strong hysteresis boundary
+        run: |
+          lake build PEL4.StrongHysteresisBoundary
+          lake env lean PEL4/StrongHysteresisBoundaryAxiomAudit.lean
       - name: Build and audit Gate 39 epistemic state sufficiency
         run: |
           lake build PEL4.EpistemicStateSufficiency
