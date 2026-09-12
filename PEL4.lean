@@ -156,6 +156,8 @@ import PEL4.SemanticFeedbackBoundaryAxiomAudit
 import PEL4.StaticScheduleConfluence
 import PEL4.StaticScheduleConfluenceFinite
 import PEL4.StaticScheduleConfluenceAxiomAudit
+import PEL4.EpistemicStateSufficiency
+import PEL4.EpistemicStateSufficiencyAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
