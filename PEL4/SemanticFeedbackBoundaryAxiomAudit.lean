@@ -1,0 +1,9 @@
+import PEL4.SemanticFeedbackBoundary
+
+#print axioms PEL4.eval_conditionalize_eq_of_beliefFree
+#print axioms PEL4.beliefFree_evidenceExtensionStableUnder
+#print axioms PEL4.atomic_evidenceExtensionStableUnder
+#print axioms PEL4.evidenceExtensionStable_not_sensitive
+#print axioms PEL4.gate36_gate33_belP_not_beliefFree
+#print axioms PEL4.gate36_gate33_belP_extension_sensitive
+#print axioms PEL4.gate36_no_beliefFree_extension_feedback
