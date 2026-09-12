@@ -33,11 +33,12 @@ theorem conditionalize_mu_eq_div
           (intersectWorlds S (conditionalizationEvidenceEvent m i w E)) /
         m.mu i w (conditionalizationEvidenceEvent m i w E) := by
   have hDenNe :
-      m.mu i w (conditionalizationEvidenceEvent m i w E) ≠ 0 := by
-    simpa [conditionalizationEvidenceMass, conditionalizationEvidenceEvent]
-      using hAdm.positive_mass i w
-  simp only [conditionalize_mu, conditionalizationEvidenceEvent, beq_iff_eq]
+      m.mu i w
+        (filterWorlds (m.R i w) (fun u => (eval m u E).pos)) ≠ 0 := by
+    simpa [conditionalizationEvidenceMass] using hAdm.positive_mass i w
+  simp only [conditionalize_mu, beq_iff_eq]
   rw [if_neg hDenNe]
+  rfl
 
 /-- Two belief-free evidence formulas, processed in either admissible order,
 agree on every well-formed local event. -/
