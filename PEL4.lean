@@ -147,6 +147,8 @@ import PEL4.RecoveryStabilizationBounds
 import PEL4.RecoveryStabilizationBoundsAxiomAudit
 import PEL4.RecoveryEpistemicAttractor
 import PEL4.RecoveryEpistemicAttractorAxiomAudit
+import PEL4.EpistemicHysteresis
+import PEL4.EpistemicHysteresisAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
