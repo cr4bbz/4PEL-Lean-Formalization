@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 34 regenerative recovery budgets
+        run: |
+          lake build PEL4.RegenerativeRecoveryBudget
+          lake env lean PEL4/RegenerativeRecoveryBudgetAxiomAudit.lean
       - name: Build and audit Gate 33 epistemic hysteresis
         run: |
           lake build PEL4.EpistemicHysteresis
