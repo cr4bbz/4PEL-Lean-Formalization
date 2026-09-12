@@ -113,7 +113,7 @@ theorem recoveryTrajectory_recoveredBy_of_boundedProgress
           hSame.trans hStatus
         have hImpossible : (true : Bool) = false := hTrueM.symm.trans hFalseM
         cases hImpossible
-    | true => exact hStatus
+    | true => rfl
   refine ⟨N, hNBound, ?_⟩
   intro n hn
   calc
@@ -166,7 +166,7 @@ theorem recoveryAttractor_status_true_by_of_initialPotential_le
   | zero =>
       have hPotentialZero : sys.potential (trajectory 0) = 0 := by omega
       cases hStatus : sys.status (trajectory 0) with
-      | true => exact hStatus
+      | true => rfl
       | false =>
           have hStrict := hConsumes (hFollows 0) hStatus
           omega
@@ -281,16 +281,20 @@ theorem gate32_attractor_trajectory_follows :
 theorem gate32_attractor_absorbing :
     RecoveryAbsorbing gate32AttractorSystem := by
   intro s t hStep hTrue
-  cases hStep
-  · decide at hTrue
-  · rfl
+  cases hStep with
+  | recover =>
+      simp [gate32AttractorSystem, gate32Status] at hTrue
+  | stayRecovered =>
+      rfl
 
 theorem gate32_attractor_consumes_nonRecovery :
     NonRecoveryConsumesPotential gate32AttractorSystem := by
   intro s t hStep hFalse
-  cases hStep
-  · decide
-  · decide at hFalse
+  cases hStep with
+  | recover =>
+      decide
+  | stayRecovered =>
+      simp [gate32AttractorSystem, gate32Status] at hFalse
 
 theorem gate32_attractor_recovery_is_permanent :
     EventuallyRecoveryStatus gate32AttractorSystem
