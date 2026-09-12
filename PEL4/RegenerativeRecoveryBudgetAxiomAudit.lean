@@ -1,0 +1,12 @@
+import PEL4.RegenerativeRecoveryBudget
+
+#print axioms PEL4.recoveryRegenerative_changeCount_add_finalPotential_le
+#print axioms PEL4.recoveryRegenerative_changeCount_le_initial_add_regeneration
+#print axioms PEL4.recoveryRegenerative_changeCount_le_initial_add_budget
+#print axioms PEL4.RecoveryDescentSystem.toRegenerative_regenerationTotal
+#print axioms PEL4.recoveryDescent_changeCount_le_via_regenerative
+#print axioms PEL4.gate34_regenerative_path_follows
+#print axioms PEL4.gate34_regeneration_funds_extra_flip
+#print axioms PEL4.gate34_regeneration_total_is_one
+#print axioms PEL4.gate34_regenerative_bound_is_sharp
+#print axioms PEL4.gate34_regeneration_is_genuinely_used
