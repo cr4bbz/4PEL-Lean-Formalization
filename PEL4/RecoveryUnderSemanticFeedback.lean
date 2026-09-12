@@ -244,7 +244,13 @@ theorem gate41_trajectory_follows :
 theorem gate41_regeneration_ceases_after_two :
     RegenerationCeasesAfter gate41RegenerativeSystem gate41Trajectory 2 := by
   intro n
-  cases n <;> rfl
+  cases n with
+  | zero => decide
+  | succ n =>
+      have hNow : 2 + (n + 1) = n + 3 := by omega
+      have hNext : 2 + (n + 1) + 1 = n + 4 := by omega
+      rw [hNow, hNext]
+      rfl
 
 theorem gate41_recovery_absorbing_after_two :
     RecoveryAbsorbingAfter gate41RegenerativeSystem gate41Trajectory 2 := by
@@ -252,7 +258,10 @@ theorem gate41_recovery_absorbing_after_two :
   cases n with
   | zero =>
       simp [gate41RegenerativeSystem, gate41Trajectory] at hTrue
-  | succ n => rfl
+  | succ n =>
+      have hNext : 2 + (n + 1) + 1 = n + 4 := by omega
+      rw [hNext]
+      rfl
 
 theorem gate41_nonRecovery_consumes_after_two :
     NonRecoveryConsumesPotentialAfter
@@ -261,7 +270,14 @@ theorem gate41_nonRecovery_consumes_after_two :
   cases n with
   | zero => decide
   | succ n =>
-      simp [gate41RegenerativeSystem, gate41Trajectory] at hFalse
+      have hNow : 2 + (n + 1) = n + 3 := by omega
+      rw [hNow] at hFalse
+      have hRecovered :
+          gate41RegenerativeSystem.status (gate41Trajectory (n + 3)) = true := by
+        rfl
+      have hImpossible : (true : Bool) = false :=
+        hRecovered.symm.trans hFalse
+      cases hImpossible
 
 /-- Gate 41 permits a genuinely regenerative, status-changing prefix and still
 forces permanent Recovery once the tail contract begins. -/
