@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 38 static schedule confluence
+        run: |
+          lake build PEL4.StaticScheduleConfluence
+          lake env lean PEL4/StaticScheduleConfluenceAxiomAudit.lean
       - name: Build and audit Gate 36 semantic feedback boundary
         run: |
           lake build PEL4.SemanticFeedbackBoundary
