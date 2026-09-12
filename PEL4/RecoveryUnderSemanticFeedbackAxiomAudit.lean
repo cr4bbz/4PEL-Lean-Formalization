@@ -1,0 +1,9 @@
+import PEL4.RecoveryUnderSemanticFeedback
+
+#print axioms PEL4.regenerativeTailDescentSystem_id_follows
+#print axioms PEL4.regenerativeTailDescentSystem_absorbing
+#print axioms PEL4.regenerativeTailDescentSystem_consumes
+#print axioms PEL4.recoveryRegenerative_eventuallyRecovery_after_cutoff
+#print axioms PEL4.gate41_trajectory_follows
+#print axioms PEL4.gate41_turbulence_then_permanent_recovery
+#print axioms PEL4.gate41_cutoff_bound_is_sharp
