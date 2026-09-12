@@ -1,0 +1,7 @@
+import PEL4.StrongHysteresisBoundary
+
+#print axioms PEL4.conditionalize_two_extensionStable_measure_eq_on_event
+#print axioms PEL4.conditionalize_two_extensionStable_observationEquivalent
+#print axioms PEL4.conditionalize_two_extensionStable_recovery_confluent
+#print axioms PEL4.recovery_hysteresis_implies_extension_feedback
+#print axioms PEL4.gate40_gate33_violates_mutual_extension_stability
