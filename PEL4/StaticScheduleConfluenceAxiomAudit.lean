@@ -1,7 +1,14 @@
-import PEL4.StaticScheduleConfluence
+import PEL4.StaticScheduleConfluenceFinite
 
 #print axioms PEL4.conditionalize_mu_eq_div
 #print axioms PEL4.conditionalize_two_beliefFree_measure_eq_on_event
 #print axioms PEL4.conditionalize_two_beliefFree_observationEquivalent
 #print axioms PEL4.conditionalize_two_beliefFree_recovery_confluent
 #print axioms PEL4.gate38_atomic_confluence_as_special_case
+#print axioms PEL4.eval_beliefFree_eq_of_modalObservationEquivalent
+#print axioms PEL4.beliefFree_evidenceEvent_eq_of_modalObservationEquivalent
+#print axioms PEL4.conditionalize_beliefFree_preserves_modalObservationEquivalent
+#print axioms PEL4.BeliefFreeScheduleRun.preserves_probabilityIntegrity
+#print axioms PEL4.beliefFreeScheduleRun_preserves_modalObservationEquivalent
+#print axioms PEL4.beliefFreeSchedule_adjacentSwap_observationEquivalent
+#print axioms PEL4.beliefFreeSchedule_adjacentSwap_recovery_confluent
