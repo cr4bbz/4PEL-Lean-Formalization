@@ -160,6 +160,8 @@ import PEL4.EpistemicStateSufficiency
 import PEL4.EpistemicStateSufficiencyAxiomAudit
 import PEL4.StrongHysteresisBoundary
 import PEL4.StrongHysteresisBoundaryAxiomAudit
+import PEL4.RecoveryUnderSemanticFeedback
+import PEL4.RecoveryUnderSemanticFeedbackAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
