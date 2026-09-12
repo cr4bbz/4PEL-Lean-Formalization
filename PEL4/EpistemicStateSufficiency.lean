@@ -140,7 +140,7 @@ theorem gate39_gate33_intermediate_states_differ :
   rw [gate39_gate33_belFirst_belP_at_b,
       gate39_gate33_eFirst_belP_at_b] at hEval
   have hPos : true = false := congrArg (fun v : FDEValue => v.pos) hEval
-  decide at hPos
+  simp at hPos
 
 /-!
 ## Gate-39 conclusion
