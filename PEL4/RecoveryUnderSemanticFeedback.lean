@@ -248,8 +248,7 @@ theorem gate41_regeneration_ceases_after_two :
   | zero => decide
   | succ n =>
       have hNow : 2 + (n + 1) = n + 3 := by omega
-      have hNext : 2 + (n + 1) + 1 = n + 4 := by omega
-      rw [hNow, hNext]
+      rw [hNow]
       rfl
 
 theorem gate41_recovery_absorbing_after_two :
