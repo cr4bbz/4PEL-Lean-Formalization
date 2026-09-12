@@ -1,0 +1,15 @@
+import PEL4.RecoveryEpistemicAttractor
+
+#print axioms PEL4.eventuallyRecoveryStatus_implies_nonRecoveryTransient
+#print axioms PEL4.recoveryTrajectory_eventuallyRecovery_of_nonRecoveryTransient
+#print axioms PEL4.recoveryTrajectory_eventuallyRecovery_iff_nonRecoveryTransient
+#print axioms PEL4.recoveryTrajectory_recoveredBy_of_boundedProgress
+#print axioms PEL4.recoveryAbsorbing_from_zero
+#print axioms PEL4.recoveryAttractor_status_true_by_of_initialPotential_le
+#print axioms PEL4.recoveryTrajectory_eventuallyRecovery_of_attractorContract
+#print axioms PEL4.recoveryAttractorContract_implies_nonRecoveryTransient
+#print axioms PEL4.gate32_attractor_trajectory_follows
+#print axioms PEL4.gate32_attractor_absorbing
+#print axioms PEL4.gate32_attractor_consumes_nonRecovery
+#print axioms PEL4.gate32_attractor_recovery_is_permanent
+#print axioms PEL4.gate32_gate28_nonRecovery_not_potential_consuming
