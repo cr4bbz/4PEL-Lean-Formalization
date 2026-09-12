@@ -149,6 +149,8 @@ import PEL4.RecoveryEpistemicAttractor
 import PEL4.RecoveryEpistemicAttractorAxiomAudit
 import PEL4.EpistemicHysteresis
 import PEL4.EpistemicHysteresisAxiomAudit
+import PEL4.RegenerativeRecoveryBudget
+import PEL4.RegenerativeRecoveryBudgetAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
