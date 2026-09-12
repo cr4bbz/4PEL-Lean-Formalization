@@ -12,8 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
-      - name: Build Gate 32 recovery epistemic attractor
-        run: lake build PEL4.RecoveryEpistemicAttractor
+      - name: Build and audit Gate 32 recovery epistemic attractor
+        run: |
+          lake build PEL4.RecoveryEpistemicAttractor
+          lake env lean PEL4/RecoveryEpistemicAttractorAxiomAudit.lean
       - name: Build and audit Gate 31 progress and stabilization bounds
         run: |
           lake build PEL4.RecoveryStabilizationBounds
