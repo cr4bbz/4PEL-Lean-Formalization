@@ -1,0 +1,7 @@
+import PEL4.StaticScheduleConfluence
+
+#print axioms PEL4.conditionalize_mu_eq_div
+#print axioms PEL4.conditionalize_two_beliefFree_measure_eq_on_event
+#print axioms PEL4.conditionalize_two_beliefFree_observationEquivalent
+#print axioms PEL4.conditionalize_two_beliefFree_recovery_confluent
+#print axioms PEL4.gate38_atomic_confluence_as_special_case
