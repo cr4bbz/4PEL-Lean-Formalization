@@ -153,6 +153,9 @@ import PEL4.RegenerativeRecoveryBudget
 import PEL4.RegenerativeRecoveryBudgetAxiomAudit
 import PEL4.SemanticFeedbackBoundary
 import PEL4.SemanticFeedbackBoundaryAxiomAudit
+import PEL4.StaticScheduleConfluence
+import PEL4.StaticScheduleConfluenceFinite
+import PEL4.StaticScheduleConfluenceAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
