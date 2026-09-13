@@ -202,7 +202,7 @@ theorem gate42_loop_has_nontrivial_epistemic_displacement :
           gate42AtomicEvidenceEvent) hEq
   rw [gate42_anchor_atomicEvidence_mass,
       gate42_endpoint_atomicEvidence_mass] at hMass
-  have hNe : (4 : Rat) / 5 ≠ 1 := by norm_num
+  have hNe : (4 : Rat) / 5 ≠ 1 := by native_decide
   exact hNe hMass
 
 /-- Concrete schedule run entering the anchor `B p`. -/
