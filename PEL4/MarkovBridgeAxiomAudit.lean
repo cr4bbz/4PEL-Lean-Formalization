@@ -1,0 +1,8 @@
+import PEL4.MarkovBridge
+
+#print axioms PEL4.controlledEpistemicStep_deterministic
+#print axioms PEL4.controlledEpistemicStep_same_present_same_action
+#print axioms PEL4.controlledEpistemicStep_history_irrelevant_after_merge
+#print axioms PEL4.controlledEpistemicFuture_same_present_same_actions
+#print axioms PEL4.gate44_atomic_histories_merge
+#print axioms PEL4.gate44_atomic_stutter_history_erased
