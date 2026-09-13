@@ -26,9 +26,10 @@ def OneStepStrictlyPrefers
     {State Action : Type}
     (reward : OneStepEpistemicReward State Action)
     (start : State)
-    (preferred preferredOut alternative alternativeOut : State × Action × State) : Prop :=
-  reward start preferred.2.1 preferred.2.2 >
-    reward start alternative.2.1 alternative.2.2
+    (preferredAction : Action) (preferredOut : State)
+    (alternativeAction : Action) (alternativeOut : State) : Prop :=
+  reward start preferredAction preferredOut >
+    reward start alternativeAction alternativeOut
 
 /-- A generic local witness that an immediate-status reward prefers one
 available controlled branch over another with a different status. -/
@@ -147,7 +148,7 @@ theorem gate46_probe_not_myopically_optimal :
     ¬ Gate46MyopicallyOptimal .probe := by
   intro hOptimal
   have h := hOptimal .preserve
-  norm_num at h
+  omega
 
 /-- The naive one-step objective has a unique optimum: every myopically optimal
 choice must be the Recovery-preserving acquisition plan. -/
