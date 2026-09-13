@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 35 growing ontology / Product Update
+        run: |
+          lake build PEL4.GrowingOntologyProductUpdate
+          lake env lean PEL4/GrowingOntologyProductUpdateAxiomAudit.lean
       - name: Build and audit Gate 41 Recovery under semantic feedback
         run: |
           lake build PEL4.RecoveryUnderSemanticFeedback
