@@ -34,7 +34,9 @@ theorem gate35_listProduct_length {A B : Type}
   induction la with
   | nil => simp [listProduct]
   | cons a rest ih =>
-      simp [listProduct, ih, Nat.add_mul]
+      change (lb.map (fun b => (a, b)) ++ listProduct rest lb).length =
+        (a :: rest).length * lb.length
+      simp [ih, Nat.succ_mul]
 
 /-- Filtering a Boolean list predicate never creates new list entries. -/
 theorem gate35_filter_length_le {A : Type}
@@ -191,17 +193,17 @@ def gate35GrowthFundedSystem : RecoveryRegenerativeSystem Gate35RecoveryState wh
     rcases hStep with ⟨rfl, rfl⟩
     decide
 
- theorem gate35_growth_path_follows :
+theorem gate35_growth_path_follows :
     recoveryRegenerativeFollows gate35GrowthFundedSystem
       Gate35RecoveryState.before [Gate35RecoveryState.after] := by
   simp [recoveryRegenerativeFollows, gate35GrowthFundedSystem]
 
- theorem gate35_growth_path_changeCount_is_one :
+theorem gate35_growth_path_changeCount_is_one :
     recoveryRegenerativeChangeCountFrom gate35GrowthFundedSystem
       Gate35RecoveryState.before [Gate35RecoveryState.after] = 1 := by
   decide +kernel
 
- theorem gate35_growth_path_regeneration_is_one :
+theorem gate35_growth_path_regeneration_is_one :
     recoveryRegenerationTotalFrom gate35GrowthFundedSystem
       Gate35RecoveryState.before [Gate35RecoveryState.after] = 1 := by
   decide +kernel
