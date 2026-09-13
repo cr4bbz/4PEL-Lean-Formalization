@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 45 active evidence control
+        run: |
+          lake build PEL4.ActiveEvidenceControl
+          lake env lean PEL4/ActiveEvidenceControlAxiomAudit.lean
       - name: Build and audit Gate 44 Markov bridge
         run: |
           lake build PEL4.MarkovBridge
