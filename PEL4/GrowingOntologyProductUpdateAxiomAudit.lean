@@ -1,0 +1,12 @@
+import PEL4.GrowingOntologyProductUpdate
+
+#print axioms PEL4.gate35_listProduct_length
+#print axioms PEL4.productWorldCount_le_capacity
+#print axioms PEL4.productOntologyGrowth_le_capacity
+#print axioms PEL4.productWorldCount_eq_capacity_of_keepsAllPairs
+#print axioms PEL4.productOntologyGrowth_eq_one_of_singleton_twoEvents
+#print axioms PEL4.recoveryRegenerative_changeCount_le_initial_add_productGrowth
+#print axioms PEL4.recoveryRegenerative_changeCount_le_initial_add_productCapacity
+#print axioms PEL4.gate35_singleton_twoEvent_growth_exactly_funds_one_flip
+#print axioms PEL4.gate35_productGrowth_bound_is_sharp
+#print axioms PEL4.gate35_three_binary_expansions_capacity
