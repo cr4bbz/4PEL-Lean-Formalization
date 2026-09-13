@@ -1,0 +1,9 @@
+import PEL4.EpistemicRewardMisspecification
+
+#print axioms PEL4.gate46_choice_step
+#print axioms PEL4.gate46_reward_calibrated_on_realized_outcomes
+#print axioms PEL4.gate46_realized_outcomes_distinct
+#print axioms PEL4.gate46_preserve_is_myopically_optimal
+#print axioms PEL4.gate46_probe_not_myopically_optimal
+#print axioms PEL4.gate46_unique_myopic_optimum
+#print axioms PEL4.gate46_naive_recovery_reward_selects_information_avoidance
