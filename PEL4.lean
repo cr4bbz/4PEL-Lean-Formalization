@@ -170,6 +170,8 @@ import PEL4.MarkovBridge
 import PEL4.MarkovBridgeAxiomAudit
 import PEL4.ActiveEvidenceControl
 import PEL4.ActiveEvidenceControlAxiomAudit
+import PEL4.EpistemicRewardMisspecification
+import PEL4.EpistemicRewardMisspecificationAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
