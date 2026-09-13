@@ -1,0 +1,19 @@
+name: Gate 45 CI
+
+on:
+  push:
+    branches:
+      - research/active-evidence-control-gate45
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate45:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 45 active evidence control
+        run: |
+          lake build PEL4.ActiveEvidenceControl
+          lake env lean PEL4/ActiveEvidenceControlAxiomAudit.lean
