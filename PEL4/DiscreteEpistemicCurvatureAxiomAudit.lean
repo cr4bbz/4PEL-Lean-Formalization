@@ -1,0 +1,8 @@
+import PEL4.DiscreteEpistemicCurvature
+
+#print axioms PEL4.EpistemicLoopCommutator.pq_endpoint_unique
+#print axioms PEL4.EpistemicLoopCommutator.qp_endpoint_unique
+#print axioms PEL4.gate43_loop_orders_modally_diverge
+#print axioms PEL4.gate43_loop_order_endpoints_differ
+#print axioms PEL4.gate43_loop_commutator_noncommuting
+#print axioms PEL4.gate43_discrete_epistemic_curvature
