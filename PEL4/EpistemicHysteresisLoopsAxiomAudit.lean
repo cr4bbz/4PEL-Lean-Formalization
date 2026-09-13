@@ -1,0 +1,10 @@
+import PEL4.EpistemicHysteresisLoops
+
+#print axioms PEL4.evidenceControlLoop_exactClosure_erases_history
+#print axioms PEL4.gate42_belP_after_bel_then_e_admissible
+#print axioms PEL4.gate42_anchor_recovered
+#print axioms PEL4.gate42_endpoint_recovered
+#print axioms PEL4.gate42_anchor_semantics_changed_on_return
+#print axioms PEL4.gate42_loop_has_nontrivial_epistemic_displacement
+#print axioms PEL4.gate42_controlLoop_nontrivial
+#print axioms PEL4.gate42_recovery_loop_closes_but_model_does_not
