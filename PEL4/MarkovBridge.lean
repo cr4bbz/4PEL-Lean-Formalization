@@ -21,7 +21,7 @@ Conditionalization step. -/
 abbrev EpistemicControlAction (Atom Ag : Type) := Formula Atom Ag
 
 /-- The controlled state is the complete current 4PEL model. -/
-abbrev EpistemicControlState (W Ag Atom : Type) := Model W Ag Atom
+abbrev EpistemicControlState (W Ag Atom : Type) [DecidableEq W] := Model W Ag Atom
 
 /-- One controlled epistemic step is exactly a singleton Conditionalization
 schedule. Admissibility is therefore carried by the schedule-run witness. -/
