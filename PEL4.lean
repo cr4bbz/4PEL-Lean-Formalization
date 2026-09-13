@@ -168,6 +168,8 @@ import PEL4.Dynamics
 import PEL4.ActionModel
 import PEL4.ProductUpdate
 import PEL4.ProductTheorems
+import PEL4.GrowingOntologyProductUpdate
+import PEL4.GrowingOntologyProductUpdateAxiomAudit
 
 -- Dynamic and modal paradox case studies
 import PEL4.Paradoxes.ParadoxicalAction
