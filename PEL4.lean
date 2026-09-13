@@ -164,6 +164,8 @@ import PEL4.RecoveryUnderSemanticFeedback
 import PEL4.RecoveryUnderSemanticFeedbackAxiomAudit
 import PEL4.EpistemicHysteresisLoops
 import PEL4.EpistemicHysteresisLoopsAxiomAudit
+import PEL4.DiscreteEpistemicCurvature
+import PEL4.DiscreteEpistemicCurvatureAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
