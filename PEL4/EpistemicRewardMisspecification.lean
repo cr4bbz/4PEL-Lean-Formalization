@@ -148,6 +148,8 @@ theorem gate46_probe_not_myopically_optimal :
     ¬ Gate46MyopicallyOptimal .probe := by
   intro hOptimal
   have h := hOptimal .preserve
+  have hImpossible : (1 : Nat) ≤ 0 := by
+    simpa [gate46ImmediateRecoveryReward] using h
   omega
 
 /-- The naive one-step objective has a unique optimum: every myopically optimal
