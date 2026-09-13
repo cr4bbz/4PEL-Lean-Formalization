@@ -168,6 +168,8 @@ import PEL4.DiscreteEpistemicCurvature
 import PEL4.DiscreteEpistemicCurvatureAxiomAudit
 import PEL4.MarkovBridge
 import PEL4.MarkovBridgeAxiomAudit
+import PEL4.ActiveEvidenceControl
+import PEL4.ActiveEvidenceControlAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
