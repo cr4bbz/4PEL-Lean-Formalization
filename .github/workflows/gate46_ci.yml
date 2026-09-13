@@ -1,0 +1,19 @@
+name: Gate 46 CI
+
+on:
+  push:
+    branches:
+      - research/epistemic-reward-misspecification-gate46
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate46:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 46 reward misspecification
+        run: |
+          lake build PEL4.EpistemicRewardMisspecification
+          lake env lean PEL4/EpistemicRewardMisspecificationAxiomAudit.lean
