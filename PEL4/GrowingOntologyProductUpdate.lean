@@ -36,7 +36,7 @@ theorem gate35_listProduct_length {A B : Type}
   | cons a rest ih =>
       change (lb.map (fun b => (a, b)) ++ listProduct rest lb).length =
         (a :: rest).length * lb.length
-      simp [ih, Nat.succ_mul]
+      simp [ih, Nat.succ_mul, Nat.add_comm]
 
 /-- Filtering a Boolean list predicate never creates new list entries. -/
 theorem gate35_filter_length_le {A : Type}
