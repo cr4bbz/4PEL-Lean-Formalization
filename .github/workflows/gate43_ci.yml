@@ -1,0 +1,18 @@
+name: Gate 43 CI
+
+on:
+  push:
+    branches:
+      - research/discrete-epistemic-curvature-gate43
+  workflow_dispatch:
+
+jobs:
+  gate43:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 43 discrete epistemic curvature
+        run: |
+          lake build PEL4.DiscreteEpistemicCurvature
+          lake env lean PEL4/DiscreteEpistemicCurvatureAxiomAudit.lean
