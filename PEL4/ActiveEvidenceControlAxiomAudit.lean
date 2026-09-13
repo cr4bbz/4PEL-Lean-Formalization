@@ -1,0 +1,13 @@
+import PEL4.ActiveEvidenceControl
+
+#print axioms PEL4.activeEvidencePlanStep_exists_of_available
+#print axioms PEL4.activeEvidencePlanStep_deterministic_of_functional
+#print axioms PEL4.activeEvidencePlanStep_same_present_of_functional
+#print axioms PEL4.activeEvidencePolicyStep_deterministic_of_functional
+#print axioms PEL4.directAcquisitionSemantics_functional
+#print axioms PEL4.polarAcquisitionSemantics_not_functional
+#print axioms PEL4.gate45_safePlan_available
+#print axioms PEL4.gate45_disruptivePlan_available
+#print axioms PEL4.gate45_safePlan_step
+#print axioms PEL4.gate45_disruptivePlan_step
+#print axioms PEL4.gate45_active_choice_splits_recovery
