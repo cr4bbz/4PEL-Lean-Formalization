@@ -27,28 +27,26 @@ def normalizeBayesianBeliefGeneric
   if total = 0 then belief
   else belief.map fun item => (item.1 / total, item.2)
 
-/-- Scaling every belief weight by the same rational denominator scales total
-mass by that denominator. The zero denominator is handled explicitly because
-`Rat` uses totalized division. -/
+/-- Scaling every belief weight by the same nonzero rational denominator scales
+total mass by that denominator. The nonzero premise is exactly the premise used
+by Bayesian normalization. -/
 theorem bayesianBeliefMassSum_map_div
     {State : Type}
     (belief : BayesianEpistemicBelief State)
-    (d : Rat) :
+    (d : Rat)
+    (hd : d ≠ 0) :
     bayesianBeliefMassSum
         (belief.map fun item => (item.1 / d, item.2)) =
       bayesianBeliefMassSum belief / d := by
-  by_cases hd : d = 0
-  · subst d
-    induction belief with
-    | nil => simp [bayesianBeliefMassSum]
-    | cons x xs ih => simp [bayesianBeliefMassSum, ih]
-  · induction belief with
-    | nil => simp [bayesianBeliefMassSum, hd]
-    | cons x xs ih =>
-        simp only [bayesianBeliefMassSum, List.map_map, List.map_cons,
-          List.sum_cons, Function.comp_apply] at ih ⊢
-        rw [ih]
-        grind
+  induction belief with
+  | nil =>
+      simp only [bayesianBeliefMassSum, List.map_nil, List.sum_nil]
+      grind
+  | cons x xs ih =>
+      simp only [bayesianBeliefMassSum, List.map_map, List.map_cons,
+        List.sum_cons, Function.comp_apply] at ih ⊢
+      rw [ih]
+      grind
 
 /-- Main Gate-58 normalization theorem. Any finite rational belief with nonzero
 total mass normalizes to total mass one. -/
@@ -58,7 +56,7 @@ theorem normalizeBayesianBeliefGeneric_mass_one
     (hMass : bayesianBeliefMassSum belief ≠ 0) :
     bayesianBeliefMassSum (normalizeBayesianBeliefGeneric belief) = 1 := by
   simp [normalizeBayesianBeliefGeneric, hMass,
-    bayesianBeliefMassSum_map_div]
+    bayesianBeliefMassSum_map_div belief (bayesianBeliefMassSum belief) hMass]
   grind
 
 /-- Zero mass is kept explicit: normalization does not fabricate a probability
