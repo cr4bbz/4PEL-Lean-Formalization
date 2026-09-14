@@ -1,0 +1,8 @@
+import PEL4.ExperimentDominancePruning
+
+#print axioms PEL4.gate72_stress_dominates_cheap_one_step
+#print axioms PEL4.gate72_stress_dominates_precise_one_step
+#print axioms PEL4.gate72_stress_dominates_status_two_step
+#print axioms PEL4.gate72_pruning_preserves_one_sample_value
+#print axioms PEL4.gate72_pruning_preserves_two_sample_value
+#print axioms PEL4.gate72_experiment_dominance_and_pruning
