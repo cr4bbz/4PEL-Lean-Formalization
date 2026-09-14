@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 56 finite epistemic POMDP
+        run: |
+          lake build PEL4.FiniteEpistemicPOMDP
+          lake env lean PEL4/FiniteEpistemicPOMDPAxiomAudit.lean
       - name: Build and audit Gate 55 partial observation boundary
         run: |
           lake build PEL4.PartialObservationBoundary
