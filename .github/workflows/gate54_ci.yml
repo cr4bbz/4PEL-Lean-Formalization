@@ -1,0 +1,19 @@
+name: Gate 54 CI
+
+on:
+  push:
+    branches:
+      - research/truth-calibration-bridge-gate54
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate54:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 54 truth calibration bridge
+        run: |
+          lake build PEL4.TruthCalibrationBridge
+          lake env lean PEL4/TruthCalibrationBridgeAxiomAudit.lean
