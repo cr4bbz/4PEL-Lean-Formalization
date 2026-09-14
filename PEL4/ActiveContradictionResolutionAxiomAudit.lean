@@ -1,0 +1,10 @@
+import PEL4.ActiveContradictionResolution
+
+#print axioms PEL4.gate77_initial_state_is_glut
+#print axioms PEL4.gate77_positive_resolution_is_true
+#print axioms PEL4.gate77_negative_resolution_is_false
+#print axioms PEL4.gate77_glut_stop_utility_zero
+#print axioms PEL4.gate77_resolution_q_value
+#print axioms PEL4.gate77_policy_resolves_conflict
+#print axioms PEL4.gate77_resolution_always_classical
+#print axioms PEL4.gate77_active_contradiction_resolution
