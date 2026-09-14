@@ -210,6 +210,10 @@ import PEL4.ActiveEpistemicSensing
 import PEL4.ActiveEpistemicSensingAxiomAudit
 import PEL4.EpistemicIdentifiability
 import PEL4.EpistemicIdentifiabilityAxiomAudit
+import PEL4.RepeatedEvidenceLearning
+import PEL4.RepeatedEvidenceLearningAxiomAudit
+import PEL4.AliasBreakingExperimentDesign
+import PEL4.AliasBreakingExperimentDesignAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
