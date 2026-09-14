@@ -1,0 +1,8 @@
+import PEL4.StoppingRegionGeometry
+
+#print axioms PEL4.gate71_alias_one_step_sampling
+#print axioms PEL4.gate71_alias_two_step_sampling
+#print axioms PEL4.gate71_post_stress_one_step_stopping
+#print axioms PEL4.gate71_post_stress_two_step_stopping
+#print axioms PEL4.gate71_alias_value_horizon_stability
+#print axioms PEL4.gate71_stopping_region_geometry
