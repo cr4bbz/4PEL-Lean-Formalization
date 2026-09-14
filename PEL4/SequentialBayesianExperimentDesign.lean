@@ -177,10 +177,7 @@ theorem gate69_post_stress_sample_values
     sequentialExperimentQ gate69Model 0
         (gate67ExperimentPosterior .stressProbe gate66AliasedPrior observation)
         .stressProbe = (7 : Rat) / 10 := by
-  cases observation <;>
-    constructor
-    · native_decide
-    · constructor <;> native_decide
+  cases observation <;> native_decide
 
 /-- Hence stopping after the informative probe is an optimization result rather
 than a threshold rule. -/
