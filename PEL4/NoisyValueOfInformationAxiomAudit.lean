@@ -1,0 +1,9 @@
+import PEL4.NoisyValueOfInformation
+
+#print axioms PEL4.gate63_best_uninformed_value
+#print axioms PEL4.gate63_recovery_contingent_value
+#print axioms PEL4.gate63_nonRecovery_contingent_value
+#print axioms PEL4.gate63_contingent_value
+#print axioms PEL4.gate63_noisy_value_of_information
+#print axioms PEL4.gate63_noisy_value_of_information_positive
+#print axioms PEL4.gate63_information_value_without_expected_truth_mass_gain
