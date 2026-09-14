@@ -214,6 +214,8 @@ import PEL4.RepeatedEvidenceLearning
 import PEL4.RepeatedEvidenceLearningAxiomAudit
 import PEL4.AliasBreakingExperimentDesign
 import PEL4.AliasBreakingExperimentDesignAxiomAudit
+import PEL4.AdaptiveExperimentDesign
+import PEL4.AdaptiveExperimentDesignAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
