@@ -1,0 +1,9 @@
+import PEL4.EpistemicRewardAlignment
+
+#print axioms PEL4.gate53_immediate_explore_return_formula
+#print axioms PEL4.gate53_always_exploit_return_formula
+#print axioms PEL4.gate53_alignment_threshold_selects_exploration
+#print axioms PEL4.gate53_below_threshold_exploitation_not_worse
+#print axioms PEL4.gate53_naive_recovery_reward_prefers_exploitation
+#print axioms PEL4.gate53_aligned_reward_prefers_exploration
+#print axioms PEL4.gate53_reward_design_controls_epistemic_policy
