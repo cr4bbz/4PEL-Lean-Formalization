@@ -1,0 +1,7 @@
+import PEL4.MissingEvidenceAbstention
+
+#print axioms PEL4.gate82_missing_is_not_negative
+#print axioms PEL4.gate82_forced_missing_rejects
+#print axioms PEL4.gate82_safe_missing_abstains
+#print axioms PEL4.gate82_abstention_beats_forced_negative
+#print axioms PEL4.gate82_missing_evidence_requires_abstention
