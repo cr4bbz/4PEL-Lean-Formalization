@@ -1,0 +1,10 @@
+import PEL4.RationalDestabilization
+
+#print axioms PEL4.gate47_fragile_not_robust
+#print axioms PEL4.gate47_robust_is_robust
+#print axioms PEL4.gate47_preserve_better_immediately
+#print axioms PEL4.gate47_probe_better_long_run
+#print axioms PEL4.gate47_preserve_stays_fragile
+#print axioms PEL4.gate47_probe_eventually_permanent_robust
+#print axioms PEL4.gate47_gate46_myopic_order_preserved
+#print axioms PEL4.gate47_rational_destabilization_preference_reversal
