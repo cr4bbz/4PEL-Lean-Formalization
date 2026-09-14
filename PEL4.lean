@@ -186,6 +186,8 @@ import PEL4.EpistemicRegret
 import PEL4.EpistemicRegretAxiomAudit
 import PEL4.EpistemicRewardAlignment
 import PEL4.EpistemicRewardAlignmentAxiomAudit
+import PEL4.TruthCalibrationBridge
+import PEL4.TruthCalibrationBridgeAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
