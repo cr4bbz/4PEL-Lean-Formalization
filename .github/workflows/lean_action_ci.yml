@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 68 adaptive experiment design
+        run: |
+          lake build PEL4.AdaptiveExperimentDesign
+          lake env lean PEL4/AdaptiveExperimentDesignAxiomAudit.lean
       - name: Build and audit Gates 66-67 repeated learning and experiment design
         run: |
           lake build PEL4.RepeatedEvidenceLearning
