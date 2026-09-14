@@ -1,0 +1,7 @@
+import PEL4.PosteriorSampleComplexity
+
+#print axioms PEL4.gate74_ninety_percent_needs_one
+#print axioms PEL4.gate74_ninety_eight_percent_needs_two
+#print axioms PEL4.gate74_ninety_nine_percent_needs_three
+#print axioms PEL4.gate74_ninety_nine_nine_not_within_three
+#print axioms PEL4.gate74_posterior_sample_complexity
