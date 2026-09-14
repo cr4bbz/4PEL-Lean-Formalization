@@ -190,6 +190,8 @@ import PEL4.TruthCalibrationBridge
 import PEL4.TruthCalibrationBridgeAxiomAudit
 import PEL4.PartialObservationBoundary
 import PEL4.PartialObservationBoundaryAxiomAudit
+import PEL4.FiniteEpistemicPOMDP
+import PEL4.FiniteEpistemicPOMDPAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
