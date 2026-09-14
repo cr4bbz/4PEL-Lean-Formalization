@@ -1,0 +1,18 @@
+name: Gate 58 CI
+
+on:
+  push:
+    branches:
+      - research/generic-bayesian-normalization-gate58
+  workflow_dispatch:
+
+jobs:
+  gate58:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 58 generic Bayesian normalization
+        run: |
+          lake build PEL4.GenericBayesianNormalization
+          lake env lean PEL4/GenericBayesianNormalizationAxiomAudit.lean
