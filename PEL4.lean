@@ -218,6 +218,22 @@ import PEL4.AdaptiveExperimentDesign
 import PEL4.AdaptiveExperimentDesignAxiomAudit
 import PEL4.SequentialBayesianExperimentDesign
 import PEL4.SequentialBayesianExperimentDesignAxiomAudit
+import PEL4.ParametricSensingCostPhase
+import PEL4.ParametricSensingCostPhaseAxiomAudit
+import PEL4.StoppingRegionGeometry
+import PEL4.StoppingRegionGeometryAxiomAudit
+import PEL4.ExperimentDominancePruning
+import PEL4.ExperimentDominancePruningAxiomAudit
+import PEL4.SequentialIdentifiability
+import PEL4.SequentialIdentifiabilityAxiomAudit
+import PEL4.PosteriorSampleComplexity
+import PEL4.PosteriorSampleComplexityAxiomAudit
+import PEL4.DiscountedBellmanFixedPoint
+import PEL4.DiscountedBellmanFixedPointAxiomAudit
+import PEL4.FourValuedControlBridge
+import PEL4.FourValuedControlBridgeAxiomAudit
+import PEL4.ActiveContradictionResolution
+import PEL4.ActiveContradictionResolutionAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
