@@ -1,0 +1,18 @@
+name: Gate 47 CI
+
+on:
+  push:
+    branches:
+      - research/rational-destabilization-gate47
+  workflow_dispatch:
+
+jobs:
+  gate47:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 47 rational destabilization
+        run: |
+          lake build PEL4.RationalDestabilization
+          lake env lean PEL4/RationalDestabilizationAxiomAudit.lean
