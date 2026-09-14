@@ -1,0 +1,46 @@
+name: Gate 70-77 Integration CI
+
+on:
+  push:
+    branches:
+      - research/active-contradiction-resolution-gate77
+  workflow_dispatch:
+
+jobs:
+  gates70to77:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Gate 70 source and audit
+        run: |
+          lake build PEL4.ParametricSensingCostPhase
+          lake env lean PEL4/ParametricSensingCostPhaseAxiomAudit.lean
+      - name: Gate 71 source and audit
+        run: |
+          lake build PEL4.StoppingRegionGeometry
+          lake env lean PEL4/StoppingRegionGeometryAxiomAudit.lean
+      - name: Gate 72 source and audit
+        run: |
+          lake build PEL4.ExperimentDominancePruning
+          lake env lean PEL4/ExperimentDominancePruningAxiomAudit.lean
+      - name: Gate 73 source and audit
+        run: |
+          lake build PEL4.SequentialIdentifiability
+          lake env lean PEL4/SequentialIdentifiabilityAxiomAudit.lean
+      - name: Gate 74 source and audit
+        run: |
+          lake build PEL4.PosteriorSampleComplexity
+          lake env lean PEL4/PosteriorSampleComplexityAxiomAudit.lean
+      - name: Gate 75 source and audit
+        run: |
+          lake build PEL4.DiscountedBellmanFixedPoint
+          lake env lean PEL4/DiscountedBellmanFixedPointAxiomAudit.lean
+      - name: Gate 76 source and audit
+        run: |
+          lake build PEL4.FourValuedControlBridge
+          lake env lean PEL4/FourValuedControlBridgeAxiomAudit.lean
+      - name: Gate 77 source and audit
+        run: |
+          lake build PEL4.ActiveContradictionResolution
+          lake env lean PEL4/ActiveContradictionResolutionAxiomAudit.lean
