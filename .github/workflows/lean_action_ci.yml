@@ -12,6 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gates 58-61 Bayesian filtering foundation
+        run: |
+          lake build PEL4.GenericBayesianNormalization
+          lake env lean PEL4/GenericBayesianNormalizationAxiomAudit.lean
+          lake build PEL4.CanonicalEpistemicBeliefs
+          lake env lean PEL4/CanonicalEpistemicBeliefsAxiomAudit.lean
+          lake build PEL4.NoisyEpistemicObservation
+          lake env lean PEL4/NoisyEpistemicObservationAxiomAudit.lean
+          lake build PEL4.BayesianFilterSufficiency
+          lake env lean PEL4/BayesianFilterSufficiencyAxiomAudit.lean
       - name: Build and audit Gate 57 Bayesian belief-state MDP
         run: |
           lake build PEL4.BayesianBeliefStateMDP
