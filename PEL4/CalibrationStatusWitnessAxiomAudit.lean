@@ -1,0 +1,5 @@
+import PEL4.CalibrationStatusWitness
+
+#print axioms PEL4.gate80_nominal_status_true
+#print axioms PEL4.gate80_calibrated_status_gap
+#print axioms PEL4.gate80_calibration_can_downgrade_truth_to_gap
