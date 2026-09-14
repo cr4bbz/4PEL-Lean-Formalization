@@ -1,0 +1,5 @@
+import PEL4.ModelUncertaintyWitness
+
+#print axioms PEL4.gate78_reliable_prefers_fragile
+#print axioms PEL4.gate78_degraded_prefers_safe
+#print axioms PEL4.gate78_model_uncertainty_reverses_ranking

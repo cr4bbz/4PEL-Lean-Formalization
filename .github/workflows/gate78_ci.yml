@@ -1,0 +1,18 @@
+name: Gate 78 CI
+
+on:
+  push:
+    branches:
+      - research/model-uncertainty-gate78
+  workflow_dispatch:
+
+jobs:
+  gate78:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 78 model uncertainty witness
+        run: |
+          lake build PEL4.ModelUncertaintyWitness
+          lake env lean PEL4/ModelUncertaintyWitnessAxiomAudit.lean
