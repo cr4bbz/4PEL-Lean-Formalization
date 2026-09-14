@@ -1,0 +1,8 @@
+import PEL4.ParametricSensingCostPhase
+
+#print axioms PEL4.gate70_stress_preferred_iff
+#print axioms PEL4.gate70_sample_phase_iff
+#print axioms PEL4.gate70_stop_phase_iff
+#print axioms PEL4.gate70_boundary_is_indifference
+#print axioms PEL4.gate70_recovers_gate69_stress_q
+#print axioms PEL4.gate70_parametric_sensing_cost_phase_transition
