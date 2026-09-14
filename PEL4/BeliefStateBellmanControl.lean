@@ -108,8 +108,12 @@ theorem beliefBellmanValue_eq_of_equivalent
     {left right : BayesianEpistemicBelief State}
     (h : BayesianBeliefEquivalent left right) :
     beliefBellmanValue model n left = beliefBellmanValue model n right := by
+  have hcanon :
+      canonicalControllerBelief model left = canonicalControllerBelief model right := by
+    simpa [canonicalControllerBelief] using
+      canonicalBayesianProfile_eq_of_equivalent model.support h
   unfold beliefBellmanValue
-  rw [canonicalBayesianProfile_eq_of_equivalent model.support h]
+  rw [hcanon]
 
 /-- The same representation invariance holds for action values. -/
 theorem beliefBellmanQ_eq_of_equivalent
@@ -122,8 +126,12 @@ theorem beliefBellmanQ_eq_of_equivalent
     (action : Action) :
     beliefBellmanQ model remaining left action =
       beliefBellmanQ model remaining right action := by
+  have hcanon :
+      canonicalControllerBelief model left = canonicalControllerBelief model right := by
+    simpa [canonicalControllerBelief] using
+      canonicalBayesianProfile_eq_of_equivalent model.support h
   unfold beliefBellmanQ
-  rw [canonicalBayesianProfile_eq_of_equivalent model.support h]
+  rw [hcanon]
 
 /-- Gate-62 terminal objective: posterior mass on the bridge-certified robust
 hidden state. This is a truth-calibration witness objective, not a general
