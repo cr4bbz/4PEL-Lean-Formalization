@@ -73,14 +73,16 @@ theorem gate73_second_bit_not_identifying :
 theorem gate73_two_step_plan_identifies :
     Gate73PlanIdentifies [.firstBit, .secondBit] := by
   intro left right h
-  cases left <;> cases right <;> native_decide
+  cases left <;> cases right <;>
+    simp [gate73Signature, gate73Observe] at h ⊢
 
 /-- Reversing the order preserves identifiability because both coordinates are
 still observed. -/
 theorem gate73_reversed_two_step_plan_identifies :
     Gate73PlanIdentifies [.secondBit, .firstBit] := by
   intro left right h
-  cases left <;> cases right <;> native_decide
+  cases left <;> cases right <;>
+    simp [gate73Signature, gate73Observe] at h ⊢
 
 /-- Every hidden state receives a distinct two-bit signature. -/
 theorem gate73_two_step_signatures :
