@@ -125,10 +125,10 @@ theorem gate55_partial_observation_boundary :
       gate55Observe (gate48Transition .robust .explore) := by
   exact ⟨gate55_fragile_robust_same_observation,
     gate55_fragile_robust_different_calibration,
-    gate54_recovery_alone_does_not_imply_truth.2,
-    gate54_robust_state_truth_aligned,
-    gate47_fragile_not_robust,
-    gate47_robust_is_robust,
+    ⟨gate54_recovery_alone_does_not_imply_truth.2,
+      gate54_robust_state_truth_aligned⟩,
+    ⟨gate47_fragile_not_robust,
+      gate47_robust_is_robust⟩,
     gate55_same_observation_same_action_different_next_observation.2⟩
 
 /-!
