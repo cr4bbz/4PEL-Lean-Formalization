@@ -1,0 +1,7 @@
+import PEL4.SequentialIdentifiability
+
+#print axioms PEL4.gate73_first_bit_not_identifying
+#print axioms PEL4.gate73_second_bit_not_identifying
+#print axioms PEL4.gate73_two_step_plan_identifies
+#print axioms PEL4.gate73_reversed_two_step_plan_identifies
+#print axioms PEL4.gate73_sequential_identifiability
