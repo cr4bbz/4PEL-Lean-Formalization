@@ -1,0 +1,10 @@
+import PEL4.EpistemicIdentifiability
+
+#print axioms PEL4.gate65_same_coarse_status_implies_observational_equivalence
+#print axioms PEL4.gate65_fragile_robust_observationally_equivalent
+#print axioms PEL4.gate65_fragile_robust_not_identifiable
+#print axioms PEL4.gate65_aliased_states_differ_in_robustness
+#print axioms PEL4.gate65_aliased_states_differ_in_truth_alignment
+#print axioms PEL4.gate65_robust_destabilized_identifiable
+#print axioms PEL4.gate65_equivalence_excludes_identifiability
+#print axioms PEL4.gate65_epistemic_identifiability_boundary
