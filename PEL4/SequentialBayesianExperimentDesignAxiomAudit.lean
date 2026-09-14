@@ -1,0 +1,14 @@
+import PEL4.SequentialBayesianExperimentDesign
+
+#print axioms PEL4.gate69_alias_stop_value
+#print axioms PEL4.gate69_alias_one_sample_q_values
+#print axioms PEL4.gate69_alias_one_sample_value
+#print axioms PEL4.gate69_alias_two_sample_q_values
+#print axioms PEL4.gate69_alias_two_sample_value
+#print axioms PEL4.gate69_policy_samples_stress_at_alias
+#print axioms PEL4.gate69_post_stress_stop_value
+#print axioms PEL4.gate69_post_stress_sample_values
+#print axioms PEL4.gate69_policy_stops_after_stress
+#print axioms PEL4.gate69_post_stress_value
+#print axioms PEL4.gate69_cheap_delay_is_strictly_worse
+#print axioms PEL4.gate69_sequential_bayesian_experiment_design_with_cost
