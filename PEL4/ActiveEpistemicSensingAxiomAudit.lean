@@ -1,0 +1,10 @@
+import PEL4.ActiveEpistemicSensing
+
+#print axioms PEL4.gate64_cheap_recovery_posterior
+#print axioms PEL4.gate64_cheap_nonRecovery_posterior
+#print axioms PEL4.gate64_cheap_net_value
+#print axioms PEL4.gate64_precise_gross_value
+#print axioms PEL4.gate64_precise_net_value
+#print axioms PEL4.gate64_precise_sensor_strictly_preferred
+#print axioms PEL4.gate64_sensor_advantage
+#print axioms PEL4.gate64_active_epistemic_sensing_selects_precise_test
