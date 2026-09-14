@@ -1,0 +1,8 @@
+import PEL4.BayesianFilterSufficiency
+
+#print axioms PEL4.noisyBayesianFilter_same_present_same_future
+#print axioms PEL4.noisyBayesianFilter_merged_histories_common_future
+#print axioms PEL4.canonicalBayesianProfile_eq_of_equivalent
+#print axioms PEL4.gate61_history_reaches_recovery_posterior
+#print axioms PEL4.gate61_history_compression_witness
+#print axioms PEL4.gate61_bayesian_posterior_is_markov_sufficient
