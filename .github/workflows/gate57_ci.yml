@@ -1,0 +1,18 @@
+name: Gate 57 CI
+
+on:
+  push:
+    branches:
+      - research/bayesian-belief-state-mdp-gate57
+  workflow_dispatch:
+
+jobs:
+  gate57:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 57 Bayesian belief-state MDP
+        run: |
+          lake build PEL4.BayesianBeliefStateMDP
+          lake env lean PEL4/BayesianBeliefStateMDPAxiomAudit.lean
