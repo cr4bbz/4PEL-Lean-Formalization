@@ -1,0 +1,19 @@
+name: Gate 56 CI
+
+on:
+  push:
+    branches:
+      - research/finite-epistemic-pomdp-gate56
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate56:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 56 finite epistemic POMDP
+        run: |
+          lake build PEL4.FiniteEpistemicPOMDP
+          lake env lean PEL4/FiniteEpistemicPOMDPAxiomAudit.lean
