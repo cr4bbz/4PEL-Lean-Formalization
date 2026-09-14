@@ -1,0 +1,6 @@
+import PEL4.GenericBayesianNormalization
+
+#print axioms PEL4.bayesianBeliefMassSum_map_div
+#print axioms PEL4.normalizeBayesianBeliefGeneric_mass_one
+#print axioms PEL4.normalizeBayesianBeliefGeneric_zero_mass
+#print axioms PEL4.gate58_generic_normalization_covers_gate57
