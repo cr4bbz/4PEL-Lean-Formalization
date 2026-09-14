@@ -34,7 +34,8 @@ def canonicalControllerBelief
     (belief : BayesianEpistemicBelief State) : BayesianEpistemicBelief State :=
   canonicalBayesianProfile model.support belief
 
-/-- Canonical noisy posterior used as the next controller state. -/
+/-- Canonical noisy posterior used as the next controller state. The input is
+allowed to be raw; both the input and the result are canonicalized. -/
 def beliefControllerUpdate
     {State Action Observation : Type}
     [DecidableEq State]
@@ -46,25 +47,46 @@ def beliefControllerUpdate
     (noisyBayesianBeliefUpdate model.pomdp
       (canonicalControllerBelief model belief) action observation)
 
-/-- Finite-horizon Bellman value on canonical Bayesian belief states. Horizon
-zero evaluates terminal utility; positive horizons maximize expected continuation
-value over the explicit finite action list. -/
+mutual
+  /-- Internal Bellman recursion. Its input is already the canonical controller
+  state. Recursive successors are canonicalized before the next call. -/
+  def beliefBellmanValueCanonical
+      {State Action Observation : Type}
+      [DecidableEq State]
+      (model : FiniteBeliefBellmanModel State Action Observation) :
+      Nat -> BayesianEpistemicBelief State -> Rat
+    | 0, belief => model.terminalUtility belief
+    | n + 1, belief =>
+        (model.actions.map fun action =>
+          beliefBellmanQCanonical model n belief action).foldl max 0
+
+  /-- Internal action value at an already-canonical controller state. -/
+  def beliefBellmanQCanonical
+      {State Action Observation : Type}
+      [DecidableEq State]
+      (model : FiniteBeliefBellmanModel State Action Observation)
+      (remaining : Nat)
+      (belief : BayesianEpistemicBelief State)
+      (action : Action) : Rat :=
+    (model.observations.map fun observation =>
+      noisyBayesianObservationProbability model.pomdp belief action observation *
+        beliefBellmanValueCanonical model remaining
+          (canonicalControllerBelief model
+            (noisyBayesianBeliefUpdate model.pomdp belief action observation))).sum
+end
+
+/-- Public Bellman value. Raw list syntax is erased once at the controller
+boundary. -/
 def beliefBellmanValue
     {State Action Observation : Type}
     [DecidableEq State]
-    (model : FiniteBeliefBellmanModel State Action Observation) :
-    Nat -> BayesianEpistemicBelief State -> Rat
-  | 0, belief => model.terminalUtility (canonicalControllerBelief model belief)
-  | n + 1, belief =>
-      (model.actions.map fun action =>
-        (model.observations.map fun observation =>
-          noisyBayesianObservationProbability model.pomdp
-              (canonicalControllerBelief model belief) action observation *
-            beliefBellmanValue model n
-              (beliefControllerUpdate model belief action observation)).sum).foldl max 0
+    (model : FiniteBeliefBellmanModel State Action Observation)
+    (n : Nat)
+    (belief : BayesianEpistemicBelief State) : Rat :=
+  beliefBellmanValueCanonical model n (canonicalControllerBelief model belief)
 
-/-- Bellman action value with `remaining` future decisions after the current
-chosen action. -/
+/-- Public Bellman action value with `remaining` future decisions after the
+current chosen action. -/
 def beliefBellmanQ
     {State Action Observation : Type}
     [DecidableEq State]
@@ -72,14 +94,12 @@ def beliefBellmanQ
     (remaining : Nat)
     (belief : BayesianEpistemicBelief State)
     (action : Action) : Rat :=
-  (model.observations.map fun observation =>
-    noisyBayesianObservationProbability model.pomdp
-        (canonicalControllerBelief model belief) action observation *
-      beliefBellmanValue model remaining
-        (beliefControllerUpdate model belief action observation)).sum
+  beliefBellmanQCanonical model remaining
+    (canonicalControllerBelief model belief) action
 
 /-- Extensionally equal raw beliefs receive exactly the same Bellman value,
-because the controller first passes through Gate 59's canonical profile. -/
+because the public controller boundary maps them to the same canonical profile
+before recursion starts. -/
 theorem beliefBellmanValue_eq_of_equivalent
     {State Action Observation : Type}
     [DecidableEq State]
@@ -88,14 +108,22 @@ theorem beliefBellmanValue_eq_of_equivalent
     {left right : BayesianEpistemicBelief State}
     (h : BayesianBeliefEquivalent left right) :
     beliefBellmanValue model n left = beliefBellmanValue model n right := by
-  have hcanon : canonicalControllerBelief model left =
-      canonicalControllerBelief model right := by
-    exact canonicalBayesianProfile_eq_of_equivalent model.support h
-  induction n with
-  | zero => simp [beliefBellmanValue, hcanon]
-  | succ n ih =>
-      simp only [beliefBellmanValue]
-      rw [hcanon]
+  unfold beliefBellmanValue
+  rw [canonicalBayesianProfile_eq_of_equivalent model.support h]
+
+/-- The same representation invariance holds for action values. -/
+theorem beliefBellmanQ_eq_of_equivalent
+    {State Action Observation : Type}
+    [DecidableEq State]
+    (model : FiniteBeliefBellmanModel State Action Observation)
+    (remaining : Nat)
+    {left right : BayesianEpistemicBelief State}
+    (h : BayesianBeliefEquivalent left right)
+    (action : Action) :
+    beliefBellmanQ model remaining left action =
+      beliefBellmanQ model remaining right action := by
+  unfold beliefBellmanQ
+  rw [canonicalBayesianProfile_eq_of_equivalent model.support h]
 
 /-- Gate-62 terminal objective: posterior mass on the bridge-certified robust
 hidden state. This is a truth-calibration witness objective, not a general
