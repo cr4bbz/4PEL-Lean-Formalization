@@ -29,18 +29,24 @@ def gate72PrunedStressValue
 /-- Stress dominates the cheap status sensor with one sample available. -/
 theorem gate72_stress_dominates_cheap_one_step :
     Gate72QDominates 0 gate66AliasedPrior .stressProbe .statusCheap := by
+  unfold Gate72QDominates
   native_decide
 
 /-- Stress dominates the precise status sensor with one sample available. -/
 theorem gate72_stress_dominates_precise_one_step :
     Gate72QDominates 0 gate66AliasedPrior .stressProbe .statusPrecise := by
+  unfold Gate72QDominates
   native_decide
 
 /-- The same dominance persists when one later sample is priced into Q. -/
 theorem gate72_stress_dominates_status_two_step :
     Gate72QDominates 1 gate66AliasedPrior .stressProbe .statusCheap ∧
     Gate72QDominates 1 gate66AliasedPrior .stressProbe .statusPrecise := by
-  constructor <;> native_decide
+  constructor
+  · unfold Gate72QDominates
+    native_decide
+  · unfold Gate72QDominates
+    native_decide
 
 /-- Pruning both old status experiments preserves the one-sample Bellman value. -/
 theorem gate72_pruning_preserves_one_sample_value :
