@@ -1,0 +1,13 @@
+import PEL4.FiniteEpistemicPOMDP
+
+namespace PEL4
+
+#print axioms gate56_current_recovery_observation_preserves_ambiguity
+#print axioms gate56_explore_prediction
+#print axioms gate56_recovery_observation_collapses_to_robust
+#print axioms gate56_nonRecovery_observation_collapses_to_destabilized
+#print axioms gate56_belief_mass_accounting
+#print axioms gate56_recovery_posterior_truth_certified
+#print axioms gate56_active_observation_resolves_hidden_truth_state
+
+end PEL4
