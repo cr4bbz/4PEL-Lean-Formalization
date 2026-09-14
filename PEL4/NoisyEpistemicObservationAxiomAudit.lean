@@ -1,0 +1,10 @@
+import PEL4.NoisyEpistemicObservation
+
+#print axioms PEL4.gate60_explore_hidden_prediction
+#print axioms PEL4.gate60_recovery_signal_probability
+#print axioms PEL4.gate60_recovery_posterior
+#print axioms PEL4.gate60_nonRecovery_posterior
+#print axioms PEL4.gate60_recovery_posterior_mass_one
+#print axioms PEL4.gate60_recovery_signal_robust_weight
+#print axioms PEL4.gate60_recovery_signal_not_oracle
+#print axioms PEL4.gate60_recovery_is_evidence_not_oracle
