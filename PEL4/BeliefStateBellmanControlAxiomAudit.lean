@@ -1,6 +1,7 @@
 import PEL4.BeliefStateBellmanControl
 
 #print axioms PEL4.beliefBellmanValue_eq_of_equivalent
+#print axioms PEL4.beliefBellmanQ_eq_of_equivalent
 #print axioms PEL4.gate62_syntax_invariant_value
 #print axioms PEL4.gate62_exploit_one_step_truth_mass
 #print axioms PEL4.gate62_explore_one_step_truth_mass
