@@ -1,0 +1,18 @@
+name: Gate 84 CI
+
+on:
+  push:
+    branches:
+      - research/sensor-model-identifiability-gate84
+  workflow_dispatch:
+
+jobs:
+  gate84:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 84 sensor-model identifiability
+        run: |
+          lake build PEL4.SensorModelIdentifiability
+          lake env lean PEL4/SensorModelIdentifiabilityAxiomAudit.lean

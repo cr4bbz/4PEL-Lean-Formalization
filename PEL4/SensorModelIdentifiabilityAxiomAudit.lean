@@ -1,0 +1,6 @@
+import PEL4.SensorModelIdentifiability
+
+#print axioms PEL4.gate84_diagA_not_identifying
+#print axioms PEL4.gate84_diagB_not_identifying
+#print axioms PEL4.gate84_joint_diagnostic_injective
+#print axioms PEL4.gate84_sequential_sensor_model_identifiability
