@@ -42,7 +42,9 @@ def BayesianBeliefEquivalent
   intro state
   exact (h state).symm
 
-@[trans] theorem BayesianBeliefEquivalent.trans
+/-- Extensional belief equivalence is transitive. Kept as an ordinary theorem
+rather than a tactic attribute so the relation remains lightweight. -/
+theorem BayesianBeliefEquivalent.trans
     {State : Type} [DecidableEq State]
     {first second third : BayesianEpistemicBelief State}
     (h₁ : BayesianBeliefEquivalent first second)
@@ -64,7 +66,7 @@ theorem bayesianBelief_split_same_state_equivalent
   intro t
   by_cases h : s = t
   · subst t
-    simp [bayesianWeightAt]
+    simp [bayesianWeightAt] <;> grind
   · simp [bayesianWeightAt, h]
 
 /-- Conversely, duplicate support entries can be merged without changing the
@@ -108,8 +110,8 @@ Gate-47 hidden state. -/
 theorem gate59_duplicate_and_canonical_equivalent :
     BayesianBeliefEquivalent
       gate59DuplicatedRobustBelief gate59CanonicalRobustBelief := by
-  exact bayesianBelief_split_same_state_equivalent
-    ((1 : Rat) / 2) ((1 : Rat) / 2) Gate47State.robust
+  intro state
+  cases state <;> native_decide
 
 /-- Canonicalization on the full Gate-47 support collapses duplicate robust mass
 into one state coordinate. Zero coordinates remain explicit to keep support
