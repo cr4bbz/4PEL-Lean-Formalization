@@ -1,0 +1,14 @@
+import PEL4.PartialObservationBoundary
+
+namespace PEL4
+
+#print axioms gate55_fragile_robust_same_observation
+#print axioms gate55_fragile_robust_different_calibration
+#print axioms gate55_recovery_observation_not_calibration_sufficient
+#print axioms gate55_recovery_observation_not_truth_sufficient
+#print axioms gate55_recovery_observation_not_robustness_sufficient
+#print axioms gate55_same_observation_same_action_different_next_observation
+#print axioms gate55_recovery_observation_not_transition_sufficient
+#print axioms gate55_partial_observation_boundary
+
+end PEL4
