@@ -172,6 +172,10 @@ import PEL4.ActiveEvidenceControl
 import PEL4.ActiveEvidenceControlAxiomAudit
 import PEL4.EpistemicRewardMisspecification
 import PEL4.EpistemicRewardMisspecificationAxiomAudit
+import PEL4.RationalDestabilization
+import PEL4.RationalDestabilizationAxiomAudit
+import PEL4.EpistemicExplorationExploitation
+import PEL4.EpistemicExplorationExploitationAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
