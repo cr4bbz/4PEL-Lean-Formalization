@@ -1,0 +1,34 @@
+name: Gate 78-85 Integration CI
+
+on:
+  push:
+    branches:
+      - research/epistemic-self-doubt-gate85
+  workflow_dispatch:
+
+jobs:
+  integrate-gates-78-85:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build Gates 78-85
+        run: |
+          lake build PEL4.ModelUncertaintyWitness
+          lake build PEL4.RobustMaximinControl
+          lake build PEL4.CalibrationStatusWitness
+          lake build PEL4.ValueOfCalibration
+          lake build PEL4.MissingEvidenceAbstention
+          lake build PEL4.AdversarialSensorRobustness
+          lake build PEL4.SensorModelIdentifiability
+          lake build PEL4.EpistemicSelfDoubtBridge
+      - name: Audit Gates 78-85
+        run: |
+          lake env lean PEL4/ModelUncertaintyWitnessAxiomAudit.lean
+          lake env lean PEL4/RobustMaximinControlAxiomAudit.lean
+          lake env lean PEL4/CalibrationStatusWitnessAxiomAudit.lean
+          lake env lean PEL4/ValueOfCalibrationAxiomAudit.lean
+          lake env lean PEL4/MissingEvidenceAbstentionAxiomAudit.lean
+          lake env lean PEL4/AdversarialSensorRobustnessAxiomAudit.lean
+          lake env lean PEL4/SensorModelIdentifiabilityAxiomAudit.lean
+          lake env lean PEL4/EpistemicSelfDoubtBridgeAxiomAudit.lean
