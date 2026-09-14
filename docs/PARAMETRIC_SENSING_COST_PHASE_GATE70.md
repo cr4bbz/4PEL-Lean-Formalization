@@ -1,6 +1,6 @@
 # Gate 70: Parametric Sensing-Cost Phase Transition
 
-Gate 69 used the concrete stress-probe price `1/5`. Gate 70 makes that price symbolic.
+Gate 69 used the concrete stress-probe price `1/5`. Gate 70 exposes the cost transition on an exact hundredth-price grid while separately checking the corresponding rational indifference point.
 
 At the unresolved fragile/robust alias:
 
@@ -10,27 +10,26 @@ stop now                 = 1/2
 net stress value          = 9/10 - c
 ```
 
-Therefore sampling is strictly better exactly when
+The rational indifference price is therefore
 
 ```text
-9/10 - c > 1/2
-iff
-c < 2/5.
+9/10 - c = 1/2
+c = 2/5 = 40/100.
 ```
 
-The controller uses stop-on-ties, so the phase law is:
+The executable controller encodes cost in hundredths and uses stop-on-ties:
 
 ```text
-c < 2/5   -> sample stressProbe
-c >= 2/5  -> stop
+cost < 40  -> sample stressProbe
+cost >= 40 -> stop
 ```
 
-The concrete Gate-69 cost `1/5` lies in the sampling phase and reproduces the verified Q-value `7/10`.
+Lean additionally verifies the boundary probes `39 -> sample`, `40 -> stop`, `41 -> stop`, the exact rational equality at `2/5`, and that the Gate-69 cost `1/5 = 20/100` lies in the sampling phase and reproduces Q-value `7/10`.
 
 ## Interpretation
 
-This is the first symbolic policy boundary in the sequential-sensing program. The value of information is no longer represented only by a few chosen prices: the formalization identifies the exact price at which inquiry ceases to be worth buying.
+This is the first policy phase boundary in the sequential-sensing program. Inquiry has an explicit price at which its net value disappears. The controller therefore does not implement unconditional curiosity: it buys information only while the information is worth more than its sensing cost.
 
 ## Boundary
 
-The threshold is specific to the Gate-67 alias witness and Gate-68 identification utility. Horizon dependence and general stopping-region geometry are deferred to Gate 71.
+The universal executable classification is over an exact hundredth-price grid. The rational boundary equality at `2/5` is verified separately. The threshold is specific to the Gate-67 alias witness and Gate-68 identification utility; no claim is made that every belief or planning horizon has the same scalar boundary.
