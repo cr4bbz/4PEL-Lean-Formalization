@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 54 truth calibration bridge
+        run: |
+          lake build PEL4.TruthCalibrationBridge
+          lake env lean PEL4/TruthCalibrationBridgeAxiomAudit.lean
       - name: Build and audit Gates 49-53 epistemic decision theory
         run: |
           lake build PEL4.FiniteEpistemicDecisionProcess
