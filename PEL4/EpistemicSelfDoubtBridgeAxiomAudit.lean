@@ -1,0 +1,8 @@
+import PEL4.EpistemicSelfDoubtBridge
+
+#print axioms PEL4.gate85_naive_trust_is_true
+#print axioms PEL4.gate85_self_doubt_opens_gap
+#print axioms PEL4.gate85_reliable_calibration_restores_true
+#print axioms PEL4.gate85_inverted_calibration_restores_false
+#print axioms PEL4.gate85_calibration_resolves_self_doubt
+#print axioms PEL4.gate85_epistemic_self_doubt_path

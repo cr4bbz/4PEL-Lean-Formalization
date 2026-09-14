@@ -1,0 +1,18 @@
+name: Gate 85 CI
+
+on:
+  push:
+    branches:
+      - research/epistemic-self-doubt-gate85
+  workflow_dispatch:
+
+jobs:
+  gate85:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 85 epistemic self-doubt bridge
+        run: |
+          lake build PEL4.EpistemicSelfDoubtBridge
+          lake env lean PEL4/EpistemicSelfDoubtBridgeAxiomAudit.lean
