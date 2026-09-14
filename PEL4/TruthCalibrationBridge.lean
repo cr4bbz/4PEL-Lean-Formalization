@@ -53,7 +53,7 @@ theorem bridgeRobustRecovery_implies_zeroCalibration
     bridge.calibrationError s = 0 := by
   cases hError : bridge.calibrationError s with
   | zero =>
-      exact hError
+      rfl
   | succ n =>
       have hPositive : 0 < bridge.calibrationError s := by
         simp [hError]
