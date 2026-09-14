@@ -1,0 +1,6 @@
+import PEL4.ValueOfCalibration
+
+#print axioms PEL4.gate81_calibration_net_value
+#print axioms PEL4.gate81_calibration_has_positive_information_value
+#print axioms PEL4.gate81_policy_calibrates_first
+#print axioms PEL4.gate81_value_of_calibration

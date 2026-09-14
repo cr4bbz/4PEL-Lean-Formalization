@@ -1,0 +1,18 @@
+name: Gate 81 CI
+
+on:
+  push:
+    branches:
+      - research/value-of-calibration-gate81
+  workflow_dispatch:
+
+jobs:
+  gate81:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 81 value of calibration
+        run: |
+          lake build PEL4.ValueOfCalibration
+          lake env lean PEL4/ValueOfCalibrationAxiomAudit.lean
