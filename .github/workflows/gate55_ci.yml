@@ -1,0 +1,19 @@
+name: Gate 55 CI
+
+on:
+  push:
+    branches:
+      - research/partial-observation-boundary-gate55
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate55:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 55 partial observation boundary
+        run: |
+          lake build PEL4.PartialObservationBoundary
+          lake env lean PEL4/PartialObservationBoundaryAxiomAudit.lean
