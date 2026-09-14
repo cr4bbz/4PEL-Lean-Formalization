@@ -1,0 +1,18 @@
+name: Gate 76 CI
+
+on:
+  push:
+    branches:
+      - research/four-valued-control-bridge-gate76
+  workflow_dispatch:
+
+jobs:
+  gate76:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 76 four-valued control bridge
+        run: |
+          lake build PEL4.FourValuedControlBridge
+          lake env lean PEL4/FourValuedControlBridgeAxiomAudit.lean
