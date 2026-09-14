@@ -188,6 +188,8 @@ import PEL4.EpistemicRewardAlignment
 import PEL4.EpistemicRewardAlignmentAxiomAudit
 import PEL4.TruthCalibrationBridge
 import PEL4.TruthCalibrationBridgeAxiomAudit
+import PEL4.PartialObservationBoundary
+import PEL4.PartialObservationBoundaryAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
