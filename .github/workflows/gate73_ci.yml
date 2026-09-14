@@ -1,0 +1,18 @@
+name: Gate 73 CI
+
+on:
+  push:
+    branches:
+      - research/sequential-identifiability-gate73
+  workflow_dispatch:
+
+jobs:
+  gate73:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 73 sequential identifiability
+        run: |
+          lake build PEL4.SequentialIdentifiability
+          lake env lean PEL4/SequentialIdentifiabilityAxiomAudit.lean
