@@ -12,6 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 48 exploration exploitation
+        run: |
+          lake build PEL4.EpistemicExplorationExploitation
+          lake env lean PEL4/EpistemicExplorationExploitationAxiomAudit.lean
+      - name: Build and audit Gate 47 rational destabilization
+        run: |
+          lake build PEL4.RationalDestabilization
+          lake env lean PEL4/RationalDestabilizationAxiomAudit.lean
       - name: Build and audit Gate 46 reward misspecification
         run: |
           lake build PEL4.EpistemicRewardMisspecification
