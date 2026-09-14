@@ -1,0 +1,18 @@
+name: Gate 69 CI
+
+on:
+  push:
+    branches:
+      - research/sequential-bayesian-experiment-design-gate69
+  workflow_dispatch:
+
+jobs:
+  gate69:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 69 sequential Bayesian experiment design
+        run: |
+          lake build PEL4.SequentialBayesianExperimentDesign
+          lake env lean PEL4/SequentialBayesianExperimentDesignAxiomAudit.lean
