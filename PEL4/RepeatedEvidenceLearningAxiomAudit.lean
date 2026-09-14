@@ -1,0 +1,11 @@
+import PEL4.RepeatedEvidenceLearning
+
+#print axioms PEL4.gate66_identifiable_mass_at_zero
+#print axioms PEL4.gate66_identifiable_mass_after_one
+#print axioms PEL4.gate66_identifiable_mass_after_two
+#print axioms PEL4.gate66_identifiable_mass_after_three
+#print axioms PEL4.gate66_identifiable_repetition_strictly_concentrates
+#print axioms PEL4.gate66_aliased_prior_one_step_fixed
+#print axioms PEL4.gate66_alias_survives_all_repetitions
+#print axioms PEL4.gate66_aliased_robust_mass_stays_half
+#print axioms PEL4.gate66_repeated_evidence_learning_boundary
