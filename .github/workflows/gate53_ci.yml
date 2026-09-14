@@ -1,0 +1,19 @@
+name: Gate 53 CI
+
+on:
+  push:
+    branches:
+      - research/epistemic-reward-alignment-gate53
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate53:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 53 epistemic reward alignment
+        run: |
+          lake build PEL4.EpistemicRewardAlignment
+          lake env lean PEL4/EpistemicRewardAlignmentAxiomAudit.lean
