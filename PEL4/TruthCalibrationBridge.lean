@@ -51,11 +51,16 @@ theorem bridgeRobustRecovery_implies_zeroCalibration
     (s : State)
     (hRobust : BridgeRobustRecovery bridge s) :
     bridge.calibrationError s = 0 := by
-  by_contra hNe
-  have hPos : 0 < bridge.calibrationError s := Nat.pos_of_ne_zero hNe
-  obtain ⟨t, hStress, hNotRecovered⟩ :=
-    bridge.positive_error_exposed s hRobust.1 hPos
-  exact hNotRecovered (hRobust.2 t hStress)
+  cases hError : bridge.calibrationError s with
+  | zero =>
+      exact hError
+  | succ n =>
+      have hPositive : 0 < bridge.calibrationError s := by
+        simp [hError]
+      obtain ⟨t, hStress, hNotRecovered⟩ :=
+        bridge.positive_error_exposed s hRobust.1 hPositive
+      have hFalse : False := hNotRecovered (hRobust.2 t hStress)
+      exact hFalse.elim
 
 /-- Main abstract bridge theorem: robust Recovery is truth-entailing only once
 an external calibration criterion and a stress suite complete for remaining
