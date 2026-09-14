@@ -1,0 +1,19 @@
+name: Gate 49 CI
+
+on:
+  push:
+    branches:
+      - research/finite-epistemic-decision-process-gate49
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate49:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 49 Bellman decision process
+        run: |
+          lake build PEL4.FiniteEpistemicDecisionProcess
+          lake env lean PEL4/FiniteEpistemicDecisionProcessAxiomAudit.lean
