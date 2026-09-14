@@ -1,0 +1,19 @@
+name: Gate 50 CI
+
+on:
+  push:
+    branches:
+      - research/stochastic-epistemic-decision-process-gate50
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gate50:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 50 stochastic epistemic decision process
+        run: |
+          lake build PEL4.StochasticEpistemicDecisionProcess
+          lake env lean PEL4/StochasticEpistemicDecisionProcessAxiomAudit.lean
