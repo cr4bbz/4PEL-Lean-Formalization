@@ -75,9 +75,7 @@ theorem gate47_fragile_not_robust : ¬ Gate47RobustRecovery .fragile := by
   intro hRobust
   have hBroken : Gate47Recovered .broken :=
     hRobust.2 .broken Gate47Stress.fragileBreak
-  have hImpossible : (false : Bool) = true := by
-    simpa [Gate47Recovered, gate47Recovered] using hBroken
-  cases hImpossible
+  simp [Gate47Recovered, gate47Recovered] at hBroken
 
 theorem gate47_robust_is_robust : Gate47RobustRecovery .robust := by
   constructor
@@ -103,7 +101,9 @@ def gate47ProbeTrajectory : Nat -> Gate47State
 /-- One point for being in current Recovery. This is the temporal analogue of
 the immediate proxy used by Gate 46. -/
 def gate47RecoveryScore (s : Gate47State) : Nat :=
-  if Gate47Recovered s then 1 else 0
+  match gate47Recovered s with
+  | true => 1
+  | false => 0
 
 /-- Immediate one-step value of a trajectory. -/
 def gate47ImmediateValue (trajectory : Nat -> Gate47State) : Nat :=
@@ -220,7 +220,7 @@ theorem gate47_rational_destabilization_preference_reversal :
     gate47_probe_better_long_run,
     gate47_fragile_is_recovered,
     gate47_fragile_not_robust,
-    by decide,
+    by simp [Gate47Recovered, gate47Recovered],
     gate47_robust_is_robust,
     gate47_probe_eventually_permanent_robust⟩
 
