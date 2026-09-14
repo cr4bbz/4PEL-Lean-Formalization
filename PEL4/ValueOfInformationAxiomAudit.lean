@@ -1,0 +1,10 @@
+import PEL4.ValueOfInformation
+
+#print axioms PEL4.gate51_hold_uninformed_value
+#print axioms PEL4.gate51_repair_uninformed_value
+#print axioms PEL4.gate51_best_uninformed_value
+#print axioms PEL4.gate51_informed_value
+#print axioms PEL4.gate51_value_of_information_eq_three
+#print axioms PEL4.gate51_value_of_information_positive
+#print axioms PEL4.gate51_information_can_be_valuable_despite_destabilization
+#print axioms PEL4.gate51_observation_strictly_improves_decision_value
