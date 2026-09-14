@@ -28,7 +28,8 @@ def normalizeBayesianBeliefGeneric
   else belief.map fun item => (item.1 / total, item.2)
 
 /-- Scaling every belief weight by the same rational denominator scales total
-mass by that denominator. -/
+mass by that denominator. The zero denominator is handled explicitly because
+`Rat` uses totalized division. -/
 theorem bayesianBeliefMassSum_map_div
     {State : Type}
     (belief : BayesianEpistemicBelief State)
@@ -36,11 +37,18 @@ theorem bayesianBeliefMassSum_map_div
     bayesianBeliefMassSum
         (belief.map fun item => (item.1 / d, item.2)) =
       bayesianBeliefMassSum belief / d := by
-  induction belief with
-  | nil => simp [bayesianBeliefMassSum]
-  | cons x xs ih =>
-      simp [bayesianBeliefMassSum, ih]
-      grind
+  by_cases hd : d = 0
+  · subst d
+    induction belief with
+    | nil => simp [bayesianBeliefMassSum]
+    | cons x xs ih => simp [bayesianBeliefMassSum, ih]
+  · induction belief with
+    | nil => simp [bayesianBeliefMassSum, hd]
+    | cons x xs ih =>
+        simp only [bayesianBeliefMassSum, List.map_map, List.map_cons,
+          List.sum_cons, Function.comp_apply] at ih ⊢
+        rw [ih]
+        grind
 
 /-- Main Gate-58 normalization theorem. Any finite rational belief with nonzero
 total mass normalizes to total mass one. -/
