@@ -216,6 +216,8 @@ import PEL4.AliasBreakingExperimentDesign
 import PEL4.AliasBreakingExperimentDesignAxiomAudit
 import PEL4.AdaptiveExperimentDesign
 import PEL4.AdaptiveExperimentDesignAxiomAudit
+import PEL4.SequentialBayesianExperimentDesign
+import PEL4.SequentialBayesianExperimentDesignAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
