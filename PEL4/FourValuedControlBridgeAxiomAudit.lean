@@ -1,0 +1,8 @@
+import PEL4.FourValuedControlBridge
+
+#print axioms PEL4.gate76_alias_is_gap
+#print axioms PEL4.gate76_stress_recovery_is_true
+#print axioms PEL4.gate76_stress_nonRecovery_is_false
+#print axioms PEL4.gate76_controller_selects_status_resolving_probe
+#print axioms PEL4.gate76_stress_always_resolves_gap
+#print axioms PEL4.gate76_four_valued_epistemic_control_bridge
