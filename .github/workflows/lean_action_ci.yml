@@ -12,6 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: leanprover/lean-action@v1
+      - name: Build and audit Gates 49-53 epistemic decision theory
+        run: |
+          lake build PEL4.FiniteEpistemicDecisionProcess
+          lake env lean PEL4/FiniteEpistemicDecisionProcessAxiomAudit.lean
+          lake build PEL4.StochasticEpistemicDecisionProcess
+          lake env lean PEL4/StochasticEpistemicDecisionProcessAxiomAudit.lean
+          lake build PEL4.ValueOfInformation
+          lake env lean PEL4/ValueOfInformationAxiomAudit.lean
+          lake build PEL4.EpistemicRegret
+          lake env lean PEL4/EpistemicRegretAxiomAudit.lean
+          lake build PEL4.EpistemicRewardAlignment
+          lake env lean PEL4/EpistemicRewardAlignmentAxiomAudit.lean
       - name: Build and audit Gate 48 exploration exploitation
         run: |
           lake build PEL4.EpistemicExplorationExploitation
