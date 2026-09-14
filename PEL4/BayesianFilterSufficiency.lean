@@ -69,7 +69,7 @@ theorem canonicalBayesianProfile_eq_of_equivalent
   induction support with
   | nil => rfl
   | cons state rest ih =>
-      simp only [canonicalBayesianProfile, List.map_cons]
+      simp only [canonicalBayesianProfile, List.map_cons] at ih ⊢
       rw [h state, ih]
 
 /-- Full finite support used to canonicalize the Gate-47 hidden state space. -/
