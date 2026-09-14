@@ -1,0 +1,8 @@
+import PEL4.FiniteEpistemicDecisionProcess
+
+#print axioms PEL4.gate49_myopic_q_prefers_exploit
+#print axioms PEL4.gate49_three_step_q_prefers_explore
+#print axioms PEL4.gate49_bellman_value_three_start
+#print axioms PEL4.gate49_explore_attains_bellman_optimum
+#print axioms PEL4.gate49_exploit_is_bellman_suboptimal
+#print axioms PEL4.gate49_bellman_derives_rational_exploration
