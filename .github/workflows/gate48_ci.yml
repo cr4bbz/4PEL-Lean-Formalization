@@ -1,0 +1,18 @@
+name: Gate 48 CI
+
+on:
+  push:
+    branches:
+      - research/epistemic-exploration-exploitation-gate48
+  workflow_dispatch:
+
+jobs:
+  gate48:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 48 exploration exploitation
+        run: |
+          lake build PEL4.EpistemicExplorationExploitation
+          lake env lean PEL4/EpistemicExplorationExploitationAxiomAudit.lean
