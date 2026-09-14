@@ -1,0 +1,12 @@
+import PEL4.AdaptiveExperimentDesign
+
+#print axioms PEL4.gate68_alias_prior_confidence
+#print axioms PEL4.gate68_old_experiments_expected_confidence
+#print axioms PEL4.gate68_stress_expected_confidence
+#print axioms PEL4.gate68_stress_strictly_best_at_alias
+#print axioms PEL4.gate68_selector_chooses_stress_probe
+#print axioms PEL4.gate68_policy_samples_when_unresolved
+#print axioms PEL4.gate68_stress_observation_reaches_threshold
+#print axioms PEL4.gate68_policy_stops_after_stress_observation
+#print axioms PEL4.gate68_old_status_evidence_keeps_sampling
+#print axioms PEL4.gate68_adaptive_experiment_design_and_stopping
