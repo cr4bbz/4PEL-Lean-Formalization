@@ -58,7 +58,7 @@ theorem gate67_statusCheap_does_not_break_alias :
     ¬ Gate67ExperimentSeparates .statusCheap .fragile .robust := by
   intro h
   rcases h with ⟨observation, hNe⟩
-  cases observation <;> native_decide
+  cases observation <;> apply hNe <;> native_decide
 
 /-- Nor can the more precise status sensor. Precision about the same coarse
 observable does not add a new identifying dimension. -/
@@ -66,7 +66,7 @@ theorem gate67_statusPrecise_does_not_break_alias :
     ¬ Gate67ExperimentSeparates .statusPrecise .fragile .robust := by
   intro h
   rcases h with ⟨observation, hNe⟩
-  cases observation <;> native_decide
+  cases observation <;> apply hNe <;> native_decide
 
 /-- The new stress probe separates fragile from robust: a Recovery outcome has
 likelihood 1/10 under fragile and 9/10 under robust. -/
