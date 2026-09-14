@@ -194,6 +194,14 @@ import PEL4.FiniteEpistemicPOMDP
 import PEL4.FiniteEpistemicPOMDPAxiomAudit
 import PEL4.BayesianBeliefStateMDP
 import PEL4.BayesianBeliefStateMDPAxiomAudit
+import PEL4.GenericBayesianNormalization
+import PEL4.GenericBayesianNormalizationAxiomAudit
+import PEL4.CanonicalEpistemicBeliefs
+import PEL4.CanonicalEpistemicBeliefsAxiomAudit
+import PEL4.NoisyEpistemicObservation
+import PEL4.NoisyEpistemicObservationAxiomAudit
+import PEL4.BayesianFilterSufficiency
+import PEL4.BayesianFilterSufficiencyAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
