@@ -1,0 +1,18 @@
+name: Gate 72 CI
+
+on:
+  push:
+    branches:
+      - research/experiment-dominance-pruning-gate72
+  workflow_dispatch:
+
+jobs:
+  gate72:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 72 experiment dominance and pruning
+        run: |
+          lake build PEL4.ExperimentDominancePruning
+          lake env lean PEL4/ExperimentDominancePruningAxiomAudit.lean
