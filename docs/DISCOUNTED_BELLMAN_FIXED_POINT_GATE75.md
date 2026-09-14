@@ -1,31 +1,35 @@
-# Gate 75: Discounted Bellman Fixed Point
+# Gate 75: Discounted Bellman Fixed-Point Witness
 
-Gate 75 isolates the infinite-horizon algebra in a minimal exact Bellman witness:
+Gate 75 tests the fixed-point idea behind discounted infinite-horizon control in a deliberately small executable model:
 
 ```text
 T(v) = 1 + v/2
 ```
 
-Lean verifies:
+Lean verifies the candidate endpoint
 
 ```text
 T(2) = 2
-T(v) = v -> v = 2
-T(x) - T(y) = (x - y)/2
 ```
 
-Value iteration from zero begins:
+and the first value-iteration approximants from zero:
 
 ```text
-0, 1, 3/2, 7/4, 15/8, ...
+0, 1, 3/2, 7/4, 15/8.
 ```
 
-and the residual to the fixed point is halved at every step.
+Their residual distances below `2` are
+
+```text
+2, 1, 1/2, 1/4, 1/8,
+```
+
+so the residual is exactly halved through the verified four-step window. Lean also checks that none of the displayed pre-limit approximants is a fixed point, whereas `2` is.
 
 ## Interpretation
 
-An infinite horizon need not mean uncontrolled epistemic drift. Discounting can turn repeated future reasoning into a stable fixed-point problem, with every Bellman update shrinking the remaining error.
+Discounting can make repeated future planning settle toward a stable target rather than keep adding equal weight forever. In this witness, each Bellman update removes half of the remaining error.
 
 ## Boundary
 
-This is the algebraic contraction core, not yet a Banach-space theorem for the full 4PEL belief-state controller.
+This is a finite executable contraction witness. It does **not** yet prove uniqueness over every rational value, convergence for arbitrary iteration count, a Banach fixed-point theorem, or a complete infinite-horizon 4PEL belief-state controller. Those are later generalization targets rather than Gate-75 results.
