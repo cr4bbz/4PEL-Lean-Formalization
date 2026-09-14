@@ -1,0 +1,14 @@
+import PEL4.AliasBreakingExperimentDesign
+
+#print axioms PEL4.gate67_statusCheap_does_not_break_alias
+#print axioms PEL4.gate67_statusPrecise_does_not_break_alias
+#print axioms PEL4.gate67_stress_probe_breaks_alias
+#print axioms PEL4.gate67_stress_probe_recovery_likelihoods
+#print axioms PEL4.gate67_unique_alias_breaker
+#print axioms PEL4.gate67_fragile_robust_identifiable_after_expansion
+#print axioms PEL4.gate67_old_precise_sensor_still_half_half
+#print axioms PEL4.gate67_stress_recovery_posterior
+#print axioms PEL4.gate67_stress_nonRecovery_posterior
+#print axioms PEL4.gate67_stress_signal_probabilities
+#print axioms PEL4.gate67_alias_breaking_choice_unique
+#print axioms PEL4.gate67_experiment_design_breaks_structural_alias
