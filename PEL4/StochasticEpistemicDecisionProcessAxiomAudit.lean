@@ -1,0 +1,8 @@
+import PEL4.StochasticEpistemicDecisionProcess
+
+#print axioms PEL4.gate50_explore_has_two_outcomes
+#print axioms PEL4.gate50_exploit_is_certain_fragile
+#print axioms PEL4.gate50_transition_kernel_normalized
+#print axioms PEL4.gate50_exploit_expected_numerator
+#print axioms PEL4.gate50_explore_expected_numerator
+#print axioms PEL4.gate50_stochastic_exploration_can_dominate
