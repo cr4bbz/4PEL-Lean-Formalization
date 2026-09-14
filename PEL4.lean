@@ -202,6 +202,14 @@ import PEL4.NoisyEpistemicObservation
 import PEL4.NoisyEpistemicObservationAxiomAudit
 import PEL4.BayesianFilterSufficiency
 import PEL4.BayesianFilterSufficiencyAxiomAudit
+import PEL4.BeliefStateBellmanControl
+import PEL4.BeliefStateBellmanControlAxiomAudit
+import PEL4.NoisyValueOfInformation
+import PEL4.NoisyValueOfInformationAxiomAudit
+import PEL4.ActiveEpistemicSensing
+import PEL4.ActiveEpistemicSensingAxiomAudit
+import PEL4.EpistemicIdentifiability
+import PEL4.EpistemicIdentifiabilityAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
