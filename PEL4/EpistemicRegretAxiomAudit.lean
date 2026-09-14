@@ -1,0 +1,11 @@
+import PEL4.EpistemicRegret
+
+#print axioms PEL4.gate52_immediate_explore_return
+#print axioms PEL4.gate52_delayed_explore_return
+#print axioms PEL4.gate52_always_exploit_return
+#print axioms PEL4.gate52_immediate_exploration_zero_regret
+#print axioms PEL4.gate52_delayed_exploration_regret_eq_three
+#print axioms PEL4.gate52_always_exploit_regret_eq_one
+#print axioms PEL4.gate52_delaying_exploration_strictly_increases_regret
+#print axioms PEL4.gate52_delayed_schedule_misses_robust_endpoint
+#print axioms PEL4.gate52_deadline_sensitive_epistemic_regret
