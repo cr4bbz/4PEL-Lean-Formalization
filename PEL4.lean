@@ -176,6 +176,16 @@ import PEL4.RationalDestabilization
 import PEL4.RationalDestabilizationAxiomAudit
 import PEL4.EpistemicExplorationExploitation
 import PEL4.EpistemicExplorationExploitationAxiomAudit
+import PEL4.FiniteEpistemicDecisionProcess
+import PEL4.FiniteEpistemicDecisionProcessAxiomAudit
+import PEL4.StochasticEpistemicDecisionProcess
+import PEL4.StochasticEpistemicDecisionProcessAxiomAudit
+import PEL4.ValueOfInformation
+import PEL4.ValueOfInformationAxiomAudit
+import PEL4.EpistemicRegret
+import PEL4.EpistemicRegretAxiomAudit
+import PEL4.EpistemicRewardAlignment
+import PEL4.EpistemicRewardAlignmentAxiomAudit
 
 -- Dynamic and product-update layer
 import PEL4.Dynamics
