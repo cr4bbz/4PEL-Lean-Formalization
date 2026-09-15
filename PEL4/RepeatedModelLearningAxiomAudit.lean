@@ -1,0 +1,9 @@
+import PEL4.RepeatedModelLearning
+
+#print axioms PEL4.gate89_two_passes_strongly_support_reliability
+#print axioms PEL4.gate89_two_failures_strongly_support_degradation
+#print axioms PEL4.gate89_mixed_evidence_posterior
+#print axioms PEL4.gate89_independent_order_agrees
+#print axioms PEL4.gate89_repeated_pass_increases_trust
+#print axioms PEL4.gate89_repeated_fail_decreases_trust
+#print axioms PEL4.gate89_repeated_model_learning
