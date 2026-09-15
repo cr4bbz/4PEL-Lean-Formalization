@@ -45,23 +45,27 @@ def gate109RepairStep (state : Gate103NestedStatus) : Gate103NestedStatus :=
   else
     { state with model := gate109RepairValue state.model }
 
+/-- Strict truth is a repair-stable coordinate. -/
+theorem gate109_T_is_classical : gate109Classical FDEValue.T := by
+  exact Or.inl rfl
+
 /-- Ideal repair always produces a classical coordinate. -/
 theorem gate109_repair_value_is_classical (value : FDEValue) :
     gate109Classical (gate109RepairValue value) := by
-  rcases value with ⟨pos, neg⟩
-  cases pos
-  all_goals cases neg
-  all_goals native_decide
+  by_cases h : gate109Classical value
+  · simpa [gate109RepairValue, h] using h
+  · simpa [gate109RepairValue, h] using gate109_T_is_classical
 
 /-- The defect rank of every nested state is bounded by two. -/
 theorem gate109_defect_count_bounded (state : Gate103NestedStatus) :
     gate109DefectCount state ≤ 2 := by
-  rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos
-  all_goals cases wneg
-  all_goals cases mpos
-  all_goals cases mneg
-  all_goals native_decide
+  by_cases hw : gate109Classical state.world
+  · by_cases hm : gate109Classical state.model
+    · simp [gate109DefectCount, hw, hm]
+    · simp [gate109DefectCount, hw, hm]
+  · by_cases hm : gate109Classical state.model
+    · simp [gate109DefectCount, hw, hm]
+    · simp [gate109DefectCount, hw, hm]
 
 /-- Whenever the state is not stable, one repair step strictly decreases the
 number of remaining nonclassical coordinates. -/
@@ -69,35 +73,41 @@ theorem gate109_unstable_step_strictly_decreases_defects
     (state : Gate103NestedStatus) :
     ¬ gate109Stable state →
       gate109DefectCount (gate109RepairStep state) < gate109DefectCount state := by
-  rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos
-  all_goals cases wneg
-  all_goals cases mpos
-  all_goals cases mneg
-  all_goals native_decide
+  intro hUnstable
+  by_cases hm : gate109Classical state.model
+  · by_cases hw : gate109Classical state.world
+    · exact False.elim (hUnstable ⟨hw, hm⟩)
+    · simp [gate109RepairStep, gate109RepairValue, gate109DefectCount,
+        hm, hw, gate109_T_is_classical]
+  · by_cases hw : gate109Classical state.world
+    · simp [gate109RepairStep, gate109RepairValue, gate109DefectCount,
+        hm, hw, gate109_T_is_classical]
+    · simp [gate109RepairStep, gate109RepairValue, gate109DefectCount,
+        hm, hw, gate109_T_is_classical]
 
 /-- Stable states are fixed points of the repair controller. -/
 theorem gate109_stable_state_is_fixed_point
     (state : Gate103NestedStatus) :
     gate109Stable state → gate109RepairStep state = state := by
-  rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos
-  all_goals cases wneg
-  all_goals cases mpos
-  all_goals cases mneg
-  all_goals native_decide
+  intro hStable
+  rcases hStable with ⟨hw, hm⟩
+  simp [gate109RepairStep, hm, hw]
 
 /-- Because there are only two coordinates and every successful repair removes
 one defect, two repair steps suffice from every one of the sixteen nested states. -/
 theorem gate109_two_steps_reach_stable
     (state : Gate103NestedStatus) :
     gate109Stable (gate109RepairStep (gate109RepairStep state)) := by
-  rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos
-  all_goals cases wneg
-  all_goals cases mpos
-  all_goals cases mneg
-  all_goals native_decide
+  by_cases hm : gate109Classical state.model
+  · by_cases hw : gate109Classical state.world
+    · simpa [gate109RepairStep, hm, hw, gate109Stable] using And.intro hw hm
+    · simp [gate109RepairStep, gate109RepairValue, gate109Stable,
+        hm, hw, gate109_T_is_classical]
+  · by_cases hw : gate109Classical state.world
+    · simp [gate109RepairStep, gate109RepairValue, gate109Stable,
+        hm, hw, gate109_T_is_classical]
+    · simp [gate109RepairStep, gate109RepairValue, gate109Stable,
+        hm, hw, gate109_T_is_classical]
 
 /-- The explicit Gate-103 worst case with a model conflict is repaired before the
 already-classical world coordinate is touched. -/
