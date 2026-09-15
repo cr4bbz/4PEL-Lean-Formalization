@@ -1,0 +1,7 @@
+import PEL4.CalibratedWorldInference
+
+#print axioms PEL4.gate92_joint_posterior
+#print axioms PEL4.gate92_world_hot_mass
+#print axioms PEL4.gate92_model_reliable_mass_preserved
+#print axioms PEL4.gate92_calibration_sharpens_world_inference
+#print axioms PEL4.gate92_calibrated_world_inference
