@@ -1,0 +1,18 @@
+name: Gate 86 CI
+
+on:
+  push:
+    branches:
+      - research/bayesian-model-belief-gate86
+  workflow_dispatch:
+
+jobs:
+  gate86:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 86 Bayesian model belief
+        run: |
+          lake build PEL4.BayesianModelBelief
+          lake env lean PEL4/BayesianModelBeliefAxiomAudit.lean
