@@ -1,0 +1,7 @@
+import PEL4.CostOfIdentifiability
+
+#print axioms PEL4.gate112_identifiability_threshold
+#print axioms PEL4.gate112_low_cost_buys_identifiability
+#print axioms PEL4.gate112_high_cost_declines_identifiability
+#print axioms PEL4.gate112_priced_experiment_is_truth_guaranteeing
+#print axioms PEL4.gate112_cost_of_identifiability
