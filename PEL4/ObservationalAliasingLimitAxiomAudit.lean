@@ -1,0 +1,9 @@
+import PEL4.ObservationalAliasingLimit
+
+#print axioms PEL4.gate110_worlds_are_observationally_aliased
+#print axioms PEL4.gate110_aliased_worlds_require_different_targets
+#print axioms PEL4.gate110_no_evidence_restricted_policy_is_uniformly_correct
+#print axioms PEL4.gate110_every_policy_fails_some_aliased_world
+#print axioms PEL4.gate110_same_visible_nested_state
+#print axioms PEL4.gate110_gate109_liveness_does_not_imply_truth
+#print axioms PEL4.gate110_observational_aliasing_limit
