@@ -1,0 +1,22 @@
+import PEL4.CalibrationCostPhase
+import PEL4.BayesianRobustControlComparison
+import PEL4.CalibrationRegret
+import PEL4.OpenModelClass
+import PEL4.AnomalyDrivenModelExpansion
+import PEL4.UnknownUnknowns
+import PEL4.ContradictoryModelEvidence
+import PEL4.NestedFourValuedEpistemics
+import PEL4.RationalEpistemicSelfTrust
+
+#print axioms PEL4.gate93_calibration_cost_phase_transition
+#print axioms PEL4.gate94_bayesian_robust_policy_boundary
+#print axioms PEL4.gate95_policy_self_corrects
+#print axioms PEL4.gate96_calibration_eliminates_realized_regret
+#print axioms PEL4.gate97_open_model_class_witness
+#print axioms PEL4.gate98_normalized_but_misspecified
+#print axioms PEL4.gate99_surprise_switches_epistemic_regime
+#print axioms PEL4.gate100_anomaly_driven_model_expansion
+#print axioms PEL4.gate101_unknown_unknowns_bridge
+#print axioms PEL4.gate102_unknown_and_conflict_are_distinct
+#print axioms PEL4.gate103_nested_four_valued_epistemics
+#print axioms PEL4.gate104_rational_epistemic_self_trust
