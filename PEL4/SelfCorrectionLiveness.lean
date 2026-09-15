@@ -49,13 +49,19 @@ def gate109RepairStep (state : Gate103NestedStatus) : Gate103NestedStatus :=
 theorem gate109_repair_value_is_classical (value : FDEValue) :
     gate109Classical (gate109RepairValue value) := by
   rcases value with ⟨pos, neg⟩
-  cases pos <;> cases neg <;> native_decide
+  cases pos
+  all_goals cases neg
+  all_goals native_decide
 
 /-- The defect rank of every nested state is bounded by two. -/
 theorem gate109_defect_count_bounded (state : Gate103NestedStatus) :
     gate109DefectCount state ≤ 2 := by
   rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos <;> cases wneg <;> cases mpos <;> cases mneg <;> native_decide
+  cases wpos
+  all_goals cases wneg
+  all_goals cases mpos
+  all_goals cases mneg
+  all_goals native_decide
 
 /-- Whenever the state is not stable, one repair step strictly decreases the
 number of remaining nonclassical coordinates. -/
@@ -64,14 +70,22 @@ theorem gate109_unstable_step_strictly_decreases_defects
     ¬ gate109Stable state →
       gate109DefectCount (gate109RepairStep state) < gate109DefectCount state := by
   rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos <;> cases wneg <;> cases mpos <;> cases mneg <;> native_decide
+  cases wpos
+  all_goals cases wneg
+  all_goals cases mpos
+  all_goals cases mneg
+  all_goals native_decide
 
 /-- Stable states are fixed points of the repair controller. -/
 theorem gate109_stable_state_is_fixed_point
     (state : Gate103NestedStatus) :
     gate109Stable state → gate109RepairStep state = state := by
   rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos <;> cases wneg <;> cases mpos <;> cases mneg <;> native_decide
+  cases wpos
+  all_goals cases wneg
+  all_goals cases mpos
+  all_goals cases mneg
+  all_goals native_decide
 
 /-- Because there are only two coordinates and every successful repair removes
 one defect, two repair steps suffice from every one of the sixteen nested states. -/
@@ -79,7 +93,11 @@ theorem gate109_two_steps_reach_stable
     (state : Gate103NestedStatus) :
     gate109Stable (gate109RepairStep (gate109RepairStep state)) := by
   rcases state with ⟨⟨wpos, wneg⟩, ⟨mpos, mneg⟩⟩
-  cases wpos <;> cases wneg <;> cases mpos <;> cases mneg <;> native_decide
+  cases wpos
+  all_goals cases wneg
+  all_goals cases mpos
+  all_goals cases mneg
+  all_goals native_decide
 
 /-- The explicit Gate-103 worst case with a model conflict is repaired before the
 already-classical world coordinate is touched. -/
