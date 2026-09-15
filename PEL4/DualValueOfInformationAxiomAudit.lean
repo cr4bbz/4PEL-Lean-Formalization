@@ -1,0 +1,6 @@
+import PEL4.DualValueOfInformation
+
+#print axioms PEL4.gate91_prior_uncertainty
+#print axioms PEL4.gate91_world_probe_profile
+#print axioms PEL4.gate91_calibration_profile
+#print axioms PEL4.gate91_less_world_information_can_have_more_total_value
