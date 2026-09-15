@@ -1,0 +1,8 @@
+import PEL4.CalibrationCostPhase
+
+#print axioms PEL4.gate93_boundary_is_indifference
+#print axioms PEL4.gate93_gate92_cost_is_calibration_phase
+#print axioms PEL4.gate93_below_boundary_calibrates
+#print axioms PEL4.gate93_at_boundary_senses_world
+#print axioms PEL4.gate93_above_boundary_senses_world
+#print axioms PEL4.gate93_calibration_cost_phase_transition
