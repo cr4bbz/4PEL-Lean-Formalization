@@ -1,0 +1,7 @@
+import PEL4.ModelMisspecification
+
+#print axioms PEL4.gate98_discrepancies
+#print axioms PEL4.gate98_no_known_model_fits
+#print axioms PEL4.gate98_forced_posterior_normalized
+#print axioms PEL4.gate98_every_known_model_exceeds_tolerance
+#print axioms PEL4.gate98_normalized_but_misspecified
