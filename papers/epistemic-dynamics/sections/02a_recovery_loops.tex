@@ -1,0 +1,143 @@
+\section{Recovery after Semantic Turbulence}
+
+The preceding results create an apparent tension. The framework admits path dependence, semantic feedback, hysteresis, and regeneration. Why should Recovery ever be permanent?
+
+\Gate{41} resolves the tension by separating the past from the tail of a realized trajectory.
+
+\subsection{A cutoff theorem}
+
+Consider a regenerative Recovery system with status function, natural-valued potential $\Phi$, regeneration function $\rho$, and a realized infinite trajectory $s_0,s_1,\ldots$. Fix a cutoff time $K$. Assume only that the following three conditions hold from $K$ onward:
+
+\begin{enumerate}
+  \item \textbf{Regeneration ceases}: every realized tail transition has $\rho=0$.
+  \item \textbf{Recovery is absorbing on the realized tail}: once Recovery is reached, the next realized state is also recovered.
+  \item \textbf{Non-Recovery consumes potential}: each realized transition beginning in Non-Recovery strictly lowers $\Phi$.
+\end{enumerate}
+
+No corresponding restrictions are imposed on the prefix before $K$. It may contain Recovery loss, Recovery restoration, semantic feedback, and resource regeneration.
+
+\begin{theorem}[Recovery after semantic feedback]
+Under the three tail conditions above, there exists $N$ such that
+\[
+K\leq N\leq K+\Phi(s_K)
+\]
+and
+\[
+\forall n\geq N:\quad \Recovery(s_n).
+\]
+Equivalently,
+\[
+\boxed{
+T_{\mathrm{permanent\ Recovery}}
+\leq K+\Phi(s_K).
+}
+\]
+\end{theorem}
+
+The proof compiles the realized tail into a time-indexed ordinary descent system. Because tail regeneration is zero, the regenerative budget collapses to the earlier descent inequality. The two remaining assumptions become exactly the Recovery-attractor contract. The earlier attractor theorem can therefore be reused rather than reproved.
+
+This proof architecture matters conceptually. The theorem is path-local: it does not require every transition admitted by the ambient update system to be attractive. Only the realized future after $K$ must enter the dissipative regime.
+
+\subsection{Sharpness}
+
+The formalization contains a four-state witness:
+\[
+\begin{aligned}
+\textsf{start}(\Recovery,\Phi=1)
+&\to \textsf{fractured}(\NonRecovery,\Phi=1)\\
+&\to \textsf{cutoff}(\NonRecovery,\Phi=1)\\
+&\to \textsf{recovered}(\Recovery,\Phi=0).
+\end{aligned}
+\]
+The first transition regenerates one resource unit and finances an early loss of Recovery. The cutoff is $K=2$. Permanent Recovery begins at time $3$, exactly saturating the bound:
+\[
+3=2+1=K+\Phi(s_K).
+\]
+The numerical bound is therefore sharp for the verified witness.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  state/.style={draw=black!55, rounded corners=2pt, fill=boxgray, align=center,
+    inner xsep=4pt, inner ysep=4.5pt, minimum width=26mm, minimum height=17mm,
+    font=\footnotesize},
+  arr/.style={-{Latex[length=2.2mm]}, semithick, draw=black!65},
+  note/.style={font=\footnotesize, align=center, fill=white, inner sep=1.5pt},
+  node distance=9mm
+]
+\node[state] (s0) {$s_0$\\[-1pt]\textsf{start}\\[-1pt]$\Recovery$, $\Phi=1$};
+\node[state, right=of s0] (s1) {$s_1$\\[-1pt]\textsf{fractured}\\[-1pt]$\NonRecovery$, $\Phi=1$};
+\node[state, right=of s1] (sk) {$s_K$\\[-1pt]\textsf{cutoff}\\[-1pt]$\NonRecovery$, $\Phi=1$};
+\node[state, right=of sk] (sn) {$s_N$\\[-1pt]\textsf{recovered}\\[-1pt]$\Recovery$, $\Phi=0$};
+
+\draw[arr] (s0) -- (s1);
+\draw[arr] (s1) -- (sk);
+\draw[arr] (sk) -- (sn);
+
+\node[note] at ($(s0)!0.5!(s1)+(0,9mm)$) {regeneration $=1$};
+\node[note] at ($(s1)!0.5!(sk)+(0,9mm)$) {turbulent prefix};
+\node[note] at ($(sk)!0.5!(sn)+(0,9mm)$) {$\leq \Phi(s_K)$ further steps};
+
+\coordinate (cut) at ($(s1)!0.5!(sk)$);
+\draw[densely dashed, black!55] ($(cut)+(0,7mm)$) -- ($(cut)+(0,-12mm)$);
+\node[note] at ($(cut)+(0,14mm)$) {cutoff $K$};
+
+\node[font=\scriptsize, text=softgray, align=center] at ($(s0)!0.5!(s1)+(0,-12mm)$)
+  {early semantic feedback\\and regeneration allowed};
+\node[font=\scriptsize, text=softgray, align=center] at ($(sk)!0.5!(sn)+(0,-12mm)$)
+  {zero regeneration, dissipation,\\Recovery absorption};
+\end{tikzpicture}
+\caption{Gate 41 restarts the epistemic accounting clock at the cutoff. The prefix may be hysteretic and regenerative; the tail must be dissipative. In the sharp witness, $K=2$ and permanent Recovery occurs at $N=3=K+\Phi(s_K)$.}
+\label{fig:cutoff}
+\end{figure}
+
+
+\section{Closed Epistemic Loops and Discrete Curvature}
+
+The Gate-41 cutoff result establishes that a turbulent past can be followed by a dissipative Recovery tail. Gates 42 and 43 ask a different question: what can remain when a control sequence returns syntactically to where it started?
+
+\subsection{Recovery closure without full-state closure}
+
+An \emph{evidence-control loop} first enters an anchor formula $P$, performs an excursion through $Q$, and returns to the same syntactic anchor $P$. In the verified witness,
+\[
+P=\Bel p,
+\qquad
+Q=e.
+\]
+The observable Recovery trajectory is
+\[
+\Recovery\;\longrightarrow\;\NonRecovery\;\longrightarrow\;\Recovery.
+\]
+Thus Recovery closes. The full epistemic model does not. A fixed atomic evidence probe $E=\{a,b\}$ has mass
+\[
+\mu_{\mathrm{anchor}}(E)=\frac45,
+\qquad
+\mu_{\mathrm{return}}(E)=1,
+\]
+so the two anchor models are unequal.
+
+\begin{theorem}[Control-loop displacement, Gate 42]
+There exists a finite 4PEL evidence-control loop that returns to the same syntactic control anchor and the same Recovery status while failing to return to the same full epistemic model.
+\end{theorem}
+
+The result is a stronger form of hysteresis than a single order-sensitive pair. The memory of the loop is stored in the displaced present model, not in an additional history register. This boundary is exact: if the loop returns to the identical full model, Gate 39 implies that every common admissible future schedule subsequently coalesces.
+
+\subsection{Noncommuting loop composition}
+
+Gate 43 composes two anchored excursions in opposite orders. Let $A$ be a neutral anchor in the concrete witness, with excursions $P=\Bel p$ and $Q=e$. The two schedules are schematically
+\[
+A\to P\to A\to Q\to A
+\qquad\text{and}\qquad
+A\to Q\to A\to P\to A.
+\]
+Their endpoints differ. Formally this yields a nonzero loop commutator,
+\[
+L_P\circ L_Q \neq L_Q\circ L_P,
+\]
+in the sense of unequal full epistemic endpoints.
+
+\begin{theorem}[Discrete epistemic curvature witness, Gate 43]
+There exists a finite anchored 4PEL loop pair whose opposite compositions are individually deterministic but terminate in different full epistemic models.
+\end{theorem}
+
+The geometric terminology is intentionally limited. This is a discrete noncommuting loop witness. No differentiable manifold, connection, curvature tensor, or holonomy group is claimed. Its significance is algebraic: semantic feedback can make the order of closed control excursions observable in the final epistemic state.
