@@ -50,8 +50,17 @@ theorem gate112_identifiability_threshold (cost : Rat) :
   rw [Rat.lt_sub_right_iff_add_lt]
   have hsum : (1 : Rat) / 2 + (1 : Rat) / 2 = 1 := by
     native_decide
-  rw [← hsum]
-  exact Rat.add_lt_add_left
+  constructor
+  · intro h
+    have h' :
+        (1 : Rat) / 2 + cost < (1 : Rat) / 2 + (1 : Rat) / 2 := by
+      simpa [hsum] using h
+    exact (Rat.add_lt_add_left).mp h'
+  · intro h
+    have h' :
+        (1 : Rat) / 2 + cost < (1 : Rat) / 2 + (1 : Rat) / 2 :=
+      (Rat.add_lt_add_left).mpr h
+    simpa [hsum] using h'
 
 /-- A cheap separating diagnostic is worth buying. -/
 def gate112LowCost : Rat := (1 : Rat) / 4
