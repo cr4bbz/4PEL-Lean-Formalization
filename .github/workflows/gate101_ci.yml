@@ -1,0 +1,18 @@
+name: Gate 101 CI
+
+on:
+  push:
+    branches:
+      - research/unknown-unknowns-gate101
+  workflow_dispatch:
+
+jobs:
+  gate101:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 101 unknown unknowns
+        run: |
+          lake build PEL4.UnknownUnknowns
+          lake env lean PEL4/UnknownUnknownsAxiomAudit.lean
