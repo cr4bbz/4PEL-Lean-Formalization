@@ -1,0 +1,18 @@
+name: Gate 109 CI
+
+on:
+  push:
+    branches:
+      - research/self-correction-liveness-gate109
+  workflow_dispatch:
+
+jobs:
+  gate109:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 109 self-correction liveness
+        run: |
+          lake build PEL4.SelfCorrectionLiveness
+          lake env lean PEL4/SelfCorrectionLivenessAxiomAudit.lean
