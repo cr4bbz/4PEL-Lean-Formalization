@@ -1,0 +1,7 @@
+import PEL4.AnomalyDrivenModelExpansion
+
+#print axioms PEL4.gate100_routine_keeps_closed_class
+#print axioms PEL4.gate100_anomaly_expands_model_space
+#print axioms PEL4.gate100_action_tracks_meta_mode
+#print axioms PEL4.gate100_expansion_is_surprise_triggered
+#print axioms PEL4.gate100_anomaly_driven_model_expansion
