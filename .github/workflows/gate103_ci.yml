@@ -1,0 +1,18 @@
+name: Gate 103 CI
+
+on:
+  push:
+    branches:
+      - research/nested-four-valued-epistemics-gate103
+  workflow_dispatch:
+
+jobs:
+  gate103:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 103 nested four-valued epistemics
+        run: |
+          lake build PEL4.NestedFourValuedEpistemics
+          lake env lean PEL4/NestedFourValuedEpistemicsAxiomAudit.lean
