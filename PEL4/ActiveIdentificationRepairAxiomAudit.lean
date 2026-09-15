@@ -1,0 +1,11 @@
+import PEL4.ActiveIdentificationRepair
+
+#print axioms PEL4.gate111_passive_preserves_alias
+#print axioms PEL4.gate111_diagnostic_breaks_alias
+#print axioms PEL4.gate111_passive_not_truth_guaranteeing
+#print axioms PEL4.gate111_diagnostic_truth_guaranteeing
+#print axioms PEL4.gate111_truth_guarantee_iff_disambiguate
+#print axioms PEL4.gate111_repaired_state_truth_aligned
+#print axioms PEL4.gate111_repaired_state_stable
+#print axioms PEL4.gate111_active_information_changes_repair_possibility
+#print axioms PEL4.gate111_active_identification_restores_truth_guaranteeing_repair
