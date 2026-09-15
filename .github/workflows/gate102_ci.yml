@@ -1,0 +1,18 @@
+name: Gate 102 CI
+
+on:
+  push:
+    branches:
+      - research/contradictory-model-evidence-gate102
+  workflow_dispatch:
+
+jobs:
+  gate102:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 102 contradictory model evidence
+        run: |
+          lake build PEL4.ContradictoryModelEvidence
+          lake env lean PEL4/ContradictoryModelEvidenceAxiomAudit.lean
