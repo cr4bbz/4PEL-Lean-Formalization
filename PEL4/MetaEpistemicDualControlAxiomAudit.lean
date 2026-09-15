@@ -1,0 +1,8 @@
+import PEL4.MetaEpistemicDualControl
+
+#print axioms PEL4.gate93_sense_now_value
+#print axioms PEL4.gate93_calibrated_gross_value
+#print axioms PEL4.gate93_calibrated_net_value
+#print axioms PEL4.gate93_calibration_beats_immediate_sensing
+#print axioms PEL4.gate93_policy_calibrates_first
+#print axioms PEL4.gate93_meta_epistemic_dual_control
