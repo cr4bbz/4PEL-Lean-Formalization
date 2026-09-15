@@ -1,0 +1,18 @@
+name: Gate 97 CI
+
+on:
+  push:
+    branches:
+      - research/open-model-class-gate97
+  workflow_dispatch:
+
+jobs:
+  gate97:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 97 open model class
+        run: |
+          lake build PEL4.OpenModelClass
+          lake env lean PEL4/OpenModelClassAxiomAudit.lean
