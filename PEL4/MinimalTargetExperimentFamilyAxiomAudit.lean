@@ -1,0 +1,11 @@
+import PEL4.MinimalTargetExperimentFamily
+
+#print axioms PEL4.gate115_pair_decoder_truth_guaranteeing
+#print axioms PEL4.gate115_pair_target_separating
+#print axioms PEL4.gate115_first_not_target_separating
+#print axioms PEL4.gate115_second_not_target_separating
+#print axioms PEL4.gate115_empty_not_target_separating
+#print axioms PEL4.gate115_pair_not_world_identifying
+#print axioms PEL4.gate115_remaining_alias_is_target_harmless
+#print axioms PEL4.gate115_decoder_exists_iff_target_separating
+#print axioms PEL4.gate115_minimal_target_experiment_family
