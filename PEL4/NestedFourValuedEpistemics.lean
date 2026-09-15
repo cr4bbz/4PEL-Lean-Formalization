@@ -85,9 +85,24 @@ theorem gate103_coordinates_are_independent_witness :
 /-- Main Gate-103 theorem: first-order and second-order four-valued status form
 separate axes rather than one collapsed epistemic label. -/
 theorem gate103_nested_four_valued_epistemics :
-    gate103_same_world_three_model_statuses ∧
-    gate103_same_model_four_world_statuses ∧
-    gate103_coordinates_are_independent_witness := by
+    (gate103TrustedTruth.world = FDEValue.T ∧
+      gate103TruthWithModelGap.world = FDEValue.T ∧
+      gate103TruthWithModelConflict.world = FDEValue.T ∧
+      gate103TrustedTruth.model = FDEValue.T ∧
+      gate103TruthWithModelGap.model = FDEValue.N ∧
+      gate103TruthWithModelConflict.model = FDEValue.B) ∧
+    (gate103TrustedTruth.model = FDEValue.T ∧
+      gate103ResolvedFalseTrustedModel.model = FDEValue.T ∧
+      gate103WorldConflictTrustedModel.model = FDEValue.T ∧
+      gate103WorldGapTrustedModel.model = FDEValue.T ∧
+      gate103TrustedTruth.world = FDEValue.T ∧
+      gate103ResolvedFalseTrustedModel.world = FDEValue.F ∧
+      gate103WorldConflictTrustedModel.world = FDEValue.B ∧
+      gate103WorldGapTrustedModel.world = FDEValue.N) ∧
+    (gate103TrustedTruth.world = gate103TruthWithModelGap.world ∧
+      gate103TrustedTruth.model ≠ gate103TruthWithModelGap.model ∧
+      gate103TrustedTruth.model = gate103ResolvedFalseTrustedModel.model ∧
+      gate103TrustedTruth.world ≠ gate103ResolvedFalseTrustedModel.world) := by
   exact ⟨gate103_same_world_three_model_statuses,
     gate103_same_model_four_world_statuses,
     gate103_coordinates_are_independent_witness⟩
