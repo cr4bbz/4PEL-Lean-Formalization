@@ -77,6 +77,9 @@ theorem gate111_passive_not_truth_guaranteeing :
   intro h
   have hPositive := h Gate110HiddenWorld.positive
   simp [gate111Observe, gate111Decode, gate110Target] at hPositive
+  have hNe : FDEValue.N ≠ FDEValue.T := by
+    native_decide
+  exact hNe hPositive
 
 /-- One active diagnostic is sufficient for exact identification in this finite
 witness. -/
@@ -122,7 +125,13 @@ theorem gate111_repaired_state_truth_aligned
 theorem gate111_repaired_state_stable
     (world : Gate110HiddenWorld) :
     gate109Stable (gate111RepairedState world) := by
-  cases world <;> native_decide
+  cases world with
+  | positive =>
+      change gate109Classical FDEValue.T ∧ gate109Classical FDEValue.T
+      exact ⟨Or.inl rfl, Or.inl rfl⟩
+  | negative =>
+      change gate109Classical FDEValue.F ∧ gate109Classical FDEValue.T
+      exact ⟨Or.inr rfl, Or.inl rfl⟩
 
 /-- Gate 110's impossibility and Gate 111's recovery coexist without
 contradiction because they quantify over different observation channels. Passive
