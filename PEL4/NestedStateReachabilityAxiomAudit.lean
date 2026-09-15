@@ -1,0 +1,12 @@
+import PEL4.NestedStateReachability
+
+#print axioms PEL4.gate105_world_update_preserves_model
+#print axioms PEL4.gate105_model_update_preserves_world
+#print axioms PEL4.gate105_two_step_target
+#print axioms PEL4.gate105_sixteen_canonical_states
+#print axioms PEL4.gate105_canonical_states_are_distinct
+#print axioms PEL4.gate105_any_state_reaches_any_state
+#print axioms PEL4.gate105_all_canonical_states_reachable_from_trusted_truth
+#print axioms PEL4.gate105_model_gap_has_repair_path
+#print axioms PEL4.gate105_model_conflict_has_repair_path
+#print axioms PEL4.gate105_nested_state_reachability
