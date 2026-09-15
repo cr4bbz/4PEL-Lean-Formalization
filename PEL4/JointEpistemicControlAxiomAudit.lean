@@ -1,0 +1,10 @@
+import PEL4.JointEpistemicControl
+
+#print axioms PEL4.gate90_beliefs_normalized
+#print axioms PEL4.gate90_same_world_marginal
+#print axioms PEL4.gate90_different_model_marginals
+#print axioms PEL4.gate90_high_trust_values
+#print axioms PEL4.gate90_low_trust_values
+#print axioms PEL4.gate90_high_trust_chooses_fragile
+#print axioms PEL4.gate90_low_trust_chooses_safe
+#print axioms PEL4.gate90_same_world_different_self_trust_changes_control
