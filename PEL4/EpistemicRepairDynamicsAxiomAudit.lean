@@ -1,0 +1,11 @@
+import PEL4.EpistemicRepairDynamics
+
+#print axioms PEL4.gate108_gap_tension
+#print axioms PEL4.gate108_gap_repair_tension
+#print axioms PEL4.gate108_gap_repair_strictly_decreases_tension
+#print axioms PEL4.gate108_conflict_tension
+#print axioms PEL4.gate108_conflict_repair_tension
+#print axioms PEL4.gate108_conflict_repair_strictly_decreases_tension
+#print axioms PEL4.gate108_repairs_start_from_distinct_nonclassical_statuses
+#print axioms PEL4.gate108_repairs_end_classically
+#print axioms PEL4.gate108_epistemic_repair_dynamics
