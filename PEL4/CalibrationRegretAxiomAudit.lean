@@ -1,0 +1,7 @@
+import PEL4.CalibrationRegret
+
+#print axioms PEL4.gate96_true_best_value
+#print axioms PEL4.gate96_precalibration_regret
+#print axioms PEL4.gate96_postcalibration_regret_zero
+#print axioms PEL4.gate96_calibration_strictly_reduces_regret
+#print axioms PEL4.gate96_calibration_eliminates_realized_regret
