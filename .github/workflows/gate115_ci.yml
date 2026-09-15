@@ -1,0 +1,18 @@
+name: Gate 115 CI
+
+on:
+  push:
+    branches:
+      - research/minimal-target-experiment-family-gate115
+  workflow_dispatch:
+
+jobs:
+  gate115:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 115 minimal target experiment family
+        run: |
+          lake build PEL4.MinimalTargetExperimentFamily
+          lake env lean PEL4/MinimalTargetExperimentFamilyAxiomAudit.lean
