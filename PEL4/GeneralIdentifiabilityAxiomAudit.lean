@@ -1,0 +1,8 @@
+import PEL4.GeneralIdentifiability
+
+#print axioms PEL4.gate114_decoder_implies_fiber_consistent
+#print axioms PEL4.gate114_constructed_decoder_truth_guaranteeing
+#print axioms PEL4.gate114_truth_guaranteeing_decoder_iff_fiber_consistent
+#print axioms PEL4.gate114_gate110_fails_fiber_consistency
+#print axioms PEL4.gate114_gate111_diagnostic_is_fiber_consistent
+#print axioms PEL4.gate114_gates110_111_are_instances
