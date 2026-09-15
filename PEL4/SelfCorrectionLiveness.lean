@@ -21,6 +21,12 @@ that every requested repair is informationally possible.
 def gate109Classical (value : FDEValue) : Prop :=
   value = FDEValue.T ∨ value = FDEValue.F
 
+/-- `gate109Classical` is decidable because `FDEValue` has decidable equality. -/
+instance gate109ClassicalDecidable (value : FDEValue) :
+    Decidable (gate109Classical value) := by
+  unfold gate109Classical
+  infer_instance
+
 /-- Ideal successful repair of one four-valued coordinate. -/
 def gate109RepairValue (value : FDEValue) : FDEValue :=
   if gate109Classical value then value else FDEValue.T
