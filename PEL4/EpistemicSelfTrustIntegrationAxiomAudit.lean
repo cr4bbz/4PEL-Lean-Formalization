@@ -17,6 +17,6 @@ import PEL4.RationalEpistemicSelfTrust
 #print axioms PEL4.gate99_surprise_switches_epistemic_regime
 #print axioms PEL4.gate100_anomaly_driven_model_expansion
 #print axioms PEL4.gate101_unknown_unknowns_bridge
-#print axioms PEL4.gate102_unknown_and_conflict_are_distinct
+#print axioms PEL4.gate102_unknownness_is_not_contradiction
 #print axioms PEL4.gate103_nested_four_valued_epistemics
 #print axioms PEL4.gate104_rational_epistemic_self_trust
