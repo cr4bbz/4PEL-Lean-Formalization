@@ -1,0 +1,18 @@
+name: Gate 93 CI
+
+on:
+  push:
+    branches:
+      - research/calibration-cost-phase-gate93
+  workflow_dispatch:
+
+jobs:
+  gate93:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 93 calibration cost phase
+        run: |
+          lake build PEL4.CalibrationCostPhase
+          lake env lean PEL4/CalibrationCostPhaseAxiomAudit.lean
