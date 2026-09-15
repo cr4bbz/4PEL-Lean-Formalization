@@ -55,8 +55,9 @@ noncomputable def gate114Decoder
     [Inhabited Verdict]
     (observe : World → Observation)
     (target : World → Verdict)
-    (_hFiber : Gate114FiberConsistent observe target) : Observation → Verdict :=
-  fun observation =>
+    (_hFiber : Gate114FiberConsistent observe target) : Observation → Verdict := by
+  classical
+  exact fun observation =>
     if hExists : ∃ world : World, observe world = observation then
       target (Classical.choose hExists)
     else
@@ -71,6 +72,7 @@ theorem gate114_constructed_decoder_truth_guaranteeing
     (hFiber : Gate114FiberConsistent observe target) :
     Gate114TruthGuaranteeing observe target
       (gate114Decoder observe target hFiber) := by
+  classical
   intro world
   unfold gate114Decoder
   have hExists : ∃ candidate : World, observe candidate = observe world :=
