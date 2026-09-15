@@ -1,0 +1,10 @@
+import PEL4.CostSensitiveSelfTrust
+
+#print axioms PEL4.gate106_world_sensing_beats_acting_now
+#print axioms PEL4.gate106_calibration_threshold
+#print axioms PEL4.gate106_calibration_vs_act_threshold
+#print axioms PEL4.gate106_low_cost_calibrates
+#print axioms PEL4.gate106_high_cost_senses_world
+#print axioms PEL4.gate106_status_alone_does_not_fix_action
+#print axioms PEL4.gate106_cost_crosses_policy_boundary
+#print axioms PEL4.gate106_cost_sensitive_self_trust
