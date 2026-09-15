@@ -1,0 +1,7 @@
+import PEL4.NestedFourValuedEpistemics
+
+#print axioms PEL4.gate103_trusted_truth_is_TT
+#print axioms PEL4.gate103_same_world_three_model_statuses
+#print axioms PEL4.gate103_same_model_four_world_statuses
+#print axioms PEL4.gate103_coordinates_are_independent_witness
+#print axioms PEL4.gate103_nested_four_valued_epistemics
