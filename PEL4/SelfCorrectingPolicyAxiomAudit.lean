@@ -1,0 +1,10 @@
+import PEL4.SelfCorrectingPolicy
+
+#print axioms PEL4.gate95_initial_belief_normalized
+#print axioms PEL4.gate95_initial_policy_is_fragile
+#print axioms PEL4.gate95_fragile_is_wrong_under_true_degraded_model
+#print axioms PEL4.gate95_fail_evidence
+#print axioms PEL4.gate95_corrected_posterior
+#print axioms PEL4.gate95_corrected_belief_normalized
+#print axioms PEL4.gate95_corrected_policy_is_safe
+#print axioms PEL4.gate95_policy_self_corrects
