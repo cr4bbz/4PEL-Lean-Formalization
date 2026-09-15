@@ -44,7 +44,11 @@ theorem gate106_calibration_threshold (cost : Rat) :
   unfold gate106CalibrationNetValue
   rw [gate92_calibration_gross_value]
   unfold gate92WorldSenseNetValue
-  constructor <;> intro h <;> linarith
+  rw [Rat.lt_sub_right_iff_add_lt]
+  have hsum : (31 : Rat) / 50 + (13 : Rat) / 200 = (137 : Rat) / 200 := by
+    native_decide
+  rw [← hsum]
+  exact Rat.add_lt_add_left
 
 /-- Against acting immediately, the corresponding break-even cost is `17/200`.
 The tighter `13/200` threshold therefore comes from the availability of world
@@ -54,7 +58,11 @@ theorem gate106_calibration_vs_act_threshold (cost : Rat) :
       cost < (17 : Rat) / 200 := by
   unfold gate106CalibrationNetValue
   rw [gate92_calibration_gross_value, gate92_act_now_value]
-  constructor <;> intro h <;> linarith
+  rw [Rat.lt_sub_right_iff_add_lt]
+  have hsum : (3 : Rat) / 5 + (17 : Rat) / 200 = (137 : Rat) / 200 := by
+    native_decide
+  rw [← hsum]
+  exact Rat.add_lt_add_left
 
 /-- The original Gate-92 calibration cost lies below the derived threshold. -/
 def gate106LowCalibrationCost : Rat := (1 : Rat) / 20
