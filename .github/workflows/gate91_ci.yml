@@ -1,0 +1,18 @@
+name: Gate 91 CI
+
+on:
+  push:
+    branches:
+      - research/model-calibration-orthogonality-gate91
+  workflow_dispatch:
+
+jobs:
+  gate91:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 91 calibration orthogonality
+        run: |
+          lake build PEL4.ModelCalibrationOrthogonality
+          lake env lean PEL4/ModelCalibrationOrthogonalityAxiomAudit.lean
