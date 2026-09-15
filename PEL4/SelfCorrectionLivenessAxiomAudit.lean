@@ -1,0 +1,10 @@
+import PEL4.SelfCorrectionLiveness
+
+#print axioms PEL4.gate109_repair_value_is_classical
+#print axioms PEL4.gate109_defect_count_bounded
+#print axioms PEL4.gate109_unstable_step_strictly_decreases_defects
+#print axioms PEL4.gate109_stable_state_is_fixed_point
+#print axioms PEL4.gate109_two_steps_reach_stable
+#print axioms PEL4.gate109_model_conflict_repairs_first
+#print axioms PEL4.gate109_world_gap_repairs_when_model_stable
+#print axioms PEL4.gate109_self_correction_liveness
