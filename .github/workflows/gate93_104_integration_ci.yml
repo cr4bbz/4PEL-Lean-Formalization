@@ -1,0 +1,26 @@
+name: Gate 93-104 Integration CI
+
+on:
+  push:
+    branches:
+      - research/epistemic-self-trust-integration-gate104
+  workflow_dispatch:
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build integrated epistemic self-trust block
+        run: |
+          lake build PEL4.CalibrationCostPhase
+          lake build PEL4.BayesianRobustControlComparison
+          lake build PEL4.CalibrationRegret
+          lake build PEL4.OpenModelClass
+          lake build PEL4.AnomalyDrivenModelExpansion
+          lake build PEL4.UnknownUnknowns
+          lake build PEL4.ContradictoryModelEvidence
+          lake build PEL4.NestedFourValuedEpistemics
+          lake build PEL4.RationalEpistemicSelfTrust
+          lake env lean PEL4/EpistemicSelfTrustIntegrationAxiomAudit.lean
