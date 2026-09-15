@@ -1,0 +1,11 @@
+import PEL4.RationalEpistemicSelfTrust
+
+#print axioms PEL4.gate104_trusted_truth_acts_positive
+#print axioms PEL4.gate104_trusted_false_acts_negative
+#print axioms PEL4.gate104_model_gap_calibrates_first
+#print axioms PEL4.gate104_model_conflict_reconciles_first
+#print axioms PEL4.gate104_world_gap_senses_world
+#print axioms PEL4.gate104_world_conflict_senses_world
+#print axioms PEL4.gate104_self_trust_preempts_world_action
+#print axioms PEL4.gate104_direct_action_requires_trusted_model_witness
+#print axioms PEL4.gate104_rational_epistemic_self_trust
