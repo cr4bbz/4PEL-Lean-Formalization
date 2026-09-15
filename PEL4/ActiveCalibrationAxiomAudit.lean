@@ -1,0 +1,9 @@
+import PEL4.ActiveCalibration
+
+#print axioms PEL4.gate92_act_now_value
+#print axioms PEL4.gate92_post_calibration_values
+#print axioms PEL4.gate92_calibration_gross_value
+#print axioms PEL4.gate92_calibration_net_value
+#print axioms PEL4.gate92_calibration_beats_acting_and_world_sensing
+#print axioms PEL4.gate92_calibration_cost_is_below_both_break_even_margins
+#print axioms PEL4.gate92_active_controller_chooses_calibration
