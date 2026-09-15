@@ -1,0 +1,18 @@
+name: Gate 99 CI
+
+on:
+  push:
+    branches:
+      - research/posterior-surprise-gate99
+  workflow_dispatch:
+
+jobs:
+  gate99:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 99 posterior surprise
+        run: |
+          lake build PEL4.PosteriorSurprise
+          lake env lean PEL4/PosteriorSurpriseAxiomAudit.lean
