@@ -1,0 +1,8 @@
+import PEL4.UnknownUnknowns
+
+#print axioms PEL4.gate101_beliefs_normalized
+#print axioms PEL4.gate101_closed_class_is_strictly_supported
+#print axioms PEL4.gate101_model_doubt_opens_unknown_mass
+#print axioms PEL4.gate101_routine_keeps_unknown_mass_zero
+#print axioms PEL4.gate101_anomaly_creates_adequacy_gap
+#print axioms PEL4.gate101_unknown_unknowns_bridge
