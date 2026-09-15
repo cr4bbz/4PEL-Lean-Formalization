@@ -1,0 +1,10 @@
+import PEL4.JointWorldModelBelief
+
+#print axioms PEL4.gate89_prior_normalized
+#print axioms PEL4.gate89_prior_marginals
+#print axioms PEL4.gate89_positive_evidence
+#print axioms PEL4.gate89_positive_posterior_cells
+#print axioms PEL4.gate89_positive_posterior_normalized
+#print axioms PEL4.gate89_positive_updates_world_marginal
+#print axioms PEL4.gate89_positive_updates_model_marginal
+#print axioms PEL4.gate89_joint_update_moves_world_and_model
