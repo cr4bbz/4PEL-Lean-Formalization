@@ -1,0 +1,18 @@
+name: Gate 110 CI
+
+on:
+  push:
+    branches:
+      - research/observational-aliasing-limit-gate110
+  workflow_dispatch:
+
+jobs:
+  gate110:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 110 observational aliasing limit
+        run: |
+          lake build PEL4.ObservationalAliasingLimit
+          lake env lean PEL4/ObservationalAliasingLimitAxiomAudit.lean
