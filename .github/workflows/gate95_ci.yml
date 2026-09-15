@@ -1,0 +1,18 @@
+name: Gate 95 CI
+
+on:
+  push:
+    branches:
+      - research/self-correcting-policy-gate95
+  workflow_dispatch:
+
+jobs:
+  gate95:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 95 self-correcting policy
+        run: |
+          lake build PEL4.SelfCorrectingPolicy
+          lake env lean PEL4/SelfCorrectingPolicyAxiomAudit.lean
