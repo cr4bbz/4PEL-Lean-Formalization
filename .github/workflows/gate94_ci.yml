@@ -1,0 +1,18 @@
+name: Gate 94 CI
+
+on:
+  push:
+    branches:
+      - research/bayesian-robust-comparison-gate94
+  workflow_dispatch:
+
+jobs:
+  gate94:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 94 Bayesian robust comparison
+        run: |
+          lake build PEL4.BayesianRobustControlComparison
+          lake env lean PEL4/BayesianRobustControlComparisonAxiomAudit.lean
