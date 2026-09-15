@@ -1,0 +1,18 @@
+name: Gate 107 CI
+
+on:
+  push:
+    branches:
+      - research/four-valued-sufficiency-challenge-gate107
+  workflow_dispatch:
+
+jobs:
+  gate107:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: leanprover/lean-action@v1
+      - name: Build and audit Gate 107 four-valued sufficiency challenge
+        run: |
+          lake build PEL4.FourValuedSufficiencyChallenge
+          lake env lean PEL4/FourValuedSufficiencyChallengeAxiomAudit.lean
