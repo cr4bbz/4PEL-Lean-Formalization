@@ -1,0 +1,8 @@
+import PEL4.PosteriorSurprise
+
+#print axioms PEL4.gate99_anomaly_likelihoods_below_threshold
+#print axioms PEL4.gate99_anomaly_predictive_evidence
+#print axioms PEL4.gate99_routine_predictive_evidence
+#print axioms PEL4.gate99_routine_stays_in_normal_update
+#print axioms PEL4.gate99_anomaly_triggers_model_doubt
+#print axioms PEL4.gate99_surprise_switches_epistemic_regime
