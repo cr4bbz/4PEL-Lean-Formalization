@@ -44,6 +44,8 @@ theorem gate106_calibration_threshold (cost : Rat) :
   unfold gate106CalibrationNetValue
   rw [gate92_calibration_gross_value]
   unfold gate92WorldSenseNetValue
+  change ((31 : Rat) / 50 < (137 : Rat) / 200 - cost) ↔
+    cost < (13 : Rat) / 200
   rw [Rat.lt_sub_right_iff_add_lt]
   have hsum : (31 : Rat) / 50 + (13 : Rat) / 200 = (137 : Rat) / 200 := by
     native_decide
@@ -58,6 +60,8 @@ theorem gate106_calibration_vs_act_threshold (cost : Rat) :
       cost < (17 : Rat) / 200 := by
   unfold gate106CalibrationNetValue
   rw [gate92_calibration_gross_value, gate92_act_now_value]
+  change ((3 : Rat) / 5 < (137 : Rat) / 200 - cost) ↔
+    cost < (17 : Rat) / 200
   rw [Rat.lt_sub_right_iff_add_lt]
   have hsum : (3 : Rat) / 5 + (17 : Rat) / 200 = (137 : Rat) / 200 := by
     native_decide
