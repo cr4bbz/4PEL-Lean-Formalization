@@ -1,0 +1,8 @@
+import PEL4.FourValuedSufficiencyChallenge
+
+#print axioms PEL4.gate107_beliefs_are_normalized
+#print axioms PEL4.gate107_same_nested_four_valued_status
+#print axioms PEL4.gate107_high_belief_chooses_risky
+#print axioms PEL4.gate107_threshold_belief_chooses_safe
+#print axioms PEL4.gate107_four_valued_projection_not_control_sufficient
+#print axioms PEL4.gate107_four_valued_sufficiency_challenge
