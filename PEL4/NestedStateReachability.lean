@@ -36,8 +36,8 @@ def gate105Run (start : Gate103NestedStatus) (events : List Gate105Event) :
   events.foldl gate105Step start
 
 /-- Ordinary finite-path reachability in the Gate-105 transition system. -/
-def gate105Reachable (from to : Gate103NestedStatus) : Prop :=
-  ∃ events : List Gate105Event, gate105Run from events = to
+def gate105Reachable (source target : Gate103NestedStatus) : Prop :=
+  ∃ events : List Gate105Event, gate105Run source events = target
 
 /-- The four canonical 4PEL verdicts. -/
 def gate105Values : List FDEValue :=
@@ -62,8 +62,8 @@ theorem gate105_model_update_preserves_world
 
 /-- Two coordinate-local diagnostics can install any requested nested status. -/
 theorem gate105_two_step_target
-    (from : Gate103NestedStatus) (world model : FDEValue) :
-    gate105Run from [.worldVerdict world, .modelVerdict model] =
+    (source : Gate103NestedStatus) (world model : FDEValue) :
+    gate105Run source [.worldVerdict world, .modelVerdict model] =
       { world := world, model := model } := by
   rfl
 
@@ -80,17 +80,17 @@ theorem gate105_canonical_states_are_distinct :
 /-- Strong-connectivity witness: under ideal coordinate-local diagnostics, every
 nested epistemic state can reach every other in at most two updates. -/
 theorem gate105_any_state_reaches_any_state
-    (from target : Gate103NestedStatus) :
-    gate105Reachable from target := by
+    (source target : Gate103NestedStatus) :
+    gate105Reachable source target := by
   refine ⟨[.worldVerdict target.world, .modelVerdict target.model], ?_⟩
   rcases target with ⟨world, model⟩
-  exact gate105_two_step_target from world model
+  exact gate105_two_step_target source world model
 
 /-- In particular, every canonical state is reachable from the trusted-truth
 state used by Gates 103 and 104. -/
 theorem gate105_all_canonical_states_reachable_from_trusted_truth
     (target : Gate103NestedStatus)
-    (h : target ∈ gate105CanonicalStates) :
+    (_h : target ∈ gate105CanonicalStates) :
     gate105Reachable gate103TrustedTruth target := by
   exact gate105_any_state_reaches_any_state gate103TrustedTruth target
 
@@ -115,7 +115,7 @@ connected. -/
 theorem gate105_nested_state_reachability :
     gate105CanonicalStates.length = 16 ∧
     gate105CanonicalStates.Nodup ∧
-    (∀ from target : Gate103NestedStatus, gate105Reachable from target) := by
+    (∀ source target : Gate103NestedStatus, gate105Reachable source target) := by
   exact ⟨gate105_sixteen_canonical_states,
     gate105_canonical_states_are_distinct,
     gate105_any_state_reaches_any_state⟩
