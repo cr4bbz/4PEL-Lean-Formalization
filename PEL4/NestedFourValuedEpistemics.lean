@@ -1,4 +1,5 @@
 import PEL4.ContradictoryModelEvidence
+import PEL4.ActiveContradictionResolution
 
 namespace PEL4
 
@@ -92,7 +93,7 @@ theorem gate103_nested_four_valued_epistemics :
     gate103_coordinates_are_independent_witness⟩
 
 /-!
-## Boundary
+## Gate-103 boundary
 
 Gate 103 establishes product-coordinate independence by explicit witnesses. It
 does not claim that every one of the sixteen pairs is reachable under one fixed
