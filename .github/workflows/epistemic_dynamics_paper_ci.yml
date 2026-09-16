@@ -1,0 +1,24 @@
+name: Epistemic Dynamics Paper CI
+
+on:
+  push:
+    branches:
+      - paper/epistemic-dynamics-v0.4.0-gate116
+    paths:
+      - 'papers/epistemic-dynamics/**'
+      - 'scripts/check_epistemic_dynamics_paper.py'
+      - '.github/workflows/epistemic_dynamics_paper_ci.yml'
+  pull_request:
+    paths:
+      - 'papers/epistemic-dynamics/**'
+      - 'scripts/check_epistemic_dynamics_paper.py'
+      - '.github/workflows/epistemic_dynamics_paper_ci.yml'
+
+jobs:
+  structural-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Check manuscript inputs and Gate-116 synchronization
+        run: python scripts/check_epistemic_dynamics_paper.py
