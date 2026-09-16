@@ -1,0 +1,16 @@
+import PEL4.NoisyIdentification
+
+#print axioms PEL4.gate116_each_signal_has_full_support
+#print axioms PEL4.gate116_no_truth_guaranteeing_one_signal_decoder
+#print axioms PEL4.gate116_one_positive_posterior
+#print axioms PEL4.gate116_one_negative_posterior
+#print axioms PEL4.gate116_one_signal_remains_unresolved
+#print axioms PEL4.gate116_double_positive_posterior
+#print axioms PEL4.gate116_double_negative_posterior
+#print axioms PEL4.gate116_conflicting_signals_restore_half
+#print axioms PEL4.gate116_two_signal_statuses
+#print axioms PEL4.gate116_double_positive_does_not_logically_eliminate_negative
+#print axioms PEL4.gate116_double_negative_does_not_logically_eliminate_positive
+#print axioms PEL4.gate116_first_sample_requests_remeasurement
+#print axioms PEL4.gate116_second_sample_controls_commitment
+#print axioms PEL4.gate116_noisy_identification
