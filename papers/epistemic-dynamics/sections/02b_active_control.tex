@@ -1,0 +1,86 @@
+\section{From State Sufficiency to Active Epistemic Control}
+
+\subsection{A Markov bridge on full models}
+
+Gate 39 already states that the current full model is sufficient for fixed future schedules. Gate 44 packages the same idea as a controlled transition system. A state is a full 4PEL model $M$, an action is a syntactic evidence formula $a$, and an enabled one-step transition is a valid Conditionalization:
+\[
+M\xrightarrow{a}M'.
+\]
+The relation is deterministic whenever the action is admissible:
+\[
+M_1=M_2\ \land\ a_1=a_2
+\quad\Longrightarrow\quad
+M_1'=M_2'.
+\]
+Two different histories may therefore be compressed once they merge. The concrete witness compares $[p]$ with $[p,p]$: atomic idempotence makes the present models equal, and every common future action then has the same successor.
+
+This is a \emph{Markov-like deterministic partial control system}, not yet an MDP. In particular, not every syntactic action is enabled in every state, and no reward or stochastic transition kernel is required at this stage.
+
+\subsection{Choosing questions without choosing answers}
+
+Gate 45 distinguishes an information-acquisition plan from its realized evidence. Plans include schematic actions such as observing $\varphi$, querying a source about $\varphi$, testing $\varphi$, or running an experiment. The agent can choose the plan, but need not control which evidential result it produces. In a polar acquisition semantics the same plan may realize either $\varphi$ or $\neg\varphi$.
+
+This distinction blocks a common conflation in active epistemology: choosing to investigate is not choosing what the investigation will show. It also creates genuine control. From the same initial model, one admissible observation can preserve Recovery while another admissible probe destroys it. Thus an agent's evidence-selection policy can alter its Recovery trajectory.
+
+\subsection{Reward misspecification and rational destabilization}
+
+Gate 46 assigns a deliberately myopic reward to two available information choices:
+\[
+R_{\mathrm{now}}(a_{\mathrm{preserve}})=1,
+\qquad
+R_{\mathrm{now}}(a_{\mathrm{probe}})=0.
+\]
+Because the first choice preserves immediate Recovery and the second does not, the preserving action is uniquely myopically optimal. The formal point is not that the agent is irrational. The optimizer is correct relative to a poor proxy.
+
+Gate 47 then separates ordinary Recovery from \emph{robust Recovery}. A fragile state can satisfy Recovery while failing an admissible stress test; a robust state satisfies Recovery and preserves it across the designated stress relation. The verified paths have the schematic form
+\[
+\begin{array}{rcl}
+\text{preserve:}& \Recovery&\to\Recovery\to\Recovery\to\cdots\quad\text{but fragile},\\[1mm]
+\text{probe:}& \Recovery&\to\NonRecovery\to\NonRecovery\to\Recovery\quad\text{and robust}.
+\end{array}
+\]
+Consequently,
+\[
+a_{\mathrm{preserve}}\succ_1 a_{\mathrm{probe}},
+\qquad
+ a_{\mathrm{probe}}\succ^{\mathrm{robust}}_3 a_{\mathrm{preserve}}.
+\]
+The preference reversal verifies a minimal form of \emph{rational destabilization}: temporary loss of a coarse epistemic status can be required by a longer-horizon robustness objective.
+
+\subsection{Exploration has a deadline}
+
+Gate 48 repeats the choice through an \textsf{exploit}/\textsf{explore} controller. Exploitation remains in the fragile Recovery basin. Exploration enters the destabilized path and requires time to integrate. In the three-step witness,
+\[
+[\textsf{explore},\textsf{exploit},\textsf{exploit}]
+\longrightarrow \textsf{robust},
+\]
+whereas
+\[
+[\textsf{exploit},\textsf{explore},\textsf{exploit}]
+\longrightarrow \textsf{integrating}.
+\]
+More strongly, any three-action run that reaches the robust state must choose \textsf{explore} first. Information acquisition therefore has not only value but \emph{lead time}: delaying a good experiment can make a robustness deadline unreachable.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  st/.style={draw=black!50, rounded corners=2pt, fill=boxgray, align=center, inner sep=5pt, minimum width=27mm},
+  arr/.style={-{Latex[length=2.1mm]}, semithick, draw=black!65},
+  lab/.style={font=\scriptsize, fill=white, inner sep=1pt},
+  node distance=10mm and 12mm
+]
+\node[st] (start) {start\\$\Recovery$};
+\node[st, above right=of start] (frag) {fragile\\$\Recovery$, not robust};
+\node[st, below right=of start] (dest) {destabilized\\$\NonRecovery$};
+\node[st, right=of dest] (integ) {integrating\\$\NonRecovery$};
+\node[st, right=of integ] (rob) {robust\\$\Recovery$};
+\draw[arr] (start) -- node[lab, above left] {exploit / preserve} (frag);
+\draw[arr] (frag) edge[loop above] node[lab] {exploit} (frag);
+\draw[arr] (start) -- node[lab, below left] {explore / probe} (dest);
+\draw[arr] (dest) -- node[lab, above] {continue} (integ);
+\draw[arr] (integ) -- node[lab, above] {continue} (rob);
+\draw[arr] (rob) edge[loop above] node[lab] {maintain} (rob);
+\end{tikzpicture}
+\caption{The finite control witness underlying Gates 46--48. Immediate Recovery favors the upper path; robust Recovery under a deadline favors immediate exploration along the lower path.}
+\label{fig:control-witness}
+\end{figure}

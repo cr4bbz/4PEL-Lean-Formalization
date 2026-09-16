@@ -1,0 +1,83 @@
+\section{Belief-State Control and Active Experiment Design}
+
+Gates 62--69 continue the partial-observation program by moving Bellman control directly onto posterior states and then making the observation channel itself an object of choice. The shift is small syntactically but conceptually decisive: an epistemic controller is no longer restricted to choosing an external action after receiving evidence. It can choose \emph{which evidence-generating intervention to perform}.
+
+\subsection{Bellman control on posterior states}
+
+\paragraph{Lean-verified finite witness.}
+Gate 62 defines a two-state belief controller over hidden \texttt{rest} and \texttt{stress} conditions. From the symmetric prior $(1/2,1/2)$, the immediate expected value of the recovery action is $2/5$, while the robust action has immediate value $7/10$. The encoded observation is informative: a positive signal yields posterior $(1/5,4/5)$ and a negative signal yields $(4/5,1/5)$. At horizon one the verified values are
+\[
+V_1(\mathsf{recovery})=\frac{21}{25},
+\qquad
+V_1(\mathsf{robust})=\frac{21}{20},
+\]
+so the Bellman controller selects the robust action.
+
+\paragraph{Interpretation.}
+The result closes the gap left at Gate 61. Posterior sufficiency is not merely a filtering theorem; the posterior can serve directly as the state of a decision process. The controller can therefore be memoryless with respect to raw observation history while still acting on everything in that history that is decision-relevant under the encoded model.
+
+\subsection{Information can be informative and still not be worth buying}
+
+\paragraph{Lean-verified finite witness.}
+Gate 63 adds a meta-action between \texttt{sense} and \texttt{commit}. Immediate commitment has value $7/10$. Sensing costs $1/5$; after accounting for the downstream contingent response, its net value at the prior is $17/25$, strictly below $7/10$. The controller therefore commits rather than senses in the witness. The same dominance persists at the stressed posterior.
+
+\paragraph{Interpretation.}
+The theorem separates three claims that are easily conflated: a signal can be statistically informative, it can change the posterior, and yet it can have non-positive net decision value once cost is included. ``More information'' is not itself the objective of the control problem.
+
+\subsection{Identifiability is structural, not a synonym for sample size}
+
+Gate 64 defines observational equivalence through equality of likelihood profiles. In the verified three-state witness, \texttt{stressA} and \texttt{stressB} are aliases: starting from a $(1/2,1/2)$ posterior over the pair, either positive or negative observation leaves the posterior split unchanged. Gate 65 then introduces two experiments. A coarse experiment assigns likelihood $1/2$ in either hidden state and therefore preserves the alias, while a diagnostic experiment uses likelihoods $9/10$ and $1/10$. A positive diagnostic signal yields posterior $9/10$ on the first state, while a negative signal yields $1/10$.
+
+Gate 66 sharpens the point by repetition. For every encoded repetition count, repeated positive evidence from the coarse experiment leaves the posterior at $1/2$. Repeating the diagnostic evidence instead produces
+\[
+\frac12,
+\quad \frac9{10},
+\quad \frac{81}{82},
+\quad \frac{729}{730}
+\]
+after zero, one, two, and three positive observations. Gate 67 turns this contrast into an experiment-design result: structural aliasing cannot be repaired by taking more samples from an experiment that assigns equal likelihoods to the aliased states, but an intervention with unequal likelihoods can break it.
+
+\begin{quote}
+\textbf{Verified lesson: more data does not imply more identifiability. Sometimes the missing resource is not sample size but a different experiment.}
+\end{quote}
+
+\subsection{Adaptive experiments and an explicit stopping decision}
+
+Gate 68 makes experiment selection belief-dependent: the informative probe is selected near the aliased posterior, while a cheaper action can be preferred once the state has been sufficiently resolved. Gate 69 adds a finite-horizon Bellman controller with an explicit \texttt{stop} action. At the alias, stopping has value $1/2$. The stress-oriented experiment has gross value $9/10$, cost $1/5$, and net value $7/10$. Horizon zero therefore stops, while horizons one and two select the experiment at the alias; after the informative result has moved the posterior into a resolved region, the verified controller stops.
+
+\paragraph{Interpretation.}
+This is the first point in the chain at which inquiry itself has an endogenous boundary. The agent chooses what to test, but also when the expected improvement no longer justifies another test. Epistemic agency is therefore not maximal curiosity. It is controlled allocation of information-gathering actions.
+
+
+\section{Epistemic Agency and Four-Valued Contradiction Resolution}
+
+Gates 70--77 analyze the geometry and economics of the active-sensing controller and then reconnect posterior control to the four-valued semantic layer.
+
+\subsection{Cost phases, stopping regions, and dominance}
+
+Gate 70 parameterizes sensing cost in hundredths. With gross experiment value $9/10$ and stopping value $1/2$, the exact critical cost is $40$ hundredths. The controller samples iff the cost is strictly below $40$; at exactly $40$ it stops. Thus the Gate-69 cost of $20$ lies inside the sampling region. Gate 71 packages this behavior as a stopping-region geometry: the aliased belief lies in the sampling region at the checked horizons, whereas the post-experiment resolved beliefs lie in the stopping region.
+
+Gate 72 introduces experiment dominance. At the alias, the stress experiment $Q$-dominates the encoded cheaper and more precise alternatives for the checked horizons, and pruning the dominated actions preserves the Bellman value $7/10$. This is a finite computational witness that action-set simplification can preserve optimal value when dominance has been proved rather than assumed.
+
+\subsection{Sequential identifiability and sample complexity}
+
+Gate 73 uses four hidden states whose first and second bits are observed by separate diagnostics. Each diagnostic alone is non-identifying, but the pair is jointly identifying. Gate 74 quantifies the earlier diagnostic learning path. The posterior sequence
+\[
+\frac12,\frac9{10},\frac{81}{82},\frac{729}{730}
+\]
+crosses the encoded $90\%$ threshold after one positive observation, $98\%$ after two, and $99\%$ after three, while the $99.9\%$ target is not reached within the first three observations. The result is a concrete sample-complexity witness rather than an asymptotic rate theorem.
+
+Gate 75 isolates a discounted Bellman fixed-point calculation. For
+\[
+T(v)=1+\frac12 v,
+\]
+the verified fixed point is $v=2$, and the residual of the finite iterates halves at each step. This provides a small exact bridge from finite-horizon calculations to fixed-point reasoning without claiming a general contraction theorem for all 4PEL controllers.
+
+\subsection{From posterior support back to four values}
+
+Gate 76 maps posterior support proposition-by-proposition into FDE status using the threshold $3/4$. The symmetric alias is classified as $N$, while the stress experiment drives the relevant posterior into determinate $T$ or $F$ outcomes. The posterior controller can therefore feed a four-valued semantic status rather than merely a scalar probability.
+
+Gate 77 then begins from explicit contradiction: positive and negative support are both $4/5$, giving status $B$. Two possible resolution outcomes produce $T$ and $F$. Resolution utility is $1$ for determinate $T/F$ and $0$ for $B/N$; with cost $1/5$, the net value of resolving is $4/5$. The verified policy therefore chooses resolution, and every encoded resolution outcome exits $B$ into $T$ or $F$.
+
+\paragraph{Interpretation.}
+Paraconsistency prevents contradiction from exploding the theory, but Gate 77 adds a distinct claim: contradiction need not be inert. Once $B$ is part of a control state, an agent may rationally spend resources to transform contradictory evidence into a determinate outcome. Non-explosion and active contradiction management are compatible but conceptually different virtues.

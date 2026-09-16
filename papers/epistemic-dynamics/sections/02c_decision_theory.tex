@@ -1,0 +1,37 @@
+\section{Finite Epistemic Decision Theory}
+
+Gates 49--53 convert the preceding witness into explicit finite decision-theoretic objects. The purpose is not to claim that 4PEL is intrinsically an MDP. Rather, it is to show that its verified epistemic dynamics can support controlled optimization once actions, transition uncertainty, and objectives are added explicitly.
+
+\subsection{Bellman recursion and stochastic transition}
+
+Gate 49 defines a finite epistemic decision process and a finite-horizon Bellman recursion. In the concrete witness, horizon one favors exploitation, while horizon three favors exploration. The latter is no longer stipulated as the preferred policy: it attains the computed Bellman optimum, with
+\[
+V_3(\textsf{start})=4.
+\]
+Thus the earlier preference reversal emerges from dynamic programming rather than from a hand-selected trajectory.
+
+Gate 50 introduces an external stochastic transition kernel over epistemic states. The distinction from the internal 4PEL probability is essential:
+\[
+\underbrace{P(w\mid M)}_{\text{uncertainty represented inside a 4PEL model}}
+\qquad\neq\qquad
+\underbrace{P(M'\mid M,a)}_{\text{uncertainty about the next epistemic state}}.
+\]
+In the finite stochastic witness, exploration branches with equal transition weight between a robust and a broken outcome, yet its expected continuation value still exceeds the safe alternative.
+
+\subsection{Value of information and regret}
+
+Gate 51 isolates the value of observing which branch occurred. Without the observation, the agent must choose one fixed response for both possible outcomes and can achieve value $5$. With the observation, it can condition its response on the realized state and achieve value $8$:
+\[
+\operatorname{VoI}=8-5=3>0.
+\]
+The information is valuable because it enables contingent action, not because information is postulated to possess an intrinsic positive reward.
+
+Gate 52 measures epistemic regret against the Bellman optimum. Immediate exploration has regret $0$, delayed exploration has regret $3$, and persistent exploitation has regret $1$ in the verified witness. Timing is therefore part of epistemic performance: the same exploratory action can be optimal now and suboptimal one step later because integration consumes the remaining horizon.
+
+\subsection{A reward-alignment threshold}
+
+Gate 53 separates the reward for ordinary Recovery, $r$, from an additional robust-Recovery bonus, $b$. In the three-step witness, immediate exploration receives $r+b$, while persistent exploitation receives $3r$. Lean verifies the sufficient threshold
+\[
+\boxed{b>2r\quad\Longrightarrow\quad \textsf{explore}\succ\textsf{exploit}.}
+\]
+At or below the threshold exploitation is not worse in this witness. This is a finite reward-design result, not a universal theorem that one scalar reward captures epistemic rationality. It nevertheless formalizes a central warning: changing only the optimizer is unnecessary when the failure is caused by the objective it optimizes.

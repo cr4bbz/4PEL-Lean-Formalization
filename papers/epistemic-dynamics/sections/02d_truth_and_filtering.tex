@@ -1,0 +1,133 @@
+\section{Truth Calibration and Partial Observation}
+
+The decision-theoretic extension makes an older boundary unavoidable. If Recovery is used as a reward, what relation does Recovery bear to truth? Gates 54--57 address this question without identifying the two notions.
+
+\subsection{A conditional bridge from robust Recovery to truth alignment}
+
+Gate 54 introduces an external calibration error together with a diagnostic-completeness condition. Every remaining positive calibration error must be exposable by at least one admissible stress test, and zero calibration error must imply an externally supplied predicate $\TruthAligned$. Under these assumptions,
+\[
+\RobustRec(s)
+\quad\Longrightarrow\quad
+\operatorname{calibrationError}(s)=0
+\quad\Longrightarrow\quad
+\TruthAligned(s).
+\]
+The assumptions do real work. Ordinary Recovery alone does not imply truth alignment: the formal \textsf{fragile} state is a counterexample. The theorem is therefore a bridge under explicit diagnostic conditions, not a redefinition of Recovery as truth.
+
+\subsection{Why the visible Recovery bit is not a sufficient state}
+
+Gate 55 makes the hidden-state problem explicit. The states \textsf{fragile} and \textsf{robust} can generate the same visible observation, \textsf{recovery}, while differing in calibration error, truth alignment, and stress robustness. Worse, the same visible observation followed by the same action can produce different next observations:
+\[
+\textsf{fragile}\xrightarrow{\textsf{explore}}\textsf{destabilized}\mapsto\textsf{nonRecovery},
+\]
+while
+\[
+\textsf{robust}\xrightarrow{\textsf{explore}}\textsf{robust}\mapsto\textsf{recovery}.
+\]
+Thus the Recovery observation is not Markov-sufficient for control. Partial observability is not merely imported by analogy; it is forced by a verified aliasing witness.
+
+\subsection{A finite epistemic POMDP and normalized belief states}
+
+Gate 56 packages hidden epistemic states, actions, stochastic transitions, and observations into a finite epistemic POMDP kernel. Its initial belief after observing only Recovery can leave both \textsf{fragile} and \textsf{robust} possible. An active probe changes the hidden-state distribution, after which the next observation filters the possible states.
+
+Gate 57 normalizes these weights into rational Bayesian beliefs. Starting from
+\[
+b_0=\frac12\delta_{\textsf{fragile}}+\frac12\delta_{\textsf{robust}},
+\]
+exploration predicts
+\[
+\widehat b=\frac12\delta_{\textsf{destabilized}}+\frac12\delta_{\textsf{robust}}.
+\]
+Under the deterministic observation channel used at this stage,
+\[
+P(\textsf{recovery}\mid\textsf{explore})=\frac12,
+\qquad
+P(\textsf{nonRecovery}\mid\textsf{explore})=\frac12,
+\]
+and the corresponding posteriors collapse to the point masses $\delta_{\textsf{robust}}$ and $\delta_{\textsf{destabilized}}$. The hidden POMDP can therefore be read as a fully observed controlled process over belief states.
+
+\section{Bayesian Filtering with Noisy Epistemic Sensors}
+
+Gates 58--61 replace witness-specific belief manipulation with a more general finite filtering foundation.
+
+\subsection{Generic normalization and canonical belief identity}
+
+Gate 58 proves generic rational normalization for finite beliefs of nonzero total mass:
+\[
+\operatorname{Mass}(b)\neq0
+\quad\Longrightarrow\quad
+\operatorname{Mass}(\operatorname{Normalize}(b))=1.
+\]
+Zero mass is preserved as the representation of an impossible observation rather than being assigned an arbitrary posterior.
+
+Gate 59 then separates storage syntax from epistemic identity. For example,
+\[
+[(1/2,s),(1/2,s)]
+\qquad\text{and}\qquad
+[(1,s)]
+\]
+are different lists but represent the same distribution. Belief equivalence is defined extensionally by aggregate weight at every hidden state:
+\[
+b_1\equiv b_2
+\quad\Longleftrightarrow\quad
+\forall s\; W_{b_1}(s)=W_{b_2}(s).
+\]
+A canonical profile removes duplicate-list artifacts from the controller state.
+
+\subsection{Noisy Recovery signals}
+
+Gate 60 replaces the deterministic observation map by a stochastic observation kernel $P(o\mid s)$. The model now contains three probabilistic levels that must remain distinct:
+\[
+P(w\mid M),
+\qquad
+P(s'\mid s,a),
+\qquad
+P(o\mid s').
+\]
+The first is internal 4PEL uncertainty over worlds, the second is transition uncertainty over hidden epistemic states, and the third is sensor uncertainty.
+
+In the finite noisy witness, a Recovery signal is correct with likelihood $9/10$ for the robust branch and misleading with likelihood $1/10$ for the destabilized branch. From an equal predicted prior, observing Recovery yields
+\[
+P(\textsf{robust}\mid\textsf{recovery})=\frac9{10},
+\qquad
+P(\textsf{destabilized}\mid\textsf{recovery})=\frac1{10}.
+\]
+Hence
+\[
+\boxed{\text{Recovery is evidence for robustness, not an oracle for robustness.}}
+\]
+
+\subsection{Posterior sufficiency}
+
+Gate 61 is the partially observable analogue of Gate 39. Under a fixed transition and observation model, if two histories produce the same current posterior and are followed by the same future action--observation sequence, their future posteriors coincide:
+\[
+\boxed{
+ b_t^{(1)}=b_t^{(2)}
+ +\text{ same future action--observation sequence}
+ \Longrightarrow
+ b_{t+n}^{(1)}=b_{t+n}^{(2)}.
+}
+\]
+The result also respects Gate-59 equivalence: syntactically different belief lists that assign the same aggregate mass to every hidden state map to the same canonical controller state. The posterior is therefore a compressed epistemic memory for the encoded filter model.
+
+This sufficiency claim is model-relative. If the transition kernel, observation kernel, or hidden-state ontology is misspecified, the theorem still describes the encoded filter but does not guarantee empirical adequacy.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw=black!50, rounded corners=2pt, fill=boxgray, align=center, inner sep=5pt, text width=27mm},
+  arr/.style={-{Latex[length=2.1mm]}, semithick, draw=black!65},
+  node distance=8mm and 8mm
+]
+\node[box] (belief) {posterior $b_t$\\\scriptsize controller state};
+\node[box, right=of belief] (act) {action $a_t$\\\scriptsize chosen probe};
+\node[box, right=of act] (hidden) {hidden $s_{t+1}$\\\scriptsize epistemic state};
+\node[box, right=of hidden] (obs) {observation $o_{t+1}$\\\scriptsize noisy signal};
+\draw[arr] (belief) -- (act);
+\draw[arr] (act) -- node[above, font=\scriptsize] {$P(s'\mid s,a)$} (hidden);
+\draw[arr] (hidden) -- node[above, font=\scriptsize] {$P(o\mid s')$} (obs);
+\draw[arr] (obs) to[bend right=28] node[below, font=\scriptsize, align=center] {Bayes update\\$b_{t+1}$} (belief);
+\end{tikzpicture}
+\caption{The verified epistemic-control architecture through Gate 61. The controller acts on a posterior over hidden epistemic states. Transition uncertainty and observation noise are distinct from the probability represented internally by each 4PEL model.}
+\label{fig:pomdp-loop}
+\end{figure}
