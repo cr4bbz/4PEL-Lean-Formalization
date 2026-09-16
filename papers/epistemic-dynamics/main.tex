@@ -23,10 +23,10 @@
 \definecolor{boxgray}{gray}{0.96}
 
 \hypersetup{
-  pdftitle={Epistemic Dynamics under Inconsistency: Recovery, Active Experimentation, Model Criticism, and Rational Self-Trust in 4PEL},
+  pdftitle={Epistemic Dynamics under Inconsistency: Self-Correction, Identifiability, and Noisy Epistemic Control in 4PEL},
   pdfauthor={Julian L. Voigt (cr4bbz)},
-  pdfsubject={4PEL, epistemic dynamics, active sensing, model uncertainty, self-trust, model criticism, formal verification},
-  pdfkeywords={4PEL, paraconsistent logic, epistemic dynamics, active sensing, Bayesian control, model uncertainty, model misspecification, rational self-trust, Lean 4}
+  pdfsubject={4PEL, epistemic dynamics, self-correction, identifiability, active sensing, model uncertainty, noisy control, formal verification},
+  pdfkeywords={4PEL, paraconsistent logic, epistemic dynamics, active sensing, Bayesian control, model uncertainty, self-correction, identifiability, noisy observation, Lean 4}
 }
 
 \pagestyle{fancy}
@@ -73,19 +73,19 @@
 
 {\fontsize{23}{27}\selectfont\bfseries Epistemic Dynamics under Inconsistency\par}
 \vspace{3mm}
-{\fontsize{15}{18}\selectfont Recovery, Active Experimentation, Model Criticism, and Rational Self-Trust in 4PEL\par}
+{\fontsize{15}{18}\selectfont Self-Correction, Identifiability, and Noisy Epistemic Control in 4PEL\par}
 
 \vspace{7mm}
 {\large Julian L. Voigt \quad (cr4bbz)\par}
 \vspace{2mm}
-{\normalsize Research Paper v0.3.0 \quad 15 September 2026\par}
+{\normalsize Research Paper v0.4.0 \quad 16 September 2026\par}
 
 \vspace{7mm}
 \hrule height 0.5pt
 \vspace{5mm}
 
 \begin{abstract}
-This paper develops a formally verified account of epistemic dynamics under inconsistency within 4PEL, a four-valued epistemic framework combining paraconsistent semantic structure, probabilistic belief, modal evaluation, and explicit update dynamics. The original Recovery program is extended from passive revision to active epistemic agency and, finally, to model criticism directed at the agent's own information-generating machinery. The verified development now spans six connected layers. First, Recovery is path-dependent and can exhibit genuine hysteresis, while a state-sufficiency result shows that this path sensitivity need not require an additional history register. Second, information acquisition becomes a control problem: finite Bellman recursion, stochastic epistemic transition, value of information, regret, reward alignment, partial observation, Bayesian filtering, and noisy sensing are represented without identifying internal 4PEL probability with external transition or observation probability. Third, the agent chooses experiments rather than merely receiving signals. Structural observational aliases can survive arbitrarily many repetitions of an uninformative experiment, whereas an alternative diagnostic intervention breaks the alias; finite-horizon control then determines when to sense, when to stop, and when sensing cost crosses an exact phase boundary. Fourth, posterior evidence is bridged back into four-valued status. Contradiction can therefore become an explicit control state: a finite policy rationally pays to transform status $B$ into a determinate $T$ or $F$ outcome. Fifth, uncertainty is lifted from the world to the observation model itself. Bayesian model beliefs, calibration, robust maximin control, joint world--model posteriors, and a dual value-of-information problem allow one observation to update both first-order belief about the world and second-order trust in the sensor. In a concrete degraded-sensor witness, failed calibration changes the policy from a fragile action with objective value $1/10$ to a safe action with value $3/5$, eliminating regret from $1/2$ to $0$. Sixth, the framework crosses the closed-model boundary. A residual observation may be better explained by a model absent from the original class; sufficiently low predictive evidence triggers model doubt and an explicit action to expand the hypothesis space. Gates 101--104 then assign probability mass to an outside-class possibility, distinguish meta-level ignorance $N$ from contradiction $B$, represent world status and model status as independent four-valued axes, and define a finite self-trust controller that acts, calibrates, or expands its model class according to the meta-status of its own epistemic machinery. These results support a dynamic conception of rationality in which an agent can revise not only what it believes, but which experiment it performs, how much it trusts its evidence source, and whether its hypothesis class is adequate. All principal claims reported here are mechanized in Lean 4; claims of philosophical generality are kept separate from the verified finite witnesses.
+This paper develops a formally verified account of fallible epistemic agency within 4PEL, a four-valued framework that distinguishes strict support, strict rejection, contradiction, and evidential gap. The formal development begins with recovery and path-dependent update, extends to active sensing and decision-theoretic information acquisition, and then lifts uncertainty from the world to the observation model itself. The Gate-95--104 sequence formalizes one-step policy self-correction, model-class misspecification, predictive surprise, explicit outside-class probability mass, meta-level gap and contradiction, and a nested world--model self-trust controller. Gates 105--109 turn the nested state into a repair dynamics: all sixteen canonical world--model statuses are reachable under an explicit coordinate-update relation, epistemic maintenance becomes cost-sensitive, qualitative four-valued compression is shown not to be universally control-sufficient, concrete repair witnesses admit a strictly decreasing local potential, and a finite repair controller satisfies a conditional liveness theorem under a successful-repair oracle. Gates 110--115 expose the informational premise behind that oracle. Observational aliasing makes uniformly correct repair impossible when target-different worlds share an observation; an active separating experiment can restore a truth guarantee; identifiability itself has a cost; preserving the four-valued gap $N$ can be value-optimal; and a general theorem proves that a truth-guaranteeing decoder exists exactly when the requested target is constant on every observation fiber. A minimal experiment witness then shows that target identification can succeed without full hidden-world identification. Gate 116 removes deterministic observation and introduces a known noisy sensor. Bayesian posterior confidence can cross an explicit four-valued control threshold after repeated agreeing observations even though the alternative world retains positive likelihood. The resulting architecture separates hidden truth, quantitative belief, qualitative four-valued diagnosis, and control commitment. All claims described as verified are mechanized in Lean 4; finite modelling choices and philosophical interpretations are stated separately from theorem-level results.
 \end{abstract}
 
 \vspace{5mm}
@@ -93,7 +93,8 @@ This paper develops a formally verified account of epistemic dynamics under inco
 \footnotesize
 \textbf{Status.} Independent research paper. The reported formal results are verified in Lean 4, but the paper has not undergone external peer review.\par
 \vspace{2mm}
-Formalization snapshot: \path{research/epistemic-self-trust-integration-gate104}, commit \path{2cf3c12db6aa222a92af2c512ae68aae3fb7a0df}.
+Formalization base: \path{research/noisy-identification-gate116}, commit \path{875ed5d3850271927fdffe983ca4eca48af9cfed}.\par
+Paper synchronization branch: \path{paper/epistemic-dynamics-v0.4.0-gate116}.
 \end{center}
 \end{titlepage}
 
@@ -111,8 +112,10 @@ Formalization snapshot: \path{research/epistemic-self-trust-integration-gate104}
 \input{sections/03_active_experimentation}
 \input{sections/04_model_uncertainty}
 \input{sections/05_model_criticism_and_self_trust}
-\input{sections/06_interpretation_and_conclusion}
+\input{sections/06_self_correction_and_repair}
+\input{sections/07_identifiability_and_active_repair}
+\input{sections/08_noisy_epistemic_control}
+\input{sections/09_interpretation_and_outlook}
 \input{appendix/formal_result_map_and_verification}
-\input{references}
 
 \end{document}
