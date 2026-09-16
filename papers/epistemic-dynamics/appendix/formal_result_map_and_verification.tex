@@ -1,0 +1,62 @@
+\appendix
+\section{Formal Result Map and Verification Discipline}
+
+The paper distinguishes verified finite results from modelling assumptions and philosophical interpretation. The editorial source of truth for this version is
+\begin{quote}
+\texttt{editorial/GATES\_095\_116\_SOURCE\_AUDIT.md}
+\end{quote}
+and the claim-level contract is
+\begin{quote}
+\texttt{editorial/CLAIM\_THEOREM\_MATRIX\_v0.4.0.md}.
+\end{quote}
+
+\subsection{Late-stage gate map}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.10\textwidth}p{0.31\textwidth}X@{}}
+\toprule
+Gate & Principal Lean module & Principal verified role \\
+\midrule
+95 & \texttt{SelfCorrectingPolicy.lean} & Calibration evidence reverses a suboptimal overconfident policy in a finite degraded-sensor witness. \\
+97 & \texttt{OpenModelClass.lean} & A supplied outside-class model exactly fits evidence missed by both original hypotheses. \\
+100 & \texttt{AnomalyDrivenModelExpansion.lean} & Predictive surprise changes the model-space control action from closed updating to expansion. \\
+101 & \texttt{UnknownUnknowns.lean} & Outside-class probability mass preserves normalization and maps model adequacy to the four-valued gap $N$. \\
+102 & \texttt{ContradictoryModelEvidence.lean} & Meta-level unknownness $N$ and contradiction $B$ are formally distinct. \\
+103 & \texttt{NestedFourValuedEpistemics.lean} & World and model status form separate four-valued coordinates in explicit witnesses. \\
+104 & \texttt{RationalEpistemicSelfTrust.lean} & A finite five-action controller prioritizes model maintenance before world action when model status is non-trusted. \\
+105 & \texttt{NestedStateReachability.lean} & All sixteen canonical nested states are mutually reachable under permissive coordinate-local updates. \\
+106 & \texttt{CostSensitiveSelfTrust.lean} & Epistemic maintenance depends on explicit cost; qualitative status alone need not fix the optimal action. \\
+107 & \texttt{FourValuedSufficiencyChallenge.lean} & The same qualitative $T/T$ projection can hide quantitative states with different utility-optimal actions. \\
+108 & \texttt{EpistemicRepairDynamics.lean} & Concrete gap and contradiction repairs strictly reduce a local tension potential. \\
+109 & \texttt{SelfCorrectionLiveness.lean} & Under a successful-repair oracle, defect count strictly decreases and classical stability is reached within two repairs. \\
+110 & \texttt{ObservationalAliasingLimit.lean} & Aliased target-different worlds make uniform observation-only truth guarantees impossible. \\
+111 & \texttt{ActiveIdentificationRepair.lean} & A supplied separating intervention restores truth-guaranteeing repair in the Gate-110 witness. \\
+112 & \texttt{CostOfIdentifiability.lean} & Perfect identification is purchased only below the finite witness's exact cost threshold. \\
+113 & \texttt{RationalUnresolvedness.lean} & Safe unresolvedness can be value-optimal when inquiry is expensive and blind commitment is worse. \\
+114 & \texttt{GeneralIdentifiability.lean} & A truth-guaranteeing decoder exists iff target is constant on every observation fiber. \\
+115 & \texttt{MinimalTargetExperimentFamily.lean} & Target identification can be inclusion-minimal while full hidden-world identification still fails. \\
+116 & \texttt{NoisyIdentification.lean} & Noisy Bayesian evidence can cross a control threshold without logically eliminating the alternative world. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Version provenance}
+
+This paper version is developed on branch
+\begin{quote}
+\texttt{paper/epistemic-dynamics-v0.4.0-gate116}
+\end{quote}
+which was created from the green Gate-116 research state and then received the earlier Gate-104 manuscript as a grafted paper subtree. The Gate-116 research base is commit
+\begin{quote}
+\texttt{875ed5d3850271927fdffe983ca4eca48af9cfed}.
+\end{quote}
+The dedicated Gate-116 workflow verified \texttt{PEL4.NoisyIdentification} and its axiom audit successfully before the paper refresh began.
+
+Older specialist results are cited against the dedicated green branches where their source modules were verified. This matters because the newest cumulative branch does not necessarily retain every historical specialist module as a physical file.
+
+\subsection{Interpretation rule}
+
+A theorem proving the behavior of a finite encoded controller establishes that behavior for the encoded model. It does not automatically establish a universal norm of rationality. Exact cost thresholds, confidence thresholds, priors, sensor reliabilities, repair oracles, and experiment menus are therefore marked as modelling choices unless a separate theorem quantifies over them.
+
+The paper treats this distinction as part of the result rather than as a disclaimer. Several late gates derive their importance precisely by exposing where an earlier finite result depended on a hidden modelling assumption: Gate 106 prices Gate 104's maintenance priority, Gate 107 challenges qualitative control sufficiency, Gate 110 attacks Gate 109's repair oracle through aliasing, and Gate 116 separates control confidence from logical certainty under noise.
