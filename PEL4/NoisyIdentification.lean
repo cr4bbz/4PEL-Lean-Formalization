@@ -179,18 +179,22 @@ theorem gate116_double_negative_does_not_logically_eliminate_positive :
 /-- Sequential control after one observation: because either single sample still
 maps to `N`, the agent requests another measurement rather than committing. -/
 def gate116AfterOneAction (signal : Gate116Signal) : Gate116Action :=
-  match gate116TraceStatus [signal] with
-  | FDEValue.T => .commitPositive
-  | FDEValue.F => .commitNegative
-  | _ => .measureAgain
+  if gate116TraceStatus [signal] = FDEValue.T then
+    .commitPositive
+  else if gate116TraceStatus [signal] = FDEValue.F then
+    .commitNegative
+  else
+    .measureAgain
 
 /-- After two observations the controller commits only if the posterior bridge is
 strict, otherwise it preserves unresolvedness. -/
 def gate116AfterTwoAction (trace : List Gate116Signal) : Gate116Action :=
-  match gate116TraceStatus trace with
-  | FDEValue.T => .commitPositive
-  | FDEValue.F => .commitNegative
-  | _ => .remainUnresolved
+  if gate116TraceStatus trace = FDEValue.T then
+    .commitPositive
+  else if gate116TraceStatus trace = FDEValue.F then
+    .commitNegative
+  else
+    .remainUnresolved
 
 /-- Both possible first observations trigger another measurement. -/
 theorem gate116_first_sample_requests_remeasurement :
