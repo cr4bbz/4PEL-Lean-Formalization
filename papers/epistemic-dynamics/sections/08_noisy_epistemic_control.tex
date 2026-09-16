@@ -1,0 +1,95 @@
+\section{Noisy Identification and Epistemic Control}
+
+Gate 116 removes the deterministic-identification idealization. The observation channel is now noisy: the same signal can occur in either hidden world, although with different likelihood. This breaks the equivalence between successful target decoding and logical elimination of alternatives.
+
+\subsection{A symmetric noisy sensor}
+
+The finite witness has two hidden worlds, positive and negative, and two possible signals. Under the positive world the positive signal has likelihood $4/5$ and the negative signal $1/5$; under the negative world these likelihoods are reversed. The prior over worlds is symmetric:
+\[
+P(W_+)=P(W_-)=\frac12.
+\]
+For an observed trace $x$, Gate 116 computes the exact Bayesian posterior
+\[
+P(W_+\mid x)
+=
+\frac{P(W_+)P(x\mid W_+)}
+{P(W_+)P(x\mid W_+)+P(W_-)P(x\mid W_-)}.
+\]
+The likelihood model assumes known sensor reliability and conditional independence between repeated signals.
+
+\subsection{One observation remains unresolved}
+
+After one positive observation,
+\[
+P(W_+\mid +)=\frac45,
+\]
+and after one negative observation,
+\[
+P(W_+\mid -)=\frac15.
+\]
+Gate 116 introduces an explicit control threshold $9/10$ for converting posterior confidence into a qualitative action status. Values at or above $9/10$ map to $T$, values at or below $1/10$ map to $F$, and the intermediate region maps to $N$.
+
+Consequently, either single observation remains unresolved:
+\[
++\mapsto N,
+\qquad
+-\mapsto N.
+\]
+The sequential controller therefore requests another measurement after either possible first signal.
+
+The $9/10$ threshold is a modelling convention. It is not a logical definition of truth and should not be read as one.
+
+\subsection{Agreement crosses the control threshold}
+
+Two agreeing positive signals produce
+\[
+P(W_+\mid ++)=\frac{16}{17},
+\]
+while two agreeing negative signals produce
+\[
+P(W_+\mid --)=\frac1{17}.
+\]
+The first exceeds $9/10$ and maps to $T$; the second lies below $1/10$ and maps to $F$. The controller therefore commits directionally after two agreeing observations.
+
+Conflicting observations cancel in the symmetric witness:
+\[
+P(W_+\mid +-)=P(W_+\mid -+)=\frac12,
+\]
+so both traces map back to $N$ and the controller preserves unresolvedness.
+
+\subsection{Control confidence is not logical certainty}
+
+The decisive distinction appears after the apparently strong trace $++$. Although the posterior exceeds the control threshold, the negative world still assigns that trace positive likelihood:
+\[
+P(++\mid W_-)=\frac1{25}>0.
+\]
+Thus the controller may rationally cross its encoded action threshold without eliminating the alternative world. Gate 116 also proves that no deterministic decoder from a single signal can be truth-guaranteeing on channel support, because every individual signal remains possible in both target-different worlds.
+
+The resulting separation is
+\[
+\boxed{
+\text{confidence sufficient for control}
+\neq
+\text{logical elimination of alternatives}
+}.
+\]
+This is not a defect in Bayesian updating or in four-valued representation. It is the expected consequence of fallible evidence. The posterior quantifies relative support under the sensor model; the qualitative $T/F/N$ status is a chosen control abstraction over that posterior; logical impossibility is a stronger condition again.
+
+\subsection{From four-valued status to a layered epistemic architecture}
+
+Gate 116 therefore makes explicit a distinction that earlier gates only approached indirectly. The formal system now contains at least four separable objects:
+\[
+\text{hidden world},
+\qquad
+\text{quantitative belief},
+\qquad
+\text{four-valued control status},
+\qquad
+\text{action}.
+\]
+None is identified with the others. A world may be positive while the agent remains at $N$ after one noisy observation. The posterior may later exceed a control threshold and yield $T$ even though the negative world remains logically possible. The action policy may then commit because the encoded decision rule treats that residual risk as acceptable.
+
+This layered architecture provides the clearest current interpretation of 4PEL in the project: the four-valued component functions as a qualitative epistemic control layer embedded between richer evidence and action, rather than as a replacement for quantitative belief or as an infallible detector of metaphysical truth.
+
+\paragraph{Boundary.}
+Gate 116 does not yet price repeated measurement, infer sensor reliability, represent correlated noise, or optimize stopping time. The next natural formal question is therefore whether \texttt{measureAgain} remains optimal once each additional noisy observation has a cost and only probabilistic expected benefit.
