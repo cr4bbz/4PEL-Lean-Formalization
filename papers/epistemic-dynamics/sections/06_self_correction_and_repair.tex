@@ -1,0 +1,83 @@
+\section{Self-Correction and Repair Dynamics}
+
+Gates 105--109 ask what follows once first-order world status and second-order model status are treated as a genuine product state. The central question changes from representation to dynamics: which nested states are reachable, which repairs count as progress, and under what assumptions does self-correction terminate?
+
+\subsection{Reachability of the nested state space}
+
+Gate 105 introduces coordinate-local events that update either the world verdict or the model verdict while leaving the other coordinate unchanged. The four values
+\[
+T,\;F,\;B,\;N
+\]
+therefore generate sixteen canonical nested states. The verified witness establishes that all sixteen are pairwise distinct and that, under this permissive update relation, any canonical state can reach any other in at most two coordinate updates.
+
+This result closes the gap left by Gate 103. Gate 103 demonstrated coordinate independence by examples; Gate 105 shows full structural reachability for one explicit dynamics. The dynamics is intentionally generous, however: an update may directly install a verdict. Reachability should therefore be read as a property of the formal state architecture, not as a claim that realistic evidence streams make every transition available on demand.
+
+\subsection{The cost of epistemic maintenance}
+
+Gate 104 treated model maintenance as a priority rule. Gate 106 turns that priority into a value comparison by assigning a calibration cost $c$. Within the inherited Gate-92 value witness, calibration beats world sensing exactly when
+\[
+c<\frac{13}{200},
+\]
+and it beats immediate action exactly when
+\[
+c<\frac{17}{200}.
+\]
+Consequently, two agents in the same qualitative nested state can rationally choose different epistemic actions when their maintenance costs differ.
+
+This is the first direct limitation on a purely status-driven interpretation of Gate 104. The four-valued model coordinate diagnoses the \emph{kind} of epistemic defect; it does not by itself encode the price of repairing that defect.
+
+\subsection{A sufficiency challenge for qualitative compression}
+
+Gate 107 sharpens this limitation. Two quantitative beliefs are constructed with positive masses
+\[
+\frac{99}{100}
+\qquad\text{and}\qquad
+\frac34.
+\]
+Both project to the same nested four-valued status $(T,T)$. Yet a risky action is valued by the positive mass itself while a safe action has fixed value $4/5$. The high-confidence belief therefore selects the risky action, whereas the threshold belief selects the safe action.
+
+Thus the qualitative projection is not universally control-sufficient:
+\[
+\text{same }(T,T)
+\centernot\Rightarrow
+\text{same utility-optimal action}.
+\]
+This theorem does not refute 4PEL as a qualitative epistemic representation. It identifies an abstraction boundary: thresholding can forget quantitative distance from the threshold, and that forgotten information may matter for decision theory.
+
+\subsection{Repair as descent in a local potential}
+
+Gate 108 adds a quantitative progress measure for two concrete repair families. For evidence state $(p,n)$, define
+\[
+\tau(p,n)=pn.
+\]
+In the gap-repair witness, tension falls from
+\[
+\frac6{25}
+\quad\text{to}\quad
+\frac9{100},
+\]
+while in the contradiction-repair witness it falls from
+\[
+\frac{16}{25}
+\quad\text{to}\quad
+\frac9{100}.
+\]
+The corresponding repairs end in classical $T$ or $F$ states.
+
+The product $pn$ is not claimed to be a universal measure of epistemic disorder. Its role is local and Lyapunov-like: for the already encoded repairs, it certifies that the transition moves the witness away from simultaneous unresolved or conflicting support.
+
+\subsection{Conditional liveness of self-correction}
+
+Gate 109 abstracts from the concrete evidence values to a defect count on the nested status. A coordinate is classical when it is $T$ or $F$; $B$ and $N$ count as defects. Hence
+\[
+D(s)\in\{0,1,2\}.
+\]
+The repair controller gives the model coordinate priority. Under its explicit successful-repair oracle, every unstable step strictly decreases $D$, stable states are fixed points, and every nested state reaches the classical region in at most two repair steps:
+\[
+\forall s,\qquad
+\mathsf{Stable}(\mathsf{repair}^2(s)).
+\]
+
+This is a genuine liveness theorem, but only relative to the repair oracle. The theorem says that the control architecture terminates \emph{if} each requested repair can install an appropriate classical verdict. It does not yet show that the observation channel contains enough information to make such a repair truth-directed.
+
+That missing condition motivates the next section. Gate 110 asks whether a terminating self-correction procedure can still converge to the wrong classical answer when distinct realities are observationally indistinguishable.
