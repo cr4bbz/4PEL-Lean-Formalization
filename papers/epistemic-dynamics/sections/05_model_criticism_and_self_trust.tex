@@ -1,103 +1,136 @@
-\section{Self-Correction, Misspecification, and Open Model Classes}
+\section{Model Criticism and Nested Epistemic Self-Trust}
 
-Gates 95--100 ask what happens when the agent's own confidence is wrong and, more radically, when the correct sensor behavior is not represented anywhere in the current model class.
+Gates 95--104 move from uncertainty \emph{within} a known model class to criticism of the class and the evidence-generating mechanism itself. This transition matters because ordinary posterior reweighting cannot repair a hypothesis space that omits the relevant explanation. The resulting architecture distinguishes belief about the world, belief about the model, evidence about model adequacy, and the control policy that decides when those layers license action.
 
-\subsection{A policy that corrects its own overconfidence}
+\subsection{One-step policy self-correction}
 
-Gate 95 fixes the actual sensor to the degraded model. Objectively, the fragile action is then worth $1/10$, while the safe action is worth $3/5$. Nevertheless, an overconfident prior with reliable mass $9/10$ initially selects fragile. A failed calibration event updates model belief to
+Gate 95 gives an exact finite witness of a policy repairing its own overconfidence. The initial model belief is
 \[
-P(\mathrm{reliable}\mid\mathrm{fail})=\frac9{17},
+P(\mathrm{reliable})=\frac45,
 \qquad
-P(\mathrm{degraded}\mid\mathrm{fail})=\frac8{17},
+P(\mathrm{degraded})=\frac15.
 \]
-and the revised policy switches to safe. The objective value therefore rises from $1/10$ to $3/5$.
-
-Gate 96 measures the correction by regret. Under the actual degraded model, the optimal value is $3/5$. Before calibration the chosen fragile action has regret
+Under this belief the controller selects the fragile probe. The actual environment in the witness is degraded, where the objective probe values are
 \[
-\frac35-\frac1{10}=\frac12.
+V(\mathrm{fragile})=\frac1{10},
+\qquad
+V(\mathrm{safe})=\frac35.
 \]
-After the failed calibration and policy repair, regret is exactly $0$.
-
-\paragraph{Interpretation.}
-Self-correction here is operational rather than rhetorical. The controller begins overconfident, receives evidence specifically about the reliability of its own information source, changes its model posterior, changes its action, and eliminates a quantified decision loss.
-
-\subsection{When reweighting known models is not enough}
-
-Gate 97 introduces an observed anomaly rate of $1/2$. The two known sensor models predict $9/10$ and $1/5$, yielding absolute errors $2/5$ and $3/10$. A newly admitted balanced model predicts $1/2$ exactly and has error $0$. This is a finite witness that the residual can be caused by \emph{model-class omission}, not merely by a poor posterior weight over models already present.
-
-Gate 98 makes this misspecification explicit: the anomaly remains poorly represented throughout the closed known class, so redistributing posterior mass among the known alternatives cannot reproduce the observed behavior. The epistemic failure is therefore structural with respect to the current hypothesis space.
-
-\subsection{Posterior surprise as a trigger for structural revision}
-
-Gate 99 introduces a predictive-surprise meta-mode. Routine evidence remains inside ordinary updating, while the encoded anomaly has predictive evidence
+A failed calibration event has evidence $6/25$ and updates model belief to
 \[
-P(\mathrm{anomaly})=\frac3{200},
+P(\mathrm{reliable}\mid\mathrm{fail})=\frac13,
+\qquad
+P(\mathrm{degraded}\mid\mathrm{fail})=\frac23.
 \]
-which lies below the specified surprise threshold and therefore triggers \texttt{modelDoubt}. Gate 100 turns this meta-doubt into a structural action: routine evidence keeps the class closed, but the anomaly selects \texttt{expandUnknown}.
-
-\begin{quote}
-\textbf{Gate 100 changes the operation, not merely the posterior.} Sufficient predictive failure causes the controller to revise the hypothesis space on which future inference will be performed.
-\end{quote}
-
-The boundary is important. Gate 100 proves when the finite controller opens its model class under the encoded threshold. It does not generically construct the missing model. That remaining gap is exactly what motivates Gates 101--104.
-
-
-\section{Unknown Unknowns and Nested Rational Self-Trust}
-
-Gates 101--104 complete the present paper by turning model-class incompleteness into an explicit four-valued meta-epistemic state and then using that state for control.
-
-\subsection{Giving outside-class possibility explicit mass}
-
-Gate 101 represents an open model belief by two rational masses: \texttt{knownMass} and \texttt{unknownMass}. The closed class assigns $(1,0)$; the expanded class assigns $(3/4,1/4)$. Both distributions are normalized. Using the Gate-76 four-valued support map with threshold $2/3$, closed-class adequacy is $T$, whereas admitting nonzero unknown mass moves adequacy to $N$:
+The revised policy selects the safe probe. Thus the verified witness contains a complete chain
 \[
-T\longrightarrow N.
+\text{overconfident model belief}
+\longrightarrow
+\text{calibration failure}
+\longrightarrow
+\text{model-posterior revision}
+\longrightarrow
+\text{action revision}.
 \]
 
-\paragraph{Lean-verified finite witness.}
-The transition is not interpreted as evidence that the known class is false. Instead it records that, after structural expansion, the current evidence no longer determinately supports adequacy of the known class. Unknown mass is an explicit representation of model incompleteness, not a generic probability measure over every conceivable unseen model.
+Gate 96 expresses the same correction through regret. Under the actual degraded model, switching from the fragile to the safe probe removes the finite decision loss encoded by the witness. This is a one-step self-correction result, not an almost-sure convergence theorem for repeated learning.
 
-\subsection{Ignorance about the model is not contradiction about the model}
+\subsection{When the hypothesis class itself is wrong}
 
-Gate 102 gives model criticism its own four-valued evidence pair. With threshold $2/3$, the novel-anomaly witness has positive and negative support $(3/5,3/5)$ and is classified $N$. Conflicting diagnostics have support $(4/5,4/5)$ and are classified $B$. Trusted-model evidence $(4/5,1/5)$ yields $T$, while rejected-model evidence $(1/5,4/5)$ yields $F$.
-
-Thus the meta-level inherits the full distinction already available at the object level:
+Gate 97 adds an explicit outside candidate. The two familiar models predict positive rates
 \[
-\text{unknown }N \neq \text{contradictory }B.
+\frac1{10}
+\qquad\text{and}\qquad
+\frac9{10},
 \]
-A controller can therefore distinguish ``I do not yet have enough reason to judge my model'' from ``I have strong reasons both for and against my model.''
-
-\subsection{Two independent four-valued axes}
-
-Gate 103 packages the object and meta levels as
+while the observed rate is $1/2$. Their squared discrepancies are both
 \[
-\mathsf{NestedStatus}=\mathsf{FDE.Value}\times\mathsf{FDE.Value},
+\left(\frac12-\frac1{10}\right)^2
+=
+\left(\frac12-\frac9{10}\right)^2
+=
+\frac4{25},
 \]
-with the first coordinate for the world and the second for model adequacy. The verified witnesses include
+which exceeds the encoded tolerance $1/10$. A supplied balanced model predicts $1/2$ exactly and therefore has discrepancy $0$.
+
+The formal result is deliberately modest: expanding the model class \emph{can} repair an adequacy failure that no redistribution of mass inside the original class can fix. The missing model is supplied by the formalization; Gate 97 does not contain an automatic theory-formation algorithm.
+
+Gate 98 makes the closed-class pathology explicit. A probability distribution can remain perfectly normalized while all models receiving that probability mass are misspecified. Normalization therefore cannot serve as a certificate of model adequacy.
+
+\subsection{Surprise as a control signal for model criticism}
+
+Gate 99 distinguishes routine evidence from an anomaly whose predictive evidence under the encoded closed-class model is
 \[
-(T,T),\qquad (T,N),\qquad (T,B),\qquad (F,T).
+P(\mathrm{anomaly})=\frac3{200}.
 \]
-In particular, the same world status $T$ can coexist with trusted, unknown, or contradictory model status. World-level confidence therefore does not logically determine meta-level confidence in the machinery that produced it.
+This lies below the surprise threshold $1/20$ and triggers the meta-state \texttt{modelDoubt}. Gate 100 converts that meta-state into a structural action: routine evidence selects \texttt{keepClosed}, whereas the anomaly selects \texttt{expandUnknown}.
 
-\paragraph{Interpretation.}
-This is a finite form of nested epistemic assessment without introducing a full modal logic of iterated belief operators. The agent can be determinate about a proposition while indeterminate or conflicted about the reliability of the process that delivered that determination.
+The distinction is operational. Ordinary Bayesian updating redistributes probability over the current hypotheses. Gate 100 instead changes which hypothesis space future inference may use. What it does \emph{not} do is synthesize the missing hypothesis. It formalizes the trigger for opening the model class.
 
-\subsection{A finite rational self-trust controller}
+\subsection{Unknown unknowns as an explicit epistemic gap}
 
-Gate 104 maps the nested status to four control actions:
+Gate 101 refuses to force all probability back into the known class after model doubt. The closed open-model belief is
 \[
-\mathsf{actFragile},\quad
-\mathsf{actSafe},\quad
+(\ell,h,u)=\left(\frac12,\frac12,0\right),
+\]
+while the doubt state is
+\[
+(\ell,h,u)=\left(\frac14,\frac14,\frac12\right).
+\]
+Both are normalized. The known mass supports the proposition that the current model class is adequate; unknown mass supports its negation. Under the existing four-valued evidence semantics, the closed state is classified $T$, whereas the anomaly-induced open state is classified $N$.
+
+This is not a claim that one half is a uniquely correct prior probability for unknown models. The amount is a finite design witness. The verified structural point is that probability can be reserved for outside-class possibility without pretending that a known model is adequate.
+
+\subsection{Meta-level gaps and gluts}
+
+Gate 102 separates lack of model knowledge from contradictory evidence about the model. Four explicit support pairs are classified as
+\[
+\left(\frac12,\frac12\right)\mapsto N,
+\qquad
+\left(\frac45,\frac45\right)\mapsto B,
+\]
+\[
+\left(\frac9{10},\frac1{10}\right)\mapsto T,
+\qquad
+\left(\frac1{10},\frac9{10}\right)\mapsto F.
+\]
+Hence second-order ignorance and second-order contradiction remain extensionally distinct:
+\[
+N\neq B.
+\]
+An agent may therefore lack sufficient evidence about its own model, or possess strong evidence both for and against that model, without collapsing those epistemic defects into one generic uncertainty label.
+
+\subsection{Two four-valued coordinates}
+
+Gate 103 packages first-order and second-order assessment into
+\[
+\mathsf{NestedStatus}
+=
+\mathsf{FDEValue}_{\mathrm{world}}
+\times
+\mathsf{FDEValue}_{\mathrm{model}}.
+\]
+Explicit witnesses show the same world status $T$ alongside model status $T$, $N$, and $B$. Other witnesses hold the model coordinate fixed at $T$ while the world coordinate ranges over $T$, $F$, $B$, and $N$.
+
+The formal claim is witness-level coordinate independence. Gate 103 does not yet establish that all sixteen pairs arise under one fixed dynamics. That stronger reachability question is deferred to Gate 105.
+
+\subsection{Finite rational self-trust control}
+
+Gate 104 turns the nested status into a deterministic controller with five actions:
+\[
+\mathsf{actPositive},\quad
+\mathsf{actNegative},\quad
+\mathsf{senseWorld},\quad
 \mathsf{calibrateModel},\quad
-\mathsf{expandModelClass}.
+\mathsf{reconcileModel}.
 \]
-The verified policy behaves as follows. If the model status is $T$, the controller acts on the world status: $(T,T)$ selects the fragile action, while $(F,T)$ selects safe. If the model status is $N$, the controller expands the model class. If the model status is $B$ or $F$, it calibrates the model.
+Its priority is explicitly second-order. Model $N$ or $F$ triggers calibration; model $B$ triggers reconciliation. Only model $T$ licenses direct interpretation of the world coordinate. Under a trusted model, world $N$ or $B$ triggers additional world sensing, world $T$ licenses positive action, and world $F$ licenses negative action.
 
-\begin{proposition}[Finite self-trust priority]
-In the Gate-104 witness, model-level uncertainty or conflict is resolved before ordinary world-directed fragile action is allowed: $(T,N)$ expands the hypothesis class and $(T,B)$ calibrates, even though the world coordinate remains $T$.
-\end{proposition}
+Thus an apparently decisive world verdict does not automatically license action when the mechanism responsible for that verdict is itself in doubt. The controller can represent the thought
+\begin{quote}
+The evidence currently points toward $p$, but I do not yet trust the process that produced that evidence enough to act on it.
+\end{quote}
+without replacing the world status by the model status.
 
-\paragraph{Boundary.}
-This proposition reports the behavior of an explicitly encoded finite controller. Lean verifies that the stated priority follows from that controller's definitions. It does \emph{not} prove that this priority ordering is universally rational. A general normative theorem would require explicit comparative costs, richer posterior uncertainty, planning horizons, and a decision-theoretic objective over model repair itself.
-
-\paragraph{Interpretation.}
-At Gate 104, ``self-trust'' is no longer binary. The agent can trust, reject, remain ignorant about, or hold contradictory evidence about its epistemic machinery. Rational self-trust in this model is therefore conditional and revisable: trust licenses ordinary action, ignorance triggers structural expansion, and conflict triggers calibration.
+\paragraph{Interpretation boundary.}
+Gate 104 verifies the behavior of this particular finite priority policy. It does not prove that second-order maintenance must universally dominate first-order action. Gates 106 and 107 will make this limitation explicit by introducing epistemic costs and by showing that the qualitative four-valued compression can discard decision-relevant quantitative information.
