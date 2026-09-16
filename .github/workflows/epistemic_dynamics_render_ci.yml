@@ -1,0 +1,31 @@
+name: Epistemic Dynamics Render CI
+
+on:
+  push:
+    branches:
+      - paper/epistemic-dynamics-v0.4.0-gate116
+    paths:
+      - 'papers/epistemic-dynamics/**'
+      - '.github/workflows/epistemic_dynamics_render_ci.yml'
+  pull_request:
+    paths:
+      - 'papers/epistemic-dynamics/**'
+      - '.github/workflows/epistemic_dynamics_render_ci.yml'
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Compile paper
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: papers/epistemic-dynamics
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: epistemic-dynamics-v0.4.0-gate116
+          path: papers/epistemic-dynamics/main.pdf
+          if-no-files-found: error
