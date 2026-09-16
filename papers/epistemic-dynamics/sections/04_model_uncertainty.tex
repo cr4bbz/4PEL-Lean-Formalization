@@ -1,0 +1,44 @@
+\section{Model Uncertainty, Calibration, and Dual Epistemic Value}
+
+The active-experimentation results still assume that the agent can treat its observation mechanism as known. Gates 78--94 relax that assumption. The resulting control problem has two coupled hidden objects: the state of the world and the quality of the model or sensor through which the world is observed. The formal development therefore separates first-order evidence from second-order trust rather than folding both into one scalar confidence value.
+
+\subsection{From world uncertainty to model uncertainty}
+
+The first move is to distinguish a probe's value under different sensor regimes. A robust action may remain useful across regimes while a fragile action can be excellent under a reliable sensor and poor under a degraded one. Model uncertainty therefore becomes decision relevant even when the first-order world question is unchanged.
+
+Gates 80--85 connect this distinction back to four-valued evidence. In particular, a calibration problem can be represented as an epistemic gap rather than as an ordinary first-order falsehood, and a successful calibration can resolve the same initial state in different directions depending on the actual observation regime. These are finite witnesses rather than a general learning theory, but they establish the architectural point needed below: evidence about the world and evidence about the mechanism that generates world evidence need not be the same object.
+
+\subsection{Bayesian model belief and calibration}
+
+Gates 86--88 introduce explicit Bayesian belief over sensor models and an observation-driven posterior. This makes calibration an information-producing action rather than a purely logical rewrite. The action selected for the world can change because an observation changes belief about the model, even if the underlying world utility function itself is unchanged.
+
+The relevant separation is
+\[
+\text{world-directed value}
+\qquad\neq\qquad
+\text{model-directed information value}.
+\]
+The posterior over the observation model is quantitative. Later four-valued meta-statuses therefore should not be read as replacements for the posterior; they are qualitative control summaries of a richer belief state.
+
+\subsection{Joint world--model belief}
+
+Gate 89 represents a joint distribution over world and model states rather than maintaining two unrelated marginals. Gate 90 then shows that two agents can have the same marginal belief about the world while selecting different actions because their model-trust marginals differ. This already anticipates the insufficiency result of Gate 107: a compressed epistemic label need not retain every distinction relevant to utility-optimal control.
+
+Gate 91 gives world information and model information separate value terms. Gate 92 makes active calibration a competing action alongside acting immediately and sensing the world. In the encoded finite witness, calibration can have the highest net value because the same observation improves both model trust and downstream world control.
+
+\subsection{Cost phase boundary and robust control}
+
+Gate 93 varies calibration cost and produces an exact switching boundary between calibration and world sensing. The important result is structural rather than numerical: epistemic maintenance is an ordinary control action whose rationality depends on its expected value and cost.
+
+Gate 94 adds a robustness comparison. A Bayesian policy can exploit a favorable model posterior, while a maximin policy may prefer a safe action under the same uncertainty. The formalization therefore keeps apart at least three questions:
+
+\begin{enumerate}
+  \item what the agent believes about the world;
+  \item what the agent believes about the reliability of its own model;
+  \item which decision criterion converts those beliefs into action.
+\end{enumerate}
+
+This distinction becomes essential in Gate 95. There the agent begins with an overconfident model belief, chooses the wrong action under the actual degraded sensor, receives corrective calibration evidence, and changes policy. The next section follows that self-correction beyond ordinary reweighting and into explicit criticism of the hypothesis class itself.
+
+\paragraph{Boundary.}
+The results summarized here are finite formal witnesses. They establish representational and control possibilities inside the encoded models; they do not by themselves prove generic Bayesian consistency, universal calibration optimality, or a privileged normative relationship between Bayesian and robust decision rules.
