@@ -1,0 +1,76 @@
+\section{Interpretation, Limits, and Research Outlook}
+
+The verified development now supports a more precise interpretation of 4PEL than a simple description of four truth values. Across recovery, active sensing, model criticism, self-repair, identifiability, and noisy observation, the four-valued layer repeatedly functions as a qualitative diagnosis of the agent's epistemic situation. Quantitative belief, observation likelihood, cost, and utility remain separate objects.
+
+\subsection{A qualitative control layer}
+
+The current architecture can be summarized schematically as
+\[
+\text{hidden state}
+\longrightarrow
+\text{observations and quantitative evidence}
+\longrightarrow
+\text{4PEL status}
+\longrightarrow
+\text{epistemic or world-directed control}
+\longrightarrow
+\text{new evidence}.
+\]
+Gate 107 shows why the middle arrow should not be treated as lossless: different quantitative states may project to the same four-valued status while supporting different utility-optimal actions. Conversely, Gates 102--104 show why the qualitative layer remains useful: it distinguishes kinds of epistemic defect, such as a gap $N$ and a contradiction $B$, that should trigger different forms of maintenance.
+
+The resulting role is diagnostic rather than totalizing. Four-valued status can tell the controller what kind of epistemic situation it occupies without pretending to contain every quantity needed for decision theory.
+
+\subsection{Self-correction requires more than termination}
+
+Gates 108 and 109 show that repair can be represented dynamically and can admit local progress and liveness arguments. Gate 110 then identifies a hard limit: a terminating controller cannot recover distinctions absent from its observation channel. The formal lesson is
+\[
+\text{algorithmic completion}
+\neq
+\text{epistemic success}.
+\]
+Truth-directed self-correction requires an informational condition in addition to a terminating repair policy.
+
+Gates 111 and 114 make that condition explicit. An agent may alter the observation channel through experiment, and truth-guaranteeing decoding is possible exactly when target-different worlds no longer occupy the same observation fiber. This links active epistemology to a precise structural criterion rather than to the vague injunction to ``collect more data.'' More data of an aliased kind may add no relevant distinction; a different experiment may.
+
+\subsection{Rationality need not maximize information}
+
+Gates 112, 113, and 115 add an economical constraint. A truth-revealing experiment can be too expensive, unresolvedness can be rationally preserved, and an agent need not identify the entire hidden world when only a coarser target matters. These results support a task-relative notion of epistemic sufficiency:
+\[
+\text{enough information for the target}
+\quad\text{need not equal}\quad
+\text{maximum available information}.
+\]
+This conclusion remains conditional on the encoded utilities and experiment menus. The formal contribution is to exhibit coherent models in which epistemic restraint is value-optimal and to isolate the exact identifiability criterion that makes such restraint safe for a specified target.
+
+\subsection{Fallibility after Gate 116}
+
+Gate 116 replaces perfect observation partitions with overlapping likelihood support. This forces three notions apart:
+\[
+\text{truth},
+\qquad
+\text{posterior confidence},
+\qquad
+\text{control commitment}.
+\]
+The four-valued bridge from posterior to action status is therefore explicitly policy-relative. A $T$ produced by the Gate-116 threshold means that the posterior has entered the controller's positive commitment region; it does not mean that the negative world has become logically impossible.
+
+This distinction is essential for interpreting the broader project. The formalism is not moving toward an infallible epistemic oracle. It is moving toward a framework for agents that act under incomplete, contradictory, model-dependent, costly, and noisy evidence while retaining explicit representations of when they do not know enough.
+
+\subsection{Open formal directions}
+
+The verified results leave several sharply defined next problems.
+
+\begin{enumerate}
+  \item \textbf{Noisy optimal stopping.} Gate 116 hard-codes a second measurement after one unresolved signal. Adding measurement cost should make \texttt{measureAgain} itself a value-sensitive decision.
+  \item \textbf{Learning sensor reliability.} Gate 116 treats the $4/5$ reliability parameter as known. A richer model should place uncertainty over that parameter and couple world inference to reliability inference.
+  \item \textbf{Correlated evidence.} Conditional independence makes repeated observations easy to combine. Correlation would test whether repeated signals are being double-counted and whether contradiction or confidence can be spuriously amplified.
+  \item \textbf{General repair potentials.} Gate 108 uses a local witness potential. A stronger theorem would state sufficient conditions on a potential function for termination of an abstract repair relation.
+  \item \textbf{Minimal sufficient refinement.} Gate 107 shows that a four-valued projection can lose decision-relevant information. The natural question is how little quantitative refinement must be retained to restore control sufficiency for a specified action class.
+  \item \textbf{Bounded meta-epistemics.} Gates 101--104 introduce a model coordinate, but not an indefinite hierarchy of models of models. A formal stopping condition for reflective depth remains open.
+\end{enumerate}
+
+\subsection{Scope of the present results}
+
+The formal development is intentionally built from small finite witnesses and then generalized only when the proof obligations justify doing so. Gate 114 is an example of such a transition: finite aliasing examples become a theorem over arbitrary types. Other claims, especially exact utility thresholds and repair dynamics, remain witness-specific.
+
+Accordingly, the paper's strongest conclusion is architectural rather than universal-normative. 4PEL can support a mechanized epistemic agent in which contradictory evidence, missing evidence, uncertainty about the evidence-generating model, information-gathering actions, repair, identifiability, and noisy control coexist without being collapsed into one scalar state. Which policies are normatively optimal depends on the explicit utilities, costs, observation models, and target tasks supplied to that architecture.
