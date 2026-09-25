@@ -137,7 +137,8 @@ theorem jevWeight_nonnegative
 theorem jevWeight_total
     (d : JevFDEDistribution) :
     weightedEventMass jevSupport (jevWeight d) jevSupport = 1 := by
-  simpa [jevSupport, jevWeight, weightedEventMass, Rat.add_assoc] using d.total
+  simpa [jevSupport, jevWeight, weightedEventMass,
+    Rat.add_assoc, Rat.add_zero] using d.total
 
 theorem jevWeight_is_distribution
     (d : JevFDEDistribution) :
@@ -167,25 +168,29 @@ theorem jevCanonical_positive_mass
     (d : JevFDEDistribution) :
     jevCanonicalMeasure d jevPositiveEvent = jevPosMass d := by
   simp [jevCanonicalMeasure, weightGeneratedMeasure, weightedEventMass,
-    jevSupport, jevWeight, jevPositiveEvent, jevPosMass]
+    jevSupport, jevWeight, jevPositiveEvent, jevPosMass,
+    Rat.zero_add, Rat.add_zero]
 
 theorem jevCanonical_negative_mass
     (d : JevFDEDistribution) :
     jevCanonicalMeasure d jevNegativeEvent = jevNegMass d := by
   simp [jevCanonicalMeasure, weightGeneratedMeasure, weightedEventMass,
-    jevSupport, jevWeight, jevNegativeEvent, jevNegMass]
+    jevSupport, jevWeight, jevNegativeEvent, jevNegMass,
+    Rat.zero_add, Rat.add_zero]
 
 theorem jevCanonical_glut_mass
     (d : JevFDEDistribution) :
     jevCanonicalMeasure d jevGlutEvent = jevGlutMass d := by
   simp [jevCanonicalMeasure, weightGeneratedMeasure, weightedEventMass,
-    jevSupport, jevWeight, jevGlutEvent, jevGlutMass]
+    jevSupport, jevWeight, jevGlutEvent, jevGlutMass,
+    Rat.zero_add, Rat.add_zero]
 
 theorem jevCanonical_gap_mass
     (d : JevFDEDistribution) :
     jevCanonicalMeasure d jevGapEvent = jevGapMass d := by
   simp [jevCanonicalMeasure, weightGeneratedMeasure, weightedEventMass,
-    jevSupport, jevWeight, jevGapEvent, jevGapMass]
+    jevSupport, jevWeight, jevGapEvent, jevGapMass,
+    Rat.zero_add, Rat.add_zero]
 
 def jevCellValue : JevCell → FDEValue
   | .t => FDEValue.T
