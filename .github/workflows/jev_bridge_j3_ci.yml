@@ -1,0 +1,38 @@
+name: JevBridge J3 Offline CI
+
+on:
+  push:
+    branches:
+      - research/jev-bridge-j3
+    paths:
+      - 'PEL4/JevBridgeEmpiricalContract.lean'
+      - 'PEL4.lean'
+      - 'scripts/jev_bridge_gate_j3.py'
+      - 'data/jev_bridge_j3_frozen.jsonl'
+      - 'JEV_BRIDGE_GATE_J3_PROTOCOL.md'
+      - '.github/workflows/jev_bridge_j3_ci.yml'
+  workflow_dispatch:
+
+jobs:
+  offline-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Validate frozen benchmark
+        run: python scripts/jev_bridge_gate_j3.py validate data/jev_bridge_j3_frozen.jsonl
+      - name: Verify blind payload construction
+        run: python scripts/jev_bridge_gate_j3.py dry-run data/jev_bridge_j3_frozen.jsonl --case B01-v1 > j3_payload.json
+      - name: Reject label leakage in payload
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          text = Path('j3_payload.json').read_text(encoding='utf-8')
+          payload_text = text.split('JEV_GATE_J3_BLIND_PAYLOAD_OK')[0].strip()
+          payload = json.loads(payload_text)
+          serialized = json.dumps(payload)
+          for forbidden in ('expected', 'base_id', 'variant'):
+              if forbidden in serialized:
+                  raise SystemExit(f'label metadata leaked into payload: {forbidden}')
+          print('JEV_GATE_J3_BLINDNESS_OK')
+          PY
