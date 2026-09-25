@@ -1,5 +1,19 @@
 # Gate J3: Blind Empirical Jev Discrimination
 
+## Status
+
+**Preregistered / externally blocked (2026-09-25).**
+
+The benchmark, acceptance thresholds, blindness rule, and analysis code were
+frozen before any live Jev result was collected. New TypeSafe signups were
+paused when access was attempted, so no empirical Jev observation exists yet.
+This is an access blocker, not an empirical failure of JevBridge.
+
+Until live access is available, the frozen benchmark and acceptance criteria
+must not be edited in response to expected or hypothetical model behavior.
+Changes required for API compatibility must be documented separately and must
+not alter labels, cases, thresholds, or the primary analysis.
+
 Branch: research/jev-bridge-j3
 
 ## Research question
