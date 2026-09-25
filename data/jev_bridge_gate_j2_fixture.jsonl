@@ -1,0 +1,8 @@
+{"id":"T-1","expected":"T","t":0.80,"f":0.05,"b":0.10,"n":0.05}
+{"id":"F-1","expected":"F","t":0.05,"f":0.80,"b":0.10,"n":0.05}
+{"id":"B-1","expected":"B","t":0.10,"f":0.10,"b":0.70,"n":0.10}
+{"id":"N-1","expected":"N","t":0.10,"f":0.10,"b":0.10,"n":0.70}
+{"id":"path-N","expected":"N","t":0.10,"f":0.10,"b":0.10,"n":0.70,"chain":"intervention-1","step":0}
+{"id":"path-T","expected":"T","t":0.80,"f":0.05,"b":0.10,"n":0.05,"chain":"intervention-1","step":1}
+{"id":"path-B","expected":"B","t":0.10,"f":0.10,"b":0.70,"n":0.10,"chain":"intervention-1","step":2}
+{"id":"path-F","expected":"F","t":0.05,"f":0.80,"b":0.10,"n":0.05,"chain":"intervention-1","step":3}
