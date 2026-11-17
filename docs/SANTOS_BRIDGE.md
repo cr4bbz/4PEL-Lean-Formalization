@@ -34,6 +34,12 @@ All theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
 | | `belief_T_but_santosBox_F` | `Bφ = T`, `□φ = F` at `c = 2/3` | FINITE-WITNESS |
 | `SantosDynamics` | `belief_conditionalize_pos_iff`, `belief_conditionalize_neg_iff` | belief after conditionalisation on `E` ⇔ `μ(X ∩ E⁺) ≥ c·μ(E⁺)` before | PROVED |
 | | `belief_neg_iff_all_neg_of_certainty` | at `c = 1` refutation of belief is universal (`□¬`), not existential (`◇¬`) | PROVED |
+| `SantosReduction` | `eval_conditionalize_of_beliefFree`, `eval_announce_of_beliefFree` | S1: belief-free formulas are invariant under both updates | PROVED |
+| | `eval_bel_conditionalize_pos_iff`, `eval_bel_conditionalize_neg_iff` | S1: formula-level reduction for `B φ`, `φ` belief-free | PROVED |
+| | `bel_not_invariant` | S1: `B p` changes from `F` to `T` under conditionalisation on `p` | FINITE-WITNESS |
+| | `announce` | Santos-style update is a `Model` given nonzero evidence mass | PROVED |
+| | `belief_announce_eq_conditionalize` | both updates give the same belief, both channels | PROVED |
+| | `box_announce_ne_conditionalize` | the relational box differs between the updates | FINITE-WITNESS |
 
 ## Interpretive caveats
 
@@ -49,7 +55,7 @@ All theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
 
 ## Open questions (next step)
 
-* **S1 – formula-level reduction.** The reduction theorems hold for a fixed semantic
+* **S1 – formula-level reduction (settled for depth one, open for nesting).** The reduction theorems hold for a fixed semantic
   value. For a formula `φ` the value after the update is `eval (conditionalize m E) φ`.
   For which fragment is `eval` invariant under conditionalisation? Conjecture: exactly
   the belief-free formulas; for nested belief the reduction needs the conditional
@@ -64,3 +70,6 @@ All theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
 * **S5 – threshold crossing.** Characterise when `Bφ` and `[E]Bφ` differ, in terms of
   `μ(‖φ‖⁺ ∩ E⁺) / μ(E⁺)` versus `μ(‖φ‖⁺)`; connect to `ModalDynamicsBeliefInstability`
   and `ModalDynamicsBeliefRestoration`.
+
+A short paper with the verified results, the transfer analysis and the open questions
+is in `paper/santos-bridge/santos_bridge.pdf`.
