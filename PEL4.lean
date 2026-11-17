@@ -312,3 +312,6 @@ import PEL4.NeighbourhoodBelief
 import PEL4.SantosBridge
 import PEL4.SantosDynamics
 import PEL4.SantosReduction
+import PEL4.ConditionalBelief
+import PEL4.SantosConservativity
+import PEL4.GradedAggregation

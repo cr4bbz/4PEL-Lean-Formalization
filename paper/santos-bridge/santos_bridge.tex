@@ -31,7 +31,7 @@
 \title{Lockean Belief as a Two-Channel Neighbourhood Modality:\\
 A Bridge from 4-PEL to Four-Valued Dynamic Epistemic Logic}
 \author{J.~L.~Voigt}
-\date{Working note, draft 0.1 --- 17 November 2026\\[2pt]
+\date{Working note, draft 0.2 --- 17 November 2026\\[2pt]
 \normalsize Lean~4 artifact: branch \texttt{research/santos-bridge} of
 \texttt{cr4bbz/4PEL-Lean-Formalization}}
 
@@ -50,7 +50,11 @@ conditionalisation reduces to a conditional neighbourhood statement; belief-free
 formulas are invariant, belief formulas are not. Santos' state-deleting update can be
 adopted in 4-PEL without loss for belief: it is conditionalisation plus pruning of null
 worlds, it agrees with conditionalisation on belief in both channels, and it differs
-from it on the box. All statements marked \emph{proved} are machine-checked in Lean~4
+from it on the box. Three gaps of the first draft are closed: with conditional belief
+in the language, conditionalisation reduces for \emph{arbitrary} modal depth; adding
+Lockean belief is conservative over the box logic of serial relational models with
+finite ranges; and aggregation below certainty is replaced by the graded law
+$\mu(A\cap B)\ge 2c-1$. All statements marked \emph{proved} are machine-checked in Lean~4
 without \texttt{sorry} and without \texttt{native\_decide}. We separate these from
 interpretive claims and list the open questions.
 \end{abstract}
@@ -65,12 +69,17 @@ possibly incomplete or conflicting evidence, gives reduction axioms for public
 announcements, and explicitly leaves belief open. Evidence models in the sense of van
 Benthem and Pacuit \cite{vBP2011} are neighbourhood models; and Kogure \cite{Kogure2025}
 recently gave arithmetical completeness results for non-normal logics with neighbourhood
-semantics, among them the logic with D but without C.
+semantics, among them the logic with D but without C. Van Eijck and Renne \cite{vER2014}
+axiomatise threshold belief for $c=\tfrac12$ over epistemic neighbourhood models and leave
+other thresholds open; probabilistic public announcement logic \cite{vBGK2006} supplies the
+reduction axiom that guides Section~\ref{sec:cbel}.
 
 This note asks how the 4-PEL belief operator relates to Santos' box on one and the same
 model, and what survives of the dynamic theory. The answer has three parts:
 a neighbourhood reading (Section~\ref{sec:nbhd}), a static bridge
-(Section~\ref{sec:static}) and a dynamic bridge (Section~\ref{sec:dyn}).
+(Section~\ref{sec:static}) and a dynamic bridge (Section~\ref{sec:dyn}), completed by
+the full reduction law (Section~\ref{sec:cbel}) and a conservativity theorem
+(Section~\ref{sec:cons}).
 Section~\ref{sec:transfer} states precisely what can and cannot be taken over from
 Santos. Section~\ref{sec:open} lists open questions. The appendix maps every numbered
 result to its Lean name.
@@ -122,6 +131,19 @@ gives $\Bel v=\Nv$. Consistency of belief is controlled by the valuation, comple
 the concentration of mass. Lockean suspension of judgement exists already in the classical
 sector.
 \end{remark}
+
+\begin{theorem}[graded aggregation; proved]\label{thm:graded}
+Under integrity, for $A,B\subseteq R(w)$: $\mu_w(A\cap B)\ge\mu_w(A)+\mu_w(B)-1$. Hence
+$A,B\in N_c(w)$ implies $\mu_w(A\cap B)\ge 2c-1>0$.
+\end{theorem}
+
+Theorem~\ref{thm:graded} is what replaces C: the schema
+$\Bel_c\varphi\wedge\Bel_c\psi\to\Bel_{2c-1}(\varphi\wedge\psi)$ is sound for the support
+channel, it strengthens D, and at $c=1$ it returns aggregation. It is a sound principle
+beyond M, N, P, D; we do not claim that it completes the axiomatisation. For
+$c=\tfrac12$ a complete system needs a scheme derived from a theorem of Scott
+\cite{vER2014}; 4-PEL has $c>\tfrac12$ with a non-strict threshold, which lies in the
+range left open there.
 
 \section{The static bridge}\label{sec:static}
 
@@ -262,6 +284,61 @@ Theorem~\ref{thm:certainty} fails: an agent can believe with full mass and still
 a supported box. $M|p$ removes exactly the null worlds that cause this.
 \end{remark}
 
+\section{Conditional belief and the full reduction law}\label{sec:cbel}
+
+Probabilistic public announcement logic reduces
+$[!A]P(\varphi)=k$ to $A\to P([!A]\varphi\mid A)=k$ \cite{vBGK2006}: the announcement is
+pushed inside, and the static language needs conditional probability. We follow this
+pattern. The extended language adds conditional belief $\Bel(\varphi\mid\psi)$ and the
+relational box to atoms, $\neg$, $\wedge$ and $\Bel$, with
+\[
+\Bel(\varphi\mid\psi)(w)=\bigl(\ \mu_w(\pos{\varphi}\cap\pos{\psi})\ge c\,\mu_w(\pos{\psi})\ ,\ \
+\mu_w(\negx{\varphi}\cap\pos{\psi})\ge c\,\mu_w(\pos{\psi})\ \bigr).
+\]
+The reduct $\mathrm{red}_E$ is defined by recursion: it commutes with atoms, $\neg$,
+$\wedge$ and $\Box$, and
+\[
+\mathrm{red}_E(\Bel\varphi)=\Bel(\mathrm{red}_E\varphi\mid E),\qquad
+\mathrm{red}_E(\Bel(\varphi\mid\psi))=\Bel(\mathrm{red}_E\varphi\mid \mathrm{red}_E\psi\wedge E).
+\]
+
+\begin{theorem}[full reduction; proved]\label{thm:fullred}
+If $\mu_{i,w}(\pos{E})>0$ for all $(i,w)$, then for every formula $\varphi$ of the extended
+language and every world $w$:
+$\ [\![\varphi]\!]_{M\uparrow E}(w)=[\![\mathrm{red}_E\,\varphi]\!]_{M}(w)$.
+\end{theorem}
+
+This holds for arbitrary modal depth and as an identity of four-valued values, not only
+of support. It settles the nesting question for conditionalisation and confirms that
+conditional belief is the right static primitive: the language with $\Bel(\cdot\mid\cdot)$
+is closed under the update. By convention a condition of mass zero makes conditional
+belief both supported and refuted. For the state-deleting update $M|E$ the belief clauses
+are the same (Theorem~\ref{thm:updates}c); the box would need a relativised clause and is
+not covered.
+
+\section{Conservativity over the relational box logic}\label{sec:cons}
+
+A relational model $S=(R,V)$ has finite accessible ranges and a four-valued valuation; it
+is serial if no range is empty. Box formulas are built from atoms, $\neg$, $\wedge$, $\Box$.
+
+\begin{theorem}[conservativity; proved]\label{thm:cons}
+\begin{enumerate}[label=(\alph*),nosep]
+\item Every 4-PEL model is serial, and a box formula has the same value in a 4-PEL model
+and in its relational reduct.
+\item Every serial relational model expands to a 4-PEL model (uniform counting measure on
+each range) whose reduct it is.
+\item For every property $D$ of values: a box formula has $D$ at every world of every
+4-PEL model iff it has $D$ at every world of every serial relational model.
+\end{enumerate}
+\end{theorem}
+
+Taking $D$ to be ``supported'' or ``not refuted'' gives conservativity for either notion
+of validity; the same argument applies to consequence. The statement is relative to
+serial models with finite ranges, which is what 4-PEL models are. It becomes a statement
+about Santos' logic once his box clause is confirmed to be the one used here and his logic
+is restricted to serial frames; if that logic has the finite model property, finiteness is
+no restriction.
+
 \section{What transfers from Santos, and what does not}\label{sec:transfer}
 
 \paragraph{Transfers without loss (proved).}
@@ -287,22 +364,22 @@ against the published text before it is cited by number.
 (b)~Santos deletes states globally; $M|E$ restricts each accessible range and keeps the
 set of worlds. For formulas of modal depth at most one the two coincide by construction;
 for nested modalities the comparison is open (Question~\ref{q:nested}).
-(c)~That 4-PEL is a \emph{conservative} belief extension of Santos' logic is suggested by
-Theorem~\ref{thm:sandwich} and Theorem~\ref{thm:updates} but has not been stated or proved
-as a theorem about the two consequence relations.
+(c)~Conservativity is now a theorem (Theorem~\ref{thm:cons}), but over serial relational
+models with finite ranges and the box clauses used here; its transfer to Santos' own
+system depends on (a), on seriality, and on the finite model property of his logic, none
+of which is machine-checked.
 
 \section{Open questions}\label{sec:open}
 
-\begin{question}[nested belief]\label{q:nested}
-Extend Theorem~\ref{thm:s1}b to arbitrary modal depth. The expected form uses the
-conditional operator at every level; the comparison between global state deletion and
-range restriction has to be settled first.
+\begin{question}[reduction for the state-deleting update]\label{q:nested}
+Theorem~\ref{thm:fullred} covers conditionalisation. For $M|E$ the box needs a relativised
+clause, and global state deletion has to be compared with range restriction for nested
+modalities.
 \end{question}
 
-\begin{question}[conditional belief as a primitive]
-Does adding $\Bel(\varphi\mid E)$ to the syntax yield a complete set of reduction axioms in
-Santos' style? Is $\Bel(\varphi\mid E)$ definable from $\Bel$ and the connectives? We
-conjecture that it is not.
+\begin{question}[definability of conditional belief]
+Is $\Bel(\varphi\mid E)$ definable from $\Bel$ and the connectives? We conjecture that it
+is not; Theorem~\ref{thm:fullred} shows only that it suffices.
 \end{question}
 
 \begin{question}[frame laws under update]
@@ -322,8 +399,10 @@ the existing instability and restoration results of 4-PEL.
 \end{question}
 
 \begin{question}[axiomatisation]
-Is the set of formulas valid for $N_c$ at a fixed $c\in(\tfrac12,1)$ axiomatised by
-M, N, P, D alone? Threshold logics usually need further schemata; we make no claim.
+Which system is complete for $N_c$ at a fixed $c\in(\tfrac12,1)$ with a non-strict
+threshold? M, N, P, D and graded aggregation are sound; for $c=\tfrac12$ completeness
+needs a Scott-type scheme and a certainty operator \cite{vER2014}. We make no
+completeness claim.
 \end{question}
 
 \appendix
@@ -342,6 +421,7 @@ Thm.~\ref{thm:frame}a & \lean{neighbourhood\_N}, \lean{neighbourhood\_P} & P\\
 Thm.~\ref{thm:frame}b,c & \lean{neighbourhood\_M}, \lean{neighbourhood\_D} & P\\
 Thm.~\ref{thm:frame}d & \lean{neighbourhood\_not\_C} & W\\
 Cor.~\ref{cor:glut} & \lean{belief\_thresholdConsistent\_of\_no\_glut} & P\\
+Thm.~\ref{thm:graded} & \lean{mass\_intersection\_lower\_bound}, \lean{neighbourhood\_graded\_C}, \lean{neighbourhood\_intersection\_pos} & P\\
 Thm.~\ref{thm:sandwich} & \lean{santosBox\_pos\_implies\_belief\_pos}, \lean{belief\_neg\_implies\_santosBox\_neg} & P\\
 Thm.~\ref{thm:certainty}a & \lean{belief\_pos\_eq\_santosBox\_pos\_of\_certainty} & P\\
 Thm.~\ref{thm:certainty}b & \lean{belief\_pos\_and\_of\_certainty} & P\\
@@ -355,6 +435,10 @@ Thm.~\ref{thm:updates}a & \lean{announce} (definition with proof fields) & P\\
 Thm.~\ref{thm:updates}b & \lean{eval\_announce\_of\_beliefFree} & P\\
 Thm.~\ref{thm:updates}c & \lean{belief\_announce\_eq\_conditionalize} & P\\
 Thm.~\ref{thm:updates}d & \lean{box\_announce\_ne\_conditionalize} & W\\
+Thm.~\ref{thm:fullred} & \lean{evalC\_condOn\_eq\_red} (with \lean{CFormula}, \lean{condBelief}, \lean{red}) & P\\
+Thm.~\ref{thm:cons}a & \lean{Model.reduct\_serial}, \lean{evalC\_toC\_eq\_evalR} & P\\
+Thm.~\ref{thm:cons}b & \lean{RelModel.expand}, \lean{RelModel.reduct\_expand}, \lean{evalC\_expand\_eq\_evalR} & P\\
+Thm.~\ref{thm:cons}c & \lean{box\_validity\_conservative} & P\\
 \bottomrule
 \end{tabular}}
 
@@ -372,6 +456,10 @@ G.~Epstein (eds.), \emph{Modern Uses of Multiple-Valued Logic}, Reidel, 1977.
 \emph{Studia Logica} 99, 2011. (ILLC Prepublication PP-2011-19.)
 \bibitem{Kogure2025} H.~Kogure. Provability interpretation of non-normal modal logics
 having neighborhood semantics. arXiv:2511.16488, 2025.
+\bibitem{vBGK2006} J.~van Benthem, J.~Gerbrandy and B.~Kooi. Dynamic update with
+probabilities. ILLC Prepublication, 2006.
+\bibitem{vER2014} J.~van Eijck and B.~Renne. Belief as willingness to bet.
+arXiv:1412.5090, 2014.
 \bibitem{Santos2020} Y.~D. Santos. A four-valued dynamic epistemic logic.
 \emph{Journal of Logic, Language and Information} 29:451--489, 2020.
 \end{thebibliography}

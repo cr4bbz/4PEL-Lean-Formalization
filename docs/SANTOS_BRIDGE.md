@@ -40,6 +40,11 @@ All theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
 | | `announce` | Santos-style update is a `Model` given nonzero evidence mass | PROVED |
 | | `belief_announce_eq_conditionalize` | both updates give the same belief, both channels | PROVED |
 | | `box_announce_ne_conditionalize` | the relational box differs between the updates | FINITE-WITNESS |
+| `ConditionalBelief` | `evalC_condOn_eq_red` | full reduction for arbitrary modal depth in the language with `B(φ | ψ)` and `□`: `eval (M↑E) φ = eval M (red E φ)` | PROVED |
+| `SantosConservativity` | `Model.reduct_serial`, `evalC_toC_eq_evalR` | 4-PEL models are serial; box formulas ignore the measure | PROVED |
+| | `RelModel.expand`, `evalC_expand_eq_evalR` | every serial relational model expands (uniform measure) with the same box values | PROVED |
+| | `box_validity_conservative` | box validity over 4-PEL models ⇔ over serial relational models, for any property of values | PROVED |
+| `GradedAggregation` | `mass_intersection_lower_bound`, `neighbourhood_graded_C`, `neighbourhood_intersection_pos` | `μ(A∩B) ≥ μ(A)+μ(B)−1`, hence `≥ 2c−1 > 0` for neighbourhoods | PROVED |
 
 ## Interpretive caveats
 
@@ -73,3 +78,15 @@ All theorems depend only on `propext`, `Classical.choice`, `Quot.sound`.
 
 A short paper with the verified results, the transfer analysis and the open questions
 is in `paper/santos-bridge/santos_bridge.pdf`.
+
+## Status of the open questions after the second round
+
+* S1/S2: settled for conditionalisation at arbitrary depth (`evalC_condOn_eq_red`).
+  Still open: the same law for the state-deleting update (relativised box), and whether
+  conditional belief is definable from plain belief.
+* Conservativity: proved over serial relational models with finite ranges. Transfer to
+  Santos' own system still depends on his box clause, seriality and the finite model
+  property (INTERPRETIVE).
+* Axiomatisation: graded aggregation is a further sound principle. Completeness for a
+  fixed `c ∈ (1/2, 1)` remains open; van Eijck–Renne treat `c = 1/2` and need a
+  Scott-type scheme and a certainty operator.
